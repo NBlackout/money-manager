@@ -1,0 +1,70 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Application.Read", "MoneyManager.Application.Read\MoneyManager.Application.Read.csproj", "{80ADAACD-7CA0-47FC-8731-E08355F030A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Application.Read.Tests", "MoneyManager.Application.Read.Tests\MoneyManager.Application.Read.Tests.csproj", "{860A8887-F1FF-4714-9F29-8AA789B0D19F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Api", "MoneyManager.Api\MoneyManager.Api.csproj", "{E8CDCD19-EB82-4A99-A8A2-3D9B979020BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Infrastructure.Read", "MoneyManager.Infrastructure.Read\MoneyManager.Infrastructure.Read.csproj", "{50047521-7E44-482E-902B-4245F2A54A4A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{5FC7E41A-3F65-419B-83A5-B645F6D9084F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Read", "Read", "{5CA57638-A9EA-4B65-BCEA-D7FA68775361}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{AB58DA47-8A66-4309-B18D-A06FDF4F95E9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Read", "Read", "{A6970730-B119-44CB-BB74-D24CC6A2B6D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Infrastructure.Read.Tests", "MoneyManager.Infrastructure.Read.Tests\MoneyManager.Infrastructure.Read.Tests.csproj", "{F79E20DF-4DC0-45B8-860F-20957853CF90}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SolutionItems", "_SolutionItems", "{E1C7432F-7C18-4B3D-B449-CCB12FBC368C}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\ci.yml = .github\workflows\ci.yml
+		.gitignore = .gitignore
+		.config\dotnet-tools.json = .config\dotnet-tools.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StrykerMutator", "StrykerMutator", "{7548E457-20DD-4670-B524-AFD9BDE6EA19}"
+	ProjectSection(SolutionItems) = preProject
+		stryker-config.json = stryker-config.json
+		.run\Stryker.run.xml = .run\Stryker.run.xml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{80ADAACD-7CA0-47FC-8731-E08355F030A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80ADAACD-7CA0-47FC-8731-E08355F030A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80ADAACD-7CA0-47FC-8731-E08355F030A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80ADAACD-7CA0-47FC-8731-E08355F030A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{860A8887-F1FF-4714-9F29-8AA789B0D19F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{860A8887-F1FF-4714-9F29-8AA789B0D19F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{860A8887-F1FF-4714-9F29-8AA789B0D19F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{860A8887-F1FF-4714-9F29-8AA789B0D19F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8CDCD19-EB82-4A99-A8A2-3D9B979020BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8CDCD19-EB82-4A99-A8A2-3D9B979020BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8CDCD19-EB82-4A99-A8A2-3D9B979020BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8CDCD19-EB82-4A99-A8A2-3D9B979020BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50047521-7E44-482E-902B-4245F2A54A4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50047521-7E44-482E-902B-4245F2A54A4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50047521-7E44-482E-902B-4245F2A54A4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50047521-7E44-482E-902B-4245F2A54A4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F79E20DF-4DC0-45B8-860F-20957853CF90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F79E20DF-4DC0-45B8-860F-20957853CF90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F79E20DF-4DC0-45B8-860F-20957853CF90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F79E20DF-4DC0-45B8-860F-20957853CF90}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5CA57638-A9EA-4B65-BCEA-D7FA68775361} = {5FC7E41A-3F65-419B-83A5-B645F6D9084F}
+		{80ADAACD-7CA0-47FC-8731-E08355F030A2} = {5CA57638-A9EA-4B65-BCEA-D7FA68775361}
+		{A6970730-B119-44CB-BB74-D24CC6A2B6D1} = {AB58DA47-8A66-4309-B18D-A06FDF4F95E9}
+		{860A8887-F1FF-4714-9F29-8AA789B0D19F} = {5CA57638-A9EA-4B65-BCEA-D7FA68775361}
+		{50047521-7E44-482E-902B-4245F2A54A4A} = {A6970730-B119-44CB-BB74-D24CC6A2B6D1}
+		{F79E20DF-4DC0-45B8-860F-20957853CF90} = {A6970730-B119-44CB-BB74-D24CC6A2B6D1}
+		{7548E457-20DD-4670-B524-AFD9BDE6EA19} = {E1C7432F-7C18-4B3D-B449-CCB12FBC368C}
+	EndGlobalSection
+EndGlobal
