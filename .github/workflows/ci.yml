@@ -50,8 +50,13 @@ jobs:
       - name: Test
         run: dotnet test --no-restore --verbosity minimal
 
-      - name: Mutation testing
-        run: dotnet stryker -p MoneyManager.Application.Read -f stryker-config.json -o
+      - name: Mutation testing Write
+        run: dotnet stryker -p MoneyManager.Application.Write -f ../stryker-config.json
+        working-directory: ./MoneyManager.Application.Write.Tests
+
+      - name: Mutation testing Read
+        run: dotnet stryker -p MoneyManager.Application.Read -f ../stryker-config.json
+        working-directory: ./MoneyManager.Application.Read.Tests
 
       - name: Publish API
         run: dotnet publish MoneyManager.Api/MoneyManager.Api.csproj -c Release -o ${{env.DOTNET_ROOT}}/artifacts/api --nologo
