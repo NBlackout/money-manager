@@ -1,0 +1,1 @@
+﻿global using MoneyManager.Client.Application.Read.Ports;

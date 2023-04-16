@@ -1,0 +1,47 @@
+﻿@page "/accounts"
+@using MoneyManager.Shared
+@using MoneyManager.Client.Application.Read.UseCases.AccountSummaries
+@inject GetAccountSummaries GetAccountSummaries
+
+<PageTitle>Accounts</PageTitle>
+
+<h1>Accounts</h1>
+
+@if (accounts == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Label</th>
+            <th>Balance</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (AccountSummary? account in accounts)
+        {
+            <tr>
+                <td>@account.Id</td>
+                <td>@account.Label</td>
+                <td>@account.Balance</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IReadOnlyCollection<AccountSummary>? accounts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        accounts = await GetAccountSummaries.Execute();
+    }
+
+}

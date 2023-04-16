@@ -1,7 +1,4 @@
-﻿using MoneyManager.Application.Write.Model;
-using MoneyManager.Application.Write.Ports;
-
-namespace MoneyManager.Application.Write;
+﻿namespace MoneyManager.Application.Write.UseCases;
 
 public class ImportTransactions
 {
@@ -16,7 +13,7 @@ public class ImportTransactions
 
     public async Task Handle(Stream stream)
     {
-        var accountDescription = await ofxParser.Process(stream);
-        await accountRepository.Save(new Account(accountDescription.AccountNumber));
+        AccountCharacteristics? accountDescription = await this.ofxParser.Process(stream);
+        await this.accountRepository.Save(new Account(accountDescription.AccountNumber));
     }
 }

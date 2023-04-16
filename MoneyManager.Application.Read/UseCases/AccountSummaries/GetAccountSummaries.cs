@@ -1,6 +1,4 @@
-﻿using MoneyManager.Application.Read.Ports;
-
-namespace MoneyManager.Application.Read.AccountSummaries;
+﻿namespace MoneyManager.Application.Read.UseCases.AccountSummaries;
 
 public class GetAccountSummaries
 {
@@ -9,6 +7,6 @@ public class GetAccountSummaries
     public GetAccountSummaries(IAccountSummariesDataSource dataSource) =>
         this.dataSource = dataSource;
 
-    public async Task<IReadOnlyCollection<AccountSummary>> Handle() =>
+    public async Task<IReadOnlyCollection<AccountSummary>> Execute() =>
         await this.dataSource.Get();
 }

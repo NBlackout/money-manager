@@ -1,7 +1,4 @@
-﻿using MoneyManager.Application.Read.AccountSummaries;
-using MoneyManager.Application.Read.Ports;
-
-namespace MoneyManager.Infrastructure.Read.AccountSummaries;
+﻿namespace MoneyManager.Infrastructure.Read.AccountSummariesDataSource;
 
 public class StubbedAccountSummariesDataSource : IAccountSummariesDataSource
 {
@@ -11,5 +8,5 @@ public class StubbedAccountSummariesDataSource : IAccountSummariesDataSource
         this.data = data;
 
     public Task<IReadOnlyCollection<AccountSummary>> Get() =>
-        Task.FromResult(data);
+        Task.FromResult(this.data);
 }

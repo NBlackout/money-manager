@@ -64,7 +64,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: .net-app
+          name: .artifact-api
           path: ${{env.DOTNET_ROOT}}/artifacts/api
 
   deploy:
@@ -80,7 +80,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: .net-app
+          name: .artifact-api
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp

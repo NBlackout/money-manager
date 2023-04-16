@@ -1,6 +1,4 @@
-﻿using MoneyManager.Application.Read.AccountSummaries;
-
-namespace MoneyManager.Application.Read.Ports;
+﻿namespace MoneyManager.Application.Read.Ports;
 
 public interface IAccountSummariesDataSource
 {

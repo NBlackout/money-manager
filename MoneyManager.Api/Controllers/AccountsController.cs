@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MoneyManager.Application.Read.AccountSummaries;
+using MoneyManager.Application.Read.UseCases.AccountSummaries;
 
 namespace MoneyManager.Api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class AccountsController : ControllerBase
 {
     private readonly GetAccountSummaries getAccountSummaries;
@@ -13,9 +13,8 @@ public class AccountsController : ControllerBase
     {
         this.getAccountSummaries = getAccountSummaries;
     }
+
     [HttpGet]
-    public async Task<IReadOnlyCollection<AccountSummary>> Get()
-    {
-        return await getAccountSummaries.Handle();
-    }
+    public async Task<IReadOnlyCollection<AccountSummary>> Get() =>
+        await this.getAccountSummaries.Execute();
 }

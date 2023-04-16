@@ -7,11 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.5" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\MoneyManager.Application.Read\MoneyManager.Application.Read.csproj" />
+        <ProjectReference Include="..\MoneyManager.Client\MoneyManager.Client.csproj" />
         <ProjectReference Include="..\MoneyManager.Infrastructure.Read\MoneyManager.Infrastructure.Read.csproj" />
     </ItemGroup>
 

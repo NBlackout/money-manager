@@ -1,6 +1,4 @@
-﻿using MoneyManager.Application.Write.Model;
-
-namespace MoneyManager.Application.Write.Ports;
+﻿namespace MoneyManager.Application.Write.Ports;
 
 public interface IOfxParser
 {
