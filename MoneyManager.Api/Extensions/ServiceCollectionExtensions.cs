@@ -1,6 +1,10 @@
 ﻿using MoneyManager.Application.Read.Ports;
 using MoneyManager.Application.Read.UseCases.AccountSummaries;
+using MoneyManager.Application.Write.Ports;
+using MoneyManager.Application.Write.UseCases;
 using MoneyManager.Infrastructure.Read.AccountSummariesDataSource;
+using MoneyManager.Infrastructure.Write.OfxProcessor;
+using MoneyManager.Infrastructure.Write.Repositories;
 
 namespace MoneyManager.Api.Extensions;
 
@@ -21,9 +25,18 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    public static IServiceCollection AddWriteDependencies(this IServiceCollection services)
+    {
+        return services
+            .AddScoped<ImportTransactions>()
+            .AddSingleton<IAccountRepository, InMemoryAccountRepository>()
+            .AddScoped<IOfxProcessor, OfxProcessor>();
+    }
+
     public static IServiceCollection AddReadDependencies(this IServiceCollection services)
     {
-        AccountSummary[] accountSummaries = {
+        AccountSummary[] accountSummaries =
+        {
             new(Guid.Parse("1A87A411-BBEB-4FB0-83E7-539CF5EFBE6C"), "Compte joint", 12345.67m),
             new(Guid.Parse("603F21F4-CE85-42AB-9E7E-87C9CFFE0F6D"), "Livret", 89.00m),
             new(Guid.Parse("2981760C-A17B-4ECF-B828-AB89CCD1B11A"), "Epargne", 1000.00m)

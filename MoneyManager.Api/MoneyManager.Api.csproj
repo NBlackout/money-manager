@@ -1,11 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-    <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
-
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.5" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
@@ -13,8 +7,10 @@
 
     <ItemGroup>
         <ProjectReference Include="..\MoneyManager.Application.Read\MoneyManager.Application.Read.csproj" />
+        <ProjectReference Include="..\MoneyManager.Application.Write\MoneyManager.Application.Write.csproj" />
         <ProjectReference Include="..\MoneyManager.Client\MoneyManager.Client.csproj" />
         <ProjectReference Include="..\MoneyManager.Infrastructure.Read\MoneyManager.Infrastructure.Read.csproj" />
+        <ProjectReference Include="..\MoneyManager.Infrastructure.Write\MoneyManager.Infrastructure.Write.csproj" />
     </ItemGroup>
 
 </Project>

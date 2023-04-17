@@ -3,17 +3,24 @@
 public class ImportTransactions
 {
     private readonly IAccountRepository accountRepository;
-    private readonly IOfxParser ofxParser;
+    private readonly IOfxProcessor ofxProcessor;
 
-    public ImportTransactions(IAccountRepository accountRepository, IOfxParser ofxParser)
+    public ImportTransactions(IAccountRepository accountRepository, IOfxProcessor ofxProcessor)
     {
         this.accountRepository = accountRepository;
-        this.ofxParser = ofxParser;
+        this.ofxProcessor = ofxProcessor;
     }
 
-    public async Task Handle(Stream stream)
+    public async Task Execute(Stream stream)
     {
-        AccountCharacteristics? accountDescription = await this.ofxParser.Process(stream);
-        await this.accountRepository.Save(new Account(accountDescription.AccountNumber));
+        AccountIdentification accountIdentification = await this.ofxProcessor.Parse(stream);
+
+        bool alreadyExists = await this.accountRepository.ExistsByNumber(accountIdentification.Number);
+        if (alreadyExists)
+            return;
+
+        Guid id = await this.accountRepository.NextIdentity();
+        Account account = accountIdentification.Track(id);
+        await this.accountRepository.Save(account);
     }
 }

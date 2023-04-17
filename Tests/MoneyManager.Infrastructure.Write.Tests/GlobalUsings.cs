@@ -1,0 +1,1 @@
+global using MoneyManager.Application.Write.Ports;

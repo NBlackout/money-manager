@@ -8,6 +8,7 @@ public static class WebAssemblyHostBuilderExtensions
     {
         builder.Services
             .AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress + "api/") })
+            .AddWriteDependencies()
             .AddReadDependencies();
 
         return builder;

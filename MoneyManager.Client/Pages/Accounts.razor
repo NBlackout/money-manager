@@ -1,11 +1,15 @@
 ﻿@page "/accounts"
 @using MoneyManager.Shared
-@using MoneyManager.Client.Application.Read.UseCases.AccountSummaries
-@inject GetAccountSummaries GetAccountSummaries
 
 <PageTitle>Accounts</PageTitle>
 
 <h1>Accounts</h1>
+
+<InputFile OnChange="UploadFile"></InputFile>
+@if (uploadResult != null)
+{
+    <div>@uploadResult</div>
+}
 
 @if (accounts == null)
 {
@@ -34,14 +38,4 @@ else
         }
         </tbody>
     </table>
-}
-
-@code {
-    private IReadOnlyCollection<AccountSummary>? accounts;
-
-    protected override async Task OnInitializedAsync()
-    {
-        accounts = await GetAccountSummaries.Execute();
-    }
-
 }

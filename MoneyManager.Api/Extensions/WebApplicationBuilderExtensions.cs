@@ -7,6 +7,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services
             .AddSwaggerDependencies()
             .AddBlazorDependencies()
+            .AddWriteDependencies()
             .AddReadDependencies();
     }
 }

@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Application.Read", "MoneyManager.Application.Read\MoneyManager.Application.Read.csproj", "{80ADAACD-7CA0-47FC-8731-E08355F030A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Application.Read.Tests", "MoneyManager.Application.Read.Tests\MoneyManager.Application.Read.Tests.csproj", "{860A8887-F1FF-4714-9F29-8AA789B0D19F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Application.Read.Tests", "Tests\MoneyManager.Application.Read.Tests\MoneyManager.Application.Read.Tests.csproj", "{860A8887-F1FF-4714-9F29-8AA789B0D19F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Api", "MoneyManager.Api\MoneyManager.Api.csproj", "{E8CDCD19-EB82-4A99-A8A2-3D9B979020BB}"
 EndProject
@@ -16,13 +16,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Read", "Read", "{A6970730-B119-44CB-BB74-D24CC6A2B6D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Infrastructure.Read.Tests", "MoneyManager.Infrastructure.Read.Tests\MoneyManager.Infrastructure.Read.Tests.csproj", "{F79E20DF-4DC0-45B8-860F-20957853CF90}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Infrastructure.Read.Tests", "Tests\MoneyManager.Infrastructure.Read.Tests\MoneyManager.Infrastructure.Read.Tests.csproj", "{F79E20DF-4DC0-45B8-860F-20957853CF90}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SolutionItems", "_SolutionItems", "{E1C7432F-7C18-4B3D-B449-CCB12FBC368C}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\ci.yml = .github\workflows\ci.yml
 		.gitignore = .gitignore
 		.config\dotnet-tools.json = .config\dotnet-tools.json
+		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StrykerMutator", "StrykerMutator", "{7548E457-20DD-4670-B524-AFD9BDE6EA19}"
@@ -33,13 +34,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StrykerMutator", "StrykerMu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Write", "Write", "{6B5ABA93-559F-49AA-A55F-BC4E381207DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Application.Write.Tests", "MoneyManager.Application.Write.Tests\MoneyManager.Application.Write.Tests.csproj", "{F89DFB6F-2AE3-4B3E-95B5-2885CC0426DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Application.Write.Tests", "Tests\MoneyManager.Application.Write.Tests\MoneyManager.Application.Write.Tests.csproj", "{F89DFB6F-2AE3-4B3E-95B5-2885CC0426DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Application.Write", "MoneyManager.Application.Write\MoneyManager.Application.Write.csproj", "{81FFC1FA-E3B3-4F21-8290-E36740F5B81C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Client", "MoneyManager.Client\MoneyManager.Client.csproj", "{3E085F02-2504-49B7-870F-5DE651A22430}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Client.Application.Read.Tests", "MoneyManager.Client.Application.Read.Tests\MoneyManager.Client.Application.Read.Tests.csproj", "{DE8883B1-B18F-4F5D-A5EF-A8BF650B1410}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Client.Application.Read.Tests", "Tests\MoneyManager.Client.Application.Read.Tests\MoneyManager.Client.Application.Read.Tests.csproj", "{DE8883B1-B18F-4F5D-A5EF-A8BF650B1410}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{14FEE47E-568E-4661-B0BE-4EAA60A5BDBB}"
 EndProject
@@ -59,7 +60,33 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Client.Applica
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Shared", "MoneyManager.Shared\MoneyManager.Shared.csproj", "{3C48B208-FEE8-4534-A209-C23DB412F3C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Client.Infrastructure.Read.Tests", "MoneyManager.Client.Infrastructure.Read.Tests\MoneyManager.Client.Infrastructure.Read.Tests.csproj", "{CB125EF2-8F6B-46C0-8EA4-607F0DD3EE0A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Client.Infrastructure.Read.Tests", "Tests\MoneyManager.Client.Infrastructure.Read.Tests\MoneyManager.Client.Infrastructure.Read.Tests.csproj", "{CB125EF2-8F6B-46C0-8EA4-607F0DD3EE0A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Write", "Write", "{0DDD28A0-24A1-4957-BED4-355E2BEBE1F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Infrastructure.Write", "MoneyManager.Infrastructure.Write\MoneyManager.Infrastructure.Write.csproj", "{8A721999-BDE5-4651-9AA5-B20199DB113F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Infrastructure.Write.Tests", "Tests\MoneyManager.Infrastructure.Write.Tests\MoneyManager.Infrastructure.Write.Tests.csproj", "{37C14979-6E1C-4A1C-A044-587EF81FCB54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Shared.TestTooling", "MoneyManager.Shared.TestTooling\MoneyManager.Shared.TestTooling.csproj", "{9BE7A071-0A89-410F-A94A-EFE4335B6FDF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Write", "Write", "{7E2BAA7E-A735-436F-A628-E86184D13C44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Client.Application.Write", "MoneyManager.Client.Application.Write\MoneyManager.Client.Application.Write.csproj", "{367BD5FE-F27F-4F0A-9E12-FE64F95943D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Client.Application.Write.Tests", "Tests\MoneyManager.Client.Application.Write.Tests\MoneyManager.Client.Application.Write.Tests.csproj", "{25F8A5B3-6429-4251-82AD-E01CBC900B47}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Write", "Write", "{F7F3D7C1-87EE-4587-986A-5EA43C681892}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Client.Infrastructure.Write", "MoneyManager.Client.Infrastructure.Write\MoneyManager.Client.Infrastructure.Write.csproj", "{EFF8941E-42EF-4474-85BF-C91C018FE509}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{EBB5BFCB-F69C-4BDF-B1ED-928F7612C337}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2C16D545-E0F6-446B-8693-DA84D25DE2F0}"
+	ProjectSection(SolutionItems) = preProject
+		Tests\Directory.Build.props = Tests\Directory.Build.props
+		Tests\AssemblyInfo.cs = Tests\AssemblyInfo.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -119,6 +146,30 @@ Global
 		{CB125EF2-8F6B-46C0-8EA4-607F0DD3EE0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB125EF2-8F6B-46C0-8EA4-607F0DD3EE0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB125EF2-8F6B-46C0-8EA4-607F0DD3EE0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A721999-BDE5-4651-9AA5-B20199DB113F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A721999-BDE5-4651-9AA5-B20199DB113F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A721999-BDE5-4651-9AA5-B20199DB113F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A721999-BDE5-4651-9AA5-B20199DB113F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37C14979-6E1C-4A1C-A044-587EF81FCB54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37C14979-6E1C-4A1C-A044-587EF81FCB54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37C14979-6E1C-4A1C-A044-587EF81FCB54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37C14979-6E1C-4A1C-A044-587EF81FCB54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BE7A071-0A89-410F-A94A-EFE4335B6FDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BE7A071-0A89-410F-A94A-EFE4335B6FDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BE7A071-0A89-410F-A94A-EFE4335B6FDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BE7A071-0A89-410F-A94A-EFE4335B6FDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{367BD5FE-F27F-4F0A-9E12-FE64F95943D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{367BD5FE-F27F-4F0A-9E12-FE64F95943D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{367BD5FE-F27F-4F0A-9E12-FE64F95943D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{367BD5FE-F27F-4F0A-9E12-FE64F95943D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25F8A5B3-6429-4251-82AD-E01CBC900B47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25F8A5B3-6429-4251-82AD-E01CBC900B47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25F8A5B3-6429-4251-82AD-E01CBC900B47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25F8A5B3-6429-4251-82AD-E01CBC900B47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFF8941E-42EF-4474-85BF-C91C018FE509}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFF8941E-42EF-4474-85BF-C91C018FE509}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFF8941E-42EF-4474-85BF-C91C018FE509}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFF8941E-42EF-4474-85BF-C91C018FE509}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5CA57638-A9EA-4B65-BCEA-D7FA68775361} = {5FC7E41A-3F65-419B-83A5-B645F6D9084F}
@@ -127,7 +178,6 @@ Global
 		{860A8887-F1FF-4714-9F29-8AA789B0D19F} = {5CA57638-A9EA-4B65-BCEA-D7FA68775361}
 		{50047521-7E44-482E-902B-4245F2A54A4A} = {A6970730-B119-44CB-BB74-D24CC6A2B6D1}
 		{F79E20DF-4DC0-45B8-860F-20957853CF90} = {A6970730-B119-44CB-BB74-D24CC6A2B6D1}
-		{7548E457-20DD-4670-B524-AFD9BDE6EA19} = {E1C7432F-7C18-4B3D-B449-CCB12FBC368C}
 		{6B5ABA93-559F-49AA-A55F-BC4E381207DD} = {5FC7E41A-3F65-419B-83A5-B645F6D9084F}
 		{F89DFB6F-2AE3-4B3E-95B5-2885CC0426DD} = {6B5ABA93-559F-49AA-A55F-BC4E381207DD}
 		{81FFC1FA-E3B3-4F21-8290-E36740F5B81C} = {6B5ABA93-559F-49AA-A55F-BC4E381207DD}
@@ -143,5 +193,17 @@ Global
 		{EE7EB747-1014-47D6-A2A3-CBCD5D13E275} = {7B882C56-DDFF-4CDF-A395-9FE62FF61492}
 		{88634489-F899-4304-ACFD-08209D8EC04F} = {57E8D2BA-0902-45DE-84A5-ADBAEE02FF81}
 		{CB125EF2-8F6B-46C0-8EA4-607F0DD3EE0A} = {7B882C56-DDFF-4CDF-A395-9FE62FF61492}
+		{0DDD28A0-24A1-4957-BED4-355E2BEBE1F9} = {AB58DA47-8A66-4309-B18D-A06FDF4F95E9}
+		{8A721999-BDE5-4651-9AA5-B20199DB113F} = {0DDD28A0-24A1-4957-BED4-355E2BEBE1F9}
+		{37C14979-6E1C-4A1C-A044-587EF81FCB54} = {0DDD28A0-24A1-4957-BED4-355E2BEBE1F9}
+		{7E2BAA7E-A735-436F-A628-E86184D13C44} = {AA881F9D-BB98-4D84-A89B-F3654B1B3975}
+		{367BD5FE-F27F-4F0A-9E12-FE64F95943D0} = {7E2BAA7E-A735-436F-A628-E86184D13C44}
+		{25F8A5B3-6429-4251-82AD-E01CBC900B47} = {7E2BAA7E-A735-436F-A628-E86184D13C44}
+		{F7F3D7C1-87EE-4587-986A-5EA43C681892} = {BD7FAC7A-0394-4554-A7CF-2DB92EDDD150}
+		{EFF8941E-42EF-4474-85BF-C91C018FE509} = {F7F3D7C1-87EE-4587-986A-5EA43C681892}
+		{3C48B208-FEE8-4534-A209-C23DB412F3C1} = {EBB5BFCB-F69C-4BDF-B1ED-928F7612C337}
+		{9BE7A071-0A89-410F-A94A-EFE4335B6FDF} = {EBB5BFCB-F69C-4BDF-B1ED-928F7612C337}
+		{2C16D545-E0F6-446B-8693-DA84D25DE2F0} = {E1C7432F-7C18-4B3D-B449-CCB12FBC368C}
+		{7548E457-20DD-4670-B524-AFD9BDE6EA19} = {2C16D545-E0F6-446B-8693-DA84D25DE2F0}
 	EndGlobalSection
 EndGlobal

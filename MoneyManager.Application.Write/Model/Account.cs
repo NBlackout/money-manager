@@ -2,10 +2,12 @@
 
 public class Account
 {
+    public Guid Id { get; }
     public string Number { get; }
 
-    public Account(string number)
+    public Account(Guid id, string number)
     {
+        this.Id = id;
         this.Number = number;
     }
 }

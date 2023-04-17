@@ -1,0 +1,1 @@
+[assembly: TestFramework("MoneyManager.Shared.TestTooling.XunitCustomTestFramework", "MoneyManager.Shared")]
