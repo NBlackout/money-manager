@@ -13,14 +13,13 @@ public class ImportTransactions
 
     public async Task Execute(Stream stream)
     {
-        AccountIdentification accountIdentification = await this.ofxProcessor.Parse(stream);
+        AccountId accountId = await this.ofxProcessor.Parse(stream);
 
-        bool alreadyExists = await this.accountRepository.ExistsByNumber(accountIdentification.Number);
+        bool alreadyExists = await this.accountRepository.Exists(accountId);
         if (alreadyExists)
             return;
 
-        Guid id = await this.accountRepository.NextIdentity();
-        Account account = accountIdentification.Track(id);
+        Account account = accountId.Track();
         await this.accountRepository.Save(account);
     }
 }

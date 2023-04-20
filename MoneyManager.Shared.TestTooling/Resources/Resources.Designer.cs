@@ -38,7 +38,7 @@ namespace MoneyManager.Shared.TestTooling {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MoneyManager.Shared.TestTooling.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MoneyManager.Shared.TestTooling.Resources.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -65,6 +65,16 @@ namespace MoneyManager.Shared.TestTooling {
         public static byte[] MissingAccountNumberOfxSample {
             get {
                 object obj = ResourceManager.GetObject("MissingAccountNumberOfxSample", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] MissingBankIdentifierOfxSample {
+            get {
+                object obj = ResourceManager.GetObject("MissingBankIdentifierOfxSample", resourceCulture);
                 return ((byte[])(obj));
             }
         }

@@ -24,12 +24,20 @@ public sealed class OfxProcessorTests : IDisposable
     public async Task Should_extract_account_identification()
     {
         using MemoryStream ofxSample = new(Resources.OfxSample);
-        AccountIdentification actual = await this.sut.Parse(ofxSample);
-        actual.Should().Be(new AccountIdentification("00012345000"));
+        AccountId actual = await this.sut.Parse(ofxSample);
+        actual.Should().Be(new AccountId("1234567890", "00012345000"));
     }
 
     [Fact]
-    public async Task Should_tell_when_account_number_cannot_be_found()
+    public async Task Should_tell_when_bank_identifier_is_missing()
+    {
+        MemoryStream invalidOfxContent = new(Resources.MissingBankIdentifierOfxSample);
+        await this.sut.Invoking(s => s.Parse(invalidOfxContent)).Should().ThrowAsync<CannotProcessOfxContent>();
+        await invalidOfxContent.DisposeAsync();
+    }
+
+    [Fact]
+    public async Task Should_tell_when_account_number_is_missing()
     {
         MemoryStream invalidOfxContent = new(Resources.MissingAccountNumberOfxSample);
         await this.sut.Invoking(s => s.Parse(invalidOfxContent)).Should().ThrowAsync<CannotProcessOfxContent>();

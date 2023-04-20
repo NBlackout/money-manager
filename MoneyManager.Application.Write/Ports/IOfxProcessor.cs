@@ -2,5 +2,5 @@
 
 public interface IOfxProcessor
 {
-    Task<AccountIdentification> Parse(Stream stream);
+    Task<AccountId> Parse(Stream stream);
 }

@@ -2,8 +2,7 @@
 
 public interface IAccountRepository
 {
-    Task<Guid> NextIdentity();
-    Task<Account> GetById(Guid id);
-    Task<bool> ExistsByNumber(string number);
+    Task<Account> GetById(AccountId id);
+    Task<bool> Exists(AccountId id);
     Task Save(Account account);
 }
