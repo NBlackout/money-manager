@@ -1,4 +1,4 @@
-name: Build and deploy ASP.Net Core app to an Azure Web App
+name: Build and deploy to App Service
 
 env:
   AZURE_WEBAPP_NAME: nblackout-money-manager
@@ -52,11 +52,11 @@ jobs:
 
       - name: Mutation testing Write
         run: dotnet stryker -p MoneyManager.Application.Write -f ../stryker-config.json
-        working-directory: ./MoneyManager.Application.Write.Tests
+        working-directory: Tests/MoneyManager.Application.Write.Tests
 
       - name: Mutation testing Read
         run: dotnet stryker -p MoneyManager.Application.Read -f ../stryker-config.json
-        working-directory: ./MoneyManager.Application.Read.Tests
+        working-directory: Tests/MoneyManager.Application.Read.Tests
 
       - name: Publish API
         run: dotnet publish MoneyManager.Api/MoneyManager.Api.csproj -c Release -o ${{env.DOTNET_ROOT}}/artifacts/api --nologo
@@ -73,7 +73,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'Development'
+      name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:

@@ -1,4 +1,4 @@
-﻿namespace MoneyManager.Infrastructure.Read.AccountSummariesDataSource;
+﻿namespace MoneyManager.Infrastructure.Read.DataSources.AccountSummaries;
 
 public class StubbedAccountSummariesDataSource : IAccountSummariesDataSource
 {

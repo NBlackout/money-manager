@@ -4,7 +4,6 @@
       <ProjectReference Include="..\..\MoneyManager.Api\MoneyManager.Api.csproj" />
       <ProjectReference Include="..\..\MoneyManager.Application.Write\MoneyManager.Application.Write.csproj" />
       <ProjectReference Include="..\..\MoneyManager.Infrastructure.Write\MoneyManager.Infrastructure.Write.csproj" />
-      <ProjectReference Include="..\..\MoneyManager.Shared.TestTooling\MoneyManager.Shared.TestTooling.csproj" />
     </ItemGroup>
 
 </Project>

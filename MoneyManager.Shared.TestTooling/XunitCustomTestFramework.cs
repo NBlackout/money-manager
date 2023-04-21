@@ -17,7 +17,7 @@ public class XunitCustomTestFramework : XunitTestFramework
 
     private class NeatObjectFormatter : IValueFormatter
     {
-        public bool CanHandle(object value) => true;
+        public bool CanHandle(object value) => value is not Exception;
 
         public void Format(object value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
         {

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MoneyManager.Shared.TestTooling {
+namespace MoneyManager.Shared.TestTooling.Resources {
     using System;
     
     
@@ -65,6 +65,16 @@ namespace MoneyManager.Shared.TestTooling {
         public static byte[] MissingAccountNumberOfxSample {
             get {
                 object obj = ResourceManager.GetObject("MissingAccountNumberOfxSample", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] MissingBalanceOfxSample {
+            get {
+                object obj = ResourceManager.GetObject("MissingBalanceOfxSample", resourceCulture);
                 return ((byte[])(obj));
             }
         }

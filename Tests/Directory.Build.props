@@ -24,9 +24,15 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\MoneyManager.Shared.TestTooling\MoneyManager.Shared.TestTooling.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
         <Using Include="FluentAssertions"/>
+        <Using Include="MoneyManager.Shared.TestTooling"/>
         <Using Include="Xunit"/>
     </ItemGroup>
+
     <ItemGroup>
         <Compile Include="..\AssemblyInfo.cs" Link="Properties\AssemblyInfo.cs"/>
     </ItemGroup>

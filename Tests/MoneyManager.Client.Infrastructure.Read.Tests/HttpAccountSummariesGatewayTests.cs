@@ -12,7 +12,7 @@ public sealed class HttpAccountSummariesGatewayTests : IDisposable
         this.host = Host.CreateDefaultBuilder()
             .ConfigureServices(services => services.AddReadDependencies().AddScoped(CreateApi))
             .Build();
-        this.sut = (HttpAccountSummariesGateway)this.host.Services.GetRequiredService<IAccountSummariesGateway>();
+        this.sut = this.host.GetRequiredService<IAccountSummariesGateway, HttpAccountSummariesGateway>();
     }
 
     [Fact]

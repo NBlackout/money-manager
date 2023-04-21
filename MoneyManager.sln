@@ -28,7 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SolutionItems", "_Solution
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StrykerMutator", "StrykerMutator", "{7548E457-20DD-4670-B524-AFD9BDE6EA19}"
 	ProjectSection(SolutionItems) = preProject
-		stryker-config.json = stryker-config.json
+		Tests\stryker-config.json = Tests\stryker-config.json
 		.run\Stryker.run.xml = .run\Stryker.run.xml
 	EndProjectSection
 EndProject
