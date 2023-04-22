@@ -1,4 +1,4 @@
-﻿using MoneyManager.Client.Application.Write.UseCases.BankStatement;
+﻿using MoneyManager.Client.Application.Write.UseCases;
 using MoneyManager.Client.Infrastructure.Write.BankStatementGateway;
 
 namespace MoneyManager.Client.Application.Write.Tests;
@@ -24,6 +24,6 @@ public class UploadBankStatementTests
         await this.sut.Execute(fileName, contentType, stream);
 
         List<(string, string, Stream)> expectedCalls = new() { (fileName, contentType, stream) };
-        this.gateway.Calls.Should().BeEquivalentTo(expectedCalls);
+        this.gateway.Calls.Should().Equal(expectedCalls);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MoneyManager.Client.Application.Read.UseCases.AccountSummaries;
-using MoneyManager.Client.Application.Write.UseCases.BankStatement;
+using MoneyManager.Client.Application.Write.UseCases;
 
 namespace MoneyManager.Client.Pages;
 

@@ -3,6 +3,7 @@
 public interface IAccountRepository
 {
     Task<Guid> NextIdentity();
-    Task<Account?> GetByExternalIdOrDefault(ExternalId id);
+    Task<Account> GetById(Guid id);
+    Task<Account?> GetByExternalIdOrDefault(ExternalId externalId);
     Task Save(Account account);
 }

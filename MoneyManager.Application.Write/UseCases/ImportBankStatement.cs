@@ -13,23 +13,23 @@ public class ImportBankStatement
 
     public async Task Execute(Stream stream)
     {
-        AccountStatement accountStatement = await this.ofxParser.ExtractAccountId(stream);
+        AccountStatement statement = await this.ofxParser.ExtractAccountStatement(stream);
 
-        Account? account = await this.GetAccountOrDefault(accountStatement);
+        Account? account = await this.GetTrackedAccountDescribedBy(statement);
         if (account == null)
         {
             Guid id = await this.accountRepository.NextIdentity();
-            account = accountStatement.Track(id);
+            account = statement.TrackDescribedAccount(id);
         }
         else
-            account.Synchronize(accountStatement.Balance);
+            account.Synchronize(statement.Balance);
 
         await this.accountRepository.Save(account);
     }
 
-    private async Task<Account?> GetAccountOrDefault(AccountStatement accountStatement)
+    private async Task<Account?> GetTrackedAccountDescribedBy(AccountStatement statement)
     {
-        ExternalId externalId = new(accountStatement.BankIdentifier, accountStatement.AccountNumber);
+        ExternalId externalId = new(statement.BankIdentifier, statement.AccountNumber);
 
         return await this.accountRepository.GetByExternalIdOrDefault(externalId);
     }

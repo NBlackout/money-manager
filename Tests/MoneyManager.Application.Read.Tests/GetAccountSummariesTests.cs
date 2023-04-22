@@ -1,4 +1,4 @@
-﻿using MoneyManager.Application.Read.UseCases.AccountSummaries;
+﻿using MoneyManager.Application.Read.UseCases;
 using MoneyManager.Infrastructure.Read.DataSources.AccountSummaries;
 
 namespace MoneyManager.Application.Read.Tests;
@@ -10,8 +10,8 @@ public class GetAccountSummariesTests
     {
         AccountSummary[] expected =
         {
-            new(Guid.NewGuid(), "A label", 12.34m),
-            new(Guid.NewGuid(), "Another label", 56.78m)
+            new(Guid.NewGuid(), "A label", 12.34m, true),
+            new(Guid.NewGuid(), "Another label", 56.78m, false)
         };
         GetAccountSummaries sut = new(new StubbedAccountSummariesDataSource(expected));
 
