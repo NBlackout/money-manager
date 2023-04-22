@@ -20,5 +20,5 @@ public class RepositoryAccountSummariesDataSource : IAccountSummariesDataSource
     }
 
     private static AccountSummary ToSummary(AccountSnapshot account) =>
-        new(account.Id, account.Number, account.Balance);
+        new(account.Id, account.Number, account.Balance, account.Tracked);
 }

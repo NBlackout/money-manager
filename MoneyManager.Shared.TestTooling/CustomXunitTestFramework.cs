@@ -5,21 +5,21 @@ using Xunit.Sdk;
 
 namespace MoneyManager.Shared.TestTooling;
 
-public class XunitCustomTestFramework : XunitTestFramework
+public class CustomXunitTestFramework : XunitTestFramework
 {
-    public XunitCustomTestFramework(IMessageSink messageSink)
-        : base(messageSink)
+    public CustomXunitTestFramework(IMessageSink messageSink) : base(messageSink)
     {
         AssertionOptions.FormattingOptions.UseLineBreaks = true;
         AssertionOptions.EquivalencyPlan.Add<MemoryStreamEquivalencyStep>();
-        Formatter.AddFormatter(new NeatObjectFormatter());
+        // Formatter.AddFormatter(new NeatObjectFormatter());
     }
 
     private class NeatObjectFormatter : IValueFormatter
     {
-        public bool CanHandle(object value) => value is not Exception;
+        public bool CanHandle(object value) => true;
 
-        public void Format(object value, FormattedObjectGraph formattedGraph, FormattingContext context, FormatChild formatChild)
+        public void Format(object value, FormattedObjectGraph formattedGraph, FormattingContext context,
+            FormatChild formatChild)
         {
             formattedGraph.AddLine(string.Empty);
             using IDisposable _ = formattedGraph.WithIndentation();

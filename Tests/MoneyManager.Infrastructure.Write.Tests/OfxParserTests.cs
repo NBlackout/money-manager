@@ -51,7 +51,7 @@ public sealed class OfxParserTests : IDisposable
 
     private async Task Verify_OfxParser(Stream stream, AccountStatement expected)
     {
-        AccountStatement actual = await this.sut.ExtractAccountId(stream);
+        AccountStatement actual = await this.sut.ExtractAccountStatement(stream);
         actual.Should().Be(expected);
     }
 }

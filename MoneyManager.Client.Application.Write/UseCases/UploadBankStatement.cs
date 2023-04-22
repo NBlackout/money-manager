@@ -1,6 +1,6 @@
 ﻿using MoneyManager.Client.Application.Write.Ports;
 
-namespace MoneyManager.Client.Application.Write.UseCases.BankStatement;
+namespace MoneyManager.Client.Application.Write.UseCases;
 
 public class UploadBankStatement
 {

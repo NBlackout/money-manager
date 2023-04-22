@@ -4,7 +4,7 @@ namespace MoneyManager.Infrastructure.Write.OfxProcessing;
 
 public class OfxParser : IOfxParser
 {
-    public Task<AccountStatement> ExtractAccountId(Stream stream)
+    public Task<AccountStatement> ExtractAccountStatement(Stream stream)
     {
         XmlSerializer serializer = new(typeof(Ofx));
         Ofx root = (Ofx)serializer.Deserialize(stream)!;

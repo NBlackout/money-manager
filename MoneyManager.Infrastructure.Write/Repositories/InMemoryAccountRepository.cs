@@ -14,8 +14,8 @@ public class InMemoryAccountRepository : IAccountRepository
     public Task<Account> GetById(Guid id) =>
         Task.FromResult(Account.From(this.data[id]));
 
-    public Task<Account?> GetByExternalIdOrDefault(ExternalId id) =>
-        Task.FromResult(this.dataByExternalId.ContainsKey(id) ? Account.From(this.dataByExternalId[id]) : null);
+    public Task<Account?> GetByExternalIdOrDefault(ExternalId externalId) =>
+        Task.FromResult(this.dataByExternalId.ContainsKey(externalId) ? Account.From(this.dataByExternalId[externalId]) : null);
 
     public Task Save(Account account)
     {
@@ -24,9 +24,15 @@ public class InMemoryAccountRepository : IAccountRepository
         return Task.CompletedTask;
     }
 
-    public void FeedByExternalId(ExternalId externalId, Account account) =>
-        this.dataByExternalId.Add(externalId, account.Snapshot);
+    public void FeedByExternalId(ExternalId externalId, AccountSnapshot account) =>
+        this.dataByExternalId.Add(externalId, account);
 
-    public void Feed(params Account[] accounts) =>
-        accounts.ToList().ForEach(account => this.data.Add(account.Id, account.Snapshot));
+    public void Feed(params AccountSnapshot[] accounts) =>
+        accounts.ToList().ForEach(account => this.data.Add(account.Id, account));
+
+    public void Clear()
+    {
+        this.data.Clear();
+        this.dataByExternalId.Clear();
+    }
 }

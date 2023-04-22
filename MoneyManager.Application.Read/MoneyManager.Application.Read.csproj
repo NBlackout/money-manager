@@ -4,4 +4,8 @@
       <ProjectReference Include="..\MoneyManager.Shared\MoneyManager.Shared.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="UseCases\GetAccountDetails.cs" />
+    </ItemGroup>
+
 </Project>

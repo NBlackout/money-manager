@@ -1,1 +1,1 @@
-[assembly: TestFramework("MoneyManager.Shared.TestTooling.XunitCustomTestFramework", "MoneyManager.Shared")]
+[assembly: TestFramework("MoneyManager.Shared.TestTooling.CustomXunitTestFramework", "MoneyManager.Shared.TestTooling")]

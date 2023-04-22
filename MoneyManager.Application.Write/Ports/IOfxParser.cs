@@ -2,5 +2,5 @@
 
 public interface IOfxParser
 {
-    Task<AccountStatement> ExtractAccountId(Stream stream);
+    Task<AccountStatement> ExtractAccountStatement(Stream stream);
 }

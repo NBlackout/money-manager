@@ -88,6 +88,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2C16D545
 		Tests\AssemblyInfo.cs = Tests\AssemblyInfo.cs
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Client.Infrastructure.Tests", "Tests\MoneyManager.Client.Infrastructure.Tests\MoneyManager.Client.Infrastructure.Tests.csproj", "{463F2404-4481-4644-900C-D3B79FEC6D0E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -170,6 +172,10 @@ Global
 		{EFF8941E-42EF-4474-85BF-C91C018FE509}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFF8941E-42EF-4474-85BF-C91C018FE509}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFF8941E-42EF-4474-85BF-C91C018FE509}.Release|Any CPU.Build.0 = Release|Any CPU
+		{463F2404-4481-4644-900C-D3B79FEC6D0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{463F2404-4481-4644-900C-D3B79FEC6D0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{463F2404-4481-4644-900C-D3B79FEC6D0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{463F2404-4481-4644-900C-D3B79FEC6D0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5CA57638-A9EA-4B65-BCEA-D7FA68775361} = {5FC7E41A-3F65-419B-83A5-B645F6D9084F}
@@ -205,5 +211,6 @@ Global
 		{9BE7A071-0A89-410F-A94A-EFE4335B6FDF} = {EBB5BFCB-F69C-4BDF-B1ED-928F7612C337}
 		{2C16D545-E0F6-446B-8693-DA84D25DE2F0} = {E1C7432F-7C18-4B3D-B449-CCB12FBC368C}
 		{7548E457-20DD-4670-B524-AFD9BDE6EA19} = {2C16D545-E0F6-446B-8693-DA84D25DE2F0}
+		{463F2404-4481-4644-900C-D3B79FEC6D0E} = {F7F3D7C1-87EE-4587-986A-5EA43C681892}
 	EndGlobalSection
 EndGlobal
