@@ -1,12 +1,12 @@
 ﻿using MoneyManager.Client.Application.Write.Ports;
 
-namespace MoneyManager.Client.Application.Write.UseCases.OfxFile;
+namespace MoneyManager.Client.Application.Write.UseCases.BankStatement;
 
-public class UploadOfxFile
+public class UploadBankStatement
 {
-    private readonly IOfxFileGateway gateway;
+    private readonly IBankStatementGateway gateway;
 
-    public UploadOfxFile(IOfxFileGateway gateway)
+    public UploadBankStatement(IBankStatementGateway gateway)
     {
         this.gateway = gateway;
     }

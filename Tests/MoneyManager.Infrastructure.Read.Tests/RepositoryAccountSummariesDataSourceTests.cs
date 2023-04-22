@@ -27,14 +27,19 @@ public sealed class RepositoryAccountSummariesDataSourceTests : IDisposable
     [Fact]
     public async Task Should_retrieve_account_summaries()
     {
-        Account anAccount = new(Guid.NewGuid(), new ExternalId("Big bank", "Number"), 12.34m);
-        Account anotherAccount = new(Guid.NewGuid(), new ExternalId("National bank", "Unique number"), 56.78m);
+        const string anAccountNumber = "Number";
+        const decimal aBalance = 12.34m;
+        Account anAccount = new(Guid.NewGuid(), "Big bank", anAccountNumber, aBalance);
+
+        const string anotherAccountNumber = "Unique number";
+        const decimal anotherBalance = 56.78m;
+        Account anotherAccount = new(Guid.NewGuid(), "National bank", anotherAccountNumber, anotherBalance);
         this.repository.Feed(anAccount, anotherAccount);
 
-        IReadOnlyCollection<AccountSummary> actual = await sut.Get();
+        IReadOnlyCollection<AccountSummary> actual = await this.sut.Get();
         actual.Should().Equal(
-            new AccountSummary(anAccount.Id, anAccount.ExternalId.Number, anAccount.Balance),
-            new AccountSummary(anotherAccount.Id, anotherAccount.ExternalId.Number, anotherAccount.Balance)
+            new AccountSummary(anAccount.Id, anAccountNumber, aBalance),
+            new AccountSummary(anotherAccount.Id, anotherAccountNumber, anotherBalance)
         );
     }
 

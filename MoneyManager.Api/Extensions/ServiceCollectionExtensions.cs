@@ -30,7 +30,7 @@ public static class ServiceCollectionExtensions
         InMemoryAccountRepository accountRepository = new();
 
         return services
-            .AddScoped<ImportTransactions>()
+            .AddScoped<ImportBankStatement>()
             .AddSingleton<IAccountRepository>(accountRepository)
             .AddSingleton(accountRepository)
             .AddScoped<IOfxParser, OfxParser>();

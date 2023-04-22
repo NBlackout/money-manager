@@ -1,8 +1,4 @@
-using Microsoft.Extensions.Hosting;
-using MoneyManager.Api.Extensions;
-using MoneyManager.Application.Write.Model;
 using MoneyManager.Infrastructure.Write.OfxProcessing;
-using static MoneyManager.Shared.TestTooling.Resources.Resources;
 
 namespace MoneyManager.Infrastructure.Write.Tests;
 
@@ -22,28 +18,28 @@ public sealed class OfxParserTests : IDisposable
     [Fact]
     public async Task Should_extract_account_statement()
     {
-        AccountStatement expected = new(new ExternalId("1234567890", "00012345000"), 12345.67m);
-        await this.Verify_OfxParser(new MemoryStream(OfxSample), expected);
+        AccountStatement expected = new("1234567890", "00012345000", 12345.67m);
+        await this.Verify_OfxParser(new MemoryStream(Resources.OfxSample), expected);
     }
 
     [Fact]
     public async Task Should_tell_when_bank_identifier_is_missing()
     {
-        await this.Invoking(s => s.Verify_Failure(new MemoryStream(MissingBankIdentifierOfxSample))).Should()
+        await this.Invoking(s => s.Verify_Failure(new MemoryStream(Resources.MissingBankIdentifierOfxSample))).Should()
             .ThrowAsync<CannotProcessOfxContent>();
     }
 
     [Fact]
     public async Task Should_tell_when_account_number_is_missing()
     {
-        await this.Invoking(s => s.Verify_Failure(new MemoryStream(MissingAccountNumberOfxSample))).Should()
+        await this.Invoking(s => s.Verify_Failure(new MemoryStream(Resources.MissingAccountNumberOfxSample))).Should()
             .ThrowAsync<CannotProcessOfxContent>();
     }
 
     [Fact]
     public async Task Should_tell_when_balance_is_missing()
     {
-        await this.Invoking(s => s.Verify_Failure(new MemoryStream(MissingBalanceOfxSample))).Should()
+        await this.Invoking(s => s.Verify_Failure(new MemoryStream(Resources.MissingBalanceOfxSample))).Should()
             .ThrowAsync<CannotProcessOfxContent>();
     }
 
@@ -51,7 +47,7 @@ public sealed class OfxParserTests : IDisposable
         this.host.Dispose();
 
     private async Task Verify_Failure(Stream stream) =>
-        await this.Verify_OfxParser(stream, new AccountStatement(new ExternalId("Bank", "Account"), 42.42m));
+        await this.Verify_OfxParser(stream, new AccountStatement("Bank", "Account", 42.42m));
 
     private async Task Verify_OfxParser(Stream stream, AccountStatement expected)
     {

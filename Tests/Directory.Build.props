@@ -30,6 +30,7 @@
     <ItemGroup>
         <Using Include="FluentAssertions"/>
         <Using Include="MoneyManager.Shared.TestTooling"/>
+        <Using Include="MoneyManager.Shared.TestTooling.Resources"/>
         <Using Include="Xunit"/>
     </ItemGroup>
 

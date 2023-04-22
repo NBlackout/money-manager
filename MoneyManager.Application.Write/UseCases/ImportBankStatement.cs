@@ -1,11 +1,11 @@
 ﻿namespace MoneyManager.Application.Write.UseCases;
 
-public class ImportTransactions
+public class ImportBankStatement
 {
     private readonly IAccountRepository accountRepository;
     private readonly IOfxParser ofxParser;
 
-    public ImportTransactions(IAccountRepository accountRepository, IOfxParser ofxParser)
+    public ImportBankStatement(IAccountRepository accountRepository, IOfxParser ofxParser)
     {
         this.accountRepository = accountRepository;
         this.ofxParser = ofxParser;
@@ -15,7 +15,7 @@ public class ImportTransactions
     {
         AccountStatement accountStatement = await this.ofxParser.ExtractAccountId(stream);
 
-        Account? account = await this.accountRepository.GetByIdOrDefault(accountStatement.ExternalId);
+        Account? account = await this.GetAccountOrDefault(accountStatement);
         if (account == null)
         {
             Guid id = await this.accountRepository.NextIdentity();
@@ -25,5 +25,12 @@ public class ImportTransactions
             account.Synchronize(accountStatement.Balance);
 
         await this.accountRepository.Save(account);
+    }
+
+    private async Task<Account?> GetAccountOrDefault(AccountStatement accountStatement)
+    {
+        ExternalId externalId = new(accountStatement.BankIdentifier, accountStatement.AccountNumber);
+
+        return await this.accountRepository.GetByExternalIdOrDefault(externalId);
     }
 }
