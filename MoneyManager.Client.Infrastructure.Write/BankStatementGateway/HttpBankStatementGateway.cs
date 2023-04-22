@@ -1,12 +1,12 @@
 ﻿using System.Net.Http.Headers;
 
-namespace MoneyManager.Client.Infrastructure.Write.OfxFileGateway;
+namespace MoneyManager.Client.Infrastructure.Write.BankStatementGateway;
 
-public class HttpOfxFileGateway : IOfxFileGateway
+public class HttpBankStatementGateway : IBankStatementGateway
 {
     private readonly HttpClient httpClient;
 
-    public HttpOfxFileGateway(HttpClient httpClient)
+    public HttpBankStatementGateway(HttpClient httpClient)
     {
         this.httpClient = httpClient;
     }

@@ -17,10 +17,10 @@ public class OfxParser : IOfxParser
         if (statement.AvailableBalance is null || statement.AvailableBalance.Amount.HasValue is false)
             throw CannotProcessOfxContent.DueToMissingBalanceNode();
 
-        ExternalId externalId = new(statement.BankAccount.BankIdentifier, statement.BankAccount.AccountNumber);
         decimal balance = statement.AvailableBalance.Amount.Value;
 
-        return Task.FromResult(new AccountStatement(externalId, balance));
+        return Task.FromResult(new AccountStatement(statement.BankAccount.BankIdentifier,
+            statement.BankAccount.AccountNumber, balance));
     }
 
     [XmlRoot("OFX")]

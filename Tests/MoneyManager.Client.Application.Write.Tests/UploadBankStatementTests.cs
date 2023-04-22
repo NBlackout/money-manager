@@ -1,17 +1,17 @@
-﻿using MoneyManager.Client.Application.Write.UseCases.OfxFile;
-using MoneyManager.Client.Infrastructure.Write.OfxFileGateway;
+﻿using MoneyManager.Client.Application.Write.UseCases.BankStatement;
+using MoneyManager.Client.Infrastructure.Write.BankStatementGateway;
 
 namespace MoneyManager.Client.Application.Write.Tests;
 
-public class UploadOfxFileTests
+public class UploadBankStatementTests
 {
-    private readonly SpyOfxFileGateway gateway;
-    private readonly UploadOfxFile sut;
+    private readonly SpyBankStatementGateway gateway;
+    private readonly UploadBankStatement sut;
 
-    public UploadOfxFileTests()
+    public UploadBankStatementTests()
     {
-        this.gateway = new SpyOfxFileGateway();
-        this.sut = new UploadOfxFile(this.gateway);
+        this.gateway = new SpyBankStatementGateway();
+        this.sut = new UploadBankStatement(this.gateway);
     }
 
     [Fact]

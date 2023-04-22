@@ -1,6 +1,6 @@
-﻿namespace MoneyManager.Client.Infrastructure.Write.OfxFileGateway;
+﻿namespace MoneyManager.Client.Infrastructure.Write.BankStatementGateway;
 
-public class SpyOfxFileGateway : IOfxFileGateway
+public class SpyBankStatementGateway : IBankStatementGateway
 {
     public List<(string, string, Stream)> Calls { get; } = new();
 

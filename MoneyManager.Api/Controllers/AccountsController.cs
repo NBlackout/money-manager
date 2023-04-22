@@ -9,12 +9,12 @@ namespace MoneyManager.Api.Controllers;
 public class AccountsController : ControllerBase
 {
     private readonly GetAccountSummaries getAccountSummaries;
-    private readonly ImportTransactions importTransactions;
+    private readonly ImportBankStatement importBankStatement;
 
-    public AccountsController(GetAccountSummaries getAccountSummaries, ImportTransactions importTransactions)
+    public AccountsController(GetAccountSummaries getAccountSummaries, ImportBankStatement importBankStatement)
     {
         this.getAccountSummaries = getAccountSummaries;
-        this.importTransactions = importTransactions;
+        this.importBankStatement = importBankStatement;
     }
 
     [HttpGet]
@@ -25,6 +25,6 @@ public class AccountsController : ControllerBase
     public async Task Upload([FromForm] IFormFile file)
     {
         await using Stream stream = file.OpenReadStream();
-        await this.importTransactions.Execute(stream);
+        await this.importBankStatement.Execute(stream);
     }
 }
