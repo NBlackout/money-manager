@@ -2,6 +2,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\MoneyManager.Client.Application.Write\MoneyManager.Client.Application.Write.csproj" />
+      <ProjectReference Include="..\MoneyManager.Shared\MoneyManager.Shared.csproj" />
     </ItemGroup>
 
 </Project>

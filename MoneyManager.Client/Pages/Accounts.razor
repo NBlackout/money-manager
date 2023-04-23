@@ -25,6 +25,7 @@ else
             <th>Id</th>
             <th>Label</th>
             <th>Balance</th>
+            <th>Tracking</th>
         </tr>
         </thead>
         <tbody>
@@ -34,6 +35,16 @@ else
                 <td>@account.Id</td>
                 <td>@account.Label</td>
                 <td>@account.Balance</td>
+                <td>
+                    @if (account.Tracked)
+                    {
+                        <button @onclick="() => StopTracking(account.Id)">Stop</button>
+                    }
+                    else
+                    {
+                        <button @onclick="() => ResumeTracking(account.Id)">Resume</button>
+                    }
+                </td>
             </tr>
         }
         </tbody>

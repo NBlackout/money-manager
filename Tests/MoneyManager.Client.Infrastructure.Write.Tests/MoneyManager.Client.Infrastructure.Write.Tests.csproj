@@ -1,11 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
-
     <ItemGroup>
       <ProjectReference Include="..\..\MoneyManager.Client.Infrastructure.Write\MoneyManager.Client.Infrastructure.Write.csproj" />
       <ProjectReference Include="..\..\MoneyManager.Client\MoneyManager.Client.csproj" />

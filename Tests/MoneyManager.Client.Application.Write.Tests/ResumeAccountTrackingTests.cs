@@ -3,17 +3,17 @@ using MoneyManager.Client.Infrastructure.Write.AccountGateway;
 
 namespace MoneyManager.Client.Application.Write.Tests;
 
-public class StopAccountTrackingTests
+public class ResumeAccountTrackingTests
 {
     [Fact]
-    public async Task Should_stop_account_tracking()
+    public async Task Should_resume_account_tracking()
     {
-        StubbedAccountGateway accountGateway = new();
-        StopAccountTracking sut = new(accountGateway);
+        StubbedAccountGateway gateway = new();
+        ResumeAccountTracking sut = new(gateway);
 
         Guid id = Guid.NewGuid();
         await sut.Execute(id);
 
-        accountGateway.StopTrackingCalls.Should().Equal(id);
+        gateway.ResumeTrackingCalls.Should().Equal(id);
     }
 }

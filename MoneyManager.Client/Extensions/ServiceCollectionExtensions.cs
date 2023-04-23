@@ -14,6 +14,8 @@ public static class ServiceCollectionExtensions
     {
         return services
             .AddScoped<UploadBankStatement>()
+            .AddScoped<StopAccountTracking>()
+            .AddScoped<ResumeAccountTracking>()
             .AddScoped<IBankStatementGateway, HttpBankStatementGateway>()
             .AddScoped<IAccountGateway, HttpAccountGateway>();
     }
