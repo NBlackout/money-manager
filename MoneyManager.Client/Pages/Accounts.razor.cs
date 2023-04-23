@@ -14,6 +14,8 @@ public partial class Accounts : ComponentBase
 
     [Inject] private GetAccountSummaries GetAccountSummaries { get; set; } = null!;
     [Inject] private UploadBankStatement UploadBankStatement { get; set; } = null!;
+    [Inject] private StopAccountTracking StopAccountTracking { get; set; } = null!;
+    [Inject] private ResumeAccountTracking ResumeAccountTracking { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -45,5 +47,27 @@ public partial class Accounts : ComponentBase
         Stream stream = file.OpenReadStream(OneMegaByte);
 
         await this.UploadBankStatement.Execute(fileName, contentType, stream);
+    }
+
+    private async Task StopTracking(Guid id)
+    {
+        await this.StopAccountTracking.Execute(id);
+        this.Patch(id, false);
+    }
+
+    private async Task ResumeTracking(Guid id)
+    {
+        await this.ResumeAccountTracking.Execute(id);
+        this.Patch(id, true);
+    }
+
+    private void Patch(Guid id, bool tracked)
+    {
+        List<AccountSummary> updatedAccounts = this.accounts!.ToList();
+        AccountSummary account = updatedAccounts.Single(a => a.Id == id);
+        int index = updatedAccounts.IndexOf(account);
+        updatedAccounts[index] = account with { Tracked = tracked };
+
+        this.accounts = updatedAccounts;
     }
 }

@@ -3,7 +3,7 @@ using MoneyManager.Client.Extensions;
 using MoneyManager.Client.Infrastructure.Write.AccountGateway;
 using MoneyManager.Shared;
 
-namespace MoneyManager.Client.Infrastructure.Tests;
+namespace MoneyManager.Client.Infrastructure.Write.Tests;
 
 public sealed class HttpAccountGatewayTests : IDisposable
 {
@@ -20,7 +20,7 @@ public sealed class HttpAccountGatewayTests : IDisposable
         this.sut = this.host.GetRequiredService<IAccountGateway, HttpAccountGateway>();
     }
 
-    [Fact(Skip = "Temporary")]
+    [Fact]
     public async Task Should_stop_tracking_account()
     {
         Guid id = Guid.Parse("1A87A411-BBEB-4FB0-83E7-539CF5EFBE6C");
@@ -28,10 +28,26 @@ public sealed class HttpAccountGatewayTests : IDisposable
         await this.sut.StopTracking(id);
 
         IReadOnlyCollection<AccountSummary> accounts =
-            (await this.httpClient.GetFromJsonAsync<IReadOnlyCollection<AccountSummary>>(""))!;
+            (await this.httpClient.GetFromJsonAsync<IReadOnlyCollection<AccountSummary>>("accounts"))!;
         accounts.Single(a => a.Id == id).Tracked.Should().BeFalse();
 
-        await this.httpClient.PutAsJsonAsync("", new UpdateTrackedStatus(true));
+        (await this.httpClient.PutAsJsonAsync($"accounts/{id}/tracking", new ChangeTrackingStatusDto(true)))
+            .EnsureSuccessStatusCode();
+    }
+
+    [Fact]
+    public async Task Should_resume_account_tracking()
+    {
+        Guid id = Guid.Parse("2981760C-A17B-4ECF-B828-AB89CCD1B11A");
+
+        await this.sut.ResumeTracking(id);
+
+        IReadOnlyCollection<AccountSummary> accounts =
+            (await this.httpClient.GetFromJsonAsync<IReadOnlyCollection<AccountSummary>>("accounts"))!;
+        accounts.Single(a => a.Id == id).Tracked.Should().BeTrue();
+
+        (await this.httpClient.PutAsJsonAsync($"accounts/{id}/tracking", new ChangeTrackingStatusDto(false)))
+            .EnsureSuccessStatusCode();
     }
 
     public void Dispose() =>
@@ -39,10 +55,8 @@ public sealed class HttpAccountGatewayTests : IDisposable
 
     private static HttpClient CreateApiClient()
     {
-        Uri apiUri = new("https://nblackout-money-manager.azurewebsites.net/api/accounts/");
+        Uri apiUri = new("https://nblackout-money-manager.azurewebsites.net/api/");
 
         return new HttpClient { BaseAddress = apiUri };
     }
-
-    private sealed record UpdateTrackedStatus(bool Tracked);
 }

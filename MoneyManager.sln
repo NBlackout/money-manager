@@ -88,7 +88,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2C16D545
 		Tests\AssemblyInfo.cs = Tests\AssemblyInfo.cs
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Client.Infrastructure.Tests", "Tests\MoneyManager.Client.Infrastructure.Tests\MoneyManager.Client.Infrastructure.Tests.csproj", "{463F2404-4481-4644-900C-D3B79FEC6D0E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Client.Infrastructure.Write.Tests", "Tests\MoneyManager.Client.Infrastructure.Write.Tests\MoneyManager.Client.Infrastructure.Write.Tests.csproj", "{463F2404-4481-4644-900C-D3B79FEC6D0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
