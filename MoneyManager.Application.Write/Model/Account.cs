@@ -32,4 +32,7 @@ public class Account : DomainEntity
 
     public void StopTracking() =>
         this.tracked = false;
+
+    public void ResumeTracking() =>
+        this.tracked = true;
 }
