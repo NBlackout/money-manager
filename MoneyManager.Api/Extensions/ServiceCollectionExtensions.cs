@@ -37,6 +37,7 @@ public static class ServiceCollectionExtensions
         return services
             .AddScoped<ImportBankStatement>()
             .AddScoped<StopAccountTracking>()
+            .AddScoped<ResumeAccountTracking>()
             .AddSingleton<IAccountRepository>(accountRepository)
             .AddSingleton(accountRepository)
             .AddScoped<IOfxParser, OfxParser>();

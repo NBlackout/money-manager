@@ -10,13 +10,15 @@ public class AccountsController : ControllerBase
 {
     private readonly GetAccountSummaries getAccountSummaries;
     private readonly ImportBankStatement importBankStatement;
+    private readonly ResumeAccountTracking resumeAccountTracking;
     private readonly StopAccountTracking stopAccountTracking;
 
     public AccountsController(GetAccountSummaries getAccountSummaries, ImportBankStatement importBankStatement,
-        StopAccountTracking stopAccountTracking)
+        ResumeAccountTracking resumeAccountTracking, StopAccountTracking stopAccountTracking)
     {
         this.getAccountSummaries = getAccountSummaries;
         this.importBankStatement = importBankStatement;
+        this.resumeAccountTracking = resumeAccountTracking;
         this.stopAccountTracking = stopAccountTracking;
     }
 
@@ -31,8 +33,13 @@ public class AccountsController : ControllerBase
         await this.importBankStatement.Execute(stream);
     }
 
-    [HttpDelete]
-    [Route("{id:guid}")]
-    public async Task StopTracking(Guid id) =>
-        await this.stopAccountTracking.Execute(id);
+    [HttpPut]
+    [Route("{id:guid}/tracking")]
+    public async Task ChangeTrackingStatus(Guid id, ChangeTrackingStatusDto dto)
+    {
+        if (dto.Enabled)
+            await this.resumeAccountTracking.Execute(id);
+        else
+            await this.stopAccountTracking.Execute(id);
+    }
 }
