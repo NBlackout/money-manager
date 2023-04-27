@@ -1,10 +1,10 @@
-﻿using MoneyManager.Client.Application.Read.Ports;
-using MoneyManager.Client.Application.Read.UseCases.AccountSummaries;
-using MoneyManager.Client.Application.Write.Ports;
-using MoneyManager.Client.Application.Write.UseCases;
-using MoneyManager.Client.Infrastructure.Read.AccountSummariesGateway;
-using MoneyManager.Client.Infrastructure.Write.AccountGateway;
-using MoneyManager.Client.Infrastructure.Write.BankStatementGateway;
+﻿using MoneyManager.Client.Read.Application.Ports;
+using MoneyManager.Client.Read.Application.UseCases.AccountSummaries;
+using MoneyManager.Client.Write.Application.Ports;
+using MoneyManager.Client.Write.Application.UseCases;
+using MoneyManager.Client.Read.Infrastructure.AccountSummariesGateway;
+using MoneyManager.Client.Write.Infrastructure.AccountGateway;
+using MoneyManager.Client.Write.Infrastructure.BankStatementGateway;
 
 namespace MoneyManager.Client.Extensions;
 

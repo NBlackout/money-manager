@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MoneyManager.Application.Read.UseCases;
-using MoneyManager.Application.Write.UseCases;
+using MoneyManager.Read.Application.UseCases;
+using MoneyManager.Write.Application.UseCases;
 
 namespace MoneyManager.Api.Controllers;
 

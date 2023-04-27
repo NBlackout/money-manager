@@ -51,12 +51,12 @@ jobs:
         run: dotnet test --no-restore --verbosity minimal
 
       - name: Mutation testing Write
-        run: dotnet stryker -p MoneyManager.Application.Write -f ../stryker-config.json
-        working-directory: Tests/MoneyManager.Application.Write.Tests
+        run: dotnet stryker -p MoneyManager.Write.Application -f ../stryker-config.json
+        working-directory: Tests/MoneyManager.Write.Application.Tests
 
       - name: Mutation testing Read
-        run: dotnet stryker -p MoneyManager.Application.Read -f ../stryker-config.json
-        working-directory: Tests/MoneyManager.Application.Read.Tests
+        run: dotnet stryker -p MoneyManager.Read.Application -f ../stryker-config.json
+        working-directory: Tests/MoneyManager.Read.Application.Tests
 
       - name: Publish API
         run: dotnet publish MoneyManager.Api/MoneyManager.Api.csproj -c Release -o ${{env.DOTNET_ROOT}}/artifacts/api --nologo

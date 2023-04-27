@@ -6,11 +6,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\MoneyManager.Application.Read\MoneyManager.Application.Read.csproj" />
-        <ProjectReference Include="..\MoneyManager.Application.Write\MoneyManager.Application.Write.csproj" />
+        <ProjectReference Include="..\MoneyManager.Read.Application\MoneyManager.Read.Application.csproj" />
+        <ProjectReference Include="..\MoneyManager.Write.Application\MoneyManager.Write.Application.csproj" />
         <ProjectReference Include="..\MoneyManager.Client\MoneyManager.Client.csproj" />
-        <ProjectReference Include="..\MoneyManager.Infrastructure.Read\MoneyManager.Infrastructure.Read.csproj" />
-        <ProjectReference Include="..\MoneyManager.Infrastructure.Write\MoneyManager.Infrastructure.Write.csproj" />
+        <ProjectReference Include="..\MoneyManager.Read.Infrastructure\MoneyManager.Read.Infrastructure.csproj" />
+        <ProjectReference Include="..\MoneyManager.Write.Infrastructure\MoneyManager.Write.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,11 +1,11 @@
 ﻿<component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Stryker Read" type="ShConfigurationType">
-    <option name="SCRIPT_TEXT" value="dotnet stryker -p MoneyManager.Application.Read -f ../stryker-config.json -o" />
+    <option name="SCRIPT_TEXT" value="dotnet stryker -p MoneyManager.Read.Application -f ../stryker-config.json -o" />
     <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
     <option name="SCRIPT_PATH" value="" />
     <option name="SCRIPT_OPTIONS" value="" />
     <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="false" />
-    <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/Tests/MoneyManager.Application.Read.Tests" />
+    <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/Tests/MoneyManager.Read.Application.Tests" />
     <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
     <option name="INTERPRETER_PATH" value="" />
     <option name="INTERPRETER_OPTIONS" value="" />
