@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+      <ProjectReference Include="..\MoneyManager.Client.Read.Application\MoneyManager.Client.Read.Application.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -10,10 +10,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MoneyManager.Client.Application.Read\MoneyManager.Client.Application.Read.csproj" />
-      <ProjectReference Include="..\MoneyManager.Client.Application.Write\MoneyManager.Client.Application.Write.csproj" />
-      <ProjectReference Include="..\MoneyManager.Client.Infrastructure.Read\MoneyManager.Client.Infrastructure.Read.csproj" />
-      <ProjectReference Include="..\MoneyManager.Client.Infrastructure.Write\MoneyManager.Client.Infrastructure.Write.csproj" />
+      <ProjectReference Include="..\MoneyManager.Client.Read.Application\MoneyManager.Client.Read.Application.csproj" />
+      <ProjectReference Include="..\MoneyManager.Client.Write.Application\MoneyManager.Client.Write.Application.csproj" />
+      <ProjectReference Include="..\MoneyManager.Client.Read.Infrastructure\MoneyManager.Client.Read.Infrastructure.csproj" />
+      <ProjectReference Include="..\MoneyManager.Client.Write.Infrastructure\MoneyManager.Client.Write.Infrastructure.csproj" />
       <ProjectReference Include="..\MoneyManager.Shared\MoneyManager.Shared.csproj" />
     </ItemGroup>
 
