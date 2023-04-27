@@ -10,4 +10,19 @@ public static class WebApplicationBuilderExtensions
             .AddWriteDependencies()
             .AddReadDependencies();
     }
+
+    private static IServiceCollection AddSwaggerDependencies(this IServiceCollection services)
+    {
+        return services
+            .AddEndpointsApiExplorer()
+            .AddSwaggerGen();
+    }
+
+    private static IServiceCollection AddBlazorDependencies(this IServiceCollection services)
+    {
+        services.AddControllersWithViews();
+        services.AddRazorPages();
+
+        return services;
+    }
 }

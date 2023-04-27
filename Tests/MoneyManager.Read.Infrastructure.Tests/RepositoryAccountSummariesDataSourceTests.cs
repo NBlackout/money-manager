@@ -1,11 +1,6 @@
-﻿using Microsoft.Extensions.Hosting;
-using MoneyManager.Api.Extensions;
-using MoneyManager.Read.Application.Ports;
-using MoneyManager.Write.Application.Model;
-using MoneyManager.Write.Application.Ports;
+﻿using MoneyManager.Write.Application.Ports;
 using MoneyManager.Read.Infrastructure.DataSources.AccountSummaries;
 using MoneyManager.Write.Infrastructure.Repositories;
-using MoneyManager.Shared;
 
 namespace MoneyManager.Read.Infrastructure.Tests;
 
@@ -28,26 +23,26 @@ public sealed class RepositoryAccountSummariesDataSourceTests : IDisposable
     [Fact]
     public async Task Should_retrieve_tracked_account_summaries()
     {
-        const string anAccountNumber = "Number";
-        const decimal aBalance = 12.34m;
-        const bool tracked = true;
-        const bool notTracked = false;
-        AccountSnapshot anAccount = new(Guid.NewGuid(), "Big bank", anAccountNumber, aBalance, tracked);
-
-        const string anotherAccountNumber = "Unique number";
-        const decimal anotherBalance = 56.78m;
-        AccountSnapshot anotherAccount = new(Guid.NewGuid(), "Other bank", anotherAccountNumber, anotherBalance, tracked);
-
-        const string notTrackedAccountNumber = "Not tracked";
-        const decimal notTrackedBalance = 103.44m;
-        AccountSnapshot notTrackedAccount = new(Guid.NewGuid(), "Not tracked", notTrackedAccountNumber, notTrackedBalance, notTracked);
-        this.repository.Feed(anAccount, anotherAccount, notTrackedAccount);
+        AccountBuilder anAccount = AccountBuilder.For(Guid.NewGuid()) with
+        {
+            Label = "A label", Balance = 10.44m, Tracked = true
+        };
+        AccountBuilder anotherAccount = AccountBuilder.For(Guid.NewGuid()) with
+        {
+            Label = "A label", Balance = 656.98m, Tracked = true
+        };
+        AccountBuilder notTrackedAccount = AccountBuilder.For(Guid.NewGuid()) with
+        {
+            Label = "This one is not tracked", Balance = 1301.51m, Tracked = false
+        };
+        this.repository.Feed(anAccount.Build(), anotherAccount.Build(), notTrackedAccount.Build());
 
         IReadOnlyCollection<AccountSummary> actual = await this.sut.Get();
         actual.Should().Equal(
-            new AccountSummary(anAccount.Id, anAccountNumber, aBalance, tracked),
-            new AccountSummary(anotherAccount.Id, anotherAccountNumber, anotherBalance, tracked),
-            new AccountSummary(notTrackedAccount.Id, notTrackedAccountNumber, notTrackedBalance, notTracked)
+            new AccountSummary(anAccount.Id, anAccount.Label, anAccount.Balance, anAccount.Tracked),
+            new AccountSummary(anotherAccount.Id, anotherAccount.Label, anotherAccount.Balance, anotherAccount.Tracked),
+            new AccountSummary(notTrackedAccount.Id, notTrackedAccount.Label, notTrackedAccount.Balance,
+                notTrackedAccount.Tracked)
         );
     }
 
