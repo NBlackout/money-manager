@@ -3,24 +3,27 @@
 public class Account : DomainEntity
 {
     private readonly ExternalId externalId;
+    private string label;
     private decimal balance;
     private bool tracked;
 
     public AccountSnapshot Snapshot =>
-        new(this.Id, this.externalId.BankIdentifier, this.externalId.Number, this.balance, this.tracked);
+        new(this.Id, this.externalId.BankIdentifier, this.externalId.Number, this.label, this.balance, this.tracked);
 
-    private Account(Guid id, ExternalId externalId, decimal balance, bool tracked) : base(id)
+    private Account(Guid id, ExternalId externalId, string label, decimal balance, bool tracked) : base(id)
     {
         this.externalId = externalId;
+        this.label = label;
         this.balance = balance;
         this.tracked = tracked;
     }
 
-    public static Account StartTracking(Guid id, string bankIdentifier, string accountNumber, decimal balance) =>
-        new(id, new ExternalId(bankIdentifier, accountNumber), balance, true);
-
     public static Account From(AccountSnapshot snapshot) =>
-        new(snapshot.Id, new ExternalId(snapshot.BankIdentifier, snapshot.Number), snapshot.Balance, snapshot.Tracked);
+        new(snapshot.Id, new ExternalId(snapshot.BankIdentifier, snapshot.Number), snapshot.Label, snapshot.Balance,
+            snapshot.Tracked);
+
+    public static Account StartTracking(Guid id, string bankIdentifier, string accountNumber, decimal balance) =>
+        new(id, new ExternalId(bankIdentifier, accountNumber), accountNumber, balance, true);
 
     public void Synchronize(decimal updatedBalance)
     {
@@ -35,4 +38,7 @@ public class Account : DomainEntity
 
     public void ResumeTracking() =>
         this.tracked = true;
+
+    public void AssignLabel(string newLabel) =>
+        this.label = newLabel;
 }

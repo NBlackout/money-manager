@@ -2,32 +2,38 @@
 
 public class InMemoryAccountRepository : IAccountRepository
 {
-    private readonly Dictionary<Guid, AccountSnapshot> data = new();
-    private readonly Dictionary<ExternalId, AccountSnapshot> dataByExternalId = new();
+    private readonly Dictionary<Guid, Account> data = new();
+    private readonly Dictionary<ExternalId, Account> dataByExternalId = new();
 
-    public IEnumerable<AccountSnapshot> Data => this.data.Values;
+    public IEnumerable<Account> Data => this.data.Values;
     public Func<Guid> NextId { get; set; } = Guid.NewGuid;
 
     public Task<Guid> NextIdentity() =>
         Task.FromResult(this.NextId());
 
     public Task<Account> GetById(Guid id) =>
-        Task.FromResult(Account.From(this.data[id]));
+        Task.FromResult(this.data[id]);
 
-    public Task<Account?> GetByExternalIdOrDefault(ExternalId externalId) =>
-        Task.FromResult(this.dataByExternalId.ContainsKey(externalId) ? Account.From(this.dataByExternalId[externalId]) : null);
+    public Task<Account?> GetByExternalIdOrDefault(ExternalId externalId)
+    {
+        return Task.FromResult(this.dataByExternalId.TryGetValue(externalId, out Account? account)
+            ? account
+            : null);
+    }
 
     public Task Save(Account account)
     {
-        this.data[account.Id] = account.Snapshot;
+        AccountSnapshot snapshot = account.Snapshot;
+        this.data[account.Id] = Account.From(snapshot);
+        this.dataByExternalId[new ExternalId(snapshot.BankIdentifier, snapshot.Number)] = Account.From(snapshot);
 
         return Task.CompletedTask;
     }
 
-    public void FeedByExternalId(ExternalId externalId, AccountSnapshot account) =>
+    public void FeedByExternalId(ExternalId externalId, Account account) =>
         this.dataByExternalId.Add(externalId, account);
 
-    public void Feed(params AccountSnapshot[] accounts) =>
+    public void Feed(params Account[] accounts) =>
         accounts.ToList().ForEach(account => this.data.Add(account.Id, account));
 
     public void Clear()

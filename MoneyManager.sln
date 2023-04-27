@@ -74,6 +74,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2C16D545
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Client.Write.Infrastructure.Tests", "Tests\MoneyManager.Client.Write.Infrastructure.Tests\MoneyManager.Client.Write.Infrastructure.Tests.csproj", "{463F2404-4481-4644-900C-D3B79FEC6D0E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Write.TestTooling", "MoneyManager.Write.TestTooling\MoneyManager.Write.TestTooling.csproj", "{E576BF03-9B6B-4FC1-AF7F-C737BC6FAFF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Read.TestTooling", "MoneyManager.Read.TestTooling\MoneyManager.Read.TestTooling.csproj", "{E9BF8310-B14B-485C-A6FD-1B8539E11F29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -160,6 +164,14 @@ Global
 		{463F2404-4481-4644-900C-D3B79FEC6D0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{463F2404-4481-4644-900C-D3B79FEC6D0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{463F2404-4481-4644-900C-D3B79FEC6D0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E576BF03-9B6B-4FC1-AF7F-C737BC6FAFF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E576BF03-9B6B-4FC1-AF7F-C737BC6FAFF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E576BF03-9B6B-4FC1-AF7F-C737BC6FAFF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E576BF03-9B6B-4FC1-AF7F-C737BC6FAFF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9BF8310-B14B-485C-A6FD-1B8539E11F29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9BF8310-B14B-485C-A6FD-1B8539E11F29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9BF8310-B14B-485C-A6FD-1B8539E11F29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9BF8310-B14B-485C-A6FD-1B8539E11F29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{80ADAACD-7CA0-47FC-8731-E08355F030A2} = {5CA57638-A9EA-4B65-BCEA-D7FA68775361}
@@ -188,5 +200,7 @@ Global
 		{F79E20DF-4DC0-45B8-860F-20957853CF90} = {5CA57638-A9EA-4B65-BCEA-D7FA68775361}
 		{5CA57638-A9EA-4B65-BCEA-D7FA68775361} = {FA6152E0-44B3-4DDE-8F88-0F47AC870A67}
 		{6B5ABA93-559F-49AA-A55F-BC4E381207DD} = {FA6152E0-44B3-4DDE-8F88-0F47AC870A67}
+		{E576BF03-9B6B-4FC1-AF7F-C737BC6FAFF9} = {6B5ABA93-559F-49AA-A55F-BC4E381207DD}
+		{E9BF8310-B14B-485C-A6FD-1B8539E11F29} = {5CA57638-A9EA-4B65-BCEA-D7FA68775361}
 	EndGlobalSection
 EndGlobal
