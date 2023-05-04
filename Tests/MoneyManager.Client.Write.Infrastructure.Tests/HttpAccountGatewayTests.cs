@@ -24,9 +24,9 @@ public sealed class HttpAccountGatewayTests : IDisposable
     }
 
     [Fact]
-    public async Task Should_stop_tracking_account()
+    public async Task Should_stop_tracking()
     {
-        Guid id = Guid.Parse("1A87A411-BBEB-4FB0-83E7-539CF5EFBE6C");
+        Guid id = Guid.NewGuid();
 
         await this.sut.StopTracking(id);
 
@@ -34,13 +34,25 @@ public sealed class HttpAccountGatewayTests : IDisposable
     }
 
     [Fact]
-    public async Task Should_resume_account_tracking()
+    public async Task Should_resume_tracking()
     {
-        Guid id = Guid.Parse("2981760C-A17B-4ECF-B828-AB89CCD1B11A");
+        Guid id = Guid.NewGuid();
 
         await this.sut.ResumeTracking(id);
 
         this.Verify_Put($"{ApiUrl}/accounts/{id}/tracking", new { Enabled = true });
+    }
+
+
+    [Fact]
+    public async Task Should_assign_label()
+    {
+        Guid id = Guid.NewGuid();
+        const string label = "My account label";
+
+        await this.sut.AssignLabel(id, label);
+
+        this.Verify_Put($"{ApiUrl}/accounts/{id}/label", new { Label = label });
     }
 
     public void Dispose() =>

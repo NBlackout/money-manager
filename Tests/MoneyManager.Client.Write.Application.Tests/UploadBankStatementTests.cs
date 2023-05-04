@@ -1,5 +1,4 @@
-﻿using MoneyManager.Client.Write.Application.UseCases;
-using MoneyManager.Client.Write.Infrastructure.BankStatementGateway;
+﻿using MoneyManager.Client.Write.Infrastructure.BankStatementGateway;
 
 namespace MoneyManager.Client.Write.Application.Tests;
 

@@ -1,19 +1,25 @@
-﻿using MoneyManager.Client.Write.Application.UseCases;
-using MoneyManager.Client.Write.Infrastructure.AccountGateway;
+﻿using MoneyManager.Client.Write.Infrastructure.AccountGateway;
 
 namespace MoneyManager.Client.Write.Application.Tests;
 
 public class StopAccountTrackingTests
 {
+    private readonly SpyAccountGateway accountGateway;
+    private readonly StopAccountTracking sut;
+
+    public StopAccountTrackingTests()
+    {
+        this.accountGateway = new SpyAccountGateway();
+        this.sut = new StopAccountTracking(this.accountGateway);
+    }
+
     [Fact]
     public async Task Should_stop_account_tracking()
     {
-        StubbedAccountGateway accountGateway = new();
-        StopAccountTracking sut = new(accountGateway);
-
         Guid id = Guid.NewGuid();
-        await sut.Execute(id);
 
-        accountGateway.StopTrackingCalls.Should().Equal(id);
+        await this.sut.Execute(id);
+
+        this.accountGateway.StopTrackingCalls.Should().Equal(id);
     }
 }

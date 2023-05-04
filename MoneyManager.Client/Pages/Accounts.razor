@@ -19,8 +19,8 @@
 }
 else
 {
-    <table class="table">
-        <thead>
+    <table class="align-middle table table-hover">
+        <thead class="table-light">
         <tr>
             <th>Id</th>
             <th>Label</th>
@@ -33,16 +33,34 @@ else
         {
             <tr>
                 <td>@account.Id</td>
-                <td>@account.Label</td>
+                <td>
+                    @if (IsEditing(account))
+                    {
+                        <input type="text" value="@account.Label" @ref="labelInput" @onchange="@LabelChanged" @onabort="@ExitEditMode" @onblur="@ExitEditMode" class="form-control form-control-sm" placeholder="Label"/>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-link btn-sm" @onclick="@(() => ToggleEditMode(account))">
+                            <i class="oi oi-pencil"></i>
+                        </button>
+                        @account.Label
+                    }
+                </td>
                 <td>@account.Balance</td>
                 <td>
                     @if (account.Tracked)
                     {
-                        <button @onclick="() => StopTracking(account.Id)">Stop</button>
+                        <button type="button" class="btn btn-primary btn-sm" @onclick="@(() => StopTracking(account))">
+                            <i class="oi oi-media-stop"></i>
+                            Stop
+                        </button>
                     }
                     else
                     {
-                        <button @onclick="() => ResumeTracking(account.Id)">Resume</button>
+                        <button type="button" class="btn btn-primary btn-sm" @onclick="@(() => ResumeTracking(account))">
+                            <i class="oi oi-media-play"></i>
+                            Resume
+                        </button>
                     }
                 </td>
             </tr>
