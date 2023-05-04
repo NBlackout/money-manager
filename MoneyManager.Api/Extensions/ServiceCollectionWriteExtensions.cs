@@ -1,9 +1,6 @@
-﻿using MoneyManager.Read.Application.Ports;
-using MoneyManager.Read.Application.UseCases;
-using MoneyManager.Write.Application.Model;
+﻿using MoneyManager.Write.Application.Model;
 using MoneyManager.Write.Application.Ports;
 using MoneyManager.Write.Application.UseCases;
-using MoneyManager.Read.Infrastructure.DataSources.AccountSummaries;
 using MoneyManager.Write.Infrastructure.OfxProcessing;
 using MoneyManager.Write.Infrastructure.Repositories;
 
