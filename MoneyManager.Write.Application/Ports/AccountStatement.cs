@@ -2,6 +2,6 @@ namespace MoneyManager.Write.Application.Ports;
 
 public record AccountStatement(string BankIdentifier, string AccountNumber, decimal Balance)
 {
-    public Account TrackDescribedAccount(Guid id) =>
-        Account.StartTracking(id, this.BankIdentifier, this.AccountNumber, this.Balance);
+    public Bank TrackDescribedBank(Guid id) => 
+        Bank.Track(id, this.BankIdentifier);
 }

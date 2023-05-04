@@ -2,11 +2,14 @@
 
 public class ImportBankStatement
 {
+    private readonly IBankRepository bankRepository;
     private readonly IAccountRepository accountRepository;
     private readonly IOfxParser ofxParser;
 
-    public ImportBankStatement(IAccountRepository accountRepository, IOfxParser ofxParser)
+    public ImportBankStatement(IBankRepository bankRepository, IAccountRepository accountRepository,
+        IOfxParser ofxParser)
     {
+        this.bankRepository = bankRepository;
         this.accountRepository = accountRepository;
         this.ofxParser = ofxParser;
     }
@@ -15,22 +18,23 @@ public class ImportBankStatement
     {
         AccountStatement statement = await this.ofxParser.ExtractAccountStatement(stream);
 
-        Account? account = await this.GetTrackedAccountDescribedBy(statement);
+        Bank? bank = await this.bankRepository.GetByExternalIdOrDefault(statement.BankIdentifier);
+        if (bank == null)
+        {
+            Guid id = await this.bankRepository.NextIdentity();
+            bank = statement.TrackDescribedBank(id);
+        }
+
+        Account? account = await this.accountRepository.GetByExternalIdOrDefault(new ExternalId(bank.Id, statement.AccountNumber));
         if (account == null)
         {
             Guid id = await this.accountRepository.NextIdentity();
-            account = statement.TrackDescribedAccount(id);
+            account = bank.TrackAccount(id, statement.AccountNumber, statement.Balance);
         }
         else
             account.Synchronize(statement.Balance);
 
+        await this.bankRepository.Save(bank);
         await this.accountRepository.Save(account);
-    }
-
-    private async Task<Account?> GetTrackedAccountDescribedBy(AccountStatement statement)
-    {
-        ExternalId externalId = new(statement.BankIdentifier, statement.AccountNumber);
-
-        return await this.accountRepository.GetByExternalIdOrDefault(externalId);
     }
 }

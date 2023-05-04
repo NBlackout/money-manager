@@ -8,7 +8,7 @@ public class Account : DomainEntity
     private bool tracked;
 
     public AccountSnapshot Snapshot =>
-        new(this.Id, this.externalId.BankIdentifier, this.externalId.Number, this.label, this.balance, this.tracked);
+        new(this.Id, this.externalId.BankId, this.externalId.Number, this.label, this.balance, this.tracked);
 
     private Account(Guid id, ExternalId externalId, string label, decimal balance, bool tracked) : base(id)
     {
@@ -19,11 +19,11 @@ public class Account : DomainEntity
     }
 
     public static Account From(AccountSnapshot snapshot) =>
-        new(snapshot.Id, new ExternalId(snapshot.BankIdentifier, snapshot.Number), snapshot.Label, snapshot.Balance,
+        new(snapshot.Id, new ExternalId(snapshot.BankId, snapshot.Number), snapshot.Label, snapshot.Balance,
             snapshot.Tracked);
 
-    public static Account StartTracking(Guid id, string bankIdentifier, string accountNumber, decimal balance) =>
-        new(id, new ExternalId(bankIdentifier, accountNumber), accountNumber, balance, true);
+    public static Account StartTracking(Guid id, Guid bankId, string accountNumber, decimal balance) =>
+        new(id, new ExternalId(bankId, accountNumber), accountNumber, balance, true);
 
     public void Synchronize(decimal updatedBalance)
     {

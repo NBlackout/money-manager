@@ -5,65 +5,104 @@ namespace MoneyManager.Write.Application.Tests.UseCases;
 
 public class ImportBankStatementTests
 {
-    private readonly InMemoryAccountRepository repository;
+    private readonly InMemoryBankRepository bankRepository;
+    private readonly InMemoryAccountRepository accountRepository;
     private readonly StubbedOfxParser ofxParser;
     private readonly ImportBankStatement sut;
 
     public ImportBankStatementTests()
     {
-        this.repository = new InMemoryAccountRepository();
+        this.bankRepository = new InMemoryBankRepository();
+        this.accountRepository = new InMemoryAccountRepository();
         this.ofxParser = new StubbedOfxParser();
-        this.sut = new ImportBankStatement(this.repository, this.ofxParser);
+        this.sut = new ImportBankStatement(this.bankRepository, this.accountRepository, this.ofxParser);
     }
 
     [Fact]
-    public async Task Should_track_unknown_account_assigning_a_default_label()
+    public async Task Should_track_unknown_bank_and_account()
     {
-        AccountBuilder expected = AccountBuilder.For(Guid.NewGuid()) with
+        BankBuilder bank = BankBuilder.For(Guid.NewGuid());
+        AccountBuilder account = AccountBuilder.For(Guid.NewGuid()) with
         {
-            Number = "Number", Label = "Number", Tracked = true
+            BankId = bank.Id, Number = "Number", Label = "Number", Tracked = true
         };
-        this.ofxParser.SetAccountStatementFor(TheStream, AccountStatementFrom(expected));
-        this.repository.NextId = () => expected.Id;
+        this.ofxParser.SetAccountStatementFor(TheStream, AccountStatementFrom(bank, account));
 
-        await this.Verify_ImportTransactions(TheStream, expected);
+        this.bankRepository.FeedByExternalId(bank.ExternalId, null);
+        this.bankRepository.NextId = () => bank.Id;
+        this.accountRepository.FeedByExternalId(new ExternalId(account.BankId, account.Number), null);
+        this.accountRepository.NextId = () => account.Id;
+
+        await this.Verify_ImportTransactions(TheStream, bank, account);
+    }
+
+    [Fact]
+    public async Task Should_track_unknown_account()
+    {
+        BankBuilder bank = BankBuilder.For(Guid.NewGuid());
+        this.FeedByExternalId(bank);
+        AccountBuilder account = AccountBuilder.For(Guid.NewGuid()) with
+        {
+            BankId = bank.Id, Number = "Number", Label = "Number", Tracked = true
+        };
+        this.ofxParser.SetAccountStatementFor(TheStream, AccountStatementFrom(bank, account));
+
+        this.accountRepository.FeedByExternalId(new ExternalId(account.BankId, account.Number), null);
+        this.accountRepository.NextId = () => account.Id;
+
+        await this.Verify_ImportTransactions(TheStream, bank, account);
     }
 
     [Fact]
     public async Task Should_synchronize_already_tracked_account()
     {
-        AccountBuilder account = AccountBuilder.For(Guid.NewGuid()) with { Balance = 100.00m, Tracked = true };
+        BankBuilder bank = BankBuilder.For(Guid.NewGuid());
+        this.FeedByExternalId(bank);
+        AccountBuilder account = AccountBuilder.For(Guid.NewGuid()) with
+        {
+            BankId = bank.Id, Balance = 100.00m, Tracked = true
+        };
         this.FeedByExternalId(account);
 
         const decimal newBalance = 1337.42m;
-        this.ofxParser.SetAccountStatementFor(TheStream, AccountStatementFrom(account) with { Balance = newBalance });
+        this.ofxParser.SetAccountStatementFor(TheStream,
+            AccountStatementFrom(bank, account) with { Balance = newBalance });
 
-        await this.Verify_ImportTransactions(TheStream, account with { Balance = newBalance });
+        await this.Verify_ImportTransactions(TheStream, bank, account with { Balance = newBalance });
     }
 
     [Fact]
-    public async Task Should_skip_account_no_longer_tracked()
+    public async Task Should_skip_no_longer_tracked_account()
     {
-        AccountBuilder account = AccountBuilder.For(Guid.NewGuid()) with { Tracked = false };
+        BankBuilder bank = BankBuilder.For(Guid.NewGuid());
+        this.FeedByExternalId(bank);
+        AccountBuilder account = AccountBuilder.For(Guid.NewGuid()) with { BankId = bank.Id, Tracked = false };
         this.FeedByExternalId(account);
-        this.ofxParser.SetAccountStatementFor(TheStream, AccountStatementFrom(account));
+        this.ofxParser.SetAccountStatementFor(TheStream, AccountStatementFrom(bank, account));
 
-        await this.Verify_ImportTransactions(TheStream, account);
+        await this.Verify_ImportTransactions(TheStream, bank, account);
     }
 
-    private async Task Verify_ImportTransactions(Stream stream, AccountBuilder expected)
+    private async Task Verify_ImportTransactions(Stream stream, BankBuilder expectedBank,
+        AccountBuilder expectedAccount)
     {
         await this.sut.Execute(stream);
 
-        Account actual = await this.repository.GetById(expected.Id);
-        actual.Snapshot.Should().Be(expected.Build().Snapshot);
+        Bank actualBank = await this.bankRepository.GetById(expectedBank.Id);
+        actualBank.Snapshot.Should().Be(expectedBank.Build().Snapshot);
+
+        Account actualAccount = await this.accountRepository.GetById(expectedAccount.Id);
+        actualAccount.Snapshot.Should().Be(expectedAccount.Build().Snapshot);
     }
 
-    private void FeedByExternalId(AccountBuilder account) =>
-        this.repository.FeedByExternalId(new ExternalId(account.BankIdentifier, account.Number), account.Build());
+    private void FeedByExternalId(BankBuilder bank) =>
+        this.bankRepository.FeedByExternalId(bank.ExternalId, bank.Build());
 
-    private static AccountStatement AccountStatementFrom(AccountBuilder expected) =>
-        new(expected.BankIdentifier, expected.Number, expected.Balance);
+    private void FeedByExternalId(AccountBuilder account) =>
+        this.accountRepository.FeedByExternalId(new ExternalId(account.BankId, account.Number), account.Build());
+
+    private static AccountStatement AccountStatementFrom(BankBuilder bank, AccountBuilder account) =>
+        new(bank.ExternalId, account.Number, account.Balance);
 
     internal static class Data
     {
