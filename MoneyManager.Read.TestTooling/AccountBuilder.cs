@@ -11,7 +11,8 @@ public record AccountBuilder(Guid Id, string Number, string Label, decimal Balan
     public Account Build()
     {
         return Account.From(
-            new AccountSnapshot(this.Id, "Secure bank", this.Number, this.Label, this.Balance, this.Tracked)
+            new AccountSnapshot(this.Id, Guid.Parse("04150905-B6AD-4D9F-AB2B-191AB9B11A9D"), this.Number, this.Label,
+                this.Balance, this.Tracked)
         );
     }
 }
