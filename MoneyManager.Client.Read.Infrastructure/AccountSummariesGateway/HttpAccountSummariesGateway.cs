@@ -1,5 +1,4 @@
 ﻿using System.Net.Http.Json;
-using MoneyManager.Shared;
 
 namespace MoneyManager.Client.Read.Infrastructure.AccountSummariesGateway;
 

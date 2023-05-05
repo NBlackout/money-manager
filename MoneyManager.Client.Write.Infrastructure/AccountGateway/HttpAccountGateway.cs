@@ -1,7 +1,4 @@
-﻿using System.Net.Http.Json;
-using MoneyManager.Shared;
-
-namespace MoneyManager.Client.Write.Infrastructure.AccountGateway;
+﻿namespace MoneyManager.Client.Write.Infrastructure.AccountGateway;
 
 public class HttpAccountGateway : IAccountGateway
 {
@@ -20,7 +17,7 @@ public class HttpAccountGateway : IAccountGateway
 
     public async Task AssignLabel(Guid id, string label)
     {
-        (await this.httpClient.PutAsJsonAsync($"accounts/{id}/label", new AssignLabelDto(label)))
+        (await this.httpClient.PutAsJsonAsync($"accounts/{id}/label", new AssignAccountLabelDto(label)))
             .EnsureSuccessStatusCode();
     }
 

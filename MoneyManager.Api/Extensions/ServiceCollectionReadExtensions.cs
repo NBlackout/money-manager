@@ -1,6 +1,4 @@
-﻿using MoneyManager.Read.Application.Ports;
-using MoneyManager.Read.Application.UseCases;
-using MoneyManager.Read.Infrastructure.DataSources.AccountSummaries;
+﻿using MoneyManager.Read.Infrastructure.DataSources.AccountSummaries;
 
 namespace MoneyManager.Api.Extensions;
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MoneyManager.Client.Read.Application.UseCases.AccountSummaries;
-using MoneyManager.Client.Write.Application.UseCases;
 
 namespace MoneyManager.Client.Pages;
 
@@ -13,12 +12,14 @@ public partial class Accounts : ComponentBase
     private AccountSummary? accountBeingEdited;
     private string? uploadResult;
     private ElementReference labelInput;
+    private ElementReference bankNameInput;
 
     [Inject] private GetAccountSummaries GetAccountSummaries { get; set; } = null!;
     [Inject] private UploadBankStatement UploadBankStatement { get; set; } = null!;
     [Inject] private StopAccountTracking StopAccountTracking { get; set; } = null!;
     [Inject] private ResumeAccountTracking ResumeAccountTracking { get; set; } = null!;
     [Inject] private AssignAccountLabel AssignAccountLabel { get; set; } = null!;
+    [Inject] private AssignBankName AssignBankName { get; set; } = null!;
 
     protected override async Task OnInitializedAsync() =>
         await this.LoadAccounts();
@@ -65,12 +66,23 @@ public partial class Accounts : ComponentBase
         await this.UploadBankStatement.Execute(fileName, contentType, stream);
     }
 
+    private async Task BankNameChanged(ChangeEventArgs args)
+    {
+        string newBankName = (string)args.Value!;
+        await this.AssignBankName.Execute(this.accountBeingEdited!.BankId, newBankName);
+
+        foreach (AccountSummary bankAccount in this.accounts!.Where(a => a.BankId == this.accountBeingEdited.BankId))
+            this.Patch(bankAccount with { BankName = newBankName });
+        this.ExitEditMode();
+    }
+
     private async Task LabelChanged(ChangeEventArgs args)
     {
         string newLabel = (string)args.Value!;
         await this.AssignAccountLabel.Execute(this.accountBeingEdited!.Id, newLabel);
 
         this.Patch(this.accountBeingEdited with { Label = newLabel });
+        this.ExitEditMode();
     }
 
     private async Task StopTracking(AccountSummary account)

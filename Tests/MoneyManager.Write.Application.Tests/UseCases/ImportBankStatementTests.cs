@@ -31,9 +31,7 @@ public class ImportBankStatementTests
         };
         this.ofxParser.SetAccountStatementFor(TheStream, AccountStatementFrom(bank, account));
 
-        this.bankRepository.FeedByExternalId(bank.ExternalId, null);
         this.bankRepository.NextId = () => bank.Id;
-        this.accountRepository.FeedByExternalId(new ExternalId(account.BankId, account.Number), null);
         this.accountRepository.NextId = () => account.Id;
 
         await this.Verify_ImportTransactions(TheStream, bank, account);
@@ -50,7 +48,6 @@ public class ImportBankStatementTests
         };
         this.ofxParser.SetAccountStatementFor(TheStream, AccountStatementFrom(bank, account));
 
-        this.accountRepository.FeedByExternalId(new ExternalId(account.BankId, account.Number), null);
         this.accountRepository.NextId = () => account.Id;
 
         await this.Verify_ImportTransactions(TheStream, bank, account);

@@ -1,6 +1,4 @@
-﻿using MoneyManager.Shared;
-
-namespace MoneyManager.Client.Read.Infrastructure.AccountSummariesGateway;
+﻿namespace MoneyManager.Client.Read.Infrastructure.AccountSummariesGateway;
 
 public class StubbedAccountSummariesGateway : IAccountSummariesGateway
 {

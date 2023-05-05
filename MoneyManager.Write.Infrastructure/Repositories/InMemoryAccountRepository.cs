@@ -3,7 +3,7 @@
 public class InMemoryAccountRepository : IAccountRepository
 {
     private readonly Dictionary<Guid, Account> data = new();
-    private readonly Dictionary<ExternalId, Account?> dataByExternalId = new();
+    private readonly Dictionary<ExternalId, Account> dataByExternalId = new();
 
     public IEnumerable<Account> Data => this.data.Values;
     public Func<Guid> NextId { get; set; } = Guid.NewGuid;
@@ -14,8 +14,8 @@ public class InMemoryAccountRepository : IAccountRepository
     public Task<Account> GetById(Guid id) =>
         Task.FromResult(this.data[id]);
 
-    public Task<Account?> GetByExternalIdOrDefault(ExternalId externalId) => 
-        Task.FromResult(this.dataByExternalId[externalId]);
+    public Task<Account?> GetByExternalIdOrDefault(ExternalId externalId) =>
+        Task.FromResult(this.dataByExternalId.TryGetValue(externalId, out Account? account) ? account : null);
 
     public Task Save(Account account)
     {
@@ -26,7 +26,7 @@ public class InMemoryAccountRepository : IAccountRepository
         return Task.CompletedTask;
     }
 
-    public void FeedByExternalId(ExternalId externalId, Account? account) =>
+    public void FeedByExternalId(ExternalId externalId, Account account) =>
         this.dataByExternalId.Add(externalId, account);
 
     public void Feed(params Account[] accounts) =>

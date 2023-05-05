@@ -1,5 +1,6 @@
 using MoneyManager.Client.Read.Infrastructure.AccountSummariesGateway;
 using MoneyManager.Client.Read.Infrastructure.Tests.TestDoubles;
+using MoneyManager.Shared.Presentation;
 
 namespace MoneyManager.Client.Read.Infrastructure.Tests;
 
@@ -26,8 +27,8 @@ public sealed class HttpAccountSummariesGatewayTests : IDisposable
     {
         AccountSummary[] expected =
         {
-            new(Guid.NewGuid(), "Bank", "Account A", 351.30m, false),
-            new(Guid.NewGuid(), "Other bank", "Account B", 8901.04m, true)
+            new(Guid.NewGuid(), Guid.NewGuid(), "Bank", "Account A", 351.30m, false),
+            new(Guid.NewGuid(), Guid.NewGuid(), "Other bank", "Account B", 8901.04m, true)
         };
         this.httpMessageHandler.SetResponseFor($"{ApiUrl}/accounts", expected);
 

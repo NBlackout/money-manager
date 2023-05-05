@@ -1,5 +1,6 @@
 ﻿using MoneyManager.Write.Application.Ports;
 using MoneyManager.Read.Infrastructure.DataSources.AccountSummaries;
+using MoneyManager.Shared.Presentation;
 using MoneyManager.Write.Infrastructure.Repositories;
 
 namespace MoneyManager.Read.Infrastructure.Tests;
@@ -45,11 +46,12 @@ public sealed class RepositoryAccountSummariesDataSourceTests : IDisposable
         this.accountRepository.Feed(checking.Build(), saving.Build(), unknown.Build());
 
         IReadOnlyCollection<AccountSummary> actual = await this.sut.Get();
-        actual.Should().Equal(
-            new AccountSummary(checking.Id, aBank.Name, checking.Label, checking.Balance, checking.Tracked),
-            new AccountSummary(saving.Id, aBank.Name, saving.Label, saving.Balance, saving.Tracked),
-            new AccountSummary(unknown.Id, anotherBank.Name, unknown.Label, unknown.Balance, unknown.Tracked)
-        );
+        actual.Should().Equal(new AccountSummary[]
+        {
+            new(checking.Id, aBank.Id, aBank.Name, checking.Label, checking.Balance, checking.Tracked),
+            new(saving.Id, aBank.Id, aBank.Name, saving.Label, saving.Balance, saving.Tracked),
+            new(unknown.Id, anotherBank.Id, anotherBank.Name, unknown.Label, unknown.Balance, unknown.Tracked)
+        });
     }
 
     public void Dispose() =>
