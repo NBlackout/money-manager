@@ -21,7 +21,10 @@ public class ImportBankStatementTests
     [Fact]
     public async Task Should_track_unknown_bank_and_account()
     {
-        BankBuilder bank = BankBuilder.For(Guid.NewGuid());
+        BankBuilder bank = BankBuilder.For(Guid.NewGuid()) with
+        {
+            ExternalId = "1234567890", Name = "1234567890"
+        };
         AccountBuilder account = AccountBuilder.For(Guid.NewGuid()) with
         {
             BankId = bank.Id, Number = "Number", Label = "Number", Tracked = true

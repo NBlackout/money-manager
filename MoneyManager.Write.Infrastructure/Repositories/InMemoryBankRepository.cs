@@ -5,6 +5,7 @@ public class InMemoryBankRepository : IBankRepository
     private readonly Dictionary<Guid, Bank> data = new();
     private readonly Dictionary<string, Bank?> dataByExternalId = new();
 
+    public Dictionary<Guid, Bank> Data => this.data;
     public Func<Guid> NextId { get; set; } = Guid.NewGuid;
 
     public Task<Guid> NextIdentity() =>
@@ -30,4 +31,10 @@ public class InMemoryBankRepository : IBankRepository
 
     public void Feed(params Bank[] banks) =>
         banks.ToList().ForEach(bank => this.data.Add(bank.Id, bank));
+
+    public void Clear()
+    {
+        this.data.Clear();
+        this.dataByExternalId.Clear();
+    }
 }
