@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MoneyManager.Read.Application.UseCases;
-using MoneyManager.Write.Application.UseCases;
-
-namespace MoneyManager.Api.Controllers;
+﻿namespace MoneyManager.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -37,7 +33,7 @@ public class AccountsController : ControllerBase
 
     [HttpPut]
     [Route("{id:guid}/label")]
-    public async Task AssignLabel(Guid id, AssignLabelDto dto) => 
+    public async Task AssignLabel(Guid id, AssignAccountLabelDto dto) => 
         await this.assignAccountLabel.Execute(id, dto.Label);
 
     [HttpPut]

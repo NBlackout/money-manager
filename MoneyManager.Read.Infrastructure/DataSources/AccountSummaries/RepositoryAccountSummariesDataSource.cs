@@ -24,6 +24,9 @@ public class RepositoryAccountSummariesDataSource : IAccountSummariesDataSource
         return Task.FromResult(summaries);
     }
 
-    private static AccountSummary ToSummary(Bank bank, Account account) =>
-        new(account.Id, bank.Snapshot.Name, account.Snapshot.Label, account.Snapshot.Balance, account.Snapshot.Tracked);
+    private static AccountSummary ToSummary(Bank bank, Account account)
+    {
+        return new AccountSummary(account.Id, bank.Id, bank.Snapshot.Name, account.Snapshot.Label,
+            account.Snapshot.Balance, account.Snapshot.Tracked);
+    }
 }

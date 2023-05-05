@@ -3,7 +3,7 @@ namespace MoneyManager.Write.Infrastructure.Repositories;
 public class InMemoryBankRepository : IBankRepository
 {
     private readonly Dictionary<Guid, Bank> data = new();
-    private readonly Dictionary<string, Bank?> dataByExternalId = new();
+    private readonly Dictionary<string, Bank> dataByExternalId = new();
 
     public Dictionary<Guid, Bank> Data => this.data;
     public Func<Guid> NextId { get; set; } = Guid.NewGuid;
@@ -15,7 +15,7 @@ public class InMemoryBankRepository : IBankRepository
         Task.FromResult(this.data[id]);
 
     public Task<Bank?> GetByExternalIdOrDefault(string externalId) =>
-        Task.FromResult(this.dataByExternalId[externalId]);
+        Task.FromResult(this.dataByExternalId.TryGetValue(externalId, out Bank? bank) ? bank : null);
 
     public Task Save(Bank bank)
     {
@@ -26,7 +26,7 @@ public class InMemoryBankRepository : IBankRepository
         return Task.CompletedTask;
     }
 
-    public void FeedByExternalId(string externalId, Bank? bank) =>
+    public void FeedByExternalId(string externalId, Bank bank) =>
         this.dataByExternalId.Add(externalId, bank);
 
     public void Feed(params Bank[] banks) =>

@@ -3,7 +3,7 @@
 public class Bank : DomainEntity
 {
     private readonly string externalId;
-    private readonly string name;
+    private string name;
 
     public BankSnapshot Snapshot =>
         new(this.Id, this.externalId, this.name);
@@ -22,4 +22,7 @@ public class Bank : DomainEntity
 
     public Account TrackAccount(Guid id, string accountNumber, decimal balance) =>
         Account.StartTracking(id, this.Id, accountNumber, balance);
+
+    public void AssignName(string newName) =>
+        this.name = newName;
 }

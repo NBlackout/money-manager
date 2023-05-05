@@ -1,2 +1,2 @@
 ﻿global using MoneyManager.Client.Read.Application.Ports;
-global using MoneyManager.Shared;
+global using MoneyManager.Shared.Presentation;

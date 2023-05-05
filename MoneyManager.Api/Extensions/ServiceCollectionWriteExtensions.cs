@@ -1,7 +1,4 @@
-﻿using MoneyManager.Write.Application.Model;
-using MoneyManager.Write.Application.Ports;
-using MoneyManager.Write.Application.UseCases;
-using MoneyManager.Write.Infrastructure.OfxProcessing;
+﻿using MoneyManager.Write.Infrastructure.OfxProcessing;
 using MoneyManager.Write.Infrastructure.Repositories;
 
 namespace MoneyManager.Api.Extensions;
@@ -15,6 +12,7 @@ public static class ServiceCollectionWriteExtensions
     {
         return services
             .AddScoped<ImportBankStatement>()
+            .AddScoped<AssignBankName>()
             .AddScoped<StopAccountTracking>()
             .AddScoped<ResumeAccountTracking>()
             .AddScoped<AssignAccountLabel>();
