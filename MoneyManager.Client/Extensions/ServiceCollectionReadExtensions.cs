@@ -1,6 +1,6 @@
 ﻿using MoneyManager.Client.Read.Application.Ports;
 using MoneyManager.Client.Read.Application.UseCases.AccountSummaries;
-using MoneyManager.Client.Read.Infrastructure.AccountSummariesGateway;
+using MoneyManager.Client.Read.Infrastructure.Gateways.AccountSummaries;
 
 namespace MoneyManager.Client.Extensions;
 

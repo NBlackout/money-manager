@@ -1,15 +1,15 @@
 using MoneyManager.Client.Read.Application.UseCases.AccountSummaries;
-using MoneyManager.Client.Read.Infrastructure.AccountSummariesGateway;
+using MoneyManager.Client.Read.Infrastructure.Gateways.AccountSummaries;
 using MoneyManager.Shared.Presentation;
 
-namespace MoneyManager.Client.Read.Application.Tests;
+namespace MoneyManager.Client.Read.Application.Tests.UseCases;
 
 public class GetAccountSummariesTests
 {
     [Fact]
     public async Task Should_retrieve_account_summaries()
     {
-        AccountSummary[] expected =
+        AccountSummaryPresentation[] expected =
         {
             new(Guid.NewGuid(), Guid.NewGuid(), "Another bank", "Checking account", 10000.00m, false),
             new(Guid.NewGuid(), Guid.NewGuid(), "Bank", "Saving account", 5500.12m, true)
@@ -17,7 +17,7 @@ public class GetAccountSummariesTests
         StubbedAccountSummariesGateway gateway = new(expected);
         GetAccountSummaries sut = new(gateway);
 
-        IReadOnlyCollection<AccountSummary> actual = await sut.Execute();
+        IReadOnlyCollection<AccountSummaryPresentation> actual = await sut.Execute();
 
         actual.Should().Equal(expected);
     }

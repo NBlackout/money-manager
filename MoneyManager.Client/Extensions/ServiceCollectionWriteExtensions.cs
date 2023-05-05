@@ -1,6 +1,6 @@
-﻿using MoneyManager.Client.Write.Infrastructure.AccountGateway;
-using MoneyManager.Client.Write.Infrastructure.BankGateway;
-using MoneyManager.Client.Write.Infrastructure.BankStatementGateway;
+﻿using MoneyManager.Client.Write.Infrastructure.Gateways.Account;
+using MoneyManager.Client.Write.Infrastructure.Gateways.Bank;
+using MoneyManager.Client.Write.Infrastructure.Gateways.BankStatement;
 
 namespace MoneyManager.Client.Extensions;
 

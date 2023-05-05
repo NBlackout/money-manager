@@ -1,4 +1,4 @@
-﻿namespace MoneyManager.Client.Write.Infrastructure.AccountGateway;
+﻿namespace MoneyManager.Client.Write.Infrastructure.Gateways.Account;
 
 public class SpyAccountGateway : IAccountGateway
 {

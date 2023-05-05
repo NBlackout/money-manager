@@ -21,7 +21,7 @@ public class AccountsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IReadOnlyCollection<AccountSummary>> Get() =>
+    public async Task<IReadOnlyCollection<AccountSummaryPresentation>> Get() =>
         await this.getAccountSummaries.Execute();
 
     [HttpPost]
@@ -33,12 +33,12 @@ public class AccountsController : ControllerBase
 
     [HttpPut]
     [Route("{id:guid}/label")]
-    public async Task AssignLabel(Guid id, AssignAccountLabelDto dto) => 
+    public async Task AssignLabel(Guid id, AccountLabelDto dto) => 
         await this.assignAccountLabel.Execute(id, dto.Label);
 
     [HttpPut]
     [Route("{id:guid}/tracking")]
-    public async Task ChangeTrackingStatus(Guid id, ChangeTrackingStatusDto dto)
+    public async Task ChangeTrackingStatus(Guid id, TrackingStatusDto dto)
     {
         if (dto.Enabled)
             await this.resumeAccountTracking.Execute(id);

@@ -1,4 +1,4 @@
-﻿namespace MoneyManager.Client.Write.Infrastructure.AccountGateway;
+﻿namespace MoneyManager.Client.Write.Infrastructure.Gateways.Account;
 
 public class HttpAccountGateway : IAccountGateway
 {
@@ -17,13 +17,13 @@ public class HttpAccountGateway : IAccountGateway
 
     public async Task AssignLabel(Guid id, string label)
     {
-        (await this.httpClient.PutAsJsonAsync($"accounts/{id}/label", new AssignAccountLabelDto(label)))
+        (await this.httpClient.PutAsJsonAsync($"accounts/{id}/label", new AccountLabelDto(label)))
             .EnsureSuccessStatusCode();
     }
 
     private async Task ChangeTrackingStatus(Guid id, bool enabled)
     {
-        (await this.httpClient.PutAsJsonAsync($"accounts/{id}/tracking", new ChangeTrackingStatusDto(enabled)))
+        (await this.httpClient.PutAsJsonAsync($"accounts/{id}/tracking", new TrackingStatusDto(enabled)))
             .EnsureSuccessStatusCode();
     }
 }

@@ -2,5 +2,5 @@
 
 public interface IAccountSummariesDataSource
 {
-    Task<IReadOnlyCollection<AccountSummary>> Get();
+    Task<IReadOnlyCollection<AccountSummaryPresentation>> Get();
 }

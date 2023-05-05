@@ -8,8 +8,8 @@ public partial class Accounts : ComponentBase
 {
     private const int OneMegaByte = 1024000;
 
-    private IReadOnlyCollection<AccountSummary>? accounts;
-    private AccountSummary? accountBeingEdited;
+    private IReadOnlyCollection<AccountSummaryPresentation>? accounts;
+    private AccountSummaryPresentation? accountBeingEdited;
     private string? uploadResult;
     private ElementReference labelInput;
     private ElementReference bankNameInput;
@@ -48,10 +48,10 @@ public partial class Accounts : ComponentBase
     private async Task LoadAccounts() =>
         this.accounts = await this.GetAccountSummaries.Execute();
 
-    private bool IsEditing(AccountSummary account) =>
+    private bool IsEditing(AccountSummaryPresentation account) =>
         this.accountBeingEdited == account;
 
-    private void ToggleEditMode(AccountSummary account) =>
+    private void ToggleEditMode(AccountSummaryPresentation account) =>
         this.accountBeingEdited = account;
 
     private void ExitEditMode() =>
@@ -71,7 +71,7 @@ public partial class Accounts : ComponentBase
         string newBankName = (string)args.Value!;
         await this.AssignBankName.Execute(this.accountBeingEdited!.BankId, newBankName);
 
-        foreach (AccountSummary bankAccount in this.accounts!.Where(a => a.BankId == this.accountBeingEdited.BankId))
+        foreach (AccountSummaryPresentation bankAccount in this.accounts!.Where(a => a.BankId == this.accountBeingEdited.BankId))
             this.Patch(bankAccount with { BankName = newBankName });
         this.ExitEditMode();
     }
@@ -85,22 +85,22 @@ public partial class Accounts : ComponentBase
         this.ExitEditMode();
     }
 
-    private async Task StopTracking(AccountSummary account)
+    private async Task StopTracking(AccountSummaryPresentation account)
     {
         await this.StopAccountTracking.Execute(account.Id);
         this.Patch(account with { Tracked = false });
     }
 
-    private async Task ResumeTracking(AccountSummary account)
+    private async Task ResumeTracking(AccountSummaryPresentation account)
     {
         await this.ResumeAccountTracking.Execute(account.Id);
         this.Patch(account with { Tracked = true });
     }
 
-    private void Patch(AccountSummary updatedAccount)
+    private void Patch(AccountSummaryPresentation updatedAccount)
     {
-        List<AccountSummary> updatedAccounts = this.accounts!.ToList();
-        AccountSummary account = updatedAccounts.Single(a => a.Id == updatedAccount.Id);
+        List<AccountSummaryPresentation> updatedAccounts = this.accounts!.ToList();
+        AccountSummaryPresentation account = updatedAccounts.Single(a => a.Id == updatedAccount.Id);
         int index = updatedAccounts.IndexOf(account);
         updatedAccounts[index] = updatedAccount;
 

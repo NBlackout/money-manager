@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Headers;
 
-namespace MoneyManager.Client.Write.Infrastructure.BankStatementGateway;
+namespace MoneyManager.Client.Write.Infrastructure.Gateways.BankStatement;
 
 public class HttpBankStatementGateway : IBankStatementGateway
 {

@@ -1,9 +1,9 @@
-﻿using MoneyManager.Write.Application.Ports;
-using MoneyManager.Read.Infrastructure.DataSources.AccountSummaries;
+﻿using MoneyManager.Read.Infrastructure.DataSources.AccountSummaries;
 using MoneyManager.Shared.Presentation;
+using MoneyManager.Write.Application.Ports;
 using MoneyManager.Write.Infrastructure.Repositories;
 
-namespace MoneyManager.Read.Infrastructure.Tests;
+namespace MoneyManager.Read.Infrastructure.Tests.DataSources;
 
 public sealed class RepositoryAccountSummariesDataSourceTests : IDisposable
 {
@@ -45,8 +45,8 @@ public sealed class RepositoryAccountSummariesDataSourceTests : IDisposable
         this.bankRepository.Feed(aBank.Build(), anotherBank.Build());
         this.accountRepository.Feed(checking.Build(), saving.Build(), unknown.Build());
 
-        IReadOnlyCollection<AccountSummary> actual = await this.sut.Get();
-        actual.Should().Equal(new AccountSummary[]
+        IReadOnlyCollection<AccountSummaryPresentation> actual = await this.sut.Get();
+        actual.Should().Equal(new AccountSummaryPresentation[]
         {
             new(checking.Id, aBank.Id, aBank.Name, checking.Label, checking.Balance, checking.Tracked),
             new(saving.Id, aBank.Id, aBank.Name, saving.Label, saving.Balance, saving.Tracked),
