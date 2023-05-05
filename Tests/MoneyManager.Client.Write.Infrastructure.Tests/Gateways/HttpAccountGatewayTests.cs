@@ -1,9 +1,9 @@
 ﻿using System.Text.Json;
 using MoneyManager.Client.Extensions;
-using MoneyManager.Client.Write.Infrastructure.AccountGateway;
+using MoneyManager.Client.Write.Infrastructure.Gateways.Account;
 using MoneyManager.Client.Write.Infrastructure.Tests.TestDoubles;
 
-namespace MoneyManager.Client.Write.Infrastructure.Tests;
+namespace MoneyManager.Client.Write.Infrastructure.Tests.Gateways;
 
 public sealed class HttpAccountGatewayTests : IDisposable
 {

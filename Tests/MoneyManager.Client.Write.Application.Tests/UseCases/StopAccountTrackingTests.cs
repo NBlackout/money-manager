@@ -1,6 +1,6 @@
-﻿using MoneyManager.Client.Write.Infrastructure.AccountGateway;
+﻿using MoneyManager.Client.Write.Infrastructure.Gateways.Account;
 
-namespace MoneyManager.Client.Write.Application.Tests;
+namespace MoneyManager.Client.Write.Application.Tests.UseCases;
 
 public class StopAccountTrackingTests
 {

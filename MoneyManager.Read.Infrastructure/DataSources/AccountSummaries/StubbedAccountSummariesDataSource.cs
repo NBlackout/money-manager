@@ -2,11 +2,11 @@
 
 public class StubbedAccountSummariesDataSource : IAccountSummariesDataSource
 {
-    private readonly IReadOnlyCollection<AccountSummary> data;
+    private readonly IReadOnlyCollection<AccountSummaryPresentation> data;
 
-    public StubbedAccountSummariesDataSource(IReadOnlyCollection<AccountSummary> data) =>
+    public StubbedAccountSummariesDataSource(IReadOnlyCollection<AccountSummaryPresentation> data) =>
         this.data = data;
 
-    public Task<IReadOnlyCollection<AccountSummary>> Get() =>
+    public Task<IReadOnlyCollection<AccountSummaryPresentation>> Get() =>
         Task.FromResult(this.data);
 }

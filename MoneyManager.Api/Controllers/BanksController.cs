@@ -13,6 +13,6 @@ public class BanksController : ControllerBase
 
     [HttpPut]
     [Route("{id:guid}/name")]
-    public async Task AssignName(Guid id, AssignBankNameDto dto) =>
+    public async Task AssignName(Guid id, BankNameDto dto) =>
         await this.assignBankName.Execute(id, dto.Name);
 }

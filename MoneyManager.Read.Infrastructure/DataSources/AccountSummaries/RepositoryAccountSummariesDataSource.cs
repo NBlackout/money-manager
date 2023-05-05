@@ -15,18 +15,18 @@ public class RepositoryAccountSummariesDataSource : IAccountSummariesDataSource
         this.accountRepository = accountRepository;
     }
 
-    public Task<IReadOnlyCollection<AccountSummary>> Get()
+    public Task<IReadOnlyCollection<AccountSummaryPresentation>> Get()
     {
-        IReadOnlyCollection<AccountSummary> summaries = this.accountRepository.Data
+        IReadOnlyCollection<AccountSummaryPresentation> summaries = this.accountRepository.Data
             .Select(account => ToSummary(this.bankRepository.Data[account.Snapshot.BankId], account))
             .ToList();
 
         return Task.FromResult(summaries);
     }
 
-    private static AccountSummary ToSummary(Bank bank, Account account)
+    private static AccountSummaryPresentation ToSummary(Bank bank, Account account)
     {
-        return new AccountSummary(account.Id, bank.Id, bank.Snapshot.Name, account.Snapshot.Label,
+        return new AccountSummaryPresentation(account.Id, bank.Id, bank.Snapshot.Name, account.Snapshot.Label,
             account.Snapshot.Balance, account.Snapshot.Tracked);
     }
 }

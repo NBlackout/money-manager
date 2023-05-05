@@ -1,6 +1,6 @@
-﻿using MoneyManager.Client.Write.Infrastructure.BankStatementGateway;
+﻿using MoneyManager.Client.Write.Infrastructure.Gateways.BankStatement;
 
-namespace MoneyManager.Client.Write.Application.Tests;
+namespace MoneyManager.Client.Write.Application.Tests.UseCases;
 
 public class UploadBankStatementTests
 {

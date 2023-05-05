@@ -1,8 +1,8 @@
-using MoneyManager.Client.Read.Infrastructure.AccountSummariesGateway;
+using MoneyManager.Client.Read.Infrastructure.Gateways.AccountSummaries;
 using MoneyManager.Client.Read.Infrastructure.Tests.TestDoubles;
 using MoneyManager.Shared.Presentation;
 
-namespace MoneyManager.Client.Read.Infrastructure.Tests;
+namespace MoneyManager.Client.Read.Infrastructure.Tests.Gateways;
 
 public sealed class HttpAccountSummariesGatewayTests : IDisposable
 {
@@ -25,14 +25,14 @@ public sealed class HttpAccountSummariesGatewayTests : IDisposable
     [Fact]
     public async Task Should_retrieve_account_summaries()
     {
-        AccountSummary[] expected =
+        AccountSummaryPresentation[] expected =
         {
             new(Guid.NewGuid(), Guid.NewGuid(), "Bank", "Account A", 351.30m, false),
             new(Guid.NewGuid(), Guid.NewGuid(), "Other bank", "Account B", 8901.04m, true)
         };
         this.httpMessageHandler.SetResponseFor($"{ApiUrl}/accounts", expected);
 
-        IReadOnlyCollection<AccountSummary> actual = await this.sut.Get();
+        IReadOnlyCollection<AccountSummaryPresentation> actual = await this.sut.Get();
         actual.Should().Contain(expected);
     }
 

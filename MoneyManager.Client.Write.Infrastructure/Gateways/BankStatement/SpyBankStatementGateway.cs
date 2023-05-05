@@ -1,4 +1,4 @@
-﻿namespace MoneyManager.Client.Write.Infrastructure.BankStatementGateway;
+﻿namespace MoneyManager.Client.Write.Infrastructure.Gateways.BankStatement;
 
 public class SpyBankStatementGateway : IBankStatementGateway
 {

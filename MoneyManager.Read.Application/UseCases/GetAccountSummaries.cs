@@ -9,6 +9,6 @@ public class GetAccountSummaries
         this.dataSource = dataSource;
     }
 
-    public async Task<IReadOnlyCollection<AccountSummary>> Execute() =>
+    public async Task<IReadOnlyCollection<AccountSummaryPresentation>> Execute() =>
         await this.dataSource.Get();
 }

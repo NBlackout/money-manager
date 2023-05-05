@@ -1,4 +1,4 @@
-﻿namespace MoneyManager.Client.Write.Infrastructure.BankGateway;
+﻿namespace MoneyManager.Client.Write.Infrastructure.Gateways.Bank;
 
 public class HttpBankGateway : IBankGateway
 {
@@ -11,7 +11,7 @@ public class HttpBankGateway : IBankGateway
 
     public async Task AssignName(Guid id, string name)
     {
-        (await this.httpClient.PutAsJsonAsync($"banks/{id}/name", new AssignBankNameDto(name)))
+        (await this.httpClient.PutAsJsonAsync($"banks/{id}/name", new BankNameDto(name)))
             .EnsureSuccessStatusCode();
     }
 }

@@ -1,6 +1,6 @@
-﻿using MoneyManager.Client.Write.Infrastructure.BankGateway;
+﻿using MoneyManager.Client.Write.Infrastructure.Gateways.Bank;
 
-namespace MoneyManager.Client.Write.Application.Tests;
+namespace MoneyManager.Client.Write.Application.Tests.UseCases;
 
 public class AssignBankNameTests
 {

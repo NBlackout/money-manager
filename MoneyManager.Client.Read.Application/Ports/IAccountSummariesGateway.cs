@@ -2,5 +2,5 @@
 
 public interface IAccountSummariesGateway
 {
-    Task<IReadOnlyCollection<AccountSummary>> Get();
+    Task<IReadOnlyCollection<AccountSummaryPresentation>> Get();
 }
