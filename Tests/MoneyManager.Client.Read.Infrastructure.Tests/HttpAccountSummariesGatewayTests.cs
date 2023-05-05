@@ -26,8 +26,8 @@ public sealed class HttpAccountSummariesGatewayTests : IDisposable
     {
         AccountSummary[] expected =
         {
-            new(Guid.NewGuid(), "Account A", 351.30m, false),
-            new(Guid.NewGuid(), "Account B", 8901.04m, true)
+            new(Guid.NewGuid(), "Bank", "Account A", 351.30m, false),
+            new(Guid.NewGuid(), "Other bank", "Account B", 8901.04m, true)
         };
         this.httpMessageHandler.SetResponseFor($"{ApiUrl}/accounts", expected);
 

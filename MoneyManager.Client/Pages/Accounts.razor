@@ -23,6 +23,7 @@ else
         <thead class="table-light">
         <tr>
             <th>Id</th>
+            <th>Bank</th>
             <th>Label</th>
             <th>Balance</th>
             <th>Tracking</th>
@@ -33,6 +34,7 @@ else
         {
             <tr>
                 <td>@account.Id</td>
+                <td>@account.BankName</td>
                 <td>
                     @if (IsEditing(account))
                     {

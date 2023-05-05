@@ -10,8 +10,8 @@ public class GetAccountSummariesTests
     {
         AccountSummary[] expected =
         {
-            new(Guid.NewGuid(), "A label", 12.34m, true),
-            new(Guid.NewGuid(), "Another label", 56.78m, false)
+            new(Guid.NewGuid(), "It's a bank", "A label", 12.34m, true),
+            new(Guid.NewGuid(), "Big bank", "Another label", 56.78m, false)
         };
         GetAccountSummaries sut = new(new StubbedAccountSummariesDataSource(expected));
 

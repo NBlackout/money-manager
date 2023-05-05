@@ -27,8 +27,8 @@ public static class ServiceCollectionWriteExtensions
     {
         InMemoryBankRepository bankRepository = new();
         bankRepository.Feed(
-            Bank.From(new BankSnapshot(Guid.Parse("25B71ECF-9514-4A75-874A-FCFB651D4928"), "4150012")),
-            Bank.From(new BankSnapshot(Guid.Parse("0B9D0446-4E2D-45AE-9E90-47D3233EE10F"), "4150012"))
+            Bank.From(new BankSnapshot(Guid.Parse("25B71ECF-9514-4A75-874A-FCFB651D4928"), "4150012", "My bank")),
+            Bank.From(new BankSnapshot(Guid.Parse("0B9D0446-4E2D-45AE-9E90-47D3233EE10F"), "09414", "Other bank"))
         );
         InMemoryAccountRepository accountRepository = new();
         accountRepository.Feed(

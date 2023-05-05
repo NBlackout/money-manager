@@ -10,8 +10,8 @@ public class GetAccountSummariesTests
     {
         AccountSummary[] expected =
         {
-            new(Guid.NewGuid(), "Checking account", 10000.00m, false),
-            new(Guid.NewGuid(), "Saving account", 5500.12m, true)
+            new(Guid.NewGuid(), "Another bank", "Checking account", 10000.00m, false),
+            new(Guid.NewGuid(), "Bank", "Saving account", 5500.12m, true)
         };
         StubbedAccountSummariesGateway gateway = new(expected);
         GetAccountSummaries sut = new(gateway);
