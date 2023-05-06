@@ -112,15 +112,15 @@ public class ImportBankStatementTests
     {
         await this.sut.Execute(stream);
 
-        Bank actualBank = await this.bankRepository.GetById(expectedBank.Id);
+        Bank actualBank = await this.bankRepository.ById(expectedBank.Id);
         actualBank.Snapshot.Should().Be(expectedBank.Build().Snapshot);
 
-        Account actualAccount = await this.accountRepository.GetById(expectedAccount.Id);
+        Account actualAccount = await this.accountRepository.ById(expectedAccount.Id);
         actualAccount.Snapshot.Should().Be(expectedAccount.Build().Snapshot);
 
         foreach (TransactionBuilder expectedTransaction in expectedTransactions)
         {
-            Transaction actualTransaction = await this.transactionRepository.GetById(expectedTransaction.Id);
+            Transaction actualTransaction = await this.transactionRepository.ById(expectedTransaction.Id);
             actualTransaction.Snapshot.Should().Be(expectedTransaction.Build().Snapshot);
         }
     }

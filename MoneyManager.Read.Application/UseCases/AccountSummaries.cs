@@ -1,10 +1,10 @@
 ﻿namespace MoneyManager.Read.Application.UseCases;
 
-public class GetAccountSummaries
+public class AccountSummaries
 {
     private readonly IAccountSummariesDataSource dataSource;
 
-    public GetAccountSummaries(IAccountSummariesDataSource dataSource)
+    public AccountSummaries(IAccountSummariesDataSource dataSource)
     {
         this.dataSource = dataSource;
     }

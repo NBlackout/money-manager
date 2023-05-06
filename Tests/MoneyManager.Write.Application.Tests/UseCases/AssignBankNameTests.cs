@@ -20,7 +20,7 @@ public class AssignBankNameTests
         const string newName = "The new and much better name";
         await this.sut.Execute(bank.Id, newName);
 
-        Bank actual = await this.repository.GetById(bank.Id);
+        Bank actual = await this.repository.ById(bank.Id);
         actual.Snapshot.Should().Be(bank.Snapshot with { Name = newName });
     }
 }

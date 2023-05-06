@@ -14,7 +14,7 @@ public partial class Accounts : ComponentBase
     private ElementReference labelInput;
     private ElementReference bankNameInput;
 
-    [Inject] private GetAccountSummaries GetAccountSummaries { get; set; } = null!;
+    [Inject] private AccountSummaries AccountSummaries { get; set; } = null!;
     [Inject] private UploadBankStatement UploadBankStatement { get; set; } = null!;
     [Inject] private StopAccountTracking StopAccountTracking { get; set; } = null!;
     [Inject] private ResumeAccountTracking ResumeAccountTracking { get; set; } = null!;
@@ -46,7 +46,7 @@ public partial class Accounts : ComponentBase
     }
 
     private async Task LoadAccounts() =>
-        this.accounts = await this.GetAccountSummaries.Execute();
+        this.accounts = await this.AccountSummaries.Execute();
 
     private bool IsEditing(AccountSummaryPresentation account) =>
         this.accountBeingEdited == account;

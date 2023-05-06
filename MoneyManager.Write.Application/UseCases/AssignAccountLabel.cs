@@ -11,7 +11,7 @@ public class AssignAccountLabel
 
     public async Task Execute(Guid id, string label)
     {
-        Account account = await this.repository.GetById(id);
+        Account account = await this.repository.ById(id);
         account.AssignLabel(label);
         await this.repository.Save(account);
     }

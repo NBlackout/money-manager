@@ -11,7 +11,7 @@ public class ResumeAccountTracking
 
     public async Task Execute(Guid id)
     {
-        Account account = await this.repository.GetById(id);
+        Account account = await this.repository.ById(id);
         account.ResumeTracking();
         await this.repository.Save(account);
     }

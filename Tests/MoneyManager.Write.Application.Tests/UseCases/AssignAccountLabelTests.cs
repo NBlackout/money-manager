@@ -19,7 +19,7 @@ public class AssignAccountLabelTests
 
         await this.sut.Execute(account.Id, "My account label");
 
-        Account actual = await this.repository.GetById(account.Id);
+        Account actual = await this.repository.ById(account.Id);
         actual.Snapshot.Should().Be(account.Snapshot with { Label = "My account label" });
     }
 }

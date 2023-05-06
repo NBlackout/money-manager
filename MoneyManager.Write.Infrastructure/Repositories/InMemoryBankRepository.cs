@@ -11,10 +11,10 @@ public class InMemoryBankRepository : IBankRepository
     public Task<Guid> NextIdentity() =>
         Task.FromResult(this.NextId());
 
-    public Task<Bank> GetById(Guid id) =>
+    public Task<Bank> ById(Guid id) =>
         Task.FromResult(this.data[id]);
 
-    public Task<Bank?> GetByExternalIdOrDefault(string externalId) =>
+    public Task<Bank?> ByExternalIdOrDefault(string externalId) =>
         Task.FromResult(this.dataByExternalId.TryGetValue(externalId, out Bank? bank) ? bank : null);
 
     public Task Save(Bank bank)
