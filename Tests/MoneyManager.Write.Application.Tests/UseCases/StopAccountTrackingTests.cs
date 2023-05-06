@@ -19,7 +19,7 @@ public class StopAccountTrackingTests
 
         await this.sut.Execute(existing.Id);
 
-        Account actual = await this.repository.GetById(existing.Id);
+        Account actual = await this.repository.ById(existing.Id);
         actual.Snapshot.Should().Be(existing.Snapshot with { Tracked = false });
     }
 }

@@ -4,7 +4,7 @@ using MoneyManager.Shared.Presentation;
 
 namespace MoneyManager.Client.Read.Application.Tests.UseCases;
 
-public class GetAccountSummariesTests
+public class AccountSummariesTests
 {
     [Fact]
     public async Task Should_retrieve_account_summaries()
@@ -15,7 +15,7 @@ public class GetAccountSummariesTests
             new(Guid.NewGuid(), Guid.NewGuid(), "Bank", "Saving account", 5500.12m, DateTime.Now.AddDays(3), true)
         };
         StubbedAccountSummariesGateway gateway = new(expected);
-        GetAccountSummaries sut = new(gateway);
+        AccountSummaries sut = new(gateway);
 
         IReadOnlyCollection<AccountSummaryPresentation> actual = await sut.Execute();
 

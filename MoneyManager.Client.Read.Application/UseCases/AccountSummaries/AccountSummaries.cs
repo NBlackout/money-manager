@@ -1,10 +1,10 @@
 ﻿namespace MoneyManager.Client.Read.Application.UseCases.AccountSummaries;
 
-public class GetAccountSummaries
+public class AccountSummaries
 {
     private readonly IAccountSummariesGateway gateway;
 
-    public GetAccountSummaries(IAccountSummariesGateway gateway)
+    public AccountSummaries(IAccountSummariesGateway gateway)
     {
         this.gateway = gateway;
     }

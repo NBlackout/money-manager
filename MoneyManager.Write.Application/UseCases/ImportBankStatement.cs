@@ -23,14 +23,14 @@ public class ImportBankStatement
         Bank bank = await this.EnsureBankExists(statement);
         Account account = await this.EnsureAccountIsTracked(bank, statement);
         account.Synchronize(statement.Balance, statement.BalanceDate);
-        Transaction[] transactions = await this.GetUnknownTransactions(account, statement);
+        Transaction[] transactions = await this.UnknownTransactions(account, statement);
 
         await this.Save(bank, account, transactions);
     }
 
     private async Task<Bank> EnsureBankExists(AccountStatement statement)
     {
-        Bank? bank = await this.bankRepository.GetByExternalIdOrDefault(statement.BankIdentifier);
+        Bank? bank = await this.bankRepository.ByExternalIdOrDefault(statement.BankIdentifier);
         if (bank != null)
             return bank;
 
@@ -42,7 +42,7 @@ public class ImportBankStatement
     private async Task<Account> EnsureAccountIsTracked(Bank bank, AccountStatement statement)
     {
         ExternalId externalId = new(bank.Id, statement.AccountNumber);
-        Account? account = await this.accountRepository.GetByExternalIdOrDefault(externalId);
+        Account? account = await this.accountRepository.ByExternalIdOrDefault(externalId);
         if (account != null)
             return account;
 
@@ -51,21 +51,21 @@ public class ImportBankStatement
         return bank.TrackAccount(id, statement.AccountNumber, statement.Balance, statement.BalanceDate);
     }
 
-    private async Task<Transaction[]> GetUnknownTransactions(Account account, AccountStatement statement)
+    private async Task<Transaction[]> UnknownTransactions(Account account, AccountStatement statement)
     {
         Dictionary<string, TransactionStatement> transactionStatements =
             statement.Transactions.ToDictionary(t => t.TransactionIdentifier);
         IReadOnlyCollection<string> unknownExternalIds =
-            await this.transactionRepository.GetUnknownExternalIds(transactionStatements.Keys);
+            await this.transactionRepository.UnknownExternalIds(transactionStatements.Keys);
 
         List<Task<Transaction>> unknownTransactionTasks = unknownExternalIds.Select(unknownExternalId =>
-            this.GetUnknownTransaction(account, transactionStatements[unknownExternalId])).ToList();
+            this.UnknownTransaction(account, transactionStatements[unknownExternalId])).ToList();
         await Task.WhenAll(unknownTransactionTasks);
 
         return unknownTransactionTasks.Select(task => task.Result).ToArray();
     }
 
-    private async Task<Transaction> GetUnknownTransaction(Account account, TransactionStatement statement)
+    private async Task<Transaction> UnknownTransaction(Account account, TransactionStatement statement)
     {
         Guid id = await this.transactionRepository.NextIdentity();
 

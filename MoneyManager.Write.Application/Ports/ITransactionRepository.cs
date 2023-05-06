@@ -3,6 +3,6 @@
 public interface ITransactionRepository
 {
     Task<Guid> NextIdentity();
-    Task<IReadOnlyCollection<string>> GetUnknownExternalIds(IEnumerable<string> externalIds);
+    Task<IReadOnlyCollection<string>> UnknownExternalIds(IEnumerable<string> externalIds);
     Task Save(Transaction transaction);
 }

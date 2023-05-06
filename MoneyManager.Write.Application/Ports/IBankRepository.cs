@@ -3,7 +3,7 @@
 public interface IBankRepository
 {
     Task<Guid> NextIdentity();
-    Task<Bank> GetById(Guid id);
-    Task<Bank?> GetByExternalIdOrDefault(string externalId);
+    Task<Bank> ById(Guid id);
+    Task<Bank?> ByExternalIdOrDefault(string externalId);
     Task Save(Bank bank);
 }

@@ -46,14 +46,16 @@ public sealed class RepositoryAccountSummariesDataSourceTests : IDisposable
         this.accountRepository.Feed(checking.Build(), saving.Build(), notTracked.Build());
 
         IReadOnlyCollection<AccountSummaryPresentation> actual = await this.sut.Get();
-        actual.Should().Equal(new AccountSummaryPresentation[]
-        {
-            new(checking.Id, aBank.Id, aBank.Name, checking.Label, checking.Balance, checking.BalanceDate, checking.Tracked),
-            new(saving.Id, aBank.Id, aBank.Name, saving.Label, saving.Balance, saving.BalanceDate, saving.Tracked),
-            new(notTracked.Id, anotherBank.Id, anotherBank.Name, notTracked.Label, notTracked.Balance, notTracked.BalanceDate, notTracked.Tracked)
-        });
+        actual.Should().Equal(
+            PresentationFrom(checking, aBank),
+            PresentationFrom(saving, aBank),
+            PresentationFrom(notTracked, anotherBank)
+        );
     }
 
     public void Dispose() =>
         this.host.Dispose();
+
+    private static AccountSummaryPresentation PresentationFrom(AccountBuilder account, BankBuilder bank) =>
+        new(account.Id, bank.Id, bank.Name, account.Label, account.Balance, account.BalanceDate, account.Tracked);
 }

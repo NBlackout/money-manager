@@ -11,7 +11,7 @@ public class AssignBankName
 
     public async Task Execute(Guid id, string name)
     {
-        Bank bank = await this.repository.GetById(id);
+        Bank bank = await this.repository.ById(id);
         bank.AssignName(name);
         await this.repository.Save(bank);
     }

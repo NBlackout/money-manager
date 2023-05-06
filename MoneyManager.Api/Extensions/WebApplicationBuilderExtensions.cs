@@ -20,6 +20,7 @@ public static class WebApplicationBuilderExtensions
 
     private static IServiceCollection AddBlazorDependencies(this IServiceCollection services)
     {
+        services.AddRouting(options => options.LowercaseUrls = true);
         services.AddControllersWithViews();
         services.AddRazorPages();
 

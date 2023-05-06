@@ -9,7 +9,7 @@ public static class ServiceCollectionReadExtensions
     public static IServiceCollection AddReadDependencies(this IServiceCollection services)
     {
         return services
-            .AddScoped<GetAccountSummaries>()
+            .AddScoped<AccountSummaries>()
             .AddScoped<IAccountSummariesGateway, HttpAccountSummariesGateway>();
     }
 }

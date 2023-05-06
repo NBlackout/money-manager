@@ -11,10 +11,10 @@ public class InMemoryAccountRepository : IAccountRepository
     public Task<Guid> NextIdentity() =>
         Task.FromResult(this.NextId());
 
-    public Task<Account> GetById(Guid id) =>
+    public Task<Account> ById(Guid id) =>
         Task.FromResult(this.data[id]);
 
-    public Task<Account?> GetByExternalIdOrDefault(ExternalId externalId) =>
+    public Task<Account?> ByExternalIdOrDefault(ExternalId externalId) =>
         Task.FromResult(this.dataByExternalId.TryGetValue(externalId, out Account? account) ? account : null);
 
     public Task Save(Account account)
