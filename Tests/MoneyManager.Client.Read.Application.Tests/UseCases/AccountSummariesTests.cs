@@ -1,6 +1,4 @@
-using MoneyManager.Client.Read.Application.UseCases.AccountSummaries;
 using MoneyManager.Client.Read.Infrastructure.Gateways.AccountSummaries;
-using MoneyManager.Shared.Presentation;
 
 namespace MoneyManager.Client.Read.Application.Tests.UseCases;
 

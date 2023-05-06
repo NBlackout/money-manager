@@ -1,4 +1,4 @@
-﻿namespace MoneyManager.Client.Read.Application.UseCases.AccountSummaries;
+﻿namespace MoneyManager.Client.Read.Application.UseCases;
 
 public class AccountSummaries
 {

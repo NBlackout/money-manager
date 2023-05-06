@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
-using MoneyManager.Client.Read.Application.UseCases.AccountSummaries;
+﻿using Microsoft.AspNetCore.Components.Forms;
 
 namespace MoneyManager.Client.Pages;
 
@@ -20,6 +18,7 @@ public partial class Accounts : ComponentBase
     [Inject] private ResumeAccountTracking ResumeAccountTracking { get; set; } = null!;
     [Inject] private AssignAccountLabel AssignAccountLabel { get; set; } = null!;
     [Inject] private AssignBankName AssignBankName { get; set; } = null!;
+    [Inject] private NavigationManager NavigationManager { get; set; } = null!;
 
     protected override async Task OnInitializedAsync() =>
         await this.LoadAccounts();
@@ -51,8 +50,10 @@ public partial class Accounts : ComponentBase
     private bool IsEditing(AccountSummaryPresentation account) =>
         this.accountBeingEdited == account;
 
-    private void ToggleEditMode(AccountSummaryPresentation account) =>
+    private void ToggleEditMode(AccountSummaryPresentation account)
+    {
         this.accountBeingEdited = account;
+    }
 
     private void ExitEditMode() =>
         this.accountBeingEdited = null;
@@ -64,6 +65,12 @@ public partial class Accounts : ComponentBase
         Stream stream = file.OpenReadStream(OneMegaByte);
 
         await this.UploadBankStatement.Execute(fileName, contentType, stream);
+    }
+
+    private void NavigateToAccount(Guid accountId)
+    {
+        if (this.accountBeingEdited == null)
+            this.NavigationManager.NavigateTo($"accounts/{accountId}");
     }
 
     private async Task BankNameChanged(ChangeEventArgs args)
