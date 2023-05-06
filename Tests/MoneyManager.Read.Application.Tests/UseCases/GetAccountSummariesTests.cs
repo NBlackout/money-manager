@@ -11,8 +11,8 @@ public class GetAccountSummariesTests
     {
         AccountSummaryPresentation[] expected =
         {
-            new(Guid.NewGuid(), Guid.NewGuid(), "It's a bank", "A label", 12.34m, true),
-            new(Guid.NewGuid(), Guid.NewGuid(), "Big bank", "Another label", 56.78m, false)
+            new(Guid.NewGuid(), Guid.NewGuid(), "It's a bank", "A label", 12.34m, DateTime.Now.AddMonths(3), true),
+            new(Guid.NewGuid(), Guid.NewGuid(), "Big bank", "Another label", 56.78m, DateTime.Now.AddDays(24), false)
         };
         GetAccountSummaries sut = new(new StubbedAccountSummariesDataSource(expected));
 

@@ -31,13 +31,16 @@ public static class ServiceCollectionWriteExtensions
         InMemoryAccountRepository accountRepository = new();
         accountRepository.Feed(
             Account.From(new AccountSnapshot(Guid.Parse("1A87A411-BBEB-4FB0-83E7-539CF5EFBE6C"),
-                Guid.Parse("25B71ECF-9514-4A75-874A-FCFB651D4928"), "1234567890", "Compte joint", 12345.67m, true)
+                Guid.Parse("25B71ECF-9514-4A75-874A-FCFB651D4928"), "1234567890", "Compte joint", 12345.67m,
+                DateTime.Parse("2023-03-30"), true)
             ),
             Account.From(new AccountSnapshot(Guid.Parse("603F21F4-CE85-42AB-9E7E-87C9CFFE0F6D"),
-                Guid.Parse("0B9D0446-4E2D-45AE-9E90-47D3233EE10F"), "0987654321", "Livret", 89.00m, true)
+                Guid.Parse("0B9D0446-4E2D-45AE-9E90-47D3233EE10F"), "0987654321", "Livret", 89.00m,
+                DateTime.Parse("2022-06-17"), true)
             ),
             Account.From(new AccountSnapshot(Guid.Parse("2981760C-A17B-4ECF-B828-AB89CCD1B11A"),
-                Guid.Parse("25B71ECF-9514-4A75-874A-FCFB651D4928"), "ABC123ABC", "Epargne", 1000.00m, false)
+                Guid.Parse("25B71ECF-9514-4A75-874A-FCFB651D4928"), "ABC123ABC", "Epargne", 1000.00m,
+                DateTime.Parse("2023-01-12"), false)
             )
         );
 

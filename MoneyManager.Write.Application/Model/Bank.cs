@@ -20,8 +20,8 @@ public class Bank : DomainEntity
     public static Bank Track(Guid id, string bankIdentifier) =>
         new(id, bankIdentifier, bankIdentifier);
 
-    public Account TrackAccount(Guid id, string accountNumber, decimal balance) =>
-        Account.StartTracking(id, this.Id, accountNumber, balance);
+    public Account TrackAccount(Guid id, string accountNumber, decimal balance, DateTime balanceDate) =>
+        Account.StartTracking(id, this.Id, accountNumber, balance, balanceDate);
 
     public void AssignName(string newName) =>
         this.name = newName;

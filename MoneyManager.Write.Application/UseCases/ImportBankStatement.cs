@@ -29,10 +29,10 @@ public class ImportBankStatement
         if (account == null)
         {
             Guid id = await this.accountRepository.NextIdentity();
-            account = bank.TrackAccount(id, statement.AccountNumber, statement.Balance);
+            account = bank.TrackAccount(id, statement.AccountNumber, statement.Balance, statement.BalanceDate);
         }
         else
-            account.Synchronize(statement.Balance);
+            account.Synchronize(statement.Balance, statement.BalanceDate);
 
         await this.bankRepository.Save(bank);
         await this.accountRepository.Save(account);

@@ -60,15 +60,14 @@ public class ImportBankStatementTests
         this.FeedByExternalId(bank);
         AccountBuilder account = AccountBuilder.For(Guid.NewGuid()) with
         {
-            BankId = bank.Id, Balance = 100.00m, Tracked = true
+            BankId = bank.Id, Balance = 100.00m, BalanceDate = DateTime.Today.AddDays(-12), Tracked = true
         };
         this.FeedByExternalId(account);
 
-        const decimal newBalance = 1337.42m;
-        this.ofxParser.SetAccountStatementFor(TheStream,
-            AccountStatementFrom(bank, account) with { Balance = newBalance });
+        AccountBuilder expected = account with { Balance = 1337.42m, BalanceDate = DateTime.Today };
+        this.ofxParser.SetAccountStatementFor(TheStream, AccountStatementFrom(bank, expected));
 
-        await this.Verify_ImportTransactions(TheStream, bank, account with { Balance = newBalance });
+        await this.Verify_ImportTransactions(TheStream, bank, expected);
     }
 
     [Fact]
@@ -102,7 +101,7 @@ public class ImportBankStatementTests
         this.accountRepository.FeedByExternalId(new ExternalId(account.BankId, account.Number), account.Build());
 
     private static AccountStatement AccountStatementFrom(BankBuilder bank, AccountBuilder account) =>
-        new(bank.ExternalId, account.Number, account.Balance);
+        new(bank.ExternalId, account.Number, account.Balance, account.BalanceDate);
 
     internal static class Data
     {
