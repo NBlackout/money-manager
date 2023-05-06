@@ -1,4 +1,4 @@
-﻿namespace MoneyManager.Write.Application.Model;
+﻿namespace MoneyManager.Write.Application.Model.Accounts;
 
 public class Account : DomainEntity
 {
@@ -47,4 +47,7 @@ public class Account : DomainEntity
 
     public void AssignLabel(string newLabel) =>
         this.label = newLabel;
+
+    public Transaction AttachTransaction(Guid transactionId, string transactionIdentifier) => 
+        Transaction.Of(transactionId, this.Id, transactionIdentifier);
 }

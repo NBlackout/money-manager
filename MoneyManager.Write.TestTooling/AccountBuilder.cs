@@ -1,4 +1,6 @@
-﻿namespace MoneyManager.Write.TestTooling;
+﻿using MoneyManager.Write.Application.Model.Accounts;
+
+namespace MoneyManager.Write.TestTooling;
 
 public record AccountBuilder(Guid Id, Guid BankId, string Number, string Label, decimal Balance, DateTime BalanceDate,
     bool Tracked)

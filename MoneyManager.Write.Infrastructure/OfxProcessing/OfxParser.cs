@@ -9,41 +9,46 @@ public class OfxParser : IOfxParser
         XmlSerializer serializer = new(typeof(Ofx));
         Ofx root = (Ofx)serializer.Deserialize(stream)!;
 
-        Statement? statement = root.Bank?.StatementTransaction?.Statement;
-        if (statement?.BankAccount?.BankIdentifier is null)
+        StatementResponse statementResponse = root.BankMessageSetResponse!.StatementResponses.First();
+        AvailableBalance? availableBalance = statementResponse.AvailableBalance;
+
+        if (statementResponse.BankAccount?.BankIdentifier is null)
             throw CannotProcessOfxContent.DueToMissingBankIdentifierNode();
-        if (statement.BankAccount?.AccountNumber is null)
+        if (statementResponse.BankAccount?.AccountNumber is null)
             throw CannotProcessOfxContent.DueToMissingAccountNumberNode();
-        if (statement.AvailableBalance is null || statement.AvailableBalance.Amount.HasValue is false)
+        if (availableBalance is null || availableBalance.Amount.HasValue is false)
             throw CannotProcessOfxContent.DueToMissingBalanceNode();
 
-        decimal balance = statement.AvailableBalance.Amount.Value;
-        DateTime balanceDate = statement.AvailableBalance.Date!.Value;
+        decimal balance = availableBalance.Amount.Value;
+        DateTime balanceDate = availableBalance.Date!.Value;
+        TransactionStatement[] transactions = statementResponse.StatementTransactions
+            .Select(t => new TransactionStatement(t.Identifier!)).ToArray();
 
-        return Task.FromResult(new AccountStatement(statement.BankAccount.BankIdentifier,
-            statement.BankAccount.AccountNumber, balance, balanceDate));
+        return Task.FromResult(new AccountStatement(statementResponse.BankAccount.BankIdentifier,
+            statementResponse.BankAccount.AccountNumber, balance, balanceDate, transactions));
     }
 
     [XmlRoot("OFX")]
     public class Ofx
     {
-        [XmlElement("BANKMSGSRSV1")] public Bank? Bank { get; init; }
+        [XmlElement("BANKMSGSRSV1")] public BankMessageSetResponse? BankMessageSetResponse { get; init; }
     }
 
-    public class Bank
+    public class BankMessageSetResponse
     {
-        [XmlElement("STMTTRNRS")] public StatementTransaction? StatementTransaction { get; init; }
+        [XmlArray("STMTTRNRS")]
+        [XmlArrayItem("STMTRS")]
+        public StatementResponse[] StatementResponses { get; init; } = Array.Empty<StatementResponse>();
     }
 
-    public class StatementTransaction
-    {
-        [XmlElement("STMTRS")] public Statement? Statement { get; init; }
-    }
-
-    public class Statement
+    public class StatementResponse
     {
         [XmlElement("BANKACCTFROM")] public BankAccount? BankAccount { get; init; }
         [XmlElement("AVAILBAL")] public AvailableBalance? AvailableBalance { get; init; }
+
+        [XmlArray("BANKTRANLIST")]
+        [XmlArrayItem("STMTTRN")]
+        public StatementTransaction[] StatementTransactions { get; init; } = Array.Empty<StatementTransaction>();
     }
 
     public class BankAccount
@@ -55,8 +60,13 @@ public class OfxParser : IOfxParser
     public class AvailableBalance
     {
         [XmlElement("DTASOF")] public string? RawDate { get; init; }
-
         [XmlElement("BALAMT")] public decimal? Amount { get; init; }
+
         public DateTime? Date => DateTime.ParseExact(this.RawDate!, "yyyyMMddHHmmss", null);
+    }
+
+    public class StatementTransaction
+    {
+        [XmlElement("FITID")] public string? Identifier { get; init; }
     }
 }

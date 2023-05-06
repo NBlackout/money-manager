@@ -18,7 +18,8 @@ public sealed class OfxParserTests : IDisposable
     [Fact]
     public async Task Should_extract_account_statement()
     {
-        AccountStatement expected = new("1234567890", "00012345000", 12345.67m, DateTime.Parse("2023-04-13"));
+        AccountStatement expected = new("1234567890", "00012345000", 12345.67m, DateTime.Parse("2023-04-13"),
+            new TransactionStatement("TheDebitId"), new TransactionStatement("TheCreditId"));
         await this.Verify_OfxParser(new MemoryStream(Resources.OfxSample), expected);
     }
 
@@ -47,11 +48,12 @@ public sealed class OfxParserTests : IDisposable
         this.host.Dispose();
 
     private async Task Verify_Failure(Stream stream) =>
-        await this.Verify_OfxParser(stream, new AccountStatement("Bank", "Account", 42.42m, DateTime.Parse("2943-09-26")));
+        await this.Verify_OfxParser(stream,
+            new AccountStatement("Bank", "Account", 42.42m, DateTime.Parse("2943-09-26")));
 
     private async Task Verify_OfxParser(Stream stream, AccountStatement expected)
     {
         AccountStatement actual = await this.sut.ExtractAccountStatement(stream);
-        actual.Should().Be(expected);
+        actual.Should().BeEquivalentTo(expected);
     }
 }
