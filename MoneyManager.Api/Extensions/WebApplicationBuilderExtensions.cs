@@ -1,3 +1,6 @@
+using MoneyManager.Read.Api.Extensions;
+using MoneyManager.Write.Api.Extensions;
+
 namespace MoneyManager.Api.Extensions;
 
 public static class WebApplicationBuilderExtensions

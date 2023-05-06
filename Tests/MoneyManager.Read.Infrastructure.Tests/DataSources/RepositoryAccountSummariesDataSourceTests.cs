@@ -1,6 +1,5 @@
 ﻿using MoneyManager.Read.Infrastructure.DataSources.AccountSummaries;
-using MoneyManager.Shared.Presentation;
-using MoneyManager.Write.Application.Ports;
+using MoneyManager.Write.Api.Extensions;
 using MoneyManager.Write.Infrastructure.Repositories;
 
 namespace MoneyManager.Read.Infrastructure.Tests.DataSources;

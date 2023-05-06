@@ -1,4 +1,4 @@
-﻿namespace MoneyManager.Api.Controllers;
+﻿namespace MoneyManager.Write.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

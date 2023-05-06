@@ -1,5 +1,4 @@
-﻿using MoneyManager.Write.Application.Model;
-using MoneyManager.Write.Infrastructure.Repositories;
+﻿using MoneyManager.Write.Infrastructure.Repositories;
 
 namespace MoneyManager.Read.Infrastructure.DataSources.AccountSummaries;
 

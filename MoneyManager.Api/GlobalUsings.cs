@@ -1,9 +1,0 @@
-﻿global using Microsoft.AspNetCore.Mvc;
-global using MoneyManager.Read.Application.Ports;
-global using MoneyManager.Read.Application.UseCases;
-global using MoneyManager.Shared.Dto;
-global using MoneyManager.Shared.Presentation;
-global using MoneyManager.Write.Application.Model.Accounts;
-global using MoneyManager.Write.Application.Model.Banks;
-global using MoneyManager.Write.Application.Ports;
-global using MoneyManager.Write.Application.UseCases;

@@ -1,5 +1,5 @@
 ﻿using MoneyManager.Read.Application.UseCases;
-using MoneyManager.Read.Infrastructure.DataSources;
+using MoneyManager.Read.Infrastructure.DataSources.AccountDetails;
 using MoneyManager.Shared.Presentation;
 
 namespace MoneyManager.Read.Application.Tests.UseCases;
