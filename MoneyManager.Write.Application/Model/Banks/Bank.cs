@@ -1,4 +1,4 @@
-﻿namespace MoneyManager.Write.Application.Model;
+﻿namespace MoneyManager.Write.Application.Model.Banks;
 
 public class Bank : DomainEntity
 {

@@ -1,4 +1,4 @@
-﻿using MoneyManager.Write.Application.Model;
+﻿using MoneyManager.Write.Application.Model.Accounts;
 
 namespace MoneyManager.Read.TestTooling;
 

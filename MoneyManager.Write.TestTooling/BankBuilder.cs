@@ -1,4 +1,6 @@
-﻿namespace MoneyManager.Write.TestTooling;
+﻿using MoneyManager.Write.Application.Model.Banks;
+
+namespace MoneyManager.Write.TestTooling;
 
 public record BankBuilder(Guid Id, string ExternalId, string Name)
 {
