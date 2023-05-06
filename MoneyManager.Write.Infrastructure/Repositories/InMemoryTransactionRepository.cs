@@ -4,12 +4,11 @@ public class InMemoryTransactionRepository : ITransactionRepository
 {
     private readonly Dictionary<Guid, Transaction> data = new();
     private readonly List<string> knownExternalIds = new();
-    private int nextIdIndex;
 
-    public Func<Guid>[] NextIds { get; set; } = null!;
+    public Func<Guid> NextId { get; set; } = null!;
 
     public Task<Guid> NextIdentity() =>
-        Task.FromResult(this.NextIds[this.nextIdIndex++]());
+        Task.FromResult(this.NextId());
 
     public Task<Transaction> ById(Guid id) =>
         Task.FromResult(this.data[id]);

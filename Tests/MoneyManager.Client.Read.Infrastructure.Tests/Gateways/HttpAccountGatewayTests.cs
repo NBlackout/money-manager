@@ -4,22 +4,22 @@ using MoneyManager.Shared.Presentation;
 
 namespace MoneyManager.Client.Read.Infrastructure.Tests.Gateways;
 
-public sealed class HttpAccountSummariesGatewayTests : IDisposable
+public sealed class HttpAccountGatewayTests : IDisposable
 {
     private const string ApiUrl = "http://localhost";
 
     private readonly StubbedHttpMessageHandler httpMessageHandler;
     private readonly IHost host;
-    private readonly HttpAccountSummariesGateway sut;
+    private readonly HttpAccountGateway sut;
 
-    public HttpAccountSummariesGatewayTests()
+    public HttpAccountGatewayTests()
     {
         this.httpMessageHandler = new StubbedHttpMessageHandler();
         this.host = Host.CreateDefaultBuilder()
             .ConfigureServices(services =>
                 services.AddReadDependencies().AddScoped(_ => CreateHttpClient(this.httpMessageHandler)))
             .Build();
-        this.sut = this.host.GetRequiredService<IAccountSummariesGateway, HttpAccountSummariesGateway>();
+        this.sut = this.host.GetRequiredService<IAccountSummariesGateway, HttpAccountGateway>();
     }
 
     [Fact]
@@ -33,7 +33,17 @@ public sealed class HttpAccountSummariesGatewayTests : IDisposable
         this.httpMessageHandler.SetResponseFor($"{ApiUrl}/accounts", expected);
 
         IReadOnlyCollection<AccountSummaryPresentation> actual = await this.sut.Get();
-        actual.Should().Contain(expected);
+        actual.Should().Equal(expected);
+    }
+
+    [Fact]
+    public async Task Should_retrieve_account_details()
+    {
+        AccountDetailsPresentation expected = new(Guid.NewGuid(), "Some account", 185.46m);
+        this.httpMessageHandler.SetResponseFor($"{ApiUrl}/accounts/{expected.Id}", expected);
+
+        AccountDetailsPresentation actual = await this.sut.Get(expected.Id);
+        actual.Should().Be(expected);
     }
 
     public void Dispose() =>

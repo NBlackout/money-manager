@@ -32,19 +32,16 @@ else
         <tbody>
         @foreach (AccountSummaryPresentation? account in accounts)
         {
-            <tr>
+            <tr @onclick="@(() => NavigateToAccount(account.Id))">
                 <td>
-                    @if (IsEditing(account) is false)
-                    {
-                        <button type="button" class="btn btn-link btn-sm" @onclick="@(() => ToggleEditMode(account))">
-                            <i class="oi oi-pencil"></i>
-                        </button>
-                    }
+                    <button type="button" class="btn btn-link btn-sm" @onclick="@(() => ToggleEditMode(account))" hidden="@IsEditing(account)">
+                        <i class="oi oi-pencil"></i>
+                    </button>
                 </td>
                 <td>
                     @if (IsEditing(account))
                     {
-                        <input type="text" value="@account.BankName" @ref="bankNameInput" @onchange="@BankNameChanged" @onabort="@ExitEditMode" class="form-control form-control-sm" placeholder="Bank name"/>
+                        <input type="text" value="@account.BankName" @ref="bankNameInput" @onchange="@BankNameChanged" @onabort="@ExitEditMode" @onclick:stopPropagation="true" class="form-control form-control-sm" placeholder="Bank name"/>
                     }
                     else
                     {

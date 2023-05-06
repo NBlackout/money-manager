@@ -11,6 +11,9 @@ public class ImportBankStatementTests
     private readonly StubbedOfxParser ofxParser;
     private readonly ImportBankStatement sut;
 
+    private Guid[] nextIds = Array.Empty<Guid>();
+    private int nextIdIndex;
+
     public ImportBankStatementTests()
     {
         this.bankRepository = new InMemoryBankRepository();
@@ -43,7 +46,8 @@ public class ImportBankStatementTests
 
         this.bankRepository.NextId = () => bank.Id;
         this.accountRepository.NextId = () => account.Id;
-        this.transactionRepository.NextIds = new[] { () => aTransaction.Id, () => anotherTransaction.Id };
+        this.nextIds = new[] { aTransaction.Id, anotherTransaction.Id };
+        this.transactionRepository.NextId = () => this.nextIds[this.nextIdIndex++];
         this.ofxParser.SetAccountStatementFor(TheStream,
             AccountStatementFrom(bank, account, aTransaction, anotherTransaction));
 
@@ -70,7 +74,8 @@ public class ImportBankStatementTests
         this.FeedByExternalId(bank);
         this.accountRepository.NextId = () => account.Id;
         this.transactionRepository.Feed(existingTransaction.Build());
-        this.transactionRepository.NextIds = new[] { () => unknownTransaction.Id };
+        this.nextIds = new[] { unknownTransaction.Id };
+        this.transactionRepository.NextId = () => this.nextIds[this.nextIdIndex++];
         this.ofxParser.SetAccountStatementFor(TheStream,
             AccountStatementFrom(bank, account, existingTransaction, unknownTransaction));
 
