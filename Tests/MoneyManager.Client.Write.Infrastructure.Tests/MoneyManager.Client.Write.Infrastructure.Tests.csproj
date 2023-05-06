@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
+      <ProjectReference Include="..\..\MoneyManager.Client.Write.Application\MoneyManager.Client.Write.Application.csproj" />
       <ProjectReference Include="..\..\MoneyManager.Client.Write.Infrastructure\MoneyManager.Client.Write.Infrastructure.csproj" />
       <ProjectReference Include="..\..\MoneyManager.Client\MoneyManager.Client.csproj" />
     </ItemGroup>
