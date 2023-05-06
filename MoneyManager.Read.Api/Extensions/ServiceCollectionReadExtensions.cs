@@ -1,7 +1,7 @@
-﻿using MoneyManager.Read.Infrastructure.DataSources;
+﻿using MoneyManager.Read.Infrastructure.DataSources.AccountDetails;
 using MoneyManager.Read.Infrastructure.DataSources.AccountSummaries;
 
-namespace MoneyManager.Api.Extensions;
+namespace MoneyManager.Read.Api.Extensions;
 
 public static class ServiceCollectionReadExtensions
 {

@@ -1,7 +1,8 @@
-﻿using MoneyManager.Write.Infrastructure.OfxProcessing;
-using MoneyManager.Write.Infrastructure.Repositories;
+﻿using MoneyManager.Write.Application.Model.Accounts;
+using MoneyManager.Write.Application.Model.Banks;
+using MoneyManager.Write.Infrastructure.OfxProcessing;
 
-namespace MoneyManager.Api.Extensions;
+namespace MoneyManager.Write.Api.Extensions;
 
 public static class ServiceCollectionWriteExtensions
 {

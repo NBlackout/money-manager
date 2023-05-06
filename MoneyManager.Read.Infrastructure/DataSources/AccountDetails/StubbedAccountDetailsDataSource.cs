@@ -1,4 +1,4 @@
-﻿namespace MoneyManager.Read.Infrastructure.DataSources;
+﻿namespace MoneyManager.Read.Infrastructure.DataSources.AccountDetails;
 
 public class StubbedAccountDetailsDataSource : IAccountDetailsDataSource
 {
