@@ -25,6 +25,7 @@ else
             <th>Bank</th>
             <th>Label</th>
             <th>Balance</th>
+            <th>Balance date</th>
             <th>Tracking</th>
         </tr>
         </thead>
@@ -61,6 +62,7 @@ else
                     }
                 </td>
                 <td>@account.Balance</td>
+                <td>@account.BalanceDate.ToShortDateString()</td>
                 <td>
                     @if (account.Tracked)
                     {

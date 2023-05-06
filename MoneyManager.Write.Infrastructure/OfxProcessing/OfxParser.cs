@@ -18,9 +18,10 @@ public class OfxParser : IOfxParser
             throw CannotProcessOfxContent.DueToMissingBalanceNode();
 
         decimal balance = statement.AvailableBalance.Amount.Value;
+        DateTime balanceDate = statement.AvailableBalance.Date!.Value;
 
         return Task.FromResult(new AccountStatement(statement.BankAccount.BankIdentifier,
-            statement.BankAccount.AccountNumber, balance));
+            statement.BankAccount.AccountNumber, balance, balanceDate));
     }
 
     [XmlRoot("OFX")]
@@ -53,6 +54,9 @@ public class OfxParser : IOfxParser
 
     public class AvailableBalance
     {
+        [XmlElement("DTASOF")] public string? RawDate { get; init; }
+
         [XmlElement("BALAMT")] public decimal? Amount { get; init; }
+        public DateTime? Date => DateTime.ParseExact(this.RawDate!, "yyyyMMddHHmmss", null);
     }
 }

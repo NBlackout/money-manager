@@ -38,19 +38,19 @@ public sealed class RepositoryAccountSummariesDataSourceTests : IDisposable
         {
             BankId = aBank.Id, Label = "My savings", Balance = 656.98m, Tracked = true
         };
-        AccountBuilder unknown = AccountBuilder.For(Guid.NewGuid()) with
+        AccountBuilder notTracked = AccountBuilder.For(Guid.NewGuid()) with
         {
             BankId = anotherBank.Id, Label = "This one is not tracked", Balance = 1301.51m, Tracked = false
         };
         this.bankRepository.Feed(aBank.Build(), anotherBank.Build());
-        this.accountRepository.Feed(checking.Build(), saving.Build(), unknown.Build());
+        this.accountRepository.Feed(checking.Build(), saving.Build(), notTracked.Build());
 
         IReadOnlyCollection<AccountSummaryPresentation> actual = await this.sut.Get();
         actual.Should().Equal(new AccountSummaryPresentation[]
         {
-            new(checking.Id, aBank.Id, aBank.Name, checking.Label, checking.Balance, checking.Tracked),
-            new(saving.Id, aBank.Id, aBank.Name, saving.Label, saving.Balance, saving.Tracked),
-            new(unknown.Id, anotherBank.Id, anotherBank.Name, unknown.Label, unknown.Balance, unknown.Tracked)
+            new(checking.Id, aBank.Id, aBank.Name, checking.Label, checking.Balance, checking.BalanceDate, checking.Tracked),
+            new(saving.Id, aBank.Id, aBank.Name, saving.Label, saving.Balance, saving.BalanceDate, saving.Tracked),
+            new(notTracked.Id, anotherBank.Id, anotherBank.Name, notTracked.Label, notTracked.Balance, notTracked.BalanceDate, notTracked.Tracked)
         });
     }
 
