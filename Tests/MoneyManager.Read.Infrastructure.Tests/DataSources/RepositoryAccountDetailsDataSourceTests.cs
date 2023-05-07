@@ -37,7 +37,7 @@ public sealed class RepositoryAccountDetailsDataSourceTests : IDisposable
 
         AccountDetailsPresentation actual = await this.sut.Get(account.Id);
         actual.Should().BeEquivalentTo(new AccountDetailsPresentation(account.Id, account.Label, account.Balance,
-            new TransactionSummary(transaction.Id), new TransactionSummary(otherTransaction.Id)));
+            new TransactionSummary(transaction.Id, transaction.Amount), new TransactionSummary(otherTransaction.Id, transaction.Amount)));
     }
 
     public void Dispose() =>

@@ -19,7 +19,7 @@ public sealed class OfxParserTests : IDisposable
     public async Task Should_extract_account_statement()
     {
         AccountStatement expected = new("1234567890", "00012345000", 12345.67m, DateTime.Parse("2023-04-13"),
-            new TransactionStatement("TheDebitId"), new TransactionStatement("TheCreditId"));
+            new TransactionStatement("TheDebitId", -300.21m), new TransactionStatement("TheCreditId", 100.95m));
         await this.Verify_OfxParser(new MemoryStream(Resources.OfxSample), expected);
     }
 
