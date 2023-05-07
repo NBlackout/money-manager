@@ -3,7 +3,7 @@ using MoneyManager.Read.Infrastructure.DataSources.AccountSummaries;
 
 namespace MoneyManager.Read.Api.Extensions;
 
-public static class ServiceCollectionReadExtensions
+public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddReadDependencies(this IServiceCollection services) =>
         services.AddUseCases().AddInfrastructureAdapters();

@@ -25,7 +25,7 @@ public class OfxParser : IOfxParser
             throw CannotProcessOfxContent.DueToMissingBalanceNode();
 
         TransactionStatement[] transactions = statementResponse.StatementTransactions
-            .Select(t => new TransactionStatement(t.Identifier, t.Amount, t.Label)).ToArray();
+            .Select(t => new TransactionStatement(t.Identifier, t.Amount, t.Label, t.Date)).ToArray();
 
         return Task.FromResult(new AccountStatement(statementResponse.BankAccount.BankIdentifier,
             statementResponse.BankAccount.AccountNumber, availableBalance.Amount, availableBalance.Date, transactions));
@@ -70,10 +70,12 @@ public class OfxParser : IOfxParser
 
     public class StatementTransaction
     {
+        [XmlElement("DTPOSTED")] public string RawDate { get; init; } = null!;
         [XmlElement("TRNAMT")] public string RawAmount { get; init; } = null!;
         [XmlElement("FITID")] public string Identifier { get; init; } = null!;
         [XmlElement("NAME")] public string Label { get; init; } = null!;
 
         public decimal Amount => decimal.Parse(this.RawAmount, CultureInfo.CreateSpecificCulture("fr-FR"));
+        public DateTime Date => DateTime.ParseExact(this.RawDate, "yyyyMMdd", null);
     }
 }

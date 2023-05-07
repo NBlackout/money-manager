@@ -15,16 +15,18 @@ else
     <table class="align-middle table table-hover">
         <thead class="table-light">
         <tr>
-            <th>Amount</th>
             <th>Label</th>
+            <th>Amount</th>
+            <th>Date</th>
         </tr>
         </thead>
         <tbody>
         @foreach (TransactionSummary transaction in account.Transactions)
         {
             <tr>
-                <td>@transaction.Amount</td>
                 <td>@transaction.Label</td>
+                <td>@transaction.Amount</td>
+                <td>@transaction.Date.ToShortDateString()</td>
             </tr>
         }
         </tbody>

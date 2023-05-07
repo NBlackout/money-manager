@@ -11,6 +11,7 @@ public class CustomXunitTestFramework : XunitTestFramework
     {
         AssertionOptions.FormattingOptions.UseLineBreaks = true;
         AssertionOptions.EquivalencyPlan.Add<MemoryStreamEquivalencyStep>();
+        AssertionOptions.AssertEquivalencyUsing(options => options.WithStrictOrdering());
         // Formatter.AddFormatter(new NeatObjectFormatter());
     }
 

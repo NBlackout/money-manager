@@ -4,7 +4,7 @@ using MoneyManager.Write.Infrastructure.OfxProcessing;
 
 namespace MoneyManager.Write.Api.Extensions;
 
-public static class ServiceCollectionWriteExtensions
+public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddWriteDependencies(this IServiceCollection services) =>
         services.AddUseCases().AddInfrastructureAdapters();

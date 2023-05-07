@@ -28,23 +28,33 @@ public sealed class RepositoryAccountDetailsDataSourceTests : IDisposable
     public async Task Should_retrieve_account_details()
     {
         AccountBuilder account = AccountBuilder.For(Guid.NewGuid()) with { Label = "My account", Balance = 142.52m };
-        TransactionBuilder transaction = TransactionBuilder.For(Guid.NewGuid()) with { AccountId = account.Id };
-        TransactionBuilder otherTransaction = TransactionBuilder.For(Guid.NewGuid()) with { AccountId = account.Id };
+        TransactionBuilder old = TransactionBuilder.For(Guid.NewGuid()) with
+        {
+            AccountId = account.Id, Date = DateTime.Today.AddMonths(-1)
+        };
+        TransactionBuilder occuredToday = TransactionBuilder.For(Guid.NewGuid()) with
+        {
+            AccountId = account.Id, Date = DateTime.Today, Label = "Transaction A"
+        };
+        TransactionBuilder otherOccuredToday = TransactionBuilder.For(Guid.NewGuid()) with
+        {
+            AccountId = account.Id, Date = DateTime.Today, Label = "Transaction b"
+        };
         TransactionBuilder otherAccountTransaction =
             TransactionBuilder.For(Guid.NewGuid()) with { AccountId = Guid.NewGuid() };
 
         this.accountRepository.Feed(account.Build());
-        this.transactionRepository.Feed(transaction.Build(), otherTransaction.Build(), otherAccountTransaction.Build());
+        this.transactionRepository.Feed(old.Build(), otherOccuredToday.Build(), occuredToday.Build(), otherAccountTransaction.Build());
 
         AccountDetailsPresentation actual = await this.sut.Get(account.Id);
-        actual.Should().BeEquivalentTo(PresentationFrom(account, transaction, otherTransaction));
+        actual.Should().BeEquivalentTo(PresentationFrom(account, occuredToday, otherOccuredToday, old));
     }
 
     private static AccountDetailsPresentation PresentationFrom(AccountBuilder account,
         params TransactionBuilder[] transactions)
     {
         return new AccountDetailsPresentation(account.Id, account.Label, account.Balance,
-            transactions.Select(t => new TransactionSummary(t.Id, t.Amount, t.Label)).ToArray());
+            transactions.Select(t => new TransactionSummary(t.Id, t.Amount, t.Label, t.Date)).ToArray());
     }
 
     public void Dispose() =>
