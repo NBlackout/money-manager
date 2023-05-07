@@ -20,7 +20,7 @@ public sealed class HttpBankGatewayTests : IDisposable
             .ConfigureServices(services =>
                 services.AddWriteDependencies().AddScoped(_ => CreateHttpClient(this.httpMessageHandler)))
             .Build();
-        this.sut = this.host.GetRequiredService<IBankGateway, HttpBankGateway>();
+        this.sut = this.host.Service<IBankGateway, HttpBankGateway>();
     }
 
     [Fact]

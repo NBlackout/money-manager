@@ -10,7 +10,8 @@ public class AccountDetailsTests
         StubbedAccountDetailsGateway gateway = new();
         AccountDetails sut = new(gateway);
 
-        AccountDetailsPresentation expected = new(Guid.NewGuid(), "Big bucks?", 1.84m);
+        AccountDetailsPresentation expected = new(Guid.NewGuid(), "Big bucks?", 1.84m,
+            new TransactionSummary(Guid.NewGuid()));
         gateway.Feed(expected.Id, expected);
 
         AccountDetailsPresentation actual = await sut.Execute(expected.Id);

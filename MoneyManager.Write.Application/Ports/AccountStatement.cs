@@ -6,5 +6,3 @@ public record AccountStatement(string BankIdentifier, string AccountNumber, deci
     public Bank TrackDescribedBank(Guid id) =>
         Bank.Track(id, this.BankIdentifier);
 }
-
-public record TransactionStatement(string TransactionIdentifier);

@@ -19,7 +19,7 @@ public sealed class HttpAccountGatewayTests : IDisposable
             .ConfigureServices(services =>
                 services.AddReadDependencies().AddScoped(_ => CreateHttpClient(this.httpMessageHandler)))
             .Build();
-        this.sut = this.host.GetRequiredService<IAccountSummariesGateway, HttpAccountGateway>();
+        this.sut = this.host.Service<IAccountSummariesGateway, HttpAccountGateway>();
     }
 
     [Fact]
@@ -39,11 +39,12 @@ public sealed class HttpAccountGatewayTests : IDisposable
     [Fact]
     public async Task Should_retrieve_account_details()
     {
-        AccountDetailsPresentation expected = new(Guid.NewGuid(), "Some account", 185.46m);
+        AccountDetailsPresentation expected = new(Guid.NewGuid(), "Some account", 185.46m,
+            new TransactionSummary(Guid.NewGuid()), new TransactionSummary(Guid.NewGuid()));
         this.httpMessageHandler.SetResponseFor($"{ApiUrl}/accounts/{expected.Id}", expected);
 
         AccountDetailsPresentation actual = await this.sut.Get(expected.Id);
-        actual.Should().Be(expected);
+        actual.Should().BeEquivalentTo(expected);
     }
 
     public void Dispose() =>

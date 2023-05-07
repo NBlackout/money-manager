@@ -12,5 +12,19 @@
 }
 else
 {
-    @account.Label
+    <table class="align-middle table table-hover">
+        <thead class="table-light">
+        <tr>
+            <th>id</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (TransactionSummary transaction in account.Transactions)
+        {
+            <tr>
+                <td>@transaction.Id</td>
+            </tr>
+        }
+        </tbody>
+    </table>
 }
