@@ -19,7 +19,7 @@ public class AccountDetailsTests
     public async Task Should_retrieve_account_details()
     {
         AccountDetailsPresentation expected = new(Guid.NewGuid(), "Account label", 14.07m,
-            new TransactionSummary(Guid.NewGuid()), new TransactionSummary(Guid.NewGuid()));
+            new TransactionSummary(Guid.NewGuid(), -31.99m), new TransactionSummary(Guid.NewGuid(), 60.00m));
         this.dataSource.Feed(expected.Id, expected);
 
         AccountDetailsPresentation actual = await this.sut.Execute(expected.Id);

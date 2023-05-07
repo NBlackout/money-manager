@@ -8,6 +8,10 @@ public class Bank : DomainEntity
     public BankSnapshot Snapshot =>
         new(this.Id, this.externalId, this.name);
 
+    internal Bank(Guid id, string bankIdentifier) : this(id, bankIdentifier, bankIdentifier)
+    {
+    }
+
     private Bank(Guid id, string externalId, string name) : base(id)
     {
         this.externalId = externalId;
@@ -16,9 +20,6 @@ public class Bank : DomainEntity
 
     public static Bank From(BankSnapshot snapshot) =>
         new(snapshot.Id, snapshot.ExternalId, snapshot.Name);
-
-    public static Bank Track(Guid id, string bankIdentifier) =>
-        new(id, bankIdentifier, bankIdentifier);
 
     public Account TrackAccount(Guid id, string accountNumber, decimal balance, DateTime balanceDate) =>
         Account.StartTracking(id, this.Id, accountNumber, balance, balanceDate);

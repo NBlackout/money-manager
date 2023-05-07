@@ -11,7 +11,7 @@ public class AccountDetailsTests
         AccountDetails sut = new(gateway);
 
         AccountDetailsPresentation expected = new(Guid.NewGuid(), "Big bucks?", 1.84m,
-            new TransactionSummary(Guid.NewGuid()));
+            new TransactionSummary(Guid.NewGuid(), 111.42m));
         gateway.Feed(expected.Id, expected);
 
         AccountDetailsPresentation actual = await sut.Execute(expected.Id);

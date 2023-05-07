@@ -48,6 +48,6 @@ public class Account : DomainEntity
     public void AssignLabel(string newLabel) =>
         this.label = newLabel;
 
-    public Transaction AttachTransaction(Guid transactionId, string transactionIdentifier) => 
-        Transaction.Of(transactionId, this.Id, transactionIdentifier);
+    public Transaction AttachTransaction(Guid transactionId, string transactionExternalId, decimal amount) =>
+        new(transactionId, this.Id, transactionExternalId, amount);
 }

@@ -40,7 +40,7 @@ public sealed class HttpAccountGatewayTests : IDisposable
     public async Task Should_retrieve_account_details()
     {
         AccountDetailsPresentation expected = new(Guid.NewGuid(), "Some account", 185.46m,
-            new TransactionSummary(Guid.NewGuid()), new TransactionSummary(Guid.NewGuid()));
+            new TransactionSummary(Guid.NewGuid(), 532.23m), new TransactionSummary(Guid.NewGuid(), -610.00m));
         this.httpMessageHandler.SetResponseFor($"{ApiUrl}/accounts/{expected.Id}", expected);
 
         AccountDetailsPresentation actual = await this.sut.Get(expected.Id);

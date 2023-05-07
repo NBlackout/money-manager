@@ -1,7 +1,12 @@
-﻿using System.Xml.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Xml.Serialization;
 
 namespace MoneyManager.Write.Infrastructure.OfxProcessing;
 
+[SuppressMessage("ReSharper", "StringLiteralTypo")]
+[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+[SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global")]
 public class OfxParser : IOfxParser
 {
     public Task<AccountStatement> ExtractAccountStatement(Stream stream)
@@ -16,16 +21,14 @@ public class OfxParser : IOfxParser
             throw CannotProcessOfxContent.DueToMissingBankIdentifierNode();
         if (statementResponse.BankAccount?.AccountNumber is null)
             throw CannotProcessOfxContent.DueToMissingAccountNumberNode();
-        if (availableBalance is null || availableBalance.Amount.HasValue is false)
+        if (availableBalance is null)
             throw CannotProcessOfxContent.DueToMissingBalanceNode();
 
-        decimal balance = availableBalance.Amount.Value;
-        DateTime balanceDate = availableBalance.Date!.Value;
         TransactionStatement[] transactions = statementResponse.StatementTransactions
-            .Select(t => new TransactionStatement(t.Identifier!)).ToArray();
+            .Select(t => new TransactionStatement(t.Identifier, t.Amount)).ToArray();
 
         return Task.FromResult(new AccountStatement(statementResponse.BankAccount.BankIdentifier,
-            statementResponse.BankAccount.AccountNumber, balance, balanceDate, transactions));
+            statementResponse.BankAccount.AccountNumber, availableBalance.Amount, availableBalance.Date, transactions));
     }
 
     [XmlRoot("OFX")]
@@ -59,14 +62,17 @@ public class OfxParser : IOfxParser
 
     public class AvailableBalance
     {
-        [XmlElement("DTASOF")] public string? RawDate { get; init; }
-        [XmlElement("BALAMT")] public decimal? Amount { get; init; }
+        [XmlElement("DTASOF")] public string RawDate { get; init; } = null!;
+        [XmlElement("BALAMT")] public decimal Amount { get; init; }
 
-        public DateTime? Date => DateTime.ParseExact(this.RawDate!, "yyyyMMddHHmmss", null);
+        public DateTime Date => DateTime.ParseExact(this.RawDate, "yyyyMMddHHmmss", null);
     }
 
     public class StatementTransaction
     {
-        [XmlElement("FITID")] public string? Identifier { get; init; }
+        [XmlElement("TRNAMT")] public string RawAmount { get; init; } = null!;
+        [XmlElement("FITID")] public string Identifier { get; init; } = null!;
+
+        public decimal Amount => decimal.Parse(this.RawAmount, CultureInfo.CreateSpecificCulture("fr-FR"));
     }
 }

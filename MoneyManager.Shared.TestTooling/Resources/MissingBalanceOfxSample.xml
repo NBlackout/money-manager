@@ -10,9 +10,6 @@
                     <ACCTID>00012345000</ACCTID>
                     <ACCTTYPE>CHECKING</ACCTTYPE>
                 </BANKACCTFROM>
-                <AVAILBAL>
-                    <DTASOF>20230413000000</DTASOF>
-                </AVAILBAL>
                 <BANKTRANLIST>
                     <STMTTRN>
                         <DTPOSTED>20230417</DTPOSTED>

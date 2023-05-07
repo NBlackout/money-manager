@@ -4,5 +4,5 @@ public record AccountStatement(string BankIdentifier, string AccountNumber, deci
     DateTime BalanceDate, params TransactionStatement[] Transactions)
 {
     public Bank TrackDescribedBank(Guid id) =>
-        Bank.Track(id, this.BankIdentifier);
+        new(id, this.BankIdentifier);
 }

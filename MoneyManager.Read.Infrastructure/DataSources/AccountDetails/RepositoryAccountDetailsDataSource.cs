@@ -18,7 +18,7 @@ public class RepositoryAccountDetailsDataSource : IAccountDetailsDataSource
     {
         Account account = await this.accountRepository.ById(id);
         TransactionSummary[] transactions = this.transactionRepository.Data.Where(t => t.Snapshot.AccountId == id)
-            .Select(t => new TransactionSummary(t.Id)).ToArray();
+            .Select(t => new TransactionSummary(t.Id, t.Snapshot.Amount)).ToArray();
 
         return new AccountDetailsPresentation(id, account.Snapshot.Label, account.Snapshot.Balance, transactions);
     }

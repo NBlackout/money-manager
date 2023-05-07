@@ -37,11 +37,11 @@ public class ImportBankStatementTests
         };
         TransactionBuilder aTransaction = TransactionBuilder.For(Guid.NewGuid()) with
         {
-            AccountId = account.Id, ExternalId = "V0ZNTODBR8"
+            AccountId = account.Id, ExternalId = "V0ZNTODBR8", Amount = 1011.05m
         };
         TransactionBuilder anotherTransaction = TransactionBuilder.For(Guid.NewGuid()) with
         {
-            AccountId = account.Id, ExternalId = "193VN20D"
+            AccountId = account.Id, ExternalId = "193VN20D", Amount = 750.23m
         };
 
         this.bankRepository.NextId = () => bank.Id;
@@ -140,7 +140,7 @@ public class ImportBankStatementTests
         params TransactionBuilder[] transactions)
     {
         return new AccountStatement(bank.ExternalId, account.Number, account.Balance, account.BalanceDate,
-            transactions.Select(t => new TransactionStatement(t.ExternalId)).ToArray());
+            transactions.Select(t => new TransactionStatement(t.ExternalId, t.Amount)).ToArray());
     }
 
     internal static class Data
