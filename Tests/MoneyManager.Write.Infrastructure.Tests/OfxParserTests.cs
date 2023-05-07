@@ -12,7 +12,7 @@ public sealed class OfxParserTests : IDisposable
         this.host = Host.CreateDefaultBuilder()
             .ConfigureServices(services => services.AddWriteDependencies())
             .Build();
-        this.sut = this.host.GetRequiredService<IOfxParser, OfxParser>();
+        this.sut = this.host.Service<IOfxParser, OfxParser>();
     }
 
     [Fact]

@@ -18,11 +18,11 @@ public class AccountDetailsTests
     [Fact]
     public async Task Should_retrieve_account_details()
     {
-        AccountDetailsPresentation expected = new(Guid.NewGuid(), "Account label", 14.07m);
+        AccountDetailsPresentation expected = new(Guid.NewGuid(), "Account label", 14.07m,
+            new TransactionSummary(Guid.NewGuid()), new TransactionSummary(Guid.NewGuid()));
         this.dataSource.Feed(expected.Id, expected);
 
         AccountDetailsPresentation actual = await this.sut.Execute(expected.Id);
-
         actual.Should().Be(expected);
     }
 }

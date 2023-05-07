@@ -16,9 +16,9 @@ public sealed class RepositoryAccountSummariesDataSourceTests : IDisposable
         this.host = Host.CreateDefaultBuilder()
             .ConfigureServices(services => services.AddWriteDependencies().AddReadDependencies())
             .Build();
-        this.sut = this.host.GetRequiredService<IAccountSummariesDataSource, RepositoryAccountSummariesDataSource>();
-        this.bankRepository = this.host.GetRequiredService<IBankRepository, InMemoryBankRepository>();
-        this.accountRepository = this.host.GetRequiredService<IAccountRepository, InMemoryAccountRepository>();
+        this.sut = this.host.Service<IAccountSummariesDataSource, RepositoryAccountSummariesDataSource>();
+        this.bankRepository = this.host.Service<IBankRepository, InMemoryBankRepository>();
+        this.accountRepository = this.host.Service<IAccountRepository, InMemoryAccountRepository>();
 
         this.bankRepository.Clear();
         this.accountRepository.Clear();

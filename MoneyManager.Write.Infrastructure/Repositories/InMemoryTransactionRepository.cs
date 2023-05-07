@@ -5,6 +5,7 @@ public class InMemoryTransactionRepository : ITransactionRepository
     private readonly Dictionary<Guid, Transaction> data = new();
     private readonly List<string> knownExternalIds = new();
 
+    public IEnumerable<Transaction> Data => this.data.Values;
     public Func<Guid> NextId { get; set; } = null!;
 
     public Task<Guid> NextIdentity() =>
@@ -31,4 +32,7 @@ public class InMemoryTransactionRepository : ITransactionRepository
 
     public void Feed(params Transaction[] transactions) =>
         transactions.ToList().ForEach(transaction => this.Save(transaction));
+
+    public void Clear() =>
+        this.data.Clear();
 }

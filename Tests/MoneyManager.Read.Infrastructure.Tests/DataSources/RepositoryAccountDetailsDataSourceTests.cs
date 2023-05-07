@@ -8,30 +8,36 @@ public sealed class RepositoryAccountDetailsDataSourceTests : IDisposable
 {
     private readonly IHost host;
     private readonly RepositoryAccountDetailsDataSource sut;
-    private readonly InMemoryAccountRepository repository;
+    private readonly InMemoryAccountRepository accountRepository;
+    private readonly InMemoryTransactionRepository transactionRepository;
 
     public RepositoryAccountDetailsDataSourceTests()
     {
         this.host = Host.CreateDefaultBuilder()
             .ConfigureServices(services => services.AddWriteDependencies().AddReadDependencies())
             .Build();
-        this.sut = this.host.GetRequiredService<IAccountDetailsDataSource, RepositoryAccountDetailsDataSource>();
-        this.repository = this.host.GetRequiredService<IAccountRepository, InMemoryAccountRepository>();
+        this.sut = this.host.Service<IAccountDetailsDataSource, RepositoryAccountDetailsDataSource>();
+        this.accountRepository = this.host.Service<IAccountRepository, InMemoryAccountRepository>();
+        this.transactionRepository = this.host.Service<ITransactionRepository, InMemoryTransactionRepository>();
 
-        this.repository.Clear();
+        this.accountRepository.Clear();
+        this.transactionRepository.Clear();
     }
 
     [Fact]
     public async Task Should_retrieve_account_details()
     {
-        AccountBuilder account = AccountBuilder.For(Guid.NewGuid()) with
-        {
-            Label = "My account", Balance = 142.52m
-        };
-        this.repository.Feed(account.Build());
+        AccountBuilder account = AccountBuilder.For(Guid.NewGuid()) with { Label = "My account", Balance = 142.52m };
+        TransactionBuilder transaction = TransactionBuilder.For(Guid.NewGuid()) with { AccountId = account.Id };
+        TransactionBuilder otherTransaction = TransactionBuilder.For(Guid.NewGuid()) with { AccountId = account.Id };
+        TransactionBuilder otherAccountTransaction = TransactionBuilder.For(Guid.NewGuid()) with { AccountId = Guid.NewGuid() };
+
+        this.accountRepository.Feed(account.Build());
+        this.transactionRepository.Feed(transaction.Build(), otherTransaction.Build(), otherAccountTransaction.Build());
 
         AccountDetailsPresentation actual = await this.sut.Get(account.Id);
-        actual.Should().Be(new AccountDetailsPresentation(account.Id, account.Label, account.Balance));
+        actual.Should().BeEquivalentTo(new AccountDetailsPresentation(account.Id, account.Label, account.Balance,
+            new TransactionSummary(transaction.Id), new TransactionSummary(otherTransaction.Id)));
     }
 
     public void Dispose() =>

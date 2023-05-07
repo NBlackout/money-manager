@@ -20,7 +20,7 @@ public sealed class HttpAccountGatewayTests : IDisposable
             .ConfigureServices(services =>
                 services.AddWriteDependencies().AddScoped(_ => CreateHttpClient(this.httpMessageHandler)))
             .Build();
-        this.sut = this.host.GetRequiredService<IAccountGateway, HttpAccountGateway>();
+        this.sut = this.host.Service<IAccountGateway, HttpAccountGateway>();
     }
 
     [Fact]

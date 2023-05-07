@@ -51,6 +51,7 @@ public static class ServiceCollectionWriteExtensions
             .AddSingleton(bankRepository)
             .AddSingleton<IAccountRepository>(accountRepository)
             .AddSingleton(accountRepository)
-            .AddSingleton<ITransactionRepository>(transactionRepository);
+            .AddSingleton<ITransactionRepository>(transactionRepository)
+            .AddSingleton(transactionRepository);
     }
 }

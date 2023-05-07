@@ -30,7 +30,7 @@ else
         </tr>
         </thead>
         <tbody>
-        @foreach (AccountSummaryPresentation? account in accounts)
+        @foreach (AccountSummaryPresentation account in accounts)
         {
             <tr @onclick="@(() => NavigateToAccount(account.Id))">
                 <td>
