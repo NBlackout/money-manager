@@ -140,7 +140,7 @@ public class ImportBankStatementTests
         params TransactionBuilder[] transactions)
     {
         return new AccountStatement(bank.ExternalId, account.Number, account.Balance, account.BalanceDate,
-            transactions.Select(t => new TransactionStatement(t.ExternalId, t.Amount, t.Label)).ToArray());
+            transactions.Select(t => new TransactionStatement(t.ExternalId, t.Amount, t.Label, t.Date)).ToArray());
     }
 
     internal static class Data
