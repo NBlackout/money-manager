@@ -30,14 +30,21 @@ public sealed class RepositoryAccountDetailsDataSourceTests : IDisposable
         AccountBuilder account = AccountBuilder.For(Guid.NewGuid()) with { Label = "My account", Balance = 142.52m };
         TransactionBuilder transaction = TransactionBuilder.For(Guid.NewGuid()) with { AccountId = account.Id };
         TransactionBuilder otherTransaction = TransactionBuilder.For(Guid.NewGuid()) with { AccountId = account.Id };
-        TransactionBuilder otherAccountTransaction = TransactionBuilder.For(Guid.NewGuid()) with { AccountId = Guid.NewGuid() };
+        TransactionBuilder otherAccountTransaction =
+            TransactionBuilder.For(Guid.NewGuid()) with { AccountId = Guid.NewGuid() };
 
         this.accountRepository.Feed(account.Build());
         this.transactionRepository.Feed(transaction.Build(), otherTransaction.Build(), otherAccountTransaction.Build());
 
         AccountDetailsPresentation actual = await this.sut.Get(account.Id);
-        actual.Should().BeEquivalentTo(new AccountDetailsPresentation(account.Id, account.Label, account.Balance,
-            new TransactionSummary(transaction.Id, transaction.Amount), new TransactionSummary(otherTransaction.Id, transaction.Amount)));
+        actual.Should().BeEquivalentTo(PresentationFrom(account, transaction, otherTransaction));
+    }
+
+    private static AccountDetailsPresentation PresentationFrom(AccountBuilder account,
+        params TransactionBuilder[] transactions)
+    {
+        return new AccountDetailsPresentation(account.Id, account.Label, account.Balance,
+            transactions.Select(t => new TransactionSummary(t.Id, t.Amount, t.Label)).ToArray());
     }
 
     public void Dispose() =>

@@ -69,7 +69,7 @@ public class ImportBankStatement
     {
         Guid id = await this.transactionRepository.NextIdentity();
 
-        return account.AttachTransaction(id, statement.TransactionIdentifier, statement.Amount);
+        return account.AttachTransaction(id, statement.TransactionIdentifier, statement.Amount, statement.Label);
     }
 
     private async Task Save(Bank bank, Account account, IEnumerable<Transaction> transactions)
