@@ -1,5 +1,6 @@
 ﻿using MoneyManager.Write.Application.Model.Accounts;
 using MoneyManager.Write.Application.Model.Banks;
+using MoneyManager.Write.Application.Model.Transactions;
 using MoneyManager.Write.Infrastructure.OfxProcessing;
 
 namespace MoneyManager.Write.Api.Extensions;
@@ -45,6 +46,28 @@ public static class ServiceCollectionExtensions
             )
         );
         InMemoryTransactionRepository transactionRepository = new() { NextId = Guid.NewGuid };
+        transactionRepository.Feed(
+            Transaction.From(new TransactionSnapshot(Guid.Parse("4C957075-C660-4616-9FB4-492A08FFAE1C"),
+                Guid.Parse("1A87A411-BBEB-4FB0-83E7-539CF5EFBE6C"), "External id 1", -193.62m, "Payment",
+                DateTime.Parse("2023-05-07"))
+            ),
+            Transaction.From(new TransactionSnapshot(Guid.Parse("3E9F5A24-9057-44F9-9A0F-2204F42E15ED"),
+                Guid.Parse("1A87A411-BBEB-4FB0-83E7-539CF5EFBE6C"), "External id 2", 2305.51m, "Revenue",
+                DateTime.Parse("2023-06-01"))
+            ),
+            Transaction.From(new TransactionSnapshot(Guid.Parse("63BE873F-1153-4200-9992-C26661B31B08"),
+                Guid.Parse("1A87A411-BBEB-4FB0-83E7-539CF5EFBE6C"), "External id 3", -2.99m, "Pastry",
+                DateTime.Parse("2023-06-02"))
+            ),
+            Transaction.From(new TransactionSnapshot(Guid.Parse("912B37C1-2089-4AF4-90DF-6C96F89DE716"),
+                Guid.Parse("2981760C-A17B-4ECF-B828-AB89CCD1B11A"), "External id 1", 1400.00m, "Savings",
+                DateTime.Parse("2023-04-16"))
+            ),
+            Transaction.From(new TransactionSnapshot(Guid.Parse("355C7029-D35E-49D9-8E01-0230280A012F"),
+                Guid.Parse("2981760C-A17B-4ECF-B828-AB89CCD1B11A"), "External id 2", -15.99m, "Internet provider",
+                DateTime.Parse("2023-01-02"))
+            )
+        );
 
         return services
             .AddSingleton<IBankRepository>(bankRepository)
