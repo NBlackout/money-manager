@@ -5,7 +5,7 @@ public class InMemoryAccountRepository : IAccountRepository
     private readonly Dictionary<Guid, Account> data = new();
     private readonly Dictionary<ExternalId, Account> dataByExternalId = new();
 
-    public IEnumerable<Account> Data => this.data.Values;
+    public IEnumerable<AccountSnapshot> Data => this.data.Values.Select(a => a.Snapshot);
     public Func<Guid> NextId { get; set; } = null!;
 
     public Task<Guid> NextIdentity() =>

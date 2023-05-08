@@ -5,25 +5,16 @@ namespace MoneyManager.Read.Infrastructure.DataSources.AccountDetails;
 public class RepositoryAccountDetailsDataSource : IAccountDetailsDataSource
 {
     private readonly InMemoryAccountRepository accountRepository;
-    private readonly InMemoryTransactionRepository transactionRepository;
 
-    public RepositoryAccountDetailsDataSource(InMemoryAccountRepository accountRepository,
-        InMemoryTransactionRepository transactionRepository)
+    public RepositoryAccountDetailsDataSource(InMemoryAccountRepository accountRepository)
     {
         this.accountRepository = accountRepository;
-        this.transactionRepository = transactionRepository;
     }
 
     public async Task<AccountDetailsPresentation> Get(Guid id)
     {
         Account account = await this.accountRepository.ById(id);
-        TransactionSummary[] transactions = this.transactionRepository.Data
-            .Where(t => t.Snapshot.AccountId == id)
-            .OrderByDescending(t => t.Snapshot.Date)
-            .ThenBy(t => t.Snapshot.Label)
-            .Select(t => new TransactionSummary(t.Id, t.Snapshot.Amount, t.Snapshot.Label, t.Snapshot.Date))
-            .ToArray();
 
-        return new AccountDetailsPresentation(id, account.Snapshot.Label, account.Snapshot.Balance, transactions);
+        return new AccountDetailsPresentation(id, account.Snapshot.Label, account.Snapshot.Number, account.Snapshot.Balance);
     }
 }

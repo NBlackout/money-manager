@@ -1,5 +1,6 @@
 ﻿using MoneyManager.Read.Application.UseCases;
 using MoneyManager.Read.Infrastructure.DataSources.AccountSummaries;
+using MoneyManager.Read.TestTooling;
 using MoneyManager.Shared.Presentation;
 
 namespace MoneyManager.Read.Application.Tests.UseCases;
@@ -11,8 +12,7 @@ public class AccountSummariesTests
     {
         AccountSummaryPresentation[] expected =
         {
-            new(Guid.NewGuid(), Guid.NewGuid(), "It's a bank", "A label", 12.34m, DateTime.Now.AddMonths(3), true),
-            new(Guid.NewGuid(), Guid.NewGuid(), "Big bank", "Another label", 56.78m, DateTime.Now.AddDays(24), false)
+            AccountBuilder.For(Guid.NewGuid()).ToSummary(), AccountBuilder.For(Guid.NewGuid()).ToSummary()
         };
         AccountSummaries sut = new(new StubbedAccountSummariesDataSource(expected));
 

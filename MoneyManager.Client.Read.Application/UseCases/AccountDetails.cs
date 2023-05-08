@@ -9,6 +9,6 @@ public class AccountDetails
         this.gateway = gateway;
     }
 
-    public async Task<AccountDetailsPresentation> Execute(Guid id) =>
+    public async Task<AccountDetailsPresentation> Execute(Guid id) => 
         await this.gateway.Get(id);
 }

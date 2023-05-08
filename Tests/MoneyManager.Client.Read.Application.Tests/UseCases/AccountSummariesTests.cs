@@ -1,4 +1,4 @@
-using MoneyManager.Client.Read.Infrastructure.Gateways.AccountSummaries;
+using MoneyManager.Client.Read.Infrastructure.Gateways;
 
 namespace MoneyManager.Client.Read.Application.Tests.UseCases;
 

@@ -1,4 +1,4 @@
-﻿namespace MoneyManager.Client.Read.Infrastructure.Gateways.AccountSummaries;
+﻿namespace MoneyManager.Client.Read.Infrastructure.Gateways;
 
 public class StubbedAccountSummariesGateway : IAccountSummariesGateway
 {

@@ -1,5 +1,6 @@
 ﻿using MoneyManager.Read.Infrastructure.DataSources.AccountDetails;
 using MoneyManager.Read.Infrastructure.DataSources.AccountSummaries;
+using MoneyManager.Read.Infrastructure.DataSources.TransactionsOfMonth;
 
 namespace MoneyManager.Read.Api.Extensions;
 
@@ -12,13 +13,15 @@ public static class ServiceCollectionExtensions
     {
         return services
             .AddScoped<AccountSummaries>()
-            .AddScoped<AccountDetails>();
+            .AddScoped<AccountDetails>()
+            .AddScoped<TransactionsOfMonth>();
     }
 
     private static IServiceCollection AddInfrastructureAdapters(this IServiceCollection services)
     {
         return services
             .AddScoped<IAccountSummariesDataSource, RepositoryAccountSummariesDataSource>()
-            .AddScoped<IAccountDetailsDataSource, RepositoryAccountDetailsDataSource>();
+            .AddScoped<IAccountDetailsDataSource, RepositoryAccountDetailsDataSource>()
+            .AddScoped<ITransactionsOfMonthDataSource, RepositoryTransactionsOfMonthDataSource>();
     }
 }

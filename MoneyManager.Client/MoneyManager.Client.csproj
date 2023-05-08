@@ -6,10 +6,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <_ContentIncludedByDefault Remove="wwwroot\sample-data\weather.json" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\MoneyManager.Client.Read.Application\MoneyManager.Client.Read.Application.csproj" />
       <ProjectReference Include="..\MoneyManager.Client.Write.Application\MoneyManager.Client.Write.Application.csproj" />
       <ProjectReference Include="..\MoneyManager.Client.Read.Infrastructure\MoneyManager.Client.Read.Infrastructure.csproj" />

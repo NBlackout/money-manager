@@ -1,5 +1,6 @@
 ﻿using MoneyManager.Read.Application.UseCases;
 using MoneyManager.Read.Infrastructure.DataSources.AccountDetails;
+using MoneyManager.Read.TestTooling;
 using MoneyManager.Shared.Presentation;
 
 namespace MoneyManager.Read.Application.Tests.UseCases;
@@ -18,10 +19,7 @@ public class AccountDetailsTests
     [Fact]
     public async Task Should_retrieve_account_details()
     {
-        AccountDetailsPresentation expected = new(Guid.NewGuid(), "Account label", 14.07m,
-            new TransactionSummary(Guid.NewGuid(), -31.99m, "A debit", DateTime.Parse("2021-04-19")),
-            new TransactionSummary(Guid.NewGuid(), 60.00m, "A credit", DateTime.Parse("2021-10-17"))
-        );
+        AccountDetailsPresentation expected = AccountBuilder.For(Guid.NewGuid()).ToDetails();
         this.dataSource.Feed(expected.Id, expected);
 
         AccountDetailsPresentation actual = await this.sut.Execute(expected.Id);
