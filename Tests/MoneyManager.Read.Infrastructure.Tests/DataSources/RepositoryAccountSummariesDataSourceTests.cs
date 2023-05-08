@@ -1,5 +1,4 @@
 ﻿using MoneyManager.Read.Infrastructure.DataSources.AccountSummaries;
-using MoneyManager.Write.Api.Extensions;
 using MoneyManager.Write.Infrastructure.Repositories;
 
 namespace MoneyManager.Read.Infrastructure.Tests.DataSources;
@@ -27,34 +26,18 @@ public sealed class RepositoryAccountSummariesDataSourceTests : IDisposable
     [Fact]
     public async Task Should_retrieve_tracked_account_summaries()
     {
-        BankBuilder aBank = BankBuilder.For(Guid.NewGuid()) with { Name = "This is my bank" };
-        BankBuilder anotherBank = BankBuilder.For(Guid.NewGuid()) with { Name = "Not my bank" };
-        AccountBuilder checking = AccountBuilder.For(Guid.NewGuid()) with
-        {
-            BankId = aBank.Id, Label = "Checking account", Balance = 10.44m, Tracked = true
-        };
-        AccountBuilder saving = AccountBuilder.For(Guid.NewGuid()) with
-        {
-            BankId = aBank.Id, Label = "My savings", Balance = 656.98m, Tracked = true
-        };
-        AccountBuilder notTracked = AccountBuilder.For(Guid.NewGuid()) with
-        {
-            BankId = anotherBank.Id, Label = "This one is not tracked", Balance = 1301.51m, Tracked = false
-        };
-        this.bankRepository.Feed(aBank.Build(), anotherBank.Build());
+        Guid aBankId = Guid.NewGuid();
+        Guid anotherBankId = Guid.NewGuid();
+        AccountBuilder checking = AccountBuilder.For(Guid.NewGuid()) with { BankId = aBankId, Tracked = true };
+        AccountBuilder saving = AccountBuilder.For(Guid.NewGuid()) with { BankId = aBankId, Tracked = true };
+        AccountBuilder notTracked = AccountBuilder.For(Guid.NewGuid()) with { BankId = anotherBankId, Tracked = false };
+        this.bankRepository.Feed(checking.BuildBank(), notTracked.BuildBank());
         this.accountRepository.Feed(checking.Build(), saving.Build(), notTracked.Build());
 
         IReadOnlyCollection<AccountSummaryPresentation> actual = await this.sut.Get();
-        actual.Should().Equal(
-            PresentationFrom(checking, aBank),
-            PresentationFrom(saving, aBank),
-            PresentationFrom(notTracked, anotherBank)
-        );
+        actual.Should().Equal(checking.ToSummary(), saving.ToSummary(), notTracked.ToSummary());
     }
 
     public void Dispose() =>
         this.host.Dispose();
-
-    private static AccountSummaryPresentation PresentationFrom(AccountBuilder account, BankBuilder bank) =>
-        new(account.Id, bank.Id, bank.Name, account.Label, account.Balance, account.BalanceDate, account.Tracked);
 }

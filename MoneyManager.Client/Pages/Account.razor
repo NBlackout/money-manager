@@ -1,14 +1,51 @@
 ﻿@page "/accounts/{id:guid}"
 
-<h3>Account</h3>
-
 @if (account == null)
 {
     <p>
         <em>Loading...</em>
     </p>
 }
-else if (account.Transactions.Any())
+else
+{
+    <h2>@account.Label <small class="text-muted fs-6">@account.Number</small> @account.Balance €</h2>
+    <hr>
+    <div class="form-inline text-center">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default">
+                        <i class="oi oi-media-skip-backward"></i>
+                    </button>
+                    <button type="button" class="btn btn-default">
+                        <i class="oi oi-media-step-backward"></i>
+                    </button>
+                </div>
+                <select @onchange="@ShowTransactionsOfMonth" class="form-control">
+                    @foreach (DateTime month in months)
+                    {
+                        <option selected="@(month == currentMonth)">@month.ToString("MMMM yyyy")</option>
+                    }
+                </select>
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default">
+                        <i class="oi oi-media-step-forward"></i>
+                    </button>
+                    <button type="button" class="btn btn-default">
+                        <i class="oi oi-media-skip-forward"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@if (transactions == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
 {
     <table class="align-middle table table-hover table-sm">
         <thead class="table-light">
@@ -19,14 +56,15 @@ else if (account.Transactions.Any())
         </tr>
         </thead>
         <tbody>
-        @foreach (TransactionSummary transaction in account.Transactions)
+        @foreach (TransactionSummaryPresentation transaction in transactions)
         {
             <tr>
                 <td>@transaction.Label</td>
-                <td class="text-end @(transaction.Amount > 0 ? "text-success" : "text-danger")">@(transaction.Amount)€</td>
+                <td class="text-end @(transaction.Amount > 0 ? "text-success" : "text-danger")">@transaction.Amount €</td>
                 <td class="text-end">@transaction.Date.ToShortDateString()</td>
             </tr>
         }
         </tbody>
     </table>
+}
 }

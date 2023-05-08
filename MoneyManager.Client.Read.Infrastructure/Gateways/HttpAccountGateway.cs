@@ -1,6 +1,6 @@
-﻿namespace MoneyManager.Client.Read.Infrastructure.Gateways.AccountSummaries;
+﻿namespace MoneyManager.Client.Read.Infrastructure.Gateways;
 
-public class HttpAccountGateway : IAccountSummariesGateway, IAccountDetailsGateway
+public class HttpAccountGateway : IAccountSummariesGateway, IAccountDetailsGateway, ITransactionsOfMonthGateway
 {
     private readonly HttpClient httpClient;
 
@@ -14,4 +14,8 @@ public class HttpAccountGateway : IAccountSummariesGateway, IAccountDetailsGatew
 
     public async Task<AccountDetailsPresentation> Get(Guid id) =>
         (await this.httpClient.GetFromJsonAsync<AccountDetailsPresentation>($"accounts/{id}"))!;
+
+    public async Task<IReadOnlyCollection<TransactionSummaryPresentation>> Get(Guid id, int year, int month) =>
+        (await this.httpClient.GetFromJsonAsync<IReadOnlyCollection<TransactionSummaryPresentation>>(
+            $"accounts/{id}/transactions?year={year}&month={month}"))!;
 }

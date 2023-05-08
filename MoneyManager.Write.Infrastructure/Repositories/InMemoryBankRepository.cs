@@ -5,7 +5,7 @@ public class InMemoryBankRepository : IBankRepository
     private readonly Dictionary<Guid, Bank> data = new();
     private readonly Dictionary<string, Bank> dataByExternalId = new();
 
-    public Dictionary<Guid, Bank> Data => this.data;
+    public IEnumerable<BankSnapshot> Data => this.data.Values.Select(b => b.Snapshot);
     public Func<Guid> NextId { get; set; } = null!;
 
     public Task<Guid> NextIdentity() =>

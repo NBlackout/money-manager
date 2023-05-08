@@ -5,7 +5,7 @@ public class InMemoryTransactionRepository : ITransactionRepository
     private readonly Dictionary<Guid, Transaction> data = new();
     private readonly List<string> knownExternalIds = new();
 
-    public IEnumerable<Transaction> Data => this.data.Values;
+    public IEnumerable<TransactionSnapshot> Data => this.data.Values.Select(t => t.Snapshot);
     public Func<Guid> NextId { get; set; } = null!;
 
     public Task<Guid> NextIdentity() =>

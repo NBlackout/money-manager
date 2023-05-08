@@ -1,4 +1,4 @@
-using MoneyManager.Client.Read.Infrastructure.Gateways.AccountSummaries;
+using MoneyManager.Client.Read.Infrastructure.Gateways;
 using MoneyManager.Client.Read.Infrastructure.Tests.TestDoubles;
 using MoneyManager.Shared.Presentation;
 
@@ -10,7 +10,9 @@ public sealed class HttpAccountGatewayTests : IDisposable
 
     private readonly StubbedHttpMessageHandler httpMessageHandler;
     private readonly IHost host;
-    private readonly HttpAccountGateway sut;
+    private readonly HttpAccountGateway summariesSut;
+    private readonly HttpAccountGateway detailsSut;
+    private readonly HttpAccountGateway transactionsOfMonthSut;
 
     public HttpAccountGatewayTests()
     {
@@ -19,7 +21,9 @@ public sealed class HttpAccountGatewayTests : IDisposable
             .ConfigureServices(services =>
                 services.AddReadDependencies().AddScoped(_ => CreateHttpClient(this.httpMessageHandler)))
             .Build();
-        this.sut = this.host.Service<IAccountSummariesGateway, HttpAccountGateway>();
+        this.summariesSut = this.host.Service<IAccountSummariesGateway, HttpAccountGateway>();
+        this.detailsSut = this.host.Service<IAccountDetailsGateway, HttpAccountGateway>();
+        this.transactionsOfMonthSut = this.host.Service<ITransactionsOfMonthGateway, HttpAccountGateway>();
     }
 
     [Fact]
@@ -32,21 +36,37 @@ public sealed class HttpAccountGatewayTests : IDisposable
         };
         this.httpMessageHandler.SetResponseFor($"{ApiUrl}/accounts", expected);
 
-        IReadOnlyCollection<AccountSummaryPresentation> actual = await this.sut.Get();
+        IReadOnlyCollection<AccountSummaryPresentation> actual = await this.summariesSut.Get();
         actual.Should().Equal(expected);
     }
 
     [Fact]
     public async Task Should_retrieve_account_details()
     {
-        AccountDetailsPresentation expected = new(Guid.NewGuid(), "Some account", 185.46m,
-            new TransactionSummary(Guid.NewGuid(), 532.23m, "Credit", DateTime.Parse("2003-11-16")),
-            new TransactionSummary(Guid.NewGuid(), -610.00m, "Debit", DateTime.Parse("2017-06-28"))
-        );
+        AccountDetailsPresentation expected = new(Guid.NewGuid(), "Some account", "ABC123", 185.46m);
         this.httpMessageHandler.SetResponseFor($"{ApiUrl}/accounts/{expected.Id}", expected);
 
-        AccountDetailsPresentation actual = await this.sut.Get(expected.Id);
-        actual.Should().BeEquivalentTo(expected);
+        AccountDetailsPresentation actual = await this.detailsSut.Get(expected.Id);
+        actual.Should().Be(expected);
+    }
+
+    [Fact]
+    public async Task Should_retrieve_transactions_of_month()
+    {
+        Guid accountId = Guid.NewGuid();
+        const int year = 1999;
+        const int month = 8;
+        TransactionSummaryPresentation[] expected =
+        {
+            new(Guid.NewGuid(), 1.99m, "Credit", DateTime.Parse("2014-12-24")),
+            new(Guid.NewGuid(), 1.99m, "Credit", DateTime.Parse("2000-08-11"))
+        };
+        this.httpMessageHandler.SetResponseFor($"{ApiUrl}/accounts/{accountId}/transactions?year={year}&month={month}",
+            expected);
+
+        IReadOnlyCollection<TransactionSummaryPresentation>
+            actual = await this.transactionsOfMonthSut.Get(accountId, year, month);
+        actual.Should().Equal(expected);
     }
 
     public void Dispose() =>
