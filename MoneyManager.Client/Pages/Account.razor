@@ -1,7 +1,5 @@
 ﻿@page "/accounts/{id:guid}"
 
-<PageTitle>Accounts</PageTitle>
-
 <h3>Account</h3>
 
 @if (account == null)
@@ -10,9 +8,9 @@
         <em>Loading...</em>
     </p>
 }
-else
+else if (account.Transactions.Any())
 {
-    <table class="align-middle table table-hover">
+    <table class="align-middle table table-hover table-sm">
         <thead class="table-light">
         <tr>
             <th>Label</th>
@@ -25,8 +23,8 @@ else
         {
             <tr>
                 <td>@transaction.Label</td>
-                <td>@transaction.Amount</td>
-                <td>@transaction.Date.ToShortDateString()</td>
+                <td class="text-end @(transaction.Amount > 0 ? "text-success" : "text-danger")">@(transaction.Amount)€</td>
+                <td class="text-end">@transaction.Date.ToShortDateString()</td>
             </tr>
         }
         </tbody>
