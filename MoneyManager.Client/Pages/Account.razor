@@ -8,35 +8,27 @@
 }
 else
 {
-    <h2>@account.Label <small class="text-muted fs-6">@account.Number</small> @account.Balance €</h2>
+    <h2>@account.Label <small class="text-muted fs-6">@account.Number</small> @account.Balance € au @account.BalanceDate.ToShortDateString()</h2>
     <hr>
-    <div class="form-inline text-center">
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-btn">
-                    <button type="button" class="btn btn-default">
-                        <i class="oi oi-media-skip-backward"></i>
-                    </button>
-                    <button type="button" class="btn btn-default">
-                        <i class="oi oi-media-step-backward"></i>
-                    </button>
-                </div>
-                <select @onchange="@ShowTransactionsOfMonth" class="form-control">
-                    @foreach (DateTime month in months)
-                    {
-                        <option selected="@(month == currentMonth)">@month.ToString("MMMM yyyy")</option>
-                    }
-                </select>
-                <div class="input-group-btn">
-                    <button type="button" class="btn btn-default">
-                        <i class="oi oi-media-step-forward"></i>
-                    </button>
-                    <button type="button" class="btn btn-default">
-                        <i class="oi oi-media-skip-forward"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
+    <div class="input-group">
+        <button type="button" class="btn btn-outline-dark" @onclick="@ShowFirstMonthTransactions">
+            <span class="oi oi-media-skip-backward"></span>
+        </button>
+        <button type="button" class="btn btn-outline-dark" @onclick="@ShowPreviousMonthTransactions">
+            <span class="oi oi-media-step-backward"></span>
+        </button>
+        <select @onchange="@ShowTransactionsOfMonth" class="form-select border-dark">
+            @foreach (DateTime month in months)
+            {
+                <option selected="@(month == currentMonth)">@month.ToString("MMMM yyyy")</option>
+            }
+        </select>
+        <button type="button" class="btn btn-outline-dark" @onclick="@ShowNextMonthTransactions">
+            <span class="oi oi-media-step-forward"></span>
+        </button>
+        <button type="button" class="btn btn-outline-dark" @onclick="@ShowLastMonthTransactions">
+            <span class="oi oi-media-skip-forward"></span>
+        </button>
     </div>
 }
 @if (transactions == null)
@@ -66,5 +58,4 @@ else
         }
         </tbody>
     </table>
-}
 }

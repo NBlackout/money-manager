@@ -4,9 +4,9 @@ namespace MoneyManager.Client.Pages;
 
 public partial class Account : ComponentBase
 {
-    private List<DateTime>? months;
-    private DateTime currentMonth;
     private AccountDetailsPresentation? account;
+    private List<DateTime> months = new();
+    private DateTime currentMonth;
     private IReadOnlyCollection<TransactionSummaryPresentation>? transactions;
 
     [Inject] private AccountDetails AccountDetails { get; set; } = null!;
@@ -16,14 +16,10 @@ public partial class Account : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
-        this.currentMonth = new DateTime(Today.Year, Today.Month, 1);
-        this.months = LoadMonthsRange();
         this.account = await this.AccountDetails.Execute(this.Id);
-        this.transactions = await this.LoadTransactionsOfMonth(this.currentMonth);
+        this.months = LoadMonthsRange();
+        await this.LoadTransactionsOf(new DateTime(Today.Year, Today.Month, 1));
     }
-
-    private async Task ShowTransactionsOfMonth(ChangeEventArgs args) =>
-        this.transactions = await this.LoadTransactionsOfMonth(ParseExact(args.Value!.ToString()!, "MMMM yyyy", null));
 
     private static List<DateTime> LoadMonthsRange()
     {
@@ -37,6 +33,25 @@ public partial class Account : ComponentBase
         return months;
     }
 
-    private async Task<IReadOnlyCollection<TransactionSummaryPresentation>> LoadTransactionsOfMonth(DateTime today) =>
-        await this.TransactionsOfMonth.Execute(this.Id, today.Year, today.Month);
+    private async Task ShowTransactionsOfMonth(ChangeEventArgs args) =>
+        await this.LoadTransactionsOf(ParseExact(args.Value!.ToString()!, "MMMM yyyy", null));
+
+    private async Task ShowFirstMonthTransactions() =>
+        await this.LoadTransactionsOf(this.months.First());
+
+    private async Task ShowPreviousMonthTransactions() =>
+        await this.LoadTransactionsOf(this.currentMonth.AddMonths(-1));
+
+    private async Task ShowNextMonthTransactions() =>
+        await this.LoadTransactionsOf(this.currentMonth.AddMonths(1));
+
+    private async Task ShowLastMonthTransactions() =>
+        await this.LoadTransactionsOf(this.months.Last());
+
+    private async Task LoadTransactionsOf(DateTime month)
+    {
+        this.currentMonth = month;
+        this.transactions =
+            await this.TransactionsOfMonth.Execute(this.Id, this.currentMonth.Year, this.currentMonth.Month);
+    }
 }
