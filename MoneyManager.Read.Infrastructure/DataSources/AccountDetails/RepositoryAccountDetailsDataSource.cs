@@ -15,6 +15,7 @@ public class RepositoryAccountDetailsDataSource : IAccountDetailsDataSource
     {
         Account account = await this.accountRepository.ById(id);
 
-        return new AccountDetailsPresentation(id, account.Snapshot.Label, account.Snapshot.Number, account.Snapshot.Balance);
+        return new AccountDetailsPresentation(id, account.Snapshot.Label, account.Snapshot.Number,
+            account.Snapshot.Balance, account.Snapshot.BalanceDate);
     }
 }

@@ -26,5 +26,5 @@ public record AccountBuilder(Guid Id, Guid BankId, string BankName, string Label
         new(this.Id, this.BankId, this.BankName, this.Label, this.Balance, this.BalanceDate, this.Tracked);
 
     public AccountDetailsPresentation ToDetails() =>
-        new(this.Id, this.Label, this.Number, this.Balance);
+        new(this.Id, this.Label, this.Number, this.Balance, this.BalanceDate);
 }
