@@ -1,3 +1,64 @@
-﻿tbody > tr {
+﻿tbody tr {
     cursor: pointer;
+}
+
+.list-group {
+    margin-right: -2px;
+    margin-top: 20px;
+}
+
+.list-group-item {
+    background: none;
+    border-color: transparent;
+    border-radius: 0;
+    border-width: 1px 0;
+    color: #337AB7;
+    padding: 8px 8px 8px 20px;
+    z-index: 1;
+}
+
+.list-group-item .account-label {
+    margin-bottom: 8px;
+}
+
+.list-group-item .account-label + p {
+    margin-bottom: 0;
+}
+
+.list-group-item .oi {
+    color: transparent;
+}
+
+.list-group-item:hover {
+    background-color: #FFFFFF;
+    color: #23527C;
+    cursor: pointer;
+}
+
+.list-group-item:hover .oi {
+    color: #23527C;
+}
+
+.list-group-item.selected {
+    background-color: #FFFFFF;
+    border-color: #E7E7E7;
+    position: relative;
+}
+
+.list-group-item.selected:before {
+    background: #019D78;
+    bottom: -1px;
+    content: "";
+    left: 0;
+    position: absolute;
+    top: -1px;
+    width: 4px;
+}
+
+.list-group-item.selected .account-label {
+    color: #EE7522;
+}
+
+.list-group-item.selected .oi {
+    color: #EE7522;
 }

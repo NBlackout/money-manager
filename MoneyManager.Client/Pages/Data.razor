@@ -1,0 +1,7 @@
+﻿@page "/data"
+
+<InputFile OnChange="UploadBankStatementFile"></InputFile>
+@if (uploadResult != null)
+{
+    <div>@uploadResult</div>
+}

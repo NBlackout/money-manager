@@ -1,0 +1,102 @@
+﻿@page "/accounts/{id:guid}/activity"
+
+<div class="container account-activity">
+    @if (account != null)
+    {
+        <div class="row">
+            <div class="col-auto">
+                @if (isEditing)
+                {
+                    <div class="row g-3 align-items-end">
+                        <div class="col-auto">
+                            <input type="text" value="@account.Label" @ref="labelInput" @onchange="@LabelChanged" class="form-control" placeholder="Label"/>
+                        </div>
+                        <div class="col-auto">
+                            <small class="form-text fs-5">
+                                @account.Number
+                            </small>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <h2>
+                        <button type="button" class="btn btn-link btn-sm" @onclick="@ToggleEditMode" hidden="@isEditing">
+                            <i class="oi oi-pencil"></i>
+                        </button>
+                        @account.Label <small class="fs-5 text-muted">@account.Number</small>
+                    </h2>
+                }
+            </div>
+            <div class="col"></div>
+            <div class="col-auto">
+                <h2 class="account-balance fw-bold">@account.Balance € <span class="fs-5 fw-normal text-muted">au @account.BalanceDate.ToShortDateString()</span></h2>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-auto">
+                <div class="input-group">
+                    <button type="button" class="btn btn-outline-dark" @onclick="@ShowFirstMonthTransactions">
+                        <span class="oi oi-media-skip-backward"></span>
+                    </button>
+                    <button type="button" class="btn btn-outline-dark" @onclick="@ShowPreviousMonthTransactions">
+                        <span class="oi oi-media-step-backward"></span>
+                    </button>
+                    <select @onchange="@ShowTransactionsOfMonth" class="form-select border-dark">
+                        @foreach (DateTime month in months)
+                        {
+                            <option selected="@(month == currentMonth)">@month.ToString("MMMM yyyy")</option>
+                        }
+                    </select>
+                    <button type="button" class="btn btn-outline-dark" @onclick="@ShowNextMonthTransactions">
+                        <span class="oi oi-media-step-forward"></span>
+                    </button>
+                    <button type="button" class="btn btn-outline-dark" @onclick="@ShowLastMonthTransactions">
+                        <span class="oi oi-media-skip-forward"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+
+        @if (transactions != null)
+        {
+            <h3>Transactions</h3>
+            <table class="align-middle table table-hover table-sm">
+                <thead class="table-light">
+                <tr>
+                    <th class="transaction-label">Label</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (TransactionSummaryPresentation transaction in transactions)
+                {
+                    <tr>
+                        <td>@transaction.Label</td>
+                        <td class="text-end">
+                            <span class="@(transaction.Amount > 0 ? "text-success" : "text-danger")">@transaction.Amount €</span>
+                        </td>
+                        <td class="text-end">@transaction.Date.ToShortDateString()</td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td class="text-end fw-bold">Total</td>
+                    <td class="text-end">
+                        @{
+                            decimal total = transactions.Sum(t => t.Amount);
+                        }
+                        <span class="@(total > 0 ? "text-success" : "text-danger")">@total €</span>
+                    </td>
+                    <td></td>
+                </tr>
+                </tfoot>
+            </table>
+        }
+    }
+</div>
