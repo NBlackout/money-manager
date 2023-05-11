@@ -1,81 +1,73 @@
 ﻿@page "/"
+@page "/accounts/{SelectedId:guid?}"
 
-<h1>Accounts</h1>
-
-<InputFile OnChange="UploadBankStatementFile"></InputFile>
-@if (uploadResult != null)
-{
-    <div>@uploadResult</div>
-}
-
-@if (accounts == null)
-{
-    <p>
-        <em>Loading...</em>
-    </p>
-}
-else
-{
-    <table class="align-middle table table-hover">
-        <thead class="table-light">
-        <tr>
-            <th></th>
-            <th>Bank</th>
-            <th>Label</th>
-            <th>Balance</th>
-            <th>Balance date</th>
-            <th>Tracking</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (AccountSummaryPresentation account in accounts)
+<div class="container">
+    <div class="row gx-0">
+        @if (accounts != null)
         {
-            <tr @onclick="@(() => NavigateToAccount(account.Id))">
-                <td>
-                    <button type="button" class="btn btn-link btn-sm" @onclick="@(() => ToggleEditMode(account))" hidden="@IsEditing(account)">
-                        <i class="oi oi-pencil"></i>
-                    </button>
-                </td>
-                <td>
-                    @if (IsEditing(account))
-                    {
-                        <input type="text" value="@account.BankName" @ref="bankNameInput" @onchange="@BankNameChanged" @onabort="@ExitEditMode" @onclick:stopPropagation="true" class="form-control form-control-sm" placeholder="Bank name"/>
-                    }
-                    else
-                    {
-                        @account.BankName
-                    }
-                </td>
-                <td>
-                    @if (IsEditing(account))
-                    {
-                        <input type="text" value="@account.Label" @ref="labelInput" @onchange="@LabelChanged" @onabort="@ExitEditMode" class="form-control form-control-sm" placeholder="Label"/>
-                    }
-                    else
-                    {
-                        @account.Label
-                    }
-                </td>
-                <td>@account.Balance</td>
-                <td>@account.BalanceDate.ToShortDateString()</td>
-                <td>
-                    @if (account.Tracked)
-                    {
-                        <button type="button" class="btn btn-primary btn-sm" @onclick="@(() => StopTracking(account))">
-                            <i class="oi oi-media-stop"></i>
-                            Stop
-                        </button>
-                    }
-                    else
-                    {
-                        <button type="button" class="btn btn-primary btn-sm" @onclick="@(() => ResumeTracking(account))">
-                            <i class="oi oi-media-play"></i>
-                            Resume
-                        </button>
-                    }
-                </td>
-            </tr>
+            <ul class="col-3 list-group">
+                @foreach (AccountSummaryPresentation account in accounts)
+                {
+                    <li class="list-group-item @(account.Id == SelectedId ? "selected" : "")" @onclick="@(() => ShowDetails(account.Id))">
+                        <p class="account-label fw-bold d-flex justify-content-between">
+                            @account.Label
+                            <span class="oi oi-chevron-right"></span>
+                        </p>
+                        <p class="d-flex justify-content-between">
+                            @account.Number
+                            <span class="text-success">@account.Balance €</span>
+                        </p>
+                    </li>
+                }
+            </ul>
+            <div class="col-9">
+                @if (SelectedId.HasValue)
+                {
+                    <AccountActivity Id="SelectedId.Value"></AccountActivity>
+                }
+            </div>
         }
-        </tbody>
-    </table>
-}
+    </div>
+</div>
+
+@* <table class="align-middle table table-hover"> *@
+@*     <thead class="table-light"> *@
+@*     <tr> *@
+@*         <th>Bank</th> *@
+@*         <th>Tracking</th> *@
+@*     </tr> *@
+@*     </thead> *@
+@*     <tbody> *@
+@*     @foreach (AccountSummaryPresentation account in accounts) *@
+@*     { *@
+@*         <tr @onclick="@(() => NavigateToAccount(account.Id))"> *@
+@*             <td> *@
+@*                 @if (IsEditing(account)) *@
+@*                 { *@
+@*                     <input type="text" value="@account.BankName" @ref="bankNameInput" @onchange="@BankNameChanged" @onabort="@ExitEditMode" @onclick:stopPropagation="true" class="form-control form-control-sm" placeholder="Bank name"/> *@
+@*                 } *@
+@*                 else *@
+@*                 { *@
+@*                     @account.BankName *@
+@*                 } *@
+@*             </td> *@
+@*             <td> *@
+@*                 @if (account.Tracked) *@
+@*                 { *@
+@*                     <button type="button" class="btn btn-primary btn-sm" @onclick="@(() => StopTracking(account))"> *@
+@*                         <i class="oi oi-media-stop"></i> *@
+@*                         Stop *@
+@*                     </button> *@
+@*                 } *@
+@*                 else *@
+@*                 { *@
+@*                     <button type="button" class="btn btn-primary btn-sm" @onclick="@(() => ResumeTracking(account))"> *@
+@*                         <i class="oi oi-media-play"></i> *@
+@*                         Resume *@
+@*                     </button> *@
+@*                 } *@
+@*             </td> *@
+@*         </tr> *@
+@*     } *@
+@*     </tbody> *@
+@* </table> *@

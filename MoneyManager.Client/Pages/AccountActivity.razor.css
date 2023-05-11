@@ -1,0 +1,42 @@
+hr {
+    border-top: 2px solid #E7E7E7;
+    opacity: 1;
+}
+
+th {
+    background-color: #EDEDED;
+}
+
+th.transaction-label {
+    width: 100%;
+}
+
+td {
+    white-space: nowrap;
+}
+
+tfoot td {
+    border-top: 4px double #DDDDDD;
+}
+
+.account-activity {
+    background-color: #FFFFFF;
+    border: 2px solid #E7E7E7;
+    border-top: 0;
+    padding: 25px 15px 15px;
+    position: relative;
+}
+
+.account-activity:before {
+    background: #019D78;
+    content: "";
+    height: 8px;
+    left: -1px;
+    position: absolute;
+    right: -2px;
+    top: 0;
+}
+
+.account-balance {
+    color: #019D78;
+}

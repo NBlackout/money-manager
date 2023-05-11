@@ -23,7 +23,7 @@ public record AccountBuilder(Guid Id, Guid BankId, string BankName, string Label
         Bank.From(new BankSnapshot(this.BankId, this.BankId.ToString("N"), this.BankName));
 
     public AccountSummaryPresentation ToSummary() =>
-        new(this.Id, this.BankId, this.BankName, this.Label, this.Balance, this.BalanceDate, this.Tracked);
+        new(this.Id, this.BankId, this.BankName, this.Label, this.Number, this.Balance, this.BalanceDate, this.Tracked);
 
     public AccountDetailsPresentation ToDetails() =>
         new(this.Id, this.Label, this.Number, this.Balance, this.BalanceDate);

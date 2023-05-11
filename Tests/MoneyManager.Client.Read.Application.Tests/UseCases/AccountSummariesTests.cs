@@ -9,8 +9,10 @@ public class AccountSummariesTests
     {
         AccountSummaryPresentation[] expected =
         {
-            new(Guid.NewGuid(), Guid.NewGuid(), "Another bank", "Checking account", 10000.00m, DateTime.Now, false),
-            new(Guid.NewGuid(), Guid.NewGuid(), "Bank", "Saving account", 5500.12m, DateTime.Now.AddDays(3), true)
+            new(Guid.NewGuid(), Guid.NewGuid(), "Another bank", "Checking account", "014FZ3", 10000.00m, DateTime.Now,
+                false),
+            new(Guid.NewGuid(), Guid.NewGuid(), "Bank", "Saving account", "DSFP348324V94", 5500.12m,
+                DateTime.Now.AddDays(3), true)
         };
         StubbedAccountSummariesGateway gateway = new(expected);
         AccountSummaries sut = new(gateway);
