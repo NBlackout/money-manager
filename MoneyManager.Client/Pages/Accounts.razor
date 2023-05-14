@@ -33,7 +33,6 @@
 @* <table class="align-middle table table-hover"> *@
 @*     <thead class="table-light"> *@
 @*     <tr> *@
-@*         <th>Bank</th> *@
 @*         <th>Tracking</th> *@
 @*     </tr> *@
 @*     </thead> *@
@@ -41,16 +40,6 @@
 @*     @foreach (AccountSummaryPresentation account in accounts) *@
 @*     { *@
 @*         <tr @onclick="@(() => NavigateToAccount(account.Id))"> *@
-@*             <td> *@
-@*                 @if (IsEditing(account)) *@
-@*                 { *@
-@*                     <input type="text" value="@account.BankName" @ref="bankNameInput" @onchange="@BankNameChanged" @onabort="@ExitEditMode" @onclick:stopPropagation="true" class="form-control form-control-sm" placeholder="Bank name"/> *@
-@*                 } *@
-@*                 else *@
-@*                 { *@
-@*                     @account.BankName *@
-@*                 } *@
-@*             </td> *@
 @*             <td> *@
 @*                 @if (account.Tracked) *@
 @*                 { *@

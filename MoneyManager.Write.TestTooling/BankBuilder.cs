@@ -8,5 +8,5 @@ public record BankBuilder(Guid Id, string ExternalId, string Name)
         new(id, "0052158911", "The name");
 
     public Bank Build() => 
-        Bank.From(new BankSnapshot(this.Id, this.ExternalId, this.Name));
+        Bank.From(new BankSnapshot(this.Id, this.ExternalId));
 }

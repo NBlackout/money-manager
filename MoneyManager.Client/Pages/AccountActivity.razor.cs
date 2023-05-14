@@ -4,8 +4,6 @@ namespace MoneyManager.Client.Pages;
 
 public partial class AccountActivity : ComponentBase
 {
-    private Guid id;
-
     private bool isEditing;
     private ElementReference labelInput;
 
@@ -22,12 +20,9 @@ public partial class AccountActivity : ComponentBase
 
     protected override async Task OnParametersSetAsync()
     {
-        if (this.id != this.Id)
-        {
-            this.months = LoadMonthsRange();
-            this.account = await this.AccountDetails.Execute(this.Id);
-            await this.LoadTransactionsOf(new DateTime(Today.Year, Today.Month, 1));
-        }
+        this.months = LoadMonthsRange();
+        this.account = await this.AccountDetails.Execute(this.Id);
+        await this.LoadTransactionsOf(new DateTime(Today.Year, Today.Month, 1));
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

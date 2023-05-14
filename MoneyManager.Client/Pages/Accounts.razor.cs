@@ -4,13 +4,11 @@ public partial class Accounts : ComponentBase
 {
     private IReadOnlyCollection<AccountSummaryPresentation>? accounts;
     private AccountSummaryPresentation? accountBeingEdited;
-    private ElementReference bankNameInput;
 
     [Inject] private AccountSummaries AccountSummaries { get; set; } = null!;
     [Inject] private UploadBankStatement UploadBankStatement { get; set; } = null!;
     [Inject] private StopAccountTracking StopAccountTracking { get; set; } = null!;
     [Inject] private ResumeAccountTracking ResumeAccountTracking { get; set; } = null!;
-    [Inject] private AssignBankName AssignBankName { get; set; } = null!;
     [Inject] private NavigationManager NavigationManager { get; set; } = null!;
     
     [Parameter] public Guid? SelectedId { get; set; }
@@ -36,17 +34,6 @@ public partial class Accounts : ComponentBase
     {
         if (this.accountBeingEdited == null)
             this.NavigationManager.NavigateTo($"accounts/{accountId}");
-    }
-
-    private async Task BankNameChanged(ChangeEventArgs args)
-    {
-        string newBankName = (string)args.Value!;
-        await this.AssignBankName.Execute(this.accountBeingEdited!.BankId, newBankName);
-
-        foreach (AccountSummaryPresentation bankAccount in this.accounts!.Where(a =>
-                     a.BankId == this.accountBeingEdited.BankId))
-            this.Patch(bankAccount with { BankName = newBankName });
-        this.ExitEditMode();
     }
 
     private async Task StopTracking(AccountSummaryPresentation account)
