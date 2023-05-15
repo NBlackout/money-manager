@@ -1,0 +1,22 @@
+﻿@page "/categories"
+
+@if (categories != null)
+{
+    <table class="align-middle table table-hover">
+        <thead class="table-light">
+        <tr>
+            <th>Id</th>
+            <th>Label</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (CategorySummaryPresentation category in categories)
+        {
+            <tr>
+                <td>@category.Id</td>
+                <td>@category.Label</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

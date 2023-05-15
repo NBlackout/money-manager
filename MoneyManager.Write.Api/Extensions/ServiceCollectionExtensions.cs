@@ -1,5 +1,6 @@
 ﻿using MoneyManager.Write.Application.Model.Accounts;
 using MoneyManager.Write.Application.Model.Banks;
+using MoneyManager.Write.Application.Model.Categories;
 using MoneyManager.Write.Application.Model.Transactions;
 using MoneyManager.Write.Infrastructure.OfxProcessing;
 
@@ -16,7 +17,8 @@ public static class ServiceCollectionExtensions
             .AddScoped<ImportBankStatement>()
             .AddScoped<StopAccountTracking>()
             .AddScoped<ResumeAccountTracking>()
-            .AddScoped<AssignAccountLabel>();
+            .AddScoped<AssignAccountLabel>()
+            .AddScoped<AssignTransactionCategory>();
     }
 
     private static IServiceCollection AddInfrastructureAdapters(this IServiceCollection services) =>
@@ -48,24 +50,29 @@ public static class ServiceCollectionExtensions
         transactionRepository.Feed(
             Transaction.From(new TransactionSnapshot(Guid.Parse("4C957075-C660-4616-9FB4-492A08FFAE1C"),
                 Guid.Parse("1A87A411-BBEB-4FB0-83E7-539CF5EFBE6C"), "External id 1", -193.62m, "Payment",
-                DateTime.Parse("2023-05-07"))
+                DateTime.Parse("2023-05-07"), null)
             ),
             Transaction.From(new TransactionSnapshot(Guid.Parse("3E9F5A24-9057-44F9-9A0F-2204F42E15ED"),
                 Guid.Parse("1A87A411-BBEB-4FB0-83E7-539CF5EFBE6C"), "External id 2", 2305.51m, "Revenue",
-                DateTime.Parse("2023-06-01"))
+                DateTime.Parse("2023-06-01"), null)
             ),
             Transaction.From(new TransactionSnapshot(Guid.Parse("63BE873F-1153-4200-9992-C26661B31B08"),
                 Guid.Parse("1A87A411-BBEB-4FB0-83E7-539CF5EFBE6C"), "External id 3", -2.99m, "Pastry",
-                DateTime.Parse("2023-06-02"))
+                DateTime.Parse("2023-06-02"), null)
             ),
             Transaction.From(new TransactionSnapshot(Guid.Parse("912B37C1-2089-4AF4-90DF-6C96F89DE716"),
                 Guid.Parse("2981760C-A17B-4ECF-B828-AB89CCD1B11A"), "External id 1", 1400.00m, "Savings",
-                DateTime.Parse("2023-04-16"))
+                DateTime.Parse("2023-04-16"), null)
             ),
             Transaction.From(new TransactionSnapshot(Guid.Parse("355C7029-D35E-49D9-8E01-0230280A012F"),
                 Guid.Parse("2981760C-A17B-4ECF-B828-AB89CCD1B11A"), "External id 2", -15.99m, "Internet provider",
-                DateTime.Parse("2023-01-02"))
+                DateTime.Parse("2023-01-02"), null)
             )
+        );
+        InMemoryCategoryRepository categoryRepository = new();
+        categoryRepository.Feed(
+            Category.From(new CategorySnapshot(Guid.Parse("E06F5A93-0C3C-4BF4-B8D5-738C0772D29E"), "First category")),
+            Category.From(new CategorySnapshot(Guid.Parse("F8DE1AD3-7566-4BC0-B898-435373F6E89D"), "Second category"))
         );
 
         return services
@@ -74,6 +81,8 @@ public static class ServiceCollectionExtensions
             .AddSingleton<IAccountRepository>(accountRepository)
             .AddSingleton(accountRepository)
             .AddSingleton<ITransactionRepository>(transactionRepository)
-            .AddSingleton(transactionRepository);
+            .AddSingleton(transactionRepository)
+            .AddSingleton<ICategoryRepository>(categoryRepository)
+            .AddSingleton(categoryRepository);
     }
 }

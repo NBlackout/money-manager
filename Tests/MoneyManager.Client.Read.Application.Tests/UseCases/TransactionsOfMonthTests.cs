@@ -1,15 +1,15 @@
-﻿using MoneyManager.Client.Read.Infrastructure.Gateways;
+﻿using MoneyManager.Client.Read.Infrastructure.Gateways.Account;
 
 namespace MoneyManager.Client.Read.Application.Tests.UseCases;
 
 public class TransactionsOfMonthTests
 {
-    private readonly StubbedTransactionsOfMonthGateway gateway;
+    private readonly StubbedAccountGateway gateway;
     private readonly TransactionsOfMonth sut;
 
     public TransactionsOfMonthTests()
     {
-        this.gateway = new StubbedTransactionsOfMonthGateway();
+        this.gateway = new StubbedAccountGateway();
         this.sut = new TransactionsOfMonth(this.gateway);
     }
 

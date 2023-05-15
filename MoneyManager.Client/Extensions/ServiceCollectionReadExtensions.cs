@@ -1,5 +1,7 @@
 ﻿using MoneyManager.Client.Read.Application.Ports;
-using MoneyManager.Client.Read.Infrastructure.Gateways;
+using MoneyManager.Client.Read.Application.UseCases;
+using MoneyManager.Client.Read.Infrastructure.Gateways.Account;
+using MoneyManager.Client.Read.Infrastructure.Gateways.Category;
 
 namespace MoneyManager.Client.Extensions;
 
@@ -9,9 +11,8 @@ public static class ServiceCollectionReadExtensions
     {
         return services
             .AddUseCases()
-            .AddScoped<IAccountSummariesGateway, HttpAccountGateway>()
-            .AddScoped<IAccountDetailsGateway, HttpAccountGateway>()
-            .AddScoped<ITransactionsOfMonthGateway, HttpAccountGateway>();
+            .AddScoped<IAccountGateway, HttpAccountGateway>()
+            .AddScoped<ICategoryGateway, HttpCategoryGateway>();
     }
 
     private static IServiceCollection AddUseCases(this IServiceCollection services)
@@ -19,6 +20,7 @@ public static class ServiceCollectionReadExtensions
         return services
             .AddScoped<AccountSummaries>()
             .AddScoped<AccountDetails>()
-            .AddScoped<TransactionsOfMonth>();
+            .AddScoped<TransactionsOfMonth>()
+            .AddScoped<CategorySummaries>();
     }
 }

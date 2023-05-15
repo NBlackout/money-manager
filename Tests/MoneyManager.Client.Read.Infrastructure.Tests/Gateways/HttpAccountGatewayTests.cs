@@ -1,4 +1,4 @@
-using MoneyManager.Client.Read.Infrastructure.Gateways;
+using MoneyManager.Client.Read.Infrastructure.Gateways.Account;
 using MoneyManager.Client.Read.Infrastructure.Tests.TestDoubles;
 using MoneyManager.Shared.Presentation;
 
@@ -10,9 +10,7 @@ public sealed class HttpAccountGatewayTests : IDisposable
 
     private readonly StubbedHttpMessageHandler httpMessageHandler;
     private readonly IHost host;
-    private readonly HttpAccountGateway summariesSut;
-    private readonly HttpAccountGateway detailsSut;
-    private readonly HttpAccountGateway transactionsOfMonthSut;
+    private readonly HttpAccountGateway sut;
 
     public HttpAccountGatewayTests()
     {
@@ -21,9 +19,7 @@ public sealed class HttpAccountGatewayTests : IDisposable
             .ConfigureServices(services =>
                 services.AddReadDependencies().AddScoped(_ => CreateHttpClient(this.httpMessageHandler)))
             .Build();
-        this.summariesSut = this.host.Service<IAccountSummariesGateway, HttpAccountGateway>();
-        this.detailsSut = this.host.Service<IAccountDetailsGateway, HttpAccountGateway>();
-        this.transactionsOfMonthSut = this.host.Service<ITransactionsOfMonthGateway, HttpAccountGateway>();
+        this.sut = this.host.Service<IAccountGateway, HttpAccountGateway>();
     }
 
     [Fact]
@@ -37,7 +33,7 @@ public sealed class HttpAccountGatewayTests : IDisposable
         };
         this.httpMessageHandler.SetResponseFor($"{ApiUrl}/accounts", expected);
 
-        IReadOnlyCollection<AccountSummaryPresentation> actual = await this.summariesSut.Get();
+        IReadOnlyCollection<AccountSummaryPresentation> actual = await this.sut.Summaries();
         actual.Should().Equal(expected);
     }
 
@@ -48,7 +44,7 @@ public sealed class HttpAccountGatewayTests : IDisposable
             DateTime.Parse("2413-03-30"));
         this.httpMessageHandler.SetResponseFor($"{ApiUrl}/accounts/{expected.Id}", expected);
 
-        AccountDetailsPresentation actual = await this.detailsSut.Get(expected.Id);
+        AccountDetailsPresentation actual = await this.sut.Details(expected.Id);
         actual.Should().Be(expected);
     }
 
@@ -66,8 +62,8 @@ public sealed class HttpAccountGatewayTests : IDisposable
         this.httpMessageHandler.SetResponseFor($"{ApiUrl}/accounts/{accountId}/transactions?year={year}&month={month}",
             expected);
 
-        IReadOnlyCollection<TransactionSummaryPresentation>
-            actual = await this.transactionsOfMonthSut.Get(accountId, year, month);
+        IReadOnlyCollection<TransactionSummaryPresentation> actual =
+            await this.sut.TransactionsOfMonth(accountId, year, month);
         actual.Should().Equal(expected);
     }
 

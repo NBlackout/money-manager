@@ -2,13 +2,13 @@
 
 public class TransactionsOfMonth
 {
-    private readonly ITransactionsOfMonthGateway gateway;
+    private readonly IAccountGateway gateway;
 
-    public TransactionsOfMonth(ITransactionsOfMonthGateway gateway)
+    public TransactionsOfMonth(IAccountGateway gateway)
     {
         this.gateway = gateway;
     }
 
     public async Task<IReadOnlyCollection<TransactionSummaryPresentation>> Execute(Guid id, int year, int month) =>
-        await this.gateway.Get(id, year, month);
+        await this.gateway.TransactionsOfMonth(id, year, month);
 }

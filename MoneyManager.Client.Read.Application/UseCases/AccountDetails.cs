@@ -2,13 +2,13 @@
 
 public class AccountDetails
 {
-    private readonly IAccountDetailsGateway gateway;
+    private readonly IAccountGateway gateway;
 
-    public AccountDetails(IAccountDetailsGateway gateway)
+    public AccountDetails(IAccountGateway gateway)
     {
         this.gateway = gateway;
     }
 
     public async Task<AccountDetailsPresentation> Execute(Guid id) => 
-        await this.gateway.Get(id);
+        await this.gateway.Details(id);
 }

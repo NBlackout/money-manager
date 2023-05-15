@@ -1,4 +1,4 @@
-using MoneyManager.Client.Read.Infrastructure.Gateways;
+using MoneyManager.Client.Read.Infrastructure.Gateways.Account;
 
 namespace MoneyManager.Client.Read.Application.Tests.UseCases;
 
@@ -14,7 +14,7 @@ public class AccountSummariesTests
             new(Guid.NewGuid(), Guid.NewGuid(), "Saving account", "DSFP348324V94", 5500.12m,
                 DateTime.Now.AddDays(3), true)
         };
-        StubbedAccountSummariesGateway gateway = new(expected);
+        StubbedAccountGateway gateway = new(expected);
         AccountSummaries sut = new(gateway);
 
         IReadOnlyCollection<AccountSummaryPresentation> actual = await sut.Execute();

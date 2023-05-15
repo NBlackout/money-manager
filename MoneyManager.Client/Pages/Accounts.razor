@@ -1,5 +1,6 @@
 ﻿@page "/"
 @page "/accounts/{SelectedId:guid?}"
+@using MoneyManager.Client.Components
 
 <div class="container">
     <div class="row gx-0">
@@ -29,34 +30,3 @@
         }
     </div>
 </div>
-
-@* <table class="align-middle table table-hover"> *@
-@*     <thead class="table-light"> *@
-@*     <tr> *@
-@*         <th>Tracking</th> *@
-@*     </tr> *@
-@*     </thead> *@
-@*     <tbody> *@
-@*     @foreach (AccountSummaryPresentation account in accounts) *@
-@*     { *@
-@*         <tr @onclick="@(() => NavigateToAccount(account.Id))"> *@
-@*             <td> *@
-@*                 @if (account.Tracked) *@
-@*                 { *@
-@*                     <button type="button" class="btn btn-primary btn-sm" @onclick="@(() => StopTracking(account))"> *@
-@*                         <i class="oi oi-media-stop"></i> *@
-@*                         Stop *@
-@*                     </button> *@
-@*                 } *@
-@*                 else *@
-@*                 { *@
-@*                     <button type="button" class="btn btn-primary btn-sm" @onclick="@(() => ResumeTracking(account))"> *@
-@*                         <i class="oi oi-media-play"></i> *@
-@*                         Resume *@
-@*                     </button> *@
-@*                 } *@
-@*             </td> *@
-@*         </tr> *@
-@*     } *@
-@*     </tbody> *@
-@* </table> *@
