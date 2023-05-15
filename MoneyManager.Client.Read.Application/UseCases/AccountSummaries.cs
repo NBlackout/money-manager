@@ -2,13 +2,13 @@
 
 public class AccountSummaries
 {
-    private readonly IAccountSummariesGateway gateway;
+    private readonly IAccountGateway gateway;
 
-    public AccountSummaries(IAccountSummariesGateway gateway)
+    public AccountSummaries(IAccountGateway gateway)
     {
         this.gateway = gateway;
     }
 
     public async Task<IReadOnlyCollection<AccountSummaryPresentation>> Execute() =>
-        await this.gateway.Get();
+        await this.gateway.Summaries();
 }

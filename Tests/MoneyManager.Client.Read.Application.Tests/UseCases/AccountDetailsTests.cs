@@ -1,15 +1,15 @@
-﻿using MoneyManager.Client.Read.Infrastructure.Gateways;
+﻿using MoneyManager.Client.Read.Infrastructure.Gateways.Account;
 
 namespace MoneyManager.Client.Read.Application.Tests.UseCases;
 
 public class AccountDetailsTests
 {
-    private readonly StubbedAccountDetailsGateway gateway;
+    private readonly StubbedAccountGateway gateway;
     private readonly AccountDetails sut;
 
     public AccountDetailsTests()
     {
-        this.gateway = new StubbedAccountDetailsGateway();
+        this.gateway = new StubbedAccountGateway();
         this.sut = new AccountDetails(this.gateway);
     }
 

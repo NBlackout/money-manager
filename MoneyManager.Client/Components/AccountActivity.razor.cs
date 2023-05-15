@@ -1,6 +1,8 @@
-﻿using static System.DateTime;
+﻿using MoneyManager.Client.Read.Application.UseCases;
+using MoneyManager.Client.Write.Application.UseCases;
+using static System.DateTime;
 
-namespace MoneyManager.Client.Pages;
+namespace MoneyManager.Client.Components;
 
 public partial class AccountActivity : ComponentBase
 {

@@ -27,22 +27,13 @@ public class ImportBankStatementTests
     [Fact]
     public async Task Should_track_unknown_bank_and_account()
     {
-        BankBuilder bank = BankBuilder.For(Guid.NewGuid()) with
-        {
-            ExternalId = "1234567890", Name = "1234567890"
-        };
+        BankBuilder bank = BankBuilder.For(Guid.NewGuid());
         AccountBuilder account = AccountBuilder.For(Guid.NewGuid()) with
         {
             BankId = bank.Id, Number = "Number", Label = "Number", Tracked = true
         };
-        TransactionBuilder aTransaction = TransactionBuilder.For(Guid.NewGuid()) with
-        {
-            AccountId = account.Id, ExternalId = "V0ZNTODBR8", Amount = 1011.05m
-        };
-        TransactionBuilder anotherTransaction = TransactionBuilder.For(Guid.NewGuid()) with
-        {
-            AccountId = account.Id, ExternalId = "193VN20D", Amount = 750.23m
-        };
+        TransactionBuilder aTransaction = ATransaction(Guid.NewGuid(), account.Id);
+        TransactionBuilder anotherTransaction = ATransaction(Guid.NewGuid(), account.Id);
 
         this.bankRepository.NextId = () => bank.Id;
         this.accountRepository.NextId = () => account.Id;
@@ -62,24 +53,17 @@ public class ImportBankStatementTests
         {
             BankId = bank.Id, Number = "Number", Label = "Number", Tracked = true
         };
-        TransactionBuilder existingTransaction = TransactionBuilder.For(Guid.NewGuid()) with
-        {
-            AccountId = account.Id, ExternalId = "0421NFE9"
-        };
-        TransactionBuilder unknownTransaction = TransactionBuilder.For(Guid.NewGuid()) with
-        {
-            AccountId = account.Id, ExternalId = "V02BF05934VE"
-        };
+        TransactionBuilder aTransaction = ATransaction(Guid.NewGuid(), account.Id);
+        TransactionBuilder anotherTransaction = ATransaction(Guid.NewGuid(), account.Id);
 
         this.FeedByExternalId(bank);
         this.accountRepository.NextId = () => account.Id;
-        this.transactionRepository.Feed(existingTransaction.Build());
-        this.nextIds = new[] { unknownTransaction.Id };
+        this.nextIds = new[] { aTransaction.Id, anotherTransaction.Id };
         this.transactionRepository.NextId = () => this.nextIds[this.nextIdIndex++];
         this.ofxParser.SetAccountStatementFor(TheStream,
-            AccountStatementFrom(bank, account, existingTransaction, unknownTransaction));
+            AccountStatementFrom(bank, account, aTransaction, anotherTransaction));
 
-        await this.Verify_ImportTransactions(TheStream, bank, account, existingTransaction, unknownTransaction);
+        await this.Verify_ImportTransactions(TheStream, bank, account, aTransaction, anotherTransaction);
     }
 
     [Fact]
@@ -136,15 +120,23 @@ public class ImportBankStatementTests
     private void FeedByExternalId(AccountBuilder account) =>
         this.accountRepository.FeedByExternalId(new ExternalId(account.BankId, account.Number), account.Build());
 
-    private static AccountStatement AccountStatementFrom(BankBuilder bank, AccountBuilder account,
-        params TransactionBuilder[] transactions)
-    {
-        return new AccountStatement(bank.ExternalId, account.Number, account.Balance, account.BalanceDate,
-            transactions.Select(t => new TransactionStatement(t.ExternalId, t.Amount, t.Label, t.Date)).ToArray());
-    }
-
     internal static class Data
     {
         public static readonly MemoryStream TheStream = new(new byte[] { 0xF0, 0x42 });
+
+        public static TransactionBuilder ATransaction(Guid id, Guid accountId)
+        {
+            return TransactionBuilder.For(id) with
+            {
+                AccountId = accountId, ExternalId = id.ToString(), CategoryId = null
+            };
+        }
+
+        public static AccountStatement AccountStatementFrom(BankBuilder bank, AccountBuilder account,
+            params TransactionBuilder[] transactions)
+        {
+            return new AccountStatement(bank.ExternalId, account.Number, account.Balance, account.BalanceDate,
+                transactions.Select(t => new TransactionStatement(t.ExternalId, t.Amount, t.Label, t.Date)).ToArray());
+        }
     }
 }

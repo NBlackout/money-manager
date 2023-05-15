@@ -1,8 +1,4 @@
-﻿tbody tr {
-    cursor: pointer;
-}
-
-.list-group {
+﻿.list-group {
     margin-right: -2px;
     margin-top: 20px;
 }

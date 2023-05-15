@@ -10,7 +10,7 @@ public record TransactionBuilder(Guid Id, Guid AccountId, decimal Amount, string
 
     public Transaction Build() =>
         Transaction.From(new TransactionSnapshot(this.Id, this.AccountId, "External id", this.Amount, this.Label,
-            this.Date));
+            this.Date, Guid.Parse("EDC81ABE-2E95-46B2-B008-BA41C3100A69")));
 
     public TransactionSummaryPresentation ToSummary() =>
         new(this.Id, this.Amount, this.Label, this.Date);
