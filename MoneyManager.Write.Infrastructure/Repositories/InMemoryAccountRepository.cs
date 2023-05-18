@@ -30,7 +30,7 @@ public class InMemoryAccountRepository : IAccountRepository
         this.dataByExternalId.Add(externalId, account);
 
     public void Feed(params Account[] accounts) =>
-        accounts.ToList().ForEach(account => this.data.Add(account.Id, account));
+        accounts.ToList().ForEach(account => this.data[account.Id] = account);
 
     public void Clear()
     {

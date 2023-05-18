@@ -18,7 +18,7 @@ public class InMemoryCategoryRepository : ICategoryRepository
     }
 
     public void Feed(params Category[] categories) =>
-        categories.ToList().ForEach(category => this.data.Add(category.Id, category));
+        categories.ToList().ForEach(category => this.data[category.Id] = category);
 
     public void Clear()
     {

@@ -1,13 +1,11 @@
-﻿using MoneyManager.Client.Read.Application.UseCases;
-using MoneyManager.Client.Write.Application.UseCases;
-using static System.DateTime;
+﻿using static System.DateTime;
 
 namespace MoneyManager.Client.Components;
 
 public partial class AccountActivity : ComponentBase
 {
     private bool isEditing;
-    private ElementReference labelInput;
+    private ElementReference labelElement;
 
     private List<DateTime> months = new();
     private DateTime currentMonth;
@@ -30,7 +28,7 @@ public partial class AccountActivity : ComponentBase
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (this.isEditing)
-            await this.labelInput.FocusAsync();
+            await this.labelElement.FocusAsync();
     }
 
     private void ToggleEditMode() =>
@@ -46,6 +44,16 @@ public partial class AccountActivity : ComponentBase
 
         this.account = this.account! with { Label = newLabel };
         this.ExitEditMode();
+    }
+
+    private void OnCategoryAssigned((Guid TransactionId, string CategoryLabel) args)
+    {
+        TransactionSummaryPresentation transaction = this.transactions!.Single(t => t.Id == args.TransactionId);
+
+        List<TransactionSummaryPresentation> updatedTransactions = this.transactions!.ToList();
+        int transactionIndex = updatedTransactions.IndexOf(transaction);
+        updatedTransactions[transactionIndex] = transaction with { Category = args.CategoryLabel };
+        this.transactions = updatedTransactions;
     }
 
     private async Task ShowTransactionsOfMonth(ChangeEventArgs args) =>

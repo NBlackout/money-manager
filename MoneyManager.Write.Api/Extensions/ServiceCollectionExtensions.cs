@@ -18,7 +18,8 @@ public static class ServiceCollectionExtensions
             .AddScoped<StopAccountTracking>()
             .AddScoped<ResumeAccountTracking>()
             .AddScoped<AssignAccountLabel>()
-            .AddScoped<AssignTransactionCategory>();
+            .AddScoped<AssignTransactionCategory>()
+            .AddScoped<CreateCategory>();
     }
 
     private static IServiceCollection AddInfrastructureAdapters(this IServiceCollection services) =>

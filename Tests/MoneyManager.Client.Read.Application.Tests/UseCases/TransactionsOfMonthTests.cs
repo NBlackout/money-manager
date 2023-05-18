@@ -21,8 +21,8 @@ public class TransactionsOfMonthTests
         const int month = 11;
         TransactionSummaryPresentation[] expected =
         {
-            new(Guid.NewGuid(), -18.99m, "Money", DateTime.Parse("2020-06-09")),
-            new(Guid.NewGuid(), -80.00m, "Debit", DateTime.Parse("2013-07-15"))
+            new(Guid.NewGuid(), -18.99m, "Money", DateTime.Parse("2020-06-09"), null),
+            new(Guid.NewGuid(), -80.00m, "Debit", DateTime.Parse("2013-07-15"), "A category")
         };
         this.gateway.Feed(accountId, year, month, expected);
 

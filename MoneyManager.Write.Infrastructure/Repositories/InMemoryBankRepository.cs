@@ -30,7 +30,7 @@ public class InMemoryBankRepository : IBankRepository
         this.dataByExternalId.Add(externalId, bank);
 
     public void Feed(params Bank[] banks) =>
-        banks.ToList().ForEach(bank => this.data.Add(bank.Id, bank));
+        banks.ToList().ForEach(bank => this.data[bank.Id] = bank);
 
     public void Clear()
     {
