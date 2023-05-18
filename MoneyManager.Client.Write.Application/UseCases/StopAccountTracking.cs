@@ -1,6 +1,4 @@
-﻿using MoneyManager.Client.Write.Application.Ports;
-
-namespace MoneyManager.Client.Write.Application.UseCases;
+﻿namespace MoneyManager.Client.Write.Application.UseCases;
 
 public class StopAccountTracking
 {

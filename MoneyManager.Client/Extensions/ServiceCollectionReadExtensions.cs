@@ -1,5 +1,4 @@
 ﻿using MoneyManager.Client.Read.Application.Ports;
-using MoneyManager.Client.Read.Application.UseCases;
 using MoneyManager.Client.Read.Infrastructure.Gateways.Account;
 using MoneyManager.Client.Read.Infrastructure.Gateways.Category;
 
@@ -21,6 +20,7 @@ public static class ServiceCollectionReadExtensions
             .AddScoped<AccountSummaries>()
             .AddScoped<AccountDetails>()
             .AddScoped<TransactionsOfMonth>()
-            .AddScoped<CategorySummaries>();
+            .AddScoped<CategorySummaries>()
+            .AddScoped<AssignTransactionCategory>();
     }
 }

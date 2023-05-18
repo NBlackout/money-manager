@@ -7,7 +7,7 @@
                 {
                     <div class="row g-3 align-items-end">
                         <div class="col-auto">
-                            <input type="text" value="@account.Label" @ref="labelInput" @onchange="@LabelChanged" class="form-control" placeholder="Label"/>
+                            <input type="text" value="@account.Label" @ref="labelElement" @onchange="@LabelChanged" class="form-control" placeholder="Label"/>
                         </div>
                         <div class="col-auto">
                             <small class="form-text fs-5">
@@ -20,7 +20,7 @@
                 {
                     <h2>
                         <button type="button" class="btn btn-link btn-sm" @onclick="@ToggleEditMode" hidden="@isEditing">
-                            <i class="oi oi-pencil"></i>
+                            <small class="oi oi-pencil"></small>
                         </button>
                         @account.Label <small class="fs-5 text-muted">@account.Number</small>
                     </h2>
@@ -65,6 +65,8 @@
             <table class="align-middle table table-hover table-sm">
                 <thead class="table-light">
                 <tr>
+                    <th></th>
+                    <th>Category</th>
                     <th class="transaction-label">Label</th>
                     <th>Amount</th>
                     <th>Date</th>
@@ -74,6 +76,20 @@
                 @foreach (TransactionSummaryPresentation transaction in transactions)
                 {
                     <tr>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-link btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <small class="oi oi-tag"></small>
+                                </button>
+                                <TransactionLabelAssignment Id="@transaction.Id" OnCategoryAssigned="OnCategoryAssigned"></TransactionLabelAssignment>
+                            </div>
+                        </td>
+                        <td>
+                            @if (transaction.Category != null)
+                            {
+                                <span>@transaction.Category</span>
+                            }
+                        </td>
                         <td>@transaction.Label</td>
                         <td class="text-end">
                             <span class="@(transaction.Amount > 0 ? "text-success" : "text-danger")">@transaction.Amount €</span>
@@ -84,7 +100,7 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td class="text-end fw-bold">Total</td>
+                    <td colspan="3" class="text-end fw-bold">Total</td>
                     <td class="text-end">
                         @{
                             decimal total = transactions.Sum(t => t.Amount);

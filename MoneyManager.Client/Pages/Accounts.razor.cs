@@ -1,6 +1,4 @@
-﻿using MoneyManager.Client.Read.Application.UseCases;
-
-namespace MoneyManager.Client.Pages;
+﻿namespace MoneyManager.Client.Pages;
 
 public partial class Accounts : ComponentBase
 {

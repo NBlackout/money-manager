@@ -1,0 +1,11 @@
+﻿@if (categories != null)
+{
+    <ul class="dropdown-menu">
+        @foreach (CategorySummaryPresentation category in categories)
+        {
+            <li>
+                <button type="button" class="dropdown-item" @onclick="@(() => AssignLabel(category.Id))">@category.Label</button>
+            </li>
+        }
+    </ul>
+}

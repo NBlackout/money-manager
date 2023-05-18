@@ -1,22 +1,15 @@
 ﻿@page "/categories"
 
-@if (categories != null)
-{
-    <table class="align-middle table table-hover">
-        <thead class="table-light">
-        <tr>
-            <th>Id</th>
-            <th>Label</th>
-        </tr>
-        </thead>
-        <tbody>
+<button class="btn btn-primary" @onclick="@ShowCategoryForm">Add new category</button>
+<ul class="list-group list-group-flush">
+    <li class="list-group-item @(isCreating ? "" : "d-none")">
+        <input type="text" @ref="@labelElement" @onchange="@LabelChanged" @onblur="@HideCategoryForm" class="form-control" placeholder="Label"/>
+    </li>
+    @if (categories != null)
+    {
         @foreach (CategorySummaryPresentation category in categories)
         {
-            <tr>
-                <td>@category.Id</td>
-                <td>@category.Label</td>
-            </tr>
+            <li class="list-group-item">@category.Label</li>
         }
-        </tbody>
-    </table>
-}
+    }
+</ul>

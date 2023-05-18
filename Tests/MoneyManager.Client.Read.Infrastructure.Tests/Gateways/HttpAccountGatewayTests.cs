@@ -56,8 +56,8 @@ public sealed class HttpAccountGatewayTests : IDisposable
         const int month = 8;
         TransactionSummaryPresentation[] expected =
         {
-            new(Guid.NewGuid(), 1.99m, "Credit", DateTime.Parse("2014-12-24")),
-            new(Guid.NewGuid(), 1.99m, "Credit", DateTime.Parse("2000-08-11"))
+            new(Guid.NewGuid(), 1.99m, "Credit", DateTime.Parse("2014-12-24"), "Healthcare"),
+            new(Guid.NewGuid(), 1.99m, "Credit", DateTime.Parse("2000-08-11"), null)
         };
         this.httpMessageHandler.SetResponseFor($"{ApiUrl}/accounts/{accountId}/transactions?year={year}&month={month}",
             expected);
