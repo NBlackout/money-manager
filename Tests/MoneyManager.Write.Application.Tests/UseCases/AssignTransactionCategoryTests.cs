@@ -14,13 +14,13 @@ public class AssignTransactionCategoryTests
     [Fact]
     public async Task Should_assign_transaction_category()
     {
-        Transaction transaction = TransactionBuilder.For(Guid.NewGuid()).Build();
+        Transaction existing = TransactionBuilder.For(Guid.NewGuid()).Build();
         Guid categoryId = Guid.NewGuid();
-        this.repository.Feed(transaction);
+        this.repository.Feed(existing);
 
-        await this.sut.Execute(transaction.Id, categoryId);
+        await this.sut.Execute(existing.Id, categoryId);
 
-        Transaction actual = await this.repository.ById(transaction.Id);
-        actual.Snapshot.Should().Be(transaction.Snapshot with { CategoryId = categoryId });
+        Transaction actual = await this.repository.ById(existing.Id);
+        actual.Snapshot.Should().Be(existing.Snapshot with { CategoryId = categoryId });
     }
 }
