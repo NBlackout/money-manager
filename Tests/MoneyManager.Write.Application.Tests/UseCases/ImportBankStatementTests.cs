@@ -70,15 +70,16 @@ public class ImportBankStatementTests
     public async Task Should_synchronize_already_tracked_account()
     {
         BankBuilder bank = BankBuilder.For(Guid.NewGuid());
-        AccountBuilder account = AccountBuilder.For(Guid.NewGuid()) with
+        AccountBuilder existing = AccountBuilder.For(Guid.NewGuid()) with
         {
             BankId = bank.Id, Balance = 100.00m, BalanceDate = DateTime.Today.AddDays(-12), Tracked = true
         };
-        AccountBuilder expected = account with { Balance = 1337.42m, BalanceDate = DateTime.Today };
+        AccountBuilder expected = existing with { Balance = 1337.42m, BalanceDate = DateTime.Today };
 
         this.FeedByExternalId(bank);
-        this.FeedByExternalId(account);
-        this.ofxParser.SetAccountStatementFor(TheStream, AccountStatementFrom(bank, expected));
+        this.FeedByExternalId(existing);
+        AccountStatement accountStatement = AccountStatementFrom(bank, expected);
+        this.ofxParser.SetAccountStatementFor(TheStream, accountStatement);
 
         await this.Verify_ImportTransactions(TheStream, bank, expected);
     }
