@@ -4,19 +4,19 @@ namespace Client.Read.App.Tests.UseCases;
 
 public class CategorySummariesTests
 {
-    [Fact]
-    public async Task Should_retrieve_category_summaries()
+    private readonly StubbedCategoryGateway gateway = new();
+    private readonly CategorySummaries sut;
+
+    public CategorySummariesTests()
     {
-        CategorySummaryPresentation[] expected =
-        {
-            new(Guid.NewGuid(), "My category label"),
-            new(Guid.NewGuid(), "The label")
-        };
-        StubbedCategoryGateway gateway = new(expected);
-        CategorySummaries sut = new(gateway);
+        this.sut = new CategorySummaries(this.gateway);
+    }
 
-        IReadOnlyCollection<CategorySummaryPresentation> actual = await sut.Execute();
-
+    [Theory, RandomData]
+    public async Task Should_retrieve_category_summaries(CategorySummaryPresentation[] expected)
+    {
+        this.gateway.Feed(expected);
+        CategorySummaryPresentation[] actual = await this.sut.Execute();
         actual.Should().Equal(expected);
     }
 }

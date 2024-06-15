@@ -11,7 +11,7 @@ public class AssignTransactionCategory
 
     public async Task Execute(Guid id, Guid categoryId)
     {
-        Transaction transaction = await this.repository.ById(id);
+        Transaction transaction = await this.repository.By(id);
         transaction.AssignCategory(categoryId);
         await this.repository.Save(transaction);
     }

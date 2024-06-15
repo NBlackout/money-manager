@@ -8,16 +8,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="FluentAssertions" Version="6.11.0"/>
+        <PackageReference Include="FluentAssertions" Version="6.12.0"/>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1"/>
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0"/>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0"/>
-        <PackageReference Include="xunit" Version="2.4.2"/>
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0"/>
+        <PackageReference Include="xunit" Version="2.8.1"/>
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.8.1">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="coverlet.collector" Version="6.0.0">
+        <PackageReference Include="coverlet.collector" Version="6.0.2">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
@@ -30,12 +30,15 @@
     <ItemGroup>
         <Using Include="FluentAssertions"/>
         <Using Include="Shared.TestTooling"/>
+        <Using Include="Shared.TestTooling.AutoFixture"/>
         <Using Include="Shared.TestTooling.Resources"/>
         <Using Include="Xunit"/>
     </ItemGroup>
 
     <ItemGroup>
         <Compile Include="..\AssemblyInfo.cs" Link="Properties\AssemblyInfo.cs"/>
+        <Compile Include="..\AssemblyInfo.App.cs" Link="Properties\AssemblyInfo.App.cs" Condition="'$(ProjectName.EndsWith(`App.Tests`))' == true"/>
+        <Compile Include="..\AssemblyInfo.Infra.cs" Link="Properties\AssemblyInfo.Infra.cs" Condition="'$(ProjectName.EndsWith(`Infra.Tests`))' == true"/>
     </ItemGroup>
 
 </Project>

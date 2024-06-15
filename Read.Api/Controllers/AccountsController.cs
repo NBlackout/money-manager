@@ -17,7 +17,7 @@ public class AccountsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IReadOnlyCollection<AccountSummaryPresentation>> Summaries() =>
+    public async Task<AccountSummaryPresentation[]> Summaries() =>
         await this.accountSummaries.Execute();
 
     [HttpGet]
@@ -27,7 +27,7 @@ public class AccountsController : ControllerBase
 
     [HttpGet]
     [Route("{id:guid}/transactions")]
-    public async Task<IReadOnlyCollection<TransactionSummaryPresentation>> Details(Guid id, [FromQuery] int year,
+    public async Task<TransactionSummaryPresentation[]> Details(Guid id, [FromQuery] int year,
         [FromQuery] int month) =>
         await this.transactionsOfMonth.Execute(id, year, month);
 }

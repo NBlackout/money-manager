@@ -12,6 +12,6 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IReadOnlyCollection<CategorySummaryPresentation>> Summaries() =>
+    public async Task<CategorySummaryPresentation[]> Summaries() =>
         await this.categorySummaries.Execute();
 }

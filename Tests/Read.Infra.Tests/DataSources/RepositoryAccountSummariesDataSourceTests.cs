@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Read.Infra.DataSources.AccountSummaries;
+using Write.App.Model.Banks;
 using Write.Infra.Repositories;
 
 namespace Read.Infra.Tests.DataSources;
@@ -23,18 +24,17 @@ public sealed class RepositoryAccountSummariesDataSourceTests : HostFixture
     protected override void Configure(IServiceCollection services) =>
         services.AddWriteDependencies().AddReadDependencies();
 
-    [Fact]
-    public async Task Should_retrieve_tracked_account_summaries()
+    [Theory, RandomData]
+    public async Task Should_retrieve_tracked_account_summaries(Bank aBank, Bank anotherBank)
     {
-        Guid aBankId = Guid.NewGuid();
-        Guid anotherBankId = Guid.NewGuid();
-        AccountBuilder checking = AccountBuilder.For(Guid.NewGuid()) with { BankId = aBankId, Tracked = true };
-        AccountBuilder saving = AccountBuilder.For(Guid.NewGuid()) with { BankId = aBankId, Tracked = true };
-        AccountBuilder notTracked = AccountBuilder.For(Guid.NewGuid()) with { BankId = anotherBankId, Tracked = false };
-        this.bankRepository.Feed(checking.BuildBank(), notTracked.BuildBank());
+        this.bankRepository.Feed(aBank, anotherBank);
+
+        AccountBuilder checking = AccountBuilder.Create() with { BankId = aBank.Id, Tracked = true };
+        AccountBuilder saving = AccountBuilder.Create() with { BankId = aBank.Id, Tracked = true };
+        AccountBuilder notTracked = AccountBuilder.Create() with { BankId = anotherBank.Id, Tracked = false };
         this.accountRepository.Feed(checking.Build(), saving.Build(), notTracked.Build());
 
-        IReadOnlyCollection<AccountSummaryPresentation> actual = await this.sut.Get();
+        AccountSummaryPresentation[] actual = await this.sut.Get();
         actual.Should().Equal(checking.ToSummary(), saving.ToSummary(), notTracked.ToSummary());
     }
 }

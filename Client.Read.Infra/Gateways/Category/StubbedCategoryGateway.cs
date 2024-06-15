@@ -2,13 +2,11 @@
 
 public class StubbedCategoryGateway : ICategoryGateway
 {
-    private readonly IReadOnlyCollection<CategorySummaryPresentation> summaries;
+    private CategorySummaryPresentation[] summaries = null!;
 
-    public StubbedCategoryGateway(params CategorySummaryPresentation[] summaries)
-    {
-        this.summaries = summaries;
-    }
-
-    public Task<IReadOnlyCollection<CategorySummaryPresentation>> Summaries() =>
+    public Task<CategorySummaryPresentation[]> Summaries() =>
         Task.FromResult(this.summaries);
+
+    public void Feed(CategorySummaryPresentation[] summaries) =>
+        this.summaries = summaries;
 }

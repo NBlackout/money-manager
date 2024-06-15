@@ -1,23 +1,24 @@
 ﻿using Read.App.UseCases;
 using Read.Infra.DataSources.AccountSummaries;
-using Read.TestTooling;
 using Shared.Presentation;
 
 namespace Read.App.Tests.UseCases;
 
 public class AccountSummariesTests
 {
-    [Fact]
-    public async Task Should_retrieve_account_summaries()
+    private readonly StubbedAccountSummariesDataSource dataSource = new();
+    private readonly AccountSummaries sut;
+
+    public AccountSummariesTests()
     {
-        AccountSummaryPresentation[] expected =
-        {
-            AccountBuilder.For(Guid.NewGuid()).ToSummary(), AccountBuilder.For(Guid.NewGuid()).ToSummary()
-        };
-        AccountSummaries sut = new(new StubbedAccountSummariesDataSource(expected));
+        this.sut = new AccountSummaries(this.dataSource);
+    }
 
-        IReadOnlyCollection<AccountSummaryPresentation> actual = await sut.Execute();
-
+    [Theory, RandomData]
+    public async Task Should_retrieve_account_summaries(AccountSummaryPresentation[] expected)
+    {
+        this.dataSource.Feed(expected);
+        AccountSummaryPresentation[] actual = await this.sut.Execute();
         actual.Should().Equal(expected);
     }
 }

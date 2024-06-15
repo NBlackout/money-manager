@@ -11,12 +11,12 @@ public class InMemoryTransactionRepository : ITransactionRepository
     public Task<Guid> NextIdentity() =>
         Task.FromResult(this.NextId());
 
-    public Task<Transaction> ById(Guid id) =>
+    public Task<Transaction> By(Guid id) =>
         Task.FromResult(this.data[id]);
 
-    public Task<IReadOnlyCollection<string>> UnknownExternalIds(IEnumerable<string> externalIds)
+    public Task<string[]> UnknownExternalIds(IEnumerable<string> externalIds)
     {
-        IReadOnlyCollection<string> unknownExternalIds = externalIds.Except(this.knownExternalIds).ToList();
+        string[] unknownExternalIds = externalIds.Except(this.knownExternalIds).ToArray();
 
         return Task.FromResult(unknownExternalIds);
     }

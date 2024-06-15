@@ -1,4 +1,6 @@
-﻿namespace Write.App.Tests.UseCases;
+﻿using static Shared.TestTooling.Randomizer;
+
+namespace Write.App.Tests.UseCases;
 
 public class AssignTransactionCategoryTests
 {
@@ -10,16 +12,15 @@ public class AssignTransactionCategoryTests
         this.sut = new AssignTransactionCategory(this.repository);
     }
 
-    [Fact]
-    public async Task Should_assign_transaction_category()
+    [Theory, RandomData]
+    public async Task Should_assign_transaction_category(TransactionBuilder transaction)
     {
-        Transaction existing = TransactionBuilder.For(Guid.NewGuid()).Build();
-        Guid categoryId = Guid.NewGuid();
-        this.repository.Feed(existing);
+        this.repository.Feed(transaction.Build());
 
-        await this.sut.Execute(existing.Id, categoryId);
+        Guid categoryId = Another(transaction.CategoryId);
+        await this.sut.Execute(transaction.Id, categoryId);
 
-        Transaction actual = await this.repository.ById(existing.Id);
-        actual.Snapshot.Should().Be(existing.Snapshot with { CategoryId = categoryId });
+        Transaction actual = await this.repository.By(transaction.Id);
+        actual.Snapshot.Should().Be(transaction.Build().Snapshot with { CategoryId = categoryId });
     }
 }

@@ -2,5 +2,5 @@
 
 public interface ICategoryGateway
 {
-    Task<IReadOnlyCollection<CategorySummaryPresentation>> Summaries();
+    Task<CategorySummaryPresentation[]> Summaries();
 }

@@ -13,7 +13,7 @@ public class RepositoryAccountDetailsDataSource : IAccountDetailsDataSource
 
     public async Task<AccountDetailsPresentation> Get(Guid id)
     {
-        Account account = await this.accountRepository.ById(id);
+        Account account = await this.accountRepository.By(id);
 
         return new AccountDetailsPresentation(id, account.Snapshot.Label, account.Snapshot.Number,
             account.Snapshot.Balance, account.Snapshot.BalanceDate);

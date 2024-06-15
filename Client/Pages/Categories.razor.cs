@@ -5,7 +5,7 @@ public partial class Categories : ComponentBase
     private bool isCreating;
     private ElementReference labelElement;
 
-    private IReadOnlyCollection<CategorySummaryPresentation>? categories;
+    private CategorySummaryPresentation[]? categories;
 
     [Inject] public CategorySummaries CategorySummaries { get; set; } = null!;
     [Inject] public CreateCategory CreateCategory { get; set; } = null!;
@@ -31,7 +31,7 @@ public partial class Categories : ComponentBase
         string label = arg.Value!.ToString()!;
         await this.CreateCategory.Execute(id, label);
 
-        this.categories = this.categories!.Prepend(new CategorySummaryPresentation(id, label)).ToList();
+        this.categories = this.categories!.Prepend(new CategorySummaryPresentation(id, label)).ToArray();
         this.HideCategoryForm();
     }
 }

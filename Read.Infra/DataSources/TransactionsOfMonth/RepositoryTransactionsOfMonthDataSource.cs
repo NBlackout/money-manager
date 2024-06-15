@@ -15,12 +15,12 @@ public class RepositoryTransactionsOfMonthDataSource : ITransactionsOfMonthDataS
         this.categoryRepository = categoryRepository;
     }
 
-    public Task<IReadOnlyCollection<TransactionSummaryPresentation>> Get(Guid accountId, int year, int month)
+    public Task<TransactionSummaryPresentation[]> Get(Guid accountId, int year, int month)
     {
-        IReadOnlyCollection<TransactionSummaryPresentation> presentations = this.transactionRepository.Data
+        TransactionSummaryPresentation[] presentations = this.transactionRepository.Data
             .Where(t => t.AccountId == accountId && t.Date.Year == year && t.Date.Month == month)
             .Select(this.ToPresentation)
-            .ToList();
+            .ToArray();
 
         return Task.FromResult(presentations);
     }

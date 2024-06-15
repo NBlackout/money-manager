@@ -1,10 +1,18 @@
 <Project>
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
     </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
+
+    <Target Name="CopyMutationLaunchSettings" BeforeTargets="Build" Condition="'$(ProjectName.EndsWith(`.App`))' == true And '$(ProjectName.StartsWith(`Shared.`))' == false">
+        <Copy SourceFiles="../launchSettings.json" DestinationFiles="$(MSBuildProjectDirectory)/Properties/launchSettings.json" SkipUnchangedFiles="true" />
+    </Target>
 
 </Project>

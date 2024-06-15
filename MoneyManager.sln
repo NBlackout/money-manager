@@ -20,12 +20,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SolutionItems", "_Solution
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StrykerMutator", "StrykerMutator", "{7548E457-20DD-4670-B524-AFD9BDE6EA19}"
-	ProjectSection(SolutionItems) = preProject
-		Tests\stryker-config.json = Tests\stryker-config.json
-		.run\Stryker.run.xml = .run\Stryker.run.xml
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Write", "Write", "{6B5ABA93-559F-49AA-A55F-BC4E381207DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Write.App.Tests", "Tests\Write.App.Tests\Write.App.Tests.csproj", "{F89DFB6F-2AE3-4B3E-95B5-2885CC0426DD}"
@@ -70,6 +64,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2C16D545
 	ProjectSection(SolutionItems) = preProject
 		Tests\Directory.Build.props = Tests\Directory.Build.props
 		Tests\AssemblyInfo.cs = Tests\AssemblyInfo.cs
+		Tests\AssemblyInfo.App.cs = Tests\AssemblyInfo.App.cs
+		Tests\AssemblyInfo.Infra.cs = Tests\AssemblyInfo.Infra.cs
+		launchSettings.json = launchSettings.json
+		Tests\stryker-config.json = Tests\stryker-config.json
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Write.Infra.Tests", "Tests\Client.Write.Infra.Tests\Client.Write.Infra.Tests.csproj", "{463F2404-4481-4644-900C-D3B79FEC6D0E}"
@@ -199,7 +197,6 @@ Global
 		{3C48B208-FEE8-4534-A209-C23DB412F3C1} = {EBB5BFCB-F69C-4BDF-B1ED-928F7612C337}
 		{9BE7A071-0A89-410F-A94A-EFE4335B6FDF} = {EBB5BFCB-F69C-4BDF-B1ED-928F7612C337}
 		{2C16D545-E0F6-446B-8693-DA84D25DE2F0} = {E1C7432F-7C18-4B3D-B449-CCB12FBC368C}
-		{7548E457-20DD-4670-B524-AFD9BDE6EA19} = {2C16D545-E0F6-446B-8693-DA84D25DE2F0}
 		{EE7EB747-1014-47D6-A2A3-CBCD5D13E275} = {57E8D2BA-0902-45DE-84A5-ADBAEE02FF81}
 		{CB125EF2-8F6B-46C0-8EA4-607F0DD3EE0A} = {57E8D2BA-0902-45DE-84A5-ADBAEE02FF81}
 		{57E8D2BA-0902-45DE-84A5-ADBAEE02FF81} = {14FEE47E-568E-4661-B0BE-4EAA60A5BDBB}

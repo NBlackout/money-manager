@@ -9,6 +9,6 @@ public class CategorySummaries
         this.dataSource = dataSource;
     }
 
-    public async Task<IReadOnlyCollection<CategorySummaryPresentation>> Execute() =>
+    public async Task<CategorySummaryPresentation[]> Execute() =>
         await this.dataSource.Get();
 }

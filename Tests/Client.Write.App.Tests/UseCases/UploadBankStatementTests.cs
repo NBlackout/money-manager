@@ -12,15 +12,11 @@ public class UploadBankStatementTests
         this.sut = new UploadBankStatement(this.gateway);
     }
 
-    [Fact]
-    public async Task Should_upload_provided_ofx_file()
+    [Theory, RandomData]
+    public async Task Should_upload_provided_ofx_file(string fileName, string contentType, byte[] content)
     {
-        const string fileName = "The file name";
-        const string contentType = "The content type";
-        MemoryStream stream = new(new byte[] { 0x01, 0x02, 0x03 });
-
+        var stream = new MemoryStream(content);
         await this.sut.Execute(fileName, contentType, stream);
-
         List<(string, string, Stream)> expectedCalls = new() { (fileName, contentType, stream) };
         this.gateway.Calls.Should().Equal(expectedCalls);
     }

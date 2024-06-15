@@ -1,23 +1,24 @@
 ﻿using Read.App.UseCases;
 using Read.Infra.DataSources.CategorySummaries;
-using Read.TestTooling;
 using Shared.Presentation;
 
 namespace Read.App.Tests.UseCases;
 
 public class CategorySummariesTests
 {
-    [Fact]
-    public async Task Should_retrieve_category_summaries()
+    private readonly StubbedCategorySummariesDataSource dataSource = new();
+    private readonly CategorySummaries sut;
+
+    public CategorySummariesTests()
     {
-        CategorySummaryPresentation[] expected =
-        {
-            CategoryBuilder.For(Guid.NewGuid()).ToSummary(), CategoryBuilder.For(Guid.NewGuid()).ToSummary()
-        };
-        CategorySummaries sut = new(new StubbedCategorySummariesDataSource(expected));
+        this.sut = new CategorySummaries(this.dataSource);
+    }
 
-        IReadOnlyCollection<CategorySummaryPresentation> actual = await sut.Execute();
-
+    [Theory, RandomData]
+    public async Task Should_retrieve_category_summaries(CategorySummaryPresentation[] expected)
+    {
+        this.dataSource.Feed(expected);
+        CategorySummaryPresentation[] actual = await this.sut.Execute();
         actual.Should().Equal(expected);
     }
 }

@@ -1,3 +1,5 @@
+using static Shared.TestTooling.Randomizer;
+
 namespace Write.App.Tests.UseCases;
 
 public class AssignAccountLabelTests
@@ -10,15 +12,15 @@ public class AssignAccountLabelTests
         this.sut = new AssignAccountLabel(this.repository);
     }
 
-    [Fact]
-    public async Task Should_assign_account_label()
+    [Theory, RandomData]
+    public async Task Should_assign_account_label(AccountBuilder account)
     {
-        Account account = (AccountBuilder.For(Guid.NewGuid()) with { Label = "Label to change" }).Build();
-        this.repository.Feed(account);
+        this.repository.Feed(account.Build());
 
-        await this.sut.Execute(account.Id, "My account label");
+        string newLabel = Another(account.Label);
+        await this.sut.Execute(account.Id, newLabel);
 
-        Account actual = await this.repository.ById(account.Id);
-        actual.Snapshot.Should().Be(account.Snapshot with { Label = "My account label" });
+        Account actual = await this.repository.By(account.Id);
+        actual.Snapshot.Should().Be(account.Build().Snapshot with { Label = newLabel });
     }
 }

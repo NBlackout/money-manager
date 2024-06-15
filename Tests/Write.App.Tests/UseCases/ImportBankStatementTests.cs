@@ -24,7 +24,7 @@ public class ImportBankStatementTests
     public async Task Should_track_unknown_bank_and_account()
     {
         BankBuilder bank = BankBuilder.For(Guid.NewGuid());
-        AccountBuilder account = AccountBuilder.For(Guid.NewGuid()) with
+        AccountBuilder account = AccountBuilder.Create() with
         {
             BankId = bank.Id, Number = "Number", Label = "Number", Tracked = true
         };
@@ -45,7 +45,7 @@ public class ImportBankStatementTests
     public async Task Should_track_unknown_account()
     {
         BankBuilder bank = BankBuilder.For(Guid.NewGuid());
-        AccountBuilder account = AccountBuilder.For(Guid.NewGuid()) with
+        AccountBuilder account = AccountBuilder.Create() with
         {
             BankId = bank.Id, Number = "Number", Label = "Number", Tracked = true
         };
@@ -66,7 +66,7 @@ public class ImportBankStatementTests
     public async Task Should_synchronize_already_tracked_account()
     {
         BankBuilder bank = BankBuilder.For(Guid.NewGuid());
-        AccountBuilder existing = AccountBuilder.For(Guid.NewGuid()) with
+        AccountBuilder existing = AccountBuilder.Create() with
         {
             BankId = bank.Id, Balance = 100.00m, BalanceDate = DateTime.Today.AddDays(-12), Tracked = true
         };
@@ -84,7 +84,7 @@ public class ImportBankStatementTests
     public async Task Should_skip_no_longer_tracked_account()
     {
         BankBuilder bank = BankBuilder.For(Guid.NewGuid());
-        AccountBuilder account = AccountBuilder.For(Guid.NewGuid()) with { BankId = bank.Id, Tracked = false };
+        AccountBuilder account = AccountBuilder.Create() with { BankId = bank.Id, Tracked = false };
 
         this.FeedByExternalId(bank);
         this.FeedByExternalId(account);
@@ -98,15 +98,15 @@ public class ImportBankStatementTests
     {
         await this.sut.Execute(stream);
 
-        Bank actualBank = await this.bankRepository.ById(expectedBank.Id);
+        Bank actualBank = await this.bankRepository.By(expectedBank.Id);
         actualBank.Snapshot.Should().Be(expectedBank.Build().Snapshot);
 
-        Account actualAccount = await this.accountRepository.ById(expectedAccount.Id);
+        Account actualAccount = await this.accountRepository.By(expectedAccount.Id);
         actualAccount.Snapshot.Should().Be(expectedAccount.Build().Snapshot);
 
         foreach (TransactionBuilder expectedTransaction in expectedTransactions)
         {
-            Transaction actualTransaction = await this.transactionRepository.ById(expectedTransaction.Id);
+            Transaction actualTransaction = await this.transactionRepository.By(expectedTransaction.Id);
             actualTransaction.Snapshot.Should().Be(expectedTransaction.Build().Snapshot);
         }
     }

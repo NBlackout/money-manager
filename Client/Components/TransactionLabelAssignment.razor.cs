@@ -2,7 +2,7 @@
 
 public partial class TransactionLabelAssignment : ComponentBase
 {
-    private IReadOnlyCollection<CategorySummaryPresentation>? categories;
+    private CategorySummaryPresentation[]? categories;
 
     [Inject] public CategorySummaries CategorySummaries { get; set; } = null!;
     [Inject] public AssignTransactionCategory AssignTransactionCategory { get; set; } = null!;

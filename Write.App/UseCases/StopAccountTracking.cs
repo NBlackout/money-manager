@@ -11,7 +11,7 @@ public class StopAccountTracking
 
     public async Task Execute(Guid id)
     {
-        Account account = await this.repository.ById(id);
+        Account account = await this.repository.By(id);
         account.StopTracking();
         await this.repository.Save(account);
     }

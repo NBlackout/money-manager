@@ -9,4 +9,8 @@
     <ProjectReference Include="..\..\Write.App\Write.App.csproj" />
     <ProjectReference Include="..\..\Write.Infra\Write.Infra.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Hosting" Version="8.0.0" />
+  </ItemGroup>
 </Project>

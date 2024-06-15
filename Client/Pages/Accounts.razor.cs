@@ -2,7 +2,7 @@
 
 public partial class Accounts : ComponentBase
 {
-    private IReadOnlyCollection<AccountSummaryPresentation>? accounts;
+    private AccountSummaryPresentation[]? accounts;
 
     [Inject] private AccountSummaries AccountSummaries { get; set; } = null!;
     [Inject] private NavigationManager NavigationManager { get; set; } = null!;

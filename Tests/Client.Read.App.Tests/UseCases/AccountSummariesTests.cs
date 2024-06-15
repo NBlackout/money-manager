@@ -4,21 +4,19 @@ namespace Client.Read.App.Tests.UseCases;
 
 public class AccountSummariesTests
 {
-    [Fact]
-    public async Task Should_retrieve_account_summaries()
+    private readonly StubbedAccountGateway gateway = new();
+    private readonly AccountSummaries sut;
+
+    public AccountSummariesTests()
     {
-        AccountSummaryPresentation[] expected =
-        {
-            new(Guid.NewGuid(), Guid.NewGuid(), "Checking account", "014FZ3", 10000.00m, DateTime.Now,
-                false),
-            new(Guid.NewGuid(), Guid.NewGuid(), "Saving account", "DSFP348324V94", 5500.12m,
-                DateTime.Now.AddDays(3), true)
-        };
-        StubbedAccountGateway gateway = new(expected);
-        AccountSummaries sut = new(gateway);
+        this.sut = new AccountSummaries(this.gateway);
+    }
 
-        IReadOnlyCollection<AccountSummaryPresentation> actual = await sut.Execute();
-
+    [Theory, RandomData]
+    public async Task Should_retrieve_account_summaries(AccountSummaryPresentation[] expected)
+    {
+        this.gateway.Feed(expected);
+        AccountSummaryPresentation[] actual = await this.sut.Execute();
         actual.Should().Equal(expected);
     }
 }

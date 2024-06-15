@@ -6,7 +6,7 @@ public class InMemoryCategoryRepository : ICategoryRepository
 
     public IEnumerable<CategorySnapshot> Data => this.data.Values.Select(c => c.Snapshot);
 
-    public Task<Category> ById(Guid id) =>
+    public Task<Category> By(Guid id) =>
         Task.FromResult(this.data[id]);
 
     public Task Save(Category category)

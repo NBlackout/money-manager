@@ -9,6 +9,6 @@ public class TransactionsOfMonth
         this.gateway = gateway;
     }
 
-    public async Task<IReadOnlyCollection<TransactionSummaryPresentation>> Execute(Guid id, int year, int month) =>
+    public async Task<TransactionSummaryPresentation[]> Execute(Guid id, int year, int month) =>
         await this.gateway.TransactionsOfMonth(id, year, month);
 }
