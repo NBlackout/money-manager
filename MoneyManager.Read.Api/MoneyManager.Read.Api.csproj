@@ -1,7 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
-  <ItemGroup>
-    <ProjectReference Include="..\MoneyManager.Read.Application\MoneyManager.Read.Application.csproj" />
-    <ProjectReference Include="..\MoneyManager.Read.Infrastructure\MoneyManager.Read.Infrastructure.csproj" />
-    <ProjectReference Include="..\MoneyManager.Shared\MoneyManager.Shared.csproj" />
-  </ItemGroup>
-</Project>
