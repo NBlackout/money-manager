@@ -13,11 +13,11 @@ public class ResumeAccountTrackingTests
     [Theory, RandomData]
     public async Task Should_resume_account_tracking(AccountBuilder account)
     {
-        this.repository.Feed(account.Build());
+        this.repository.Feed((account with { Tracked = false }).Build());
 
         await this.sut.Execute(account.Id);
 
         Account actual = await this.repository.By(account.Id);
-        actual.Snapshot.Should().Be(account.Build().Snapshot with { Tracked = true });
+        actual.Snapshot.Should().Be(account.ToSnapshot() with { Tracked = true });
     }
 }

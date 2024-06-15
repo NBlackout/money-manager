@@ -60,6 +60,8 @@ public class ImportBankStatement
 
         List<Task<Transaction>> unknownTransactionTasks = unknownExternalIds.Select(unknownExternalId =>
             this.UnknownTransaction(account, transactionStatements[unknownExternalId])).ToList();
+        
+        // Stryker disable all: TODO find a way to cover this instruction. Because we return Task.FromResult in test doubles, tasks are already completed...
         await Task.WhenAll(unknownTransactionTasks);
 
         return unknownTransactionTasks.Select(task => task.Result).ToArray();

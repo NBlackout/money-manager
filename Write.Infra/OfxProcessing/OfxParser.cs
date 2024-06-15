@@ -41,7 +41,7 @@ public class OfxParser : IOfxParser
     {
         [XmlArray("STMTTRNRS")]
         [XmlArrayItem("STMTRS")]
-        public StatementResponse[] StatementResponses { get; init; } = Array.Empty<StatementResponse>();
+        public StatementResponse[] StatementResponses { get; init; } = [];
     }
 
     public class StatementResponse
@@ -51,7 +51,7 @@ public class OfxParser : IOfxParser
 
         [XmlArray("BANKTRANLIST")]
         [XmlArrayItem("STMTTRN")]
-        public StatementTransaction[] StatementTransactions { get; init; } = Array.Empty<StatementTransaction>();
+        public StatementTransaction[] StatementTransactions { get; init; } = [];
     }
 
     public class BankAccount

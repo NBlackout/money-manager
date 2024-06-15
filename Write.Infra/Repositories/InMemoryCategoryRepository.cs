@@ -2,26 +2,23 @@ namespace Write.Infra.Repositories;
 
 public class InMemoryCategoryRepository : ICategoryRepository
 {
-    private readonly Dictionary<Guid, Category> data = new();
+    private readonly Dictionary<Guid, CategorySnapshot> data = new();
 
-    public IEnumerable<CategorySnapshot> Data => this.data.Values.Select(c => c.Snapshot);
+    public IEnumerable<CategorySnapshot> Data => this.data.Values.Select(c => c);
 
     public Task<Category> By(Guid id) =>
-        Task.FromResult(this.data[id]);
+        Task.FromResult(Category.From(this.data[id]));
 
     public Task Save(Category category)
     {
-        CategorySnapshot snapshot = category.Snapshot;
-        this.data[category.Id] = Category.From(snapshot);
+        this.data[category.Id] = category.Snapshot;
 
         return Task.CompletedTask;
     }
 
     public void Feed(params Category[] categories) =>
-        categories.ToList().ForEach(category => this.data[category.Id] = category);
+        categories.ToList().ForEach(category => this.data[category.Id] = category.Snapshot);
 
-    public void Clear()
-    {
+    public void Clear() =>
         this.data.Clear();
-    }
 }

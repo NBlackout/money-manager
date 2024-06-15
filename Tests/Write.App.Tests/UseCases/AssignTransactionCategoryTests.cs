@@ -21,6 +21,6 @@ public class AssignTransactionCategoryTests
         await this.sut.Execute(transaction.Id, categoryId);
 
         Transaction actual = await this.repository.By(transaction.Id);
-        actual.Snapshot.Should().Be(transaction.Build().Snapshot with { CategoryId = categoryId });
+        actual.Snapshot.Should().Be(transaction.ToSnapshot() with { CategoryId = categoryId });
     }
 }

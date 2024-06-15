@@ -18,11 +18,9 @@ public record AccountBuilder(
             12.34m, DateTime.Parse("2023-05-06"), true);
     }
 
-    public Account Build()
-    {
-        return Account.From(
-            new AccountSnapshot(this.Id, this.BankId, this.Number, this.Label, this.Balance, this.BalanceDate,
-                this.Tracked)
-        );
-    }
+    public Account Build() =>
+        Account.From(this.ToSnapshot());
+
+    public AccountSnapshot ToSnapshot() =>
+        new(this.Id, this.BankId, this.Number, this.Label, this.Balance, this.BalanceDate, this.Tracked);
 }
