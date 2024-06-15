@@ -27,9 +27,12 @@ public partial class Data : ComponentBase
     private async Task Upload(IBrowserFile file)
     {
         string fileName = file.Name;
-        string contentType = file.ContentType;
+        string contentType = ContentTypeOf(file);
         Stream stream = file.OpenReadStream(OneMegaByte);
 
         await this.UploadBankStatement.Execute(fileName, contentType, stream);
     }
+
+    private static string ContentTypeOf(IBrowserFile file) =>
+        string.IsNullOrWhiteSpace(file.ContentType) is false ? file.ContentType : "application/octet-stream";
 }

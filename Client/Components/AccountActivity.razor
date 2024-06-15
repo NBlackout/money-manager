@@ -45,7 +45,7 @@
                     <select @onchange="@ShowTransactionsOfMonth" class="form-select border-dark">
                         @foreach (DateTime month in months)
                         {
-                            <option selected="@(month == currentMonth)">@month.ToString("MMMM yyyy")</option>
+                            <option selected="@(month == currentMonth)" value="@month.ToString("yyyy-MM-dd")">@month.ToString("MMMM yyyy")</option>
                         }
                     </select>
                     <button type="button" class="btn btn-outline-dark" @onclick="@ShowNextMonthTransactions">

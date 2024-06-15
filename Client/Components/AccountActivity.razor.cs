@@ -1,6 +1,4 @@
-﻿using static System.DateTime;
-
-namespace Client.Components;
+﻿namespace Client.Components;
 
 public partial class AccountActivity : ComponentBase
 {
@@ -22,7 +20,7 @@ public partial class AccountActivity : ComponentBase
     {
         this.months = LoadMonthsRange();
         this.account = await this.AccountDetails.Execute(this.Id);
-        await this.LoadTransactionsOf(new DateTime(Today.Year, Today.Month, 1));
+        await this.LoadTransactionsOf(new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1));
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -57,7 +55,7 @@ public partial class AccountActivity : ComponentBase
     }
 
     private async Task ShowTransactionsOfMonth(ChangeEventArgs args) =>
-        await this.LoadTransactionsOf(ParseExact(args.ToString()!, "MMMM yyyy", null));
+        await this.LoadTransactionsOf(DateTime.ParseExact(args.Value!.ToString()!, "yyyy-MM-dd", null));
 
     private async Task ShowFirstMonthTransactions() =>
         await this.LoadTransactionsOf(this.months.First());
@@ -80,8 +78,8 @@ public partial class AccountActivity : ComponentBase
 
     private static List<DateTime> LoadMonthsRange()
     {
-        DateTime januaryLastYear = new(Today.Year - 1, 1, 1);
-        DateTime nextMonth = Today.AddMonths(1);
+        DateTime januaryLastYear = new(DateTime.Today.Year - 1, 1, 1);
+        DateTime nextMonth = DateTime.Today.AddMonths(1);
 
         List<DateTime> months = new();
         for (DateTime date = januaryLastYear; date < nextMonth; date = date.AddMonths(1))
