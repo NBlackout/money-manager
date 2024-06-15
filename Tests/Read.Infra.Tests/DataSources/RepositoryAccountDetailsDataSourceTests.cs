@@ -20,12 +20,10 @@ public sealed class RepositoryAccountDetailsDataSourceTests : HostFixture
     protected override void Configure(IServiceCollection services) =>
         services.AddWriteDependencies().AddReadDependencies();
 
-    [Fact]
-    public async Task Should_retrieve_account_details()
+    [Theory, RandomData]
+    public async Task Should_retrieve_account_details(AccountBuilder account)
     {
-        AccountBuilder account = AccountBuilder.For(Guid.NewGuid());
         this.repository.Feed(account.Build());
-
         AccountDetailsPresentation actual = await this.sut.Get(account.Id);
         actual.Should().Be(account.ToDetails());
     }

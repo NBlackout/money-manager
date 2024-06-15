@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Write.Infra.OfxProcessing;
+using static Shared.TestTooling.Resources.Resources;
 
 namespace Write.Infra.Tests;
 
@@ -22,35 +23,37 @@ public sealed class OfxParserTests : HostFixture
             new TransactionStatement("TheDebitId", -300.21m, "The debit", DateTime.Parse("2023-04-18")),
             new TransactionStatement("TheCreditId", 100.95m, "The credit", DateTime.Parse("2023-04-17"))
         );
-        await this.Verify_OfxParser(new MemoryStream(Resources.OfxSample), expected);
+        await this.Verify(new MemoryStream(OfxSample), expected);
     }
 
     [Fact]
     public async Task Should_tell_when_bank_identifier_is_missing()
     {
-        await this.Invoking(s => s.Verify_Failure(new MemoryStream(Resources.MissingBankIdentifierOfxSample))).Should()
+        await this.Invoking(s => s.Verify_Failure(new MemoryStream(MissingBankIdentifierOfxSample)))
+            .Should()
             .ThrowAsync<CannotProcessOfxContent>();
     }
 
     [Fact]
     public async Task Should_tell_when_account_number_is_missing()
     {
-        await this.Invoking(s => s.Verify_Failure(new MemoryStream(Resources.MissingAccountNumberOfxSample))).Should()
+        await this.Invoking(s => s.Verify_Failure(new MemoryStream(MissingAccountNumberOfxSample)))
+            .Should()
             .ThrowAsync<CannotProcessOfxContent>();
     }
 
     [Fact]
     public async Task Should_tell_when_balance_is_missing()
     {
-        await this.Invoking(s => s.Verify_Failure(new MemoryStream(Resources.MissingBalanceOfxSample))).Should()
+        await this.Invoking(s => s.Verify_Failure(new MemoryStream(MissingBalanceOfxSample)))
+            .Should()
             .ThrowAsync<CannotProcessOfxContent>();
     }
 
     private async Task Verify_Failure(Stream stream) =>
-        await this.Verify_OfxParser(stream,
-            new AccountStatement("Bank", "Account", 42.42m, DateTime.Parse("2943-09-26")));
+        await this.Verify(stream, Randomizer.Any<AccountStatement>());
 
-    private async Task Verify_OfxParser(Stream stream, AccountStatement expected)
+    private async Task Verify(Stream stream, AccountStatement expected)
     {
         AccountStatement actual = await this.sut.ExtractAccountStatement(stream);
         actual.Should().BeEquivalentTo(expected);

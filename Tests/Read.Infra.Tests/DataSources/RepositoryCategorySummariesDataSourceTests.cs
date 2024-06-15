@@ -20,14 +20,11 @@ public sealed class RepositoryCategorySummariesDataSourceTests : HostFixture
     protected override void Configure(IServiceCollection services) =>
         services.AddWriteDependencies().AddReadDependencies();
 
-    [Fact]
-    public async Task Should_retrieve_tracked_category_summaries()
+    [Theory, RandomData]
+    public async Task Should_retrieve_tracked_category_summaries(CategoryBuilder[] expected)
     {
-        CategoryBuilder aCategory = CategoryBuilder.For(Guid.NewGuid()) ;
-        CategoryBuilder anotherCategory = CategoryBuilder.For(Guid.NewGuid()) ;
-        this.categoryRepository.Feed(aCategory.Build(), anotherCategory.Build());
-
-        IReadOnlyCollection<CategorySummaryPresentation> actual = await this.sut.Get();
-        actual.Should().Equal(aCategory.ToSummary(), anotherCategory.ToSummary());
+        this.categoryRepository.Feed(expected.Select(c => c.Build()).ToArray());
+        CategorySummaryPresentation[] actual = await this.sut.Get();
+        actual.Should().Equal(expected.Select(c => c.ToSummary()));
     }
 }

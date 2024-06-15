@@ -12,14 +12,10 @@ public class CreateCategoryTests
         this.sut = new CreateCategory(this.gateway);
     }
 
-    [Fact]
-    public async Task Should_create_category()
+    [Theory, RandomData]
+    public async Task Should_create_category(Guid id, string label)
     {
-        Guid id = Guid.NewGuid();
-        const string label = "Category label";
-
         await this.sut.Execute(id, label);
-
         this.gateway.Calls.Should().Equal((id, label));
     }
 }

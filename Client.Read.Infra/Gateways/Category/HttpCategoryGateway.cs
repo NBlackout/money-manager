@@ -9,6 +9,6 @@ public class HttpCategoryGateway : ICategoryGateway
         this.httpClient = httpClient;
     }
 
-    public async Task<IReadOnlyCollection<CategorySummaryPresentation>> Summaries() =>
-        (await this.httpClient.GetFromJsonAsync<IReadOnlyCollection<CategorySummaryPresentation>>("categories"))!;
+    public async Task<CategorySummaryPresentation[]> Summaries() =>
+        (await this.httpClient.GetFromJsonAsync<CategorySummaryPresentation[]>("categories"))!;
 }

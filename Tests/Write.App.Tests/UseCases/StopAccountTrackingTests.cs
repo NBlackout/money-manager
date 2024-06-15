@@ -10,15 +10,14 @@ public class StopAccountTrackingTests
         this.sut = new StopAccountTracking(this.repository);
     }
 
-    [Fact]
-    public async Task Should_stop_account_from_being_tracked()
+    [Theory, RandomData]
+    public async Task Should_resume_account_tracking(AccountBuilder account)
     {
-        Account existing = (AccountBuilder.For(Guid.NewGuid()) with { Tracked = true }).Build();
-        this.repository.Feed(existing);
+        this.repository.Feed(account.Build());
 
-        await this.sut.Execute(existing.Id);
+        await this.sut.Execute(account.Id);
 
-        Account actual = await this.repository.ById(existing.Id);
-        actual.Snapshot.Should().Be(existing.Snapshot with { Tracked = false });
+        Account actual = await this.repository.By(account.Id);
+        actual.Snapshot.Should().Be(account.Build().Snapshot with { Tracked = false });
     }
 }

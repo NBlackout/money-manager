@@ -8,7 +8,7 @@ public partial class AccountActivity : ComponentBase
     private List<DateTime> months = new();
     private DateTime currentMonth;
     private AccountDetailsPresentation? account;
-    private IReadOnlyCollection<TransactionSummaryPresentation>? transactions;
+    private TransactionSummaryPresentation[]? transactions;
 
     [Inject] private AccountDetails AccountDetails { get; set; } = null!;
     [Inject] private TransactionsOfMonth TransactionsOfMonth { get; set; } = null!;
@@ -48,8 +48,8 @@ public partial class AccountActivity : ComponentBase
     {
         TransactionSummaryPresentation transaction = this.transactions!.Single(t => t.Id == args.TransactionId);
 
-        List<TransactionSummaryPresentation> updatedTransactions = this.transactions!.ToList();
-        int transactionIndex = updatedTransactions.IndexOf(transaction);
+        TransactionSummaryPresentation[] updatedTransactions = this.transactions!.ToArray();
+        int transactionIndex = updatedTransactions.ToList().IndexOf(transaction);
         updatedTransactions[transactionIndex] = transaction with { Category = args.CategoryLabel };
         this.transactions = updatedTransactions;
     }

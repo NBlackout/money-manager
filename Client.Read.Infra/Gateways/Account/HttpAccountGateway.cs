@@ -9,13 +9,13 @@ public class HttpAccountGateway : IAccountGateway
         this.httpClient = httpClient;
     }
 
-    public async Task<IReadOnlyCollection<AccountSummaryPresentation>> Summaries() =>
-        (await this.httpClient.GetFromJsonAsync<IReadOnlyCollection<AccountSummaryPresentation>>("accounts"))!;
+    public async Task<AccountSummaryPresentation[]> Summaries() =>
+        (await this.httpClient.GetFromJsonAsync<AccountSummaryPresentation[]>("accounts"))!;
 
     public async Task<AccountDetailsPresentation> Details(Guid id) =>
         (await this.httpClient.GetFromJsonAsync<AccountDetailsPresentation>($"accounts/{id}"))!;
 
-    public async Task<IReadOnlyCollection<TransactionSummaryPresentation>> TransactionsOfMonth(Guid id, int year, int month) =>
-        (await this.httpClient.GetFromJsonAsync<IReadOnlyCollection<TransactionSummaryPresentation>>(
+    public async Task<TransactionSummaryPresentation[]> TransactionsOfMonth(Guid id, int year, int month) =>
+        (await this.httpClient.GetFromJsonAsync<TransactionSummaryPresentation[]>(
             $"accounts/{id}/transactions?year={year}&month={month}"))!;
 }

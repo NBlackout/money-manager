@@ -12,14 +12,11 @@ public class CreateCategoryTests
         this.sut = new CreateCategory(this.repository);
     }
 
-    [Fact]
-    public async Task Should_create_category()
+    [Theory, RandomData]
+    public async Task Should_create_category(CategorySnapshot expected)
     {
-        CategorySnapshot expected = new(Guid.NewGuid(), "A label");
-
         await this.sut.Execute(expected.Id, expected.Label);
-
-        Category actual = await this.repository.ById(expected.Id);
+        Category actual = await this.repository.By(expected.Id);
         actual.Snapshot.Should().Be(expected);
     }
 }

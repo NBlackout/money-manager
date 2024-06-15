@@ -15,6 +15,6 @@ internal class StubbedHttpMessageHandler : HttpMessageHandler
         return Task.FromResult(new HttpResponseMessage { Content = new StringContent(this.payloadByUrls[requestUrl]) });
     }
 
-    public void SetResponseFor(string requestUrl, object expected) =>
+    public void Feed(string requestUrl, object expected) =>
         this.payloadByUrls[requestUrl] = JsonSerializer.Serialize(expected);
 }

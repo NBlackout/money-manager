@@ -9,6 +9,6 @@ public class CategorySummaries
         this.gateway = gateway;
     }
 
-    public async Task<IReadOnlyCollection<CategorySummaryPresentation>> Execute() =>
+    public async Task<CategorySummaryPresentation[]> Execute() =>
         await this.gateway.Summaries();
 }

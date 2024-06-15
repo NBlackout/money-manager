@@ -18,8 +18,8 @@ public static class WebApplicationExtensions
 
     private static void UseSwaggerComponents(this IApplicationBuilder app)
     {
-        app.UseSwagger(options => options.RouteTemplate = $"api/{options.RouteTemplate}");
-        app.UseSwaggerUI(options => options.RoutePrefix = $"api/{options.RoutePrefix}");
+        app.UseSwagger(options => options.RouteTemplate = Path.Combine("api", options.RouteTemplate));
+        app.UseSwaggerUI(options => options.RoutePrefix = Path.Combine("api", options.RoutePrefix));
     }
 
     private static void UseBlazor(this WebApplication app)

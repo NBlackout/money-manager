@@ -19,17 +19,11 @@ public sealed class HttpCategoryGatewayTests : HostFixture
     protected override void Configure(IServiceCollection services) =>
         services.AddReadDependencies().AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
-    [Fact]
-    public async Task Should_retrieve_category_summaries()
+    [Theory, RandomData]
+    public async Task Should_retrieve_category_summaries(CategorySummaryPresentation[] expected)
     {
-        CategorySummaryPresentation[] expected =
-        {
-            new(Guid.NewGuid(), "Category"),
-            new(Guid.NewGuid(), "A category")
-        };
-        this.httpMessageHandler.SetResponseFor($"{ApiUrl}/categories", expected);
-
-        IReadOnlyCollection<CategorySummaryPresentation> actual = await this.sut.Summaries();
+        this.httpMessageHandler.Feed($"{ApiUrl}/categories", expected);
+        CategorySummaryPresentation[] actual = await this.sut.Summaries();
         actual.Should().Equal(expected);
     }
 

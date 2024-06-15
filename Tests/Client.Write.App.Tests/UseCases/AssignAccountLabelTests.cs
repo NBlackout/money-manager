@@ -12,14 +12,10 @@ public class AssignAccountLabelTests
         this.sut = new AssignAccountLabel(this.gateway);
     }
 
-    [Fact]
-    public async Task Should_assign_account_label()
+    [Theory, RandomData]
+    public async Task Should_assign_account_label(Guid id, string label)
     {
-        Guid id = Guid.NewGuid();
-        const string label = "New label";
-
         await this.sut.Execute(id, label);
-
         this.gateway.AssignLabelCalls.Should().Equal((id, label));
     }
 }

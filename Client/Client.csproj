@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
     <ItemGroup>
-        <PackageReference Include="Highsoft.Highcharts" Version="10.3.3.2" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.16" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.16" PrivateAssets="all" />
+        <PackageReference Include="Highsoft.Highcharts" Version="11.4.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.6" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.6" PrivateAssets="all" />
     </ItemGroup>
 
     <ItemGroup>

@@ -23,25 +23,20 @@ public sealed class RepositoryTransactionsOfMonthDataSourceTests : HostFixture
     protected override void Configure(IServiceCollection services) =>
         services.AddWriteDependencies().AddReadDependencies();
 
-    [Fact]
-    public async Task Should_retrieve_transactions_of_month()
+    [Theory, RandomData]
+    public async Task Should_retrieve_transactions_of_month(Guid accountId, Guid anotherAccountId)
     {
-        Guid accountId = Guid.NewGuid();
-        Guid anotherAccountId = Guid.NewGuid();
-
-        TransactionBuilder transactionBefore = SomeTransaction(Guid.NewGuid(), accountId, DateTime.Parse("2023-03-31"));
-        TransactionBuilder aTransactionThisMonth = SomeTransaction(Guid.NewGuid(), accountId,
-            DateTime.Parse("2023-04-03"), CategoryBuilder.For(Guid.Parse("2EE59E6A-C71C-44A2-8A9C-10587BF97FBB"))
-        );
-        TransactionBuilder anotherTransactionThisMonth =
-            SomeTransaction(Guid.NewGuid(), accountId, DateTime.Parse("2023-04-16"), null);
-        TransactionBuilder transactionAfter = SomeTransaction(Guid.NewGuid(), accountId, DateTime.Parse("2023-05-01"));
+        TransactionBuilder transactionBefore = SomeTransaction(accountId, DateTime.Parse("2023-03-31"));
+        TransactionBuilder aTransactionThisMonth =
+            SomeTransaction(accountId, DateTime.Parse("2023-04-03"), Randomizer.Any<CategoryBuilder>());
+        TransactionBuilder anotherTransactionThisMonth = SomeTransaction(accountId, DateTime.Parse("2023-04-16"));
+        TransactionBuilder transactionAfter = SomeTransaction(accountId, DateTime.Parse("2023-05-01"));
         TransactionBuilder transactionOfAnotherAccount =
-            SomeTransaction(Guid.NewGuid(), anotherAccountId, DateTime.Parse("2023-04-21"));
+            SomeTransaction(anotherAccountId, DateTime.Parse("2023-04-21"));
         this.Feed(transactionBefore, aTransactionThisMonth, anotherTransactionThisMonth, transactionAfter,
             transactionOfAnotherAccount);
 
-        IReadOnlyCollection<TransactionSummaryPresentation> actual = await this.sut.Get(accountId, 2023, 04);
+        TransactionSummaryPresentation[] actual = await this.sut.Get(accountId, 2023, 04);
         actual.Should().Equal(aTransactionThisMonth.ToSummary(), anotherTransactionThisMonth.ToSummary());
     }
 
@@ -56,10 +51,7 @@ public sealed class RepositoryTransactionsOfMonthDataSourceTests : HostFixture
         }
     }
 
-    private static TransactionBuilder SomeTransaction(Guid id, Guid accountId, DateTime date) =>
-        SomeTransaction(id, accountId, date, null);
-
-    private static TransactionBuilder SomeTransaction(Guid id, Guid accountId, DateTime date,
-        CategoryBuilder? category) =>
-        TransactionBuilder.For(id) with { AccountId = accountId, Date = date, Category = category };
+    private static TransactionBuilder
+        SomeTransaction(Guid accountId, DateTime date, CategoryBuilder? category = null) =>
+        TransactionBuilder.Create() with { AccountId = accountId, Date = date, Category = category };
 }

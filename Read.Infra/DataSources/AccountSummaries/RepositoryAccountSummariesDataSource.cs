@@ -14,11 +14,11 @@ public class RepositoryAccountSummariesDataSource : IAccountSummariesDataSource
         this.accountRepository = accountRepository;
     }
 
-    public Task<IReadOnlyCollection<AccountSummaryPresentation>> Get()
+    public Task<AccountSummaryPresentation[]> Get()
     {
-        IReadOnlyCollection<AccountSummaryPresentation> summaries = this.accountRepository.Data
+        AccountSummaryPresentation[] summaries = this.accountRepository.Data
             .Select(account => ToSummary(this.bankRepository.Data.Single(b => b.Id == account.BankId), account))
-            .ToList();
+            .ToArray();
 
         return Task.FromResult(summaries);
     }

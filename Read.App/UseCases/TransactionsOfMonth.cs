@@ -9,6 +9,6 @@ public class TransactionsOfMonth
         this.dataSource = dataSource;
     }
 
-    public async Task<IReadOnlyCollection<TransactionSummaryPresentation>> Execute(Guid accountId, int year, int month) =>
+    public async Task<TransactionSummaryPresentation[]> Execute(Guid accountId, int year, int month) =>
         await this.dataSource.Get(accountId, year, month);
 }

@@ -11,10 +11,10 @@ public class RepositoryCategorySummariesDataSource : ICategorySummariesDataSourc
         this.repository = repository;
     }
 
-    public Task<IReadOnlyCollection<CategorySummaryPresentation>> Get()
+    public Task<CategorySummaryPresentation[]> Get()
     {
-        IReadOnlyCollection<CategorySummaryPresentation> presentations =
-            this.repository.Data.Select(c => new CategorySummaryPresentation(c.Id, c.Label)).ToList();
+        CategorySummaryPresentation[] presentations =
+            this.repository.Data.Select(c => new CategorySummaryPresentation(c.Id, c.Label)).ToArray();
 
         return Task.FromResult(presentations);
     }

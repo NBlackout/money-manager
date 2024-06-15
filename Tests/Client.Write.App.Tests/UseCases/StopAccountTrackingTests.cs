@@ -12,13 +12,10 @@ public class StopAccountTrackingTests
         this.sut = new StopAccountTracking(this.accountGateway);
     }
 
-    [Fact]
-    public async Task Should_stop_account_tracking()
+    [Theory, RandomData]
+    public async Task Should_stop_account_tracking(Guid id)
     {
-        Guid id = Guid.NewGuid();
-
         await this.sut.Execute(id);
-
         this.accountGateway.StopTrackingCalls.Should().Equal(id);
     }
 }

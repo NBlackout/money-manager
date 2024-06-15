@@ -20,45 +20,31 @@ public sealed class HttpAccountGatewayTests : HostFixture
     protected override void Configure(IServiceCollection services) =>
         services.AddWriteDependencies().AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
-    [Fact]
-    public async Task Should_stop_tracking()
+    [Theory, RandomData]
+    public async Task Should_stop_tracking(Guid id)
     {
-        Guid id = Guid.NewGuid();
-
         await this.sut.StopTracking(id);
-
         this.Verify_Put($"{ApiUrl}/accounts/{id}/tracking", new { Enabled = false });
     }
 
-    [Fact]
-    public async Task Should_resume_tracking()
+    [Theory, RandomData]
+    public async Task Should_resume_tracking(Guid id)
     {
-        Guid id = Guid.NewGuid();
-
         await this.sut.ResumeTracking(id);
-
         this.Verify_Put($"{ApiUrl}/accounts/{id}/tracking", new { Enabled = true });
     }
 
 
-    [Fact]
-    public async Task Should_assign_label()
+    [Theory, RandomData]
+    public async Task Should_assign_label(Guid id, string label)
     {
-        Guid id = Guid.NewGuid();
-        const string label = "My account label";
-
         await this.sut.AssignLabel(id, label);
-
         this.Verify_Put($"{ApiUrl}/accounts/{id}/label", new { Label = label });
     }
 
     private void Verify_Put(string url, object payload)
     {
-        JsonSerializerOptions jsonSerializerOptions = new()
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        };
-
+        JsonSerializerOptions jsonSerializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
         this.httpMessageHandler.Calls.Should().Equal((url, JsonSerializer.Serialize(payload, jsonSerializerOptions)));
     }
 

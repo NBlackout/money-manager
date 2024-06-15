@@ -2,13 +2,11 @@
 
 public class StubbedCategorySummariesDataSource : ICategorySummariesDataSource
 {
-    private readonly IReadOnlyCollection<CategorySummaryPresentation> data;
+    private CategorySummaryPresentation[] data = null!;
 
-    public StubbedCategorySummariesDataSource(IReadOnlyCollection<CategorySummaryPresentation> expected)
-    {
-        this.data = expected;
-    }
-
-    public Task<IReadOnlyCollection<CategorySummaryPresentation>> Get() =>
+    public Task<CategorySummaryPresentation[]> Get() =>
         Task.FromResult(this.data);
+
+    public void Feed(CategorySummaryPresentation[] summaries) =>
+        this.data = summaries;
 }

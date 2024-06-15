@@ -3,7 +3,7 @@
 public interface ITransactionRepository
 {
     Task<Guid> NextIdentity();
-    Task<Transaction> ById(Guid id);
-    Task<IReadOnlyCollection<string>> UnknownExternalIds(IEnumerable<string> externalIds);
+    Task<Transaction> By(Guid id);
+    Task<string[]> UnknownExternalIds(IEnumerable<string> externalIds);
     Task Save(Transaction transaction);
 }

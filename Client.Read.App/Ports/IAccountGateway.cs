@@ -2,7 +2,7 @@
 
 public interface IAccountGateway
 {
-    Task<IReadOnlyCollection<AccountSummaryPresentation>> Summaries();
+    Task<AccountSummaryPresentation[]> Summaries();
     Task<AccountDetailsPresentation> Details(Guid id);
-    Task<IReadOnlyCollection<TransactionSummaryPresentation>> TransactionsOfMonth(Guid accountId, int year, int month);
+    Task<TransactionSummaryPresentation[]> TransactionsOfMonth(Guid accountId, int year, int month);
 }

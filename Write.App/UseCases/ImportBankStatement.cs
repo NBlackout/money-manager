@@ -55,7 +55,7 @@ public class ImportBankStatement
     {
         Dictionary<string, TransactionStatement> transactionStatements =
             statement.Transactions.ToDictionary(t => t.TransactionIdentifier);
-        IReadOnlyCollection<string> unknownExternalIds =
+        string[] unknownExternalIds =
             await this.transactionRepository.UnknownExternalIds(transactionStatements.Keys);
 
         List<Task<Transaction>> unknownTransactionTasks = unknownExternalIds.Select(unknownExternalId =>

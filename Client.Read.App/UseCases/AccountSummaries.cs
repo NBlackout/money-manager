@@ -9,6 +9,6 @@ public class AccountSummaries
         this.gateway = gateway;
     }
 
-    public async Task<IReadOnlyCollection<AccountSummaryPresentation>> Execute() =>
+    public async Task<AccountSummaryPresentation[]> Execute() =>
         await this.gateway.Summaries();
 }

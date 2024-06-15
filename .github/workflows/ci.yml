@@ -3,7 +3,7 @@ name: Build and deploy to App Service
 env:
   AZURE_WEBAPP_NAME: nblackout-money-manager
   AZURE_WEBAPP_PACKAGE_PATH: '.'
-  DOTNET_VERSION: '6.0.x'
+  DOTNET_VERSION: '8.0.x'
 
 concurrency:
   group: money-manager
