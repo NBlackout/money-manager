@@ -15,9 +15,9 @@ public class UploadBankStatementTests
     [Theory, RandomData]
     public async Task Should_upload_provided_ofx_file(string fileName, string contentType, byte[] content)
     {
-        var stream = new MemoryStream(content);
+        MemoryStream stream = new(content);
         await this.sut.Execute(fileName, contentType, stream);
-        List<(string, string, Stream)> expectedCalls = new() { (fileName, contentType, stream) };
+        List<(string, string, Stream)> expectedCalls = [(fileName, contentType, stream)];
         this.gateway.Calls.Should().Equal(expectedCalls);
     }
 }

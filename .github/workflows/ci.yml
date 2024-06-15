@@ -58,6 +58,14 @@ jobs:
         run: dotnet stryker -p Read.App -f ../stryker-config.json
         working-directory: Tests/Read.App.Tests
 
+      - name: Mutation testing Client.Write
+        run: dotnet stryker -p Client.Write.App -f ../stryker-config.json
+        working-directory: Tests/Client.Write.App.Tests
+
+      - name: Mutation testing Client.Read
+        run: dotnet stryker -p Client.Read.App -f ../stryker-config.json
+        working-directory: Tests/Client.Read.App.Tests
+
       - name: Publish API
         run: dotnet publish Api/Api.csproj -c Release -o ${{env.DOTNET_ROOT}}/artifacts/api --nologo
 

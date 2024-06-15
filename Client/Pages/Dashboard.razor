@@ -11,13 +11,13 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        List<double?> johnValues = new() { 5, 3, 4, 7, 2 };
-        List<double?> janeValues = new() { 2, -2, -3, 2, 1 };
-        List<double?> joeValues = new() { 3, 4, 4, -2, 5 };
+        List<double?> johnValues = [5, 3, 4, 7, 2];
+        List<double?> janeValues = [2, -2, -3, 2, 1];
+        List<double?> joeValues = [3, 4, 4, -2, 5];
 
-        List<AreaSeriesData> johnData = new();
-        List<AreaSeriesData> janeData = new();
-        List<AreaSeriesData> joeData = new();
+        List<AreaSeriesData> johnData = [];
+        List<AreaSeriesData> janeData = [];
+        List<AreaSeriesData> joeData = [];
 
         johnValues.ForEach(p => johnData.Add(new AreaSeriesData { Y = p }));
         janeValues.ForEach(p => janeData.Add(new AreaSeriesData { Y = p }));
@@ -29,35 +29,37 @@
             {
                 Text = "Area chart with negative values"
             },
-            XAxis = new List<XAxis>
-            {
+            XAxis =
+            [
                 new()
                 {
-                    Categories = new List<string> { "Apples", "Oranges", "Pears", "Grapes", "Bananas" }
+                    Categories = ["Apples", "Oranges", "Pears", "Grapes", "Bananas"]
                 }
-            },
+            ],
             Credits = new Credits
             {
                 Enabled = false
             },
-            Series = new List<Series>
-            {
+            Series =
+            [
                 new AreaSeries
                 {
                     Name = "John",
                     Data = johnData
                 },
+
                 new AreaSeries
                 {
                     Name = "Jane",
                     Data = janeData
                 },
+
                 new AreaSeries
                 {
                     Name = "Joe",
                     Data = joeData
                 }
-            }
+            ]
         });
 
         await JsRuntime.InvokeVoidAsync("window.renderChart", "dashboard-chart", renderer.GetJsonOptionsForBlazor());
