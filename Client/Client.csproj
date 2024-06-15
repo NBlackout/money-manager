@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+    <ItemGroup>
+        <PackageReference Include="Highsoft.Highcharts" Version="10.3.3.2" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.16" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.16" PrivateAssets="all" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Client.Read.App\Client.Read.App.csproj" />
+      <ProjectReference Include="..\Client.Write.App\Client.Write.App.csproj" />
+      <ProjectReference Include="..\Client.Read.Infra\Client.Read.Infra.csproj" />
+      <ProjectReference Include="..\Client.Write.Infra\Client.Write.Infra.csproj" />
+      <ProjectReference Include="..\Shared\Shared.csproj" />
+    </ItemGroup>
+
+</Project>

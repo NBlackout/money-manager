@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <ItemGroup>
+    <ProjectReference Include="..\Shared\Shared.csproj" />
+    <ProjectReference Include="..\Write.App\Write.App.csproj" />
+    <ProjectReference Include="..\Write.Infra\Write.Infra.csproj" />
+  </ItemGroup>
+</Project>

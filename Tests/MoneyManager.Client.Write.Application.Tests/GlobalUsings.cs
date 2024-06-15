@@ -1,1 +1,0 @@
-global using MoneyManager.Client.Write.Application.UseCases;

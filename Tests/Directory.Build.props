@@ -24,13 +24,13 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\MoneyManager.Shared.TestTooling\MoneyManager.Shared.TestTooling.csproj"/>
+        <ProjectReference Include="..\..\Shared.TestTooling\Shared.TestTooling.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
         <Using Include="FluentAssertions"/>
-        <Using Include="MoneyManager.Shared.TestTooling"/>
-        <Using Include="MoneyManager.Shared.TestTooling.Resources"/>
+        <Using Include="Shared.TestTooling"/>
+        <Using Include="Shared.TestTooling.Resources"/>
         <Using Include="Xunit"/>
     </ItemGroup>
 

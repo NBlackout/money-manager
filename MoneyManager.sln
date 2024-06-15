@@ -1,16 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Read.Application", "MoneyManager.Read.Application\MoneyManager.Read.Application.csproj", "{80ADAACD-7CA0-47FC-8731-E08355F030A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Read.App", "Read.App\Read.App.csproj", "{80ADAACD-7CA0-47FC-8731-E08355F030A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Read.Application.Tests", "Tests\MoneyManager.Read.Application.Tests\MoneyManager.Read.Application.Tests.csproj", "{860A8887-F1FF-4714-9F29-8AA789B0D19F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Read.App.Tests", "Tests\Read.App.Tests\Read.App.Tests.csproj", "{860A8887-F1FF-4714-9F29-8AA789B0D19F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Api", "MoneyManager.Api\MoneyManager.Api.csproj", "{E8CDCD19-EB82-4A99-A8A2-3D9B979020BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{E8CDCD19-EB82-4A99-A8A2-3D9B979020BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Read.Infrastructure", "MoneyManager.Read.Infrastructure\MoneyManager.Read.Infrastructure.csproj", "{50047521-7E44-482E-902B-4245F2A54A4A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Read.Infra", "Read.Infra\Read.Infra.csproj", "{50047521-7E44-482E-902B-4245F2A54A4A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Read", "Read", "{5CA57638-A9EA-4B65-BCEA-D7FA68775361}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Read.Infrastructure.Tests", "Tests\MoneyManager.Read.Infrastructure.Tests\MoneyManager.Read.Infrastructure.Tests.csproj", "{F79E20DF-4DC0-45B8-860F-20957853CF90}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Read.Infra.Tests", "Tests\Read.Infra.Tests\Read.Infra.Tests.csproj", "{F79E20DF-4DC0-45B8-860F-20957853CF90}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SolutionItems", "_SolutionItems", "{E1C7432F-7C18-4B3D-B449-CCB12FBC368C}"
 	ProjectSection(SolutionItems) = preProject
@@ -28,13 +28,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StrykerMutator", "StrykerMu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Write", "Write", "{6B5ABA93-559F-49AA-A55F-BC4E381207DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Write.Application.Tests", "Tests\MoneyManager.Write.Application.Tests\MoneyManager.Write.Application.Tests.csproj", "{F89DFB6F-2AE3-4B3E-95B5-2885CC0426DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Write.App.Tests", "Tests\Write.App.Tests\Write.App.Tests.csproj", "{F89DFB6F-2AE3-4B3E-95B5-2885CC0426DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Write.Application", "MoneyManager.Write.Application\MoneyManager.Write.Application.csproj", "{81FFC1FA-E3B3-4F21-8290-E36740F5B81C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Write.App", "Write.App\Write.App.csproj", "{81FFC1FA-E3B3-4F21-8290-E36740F5B81C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Client", "MoneyManager.Client\MoneyManager.Client.csproj", "{3E085F02-2504-49B7-870F-5DE651A22430}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{3E085F02-2504-49B7-870F-5DE651A22430}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Client.Read.Application.Tests", "Tests\MoneyManager.Client.Read.Application.Tests\MoneyManager.Client.Read.Application.Tests.csproj", "{DE8883B1-B18F-4F5D-A5EF-A8BF650B1410}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Read.App.Tests", "Tests\Client.Read.App.Tests\Client.Read.App.Tests.csproj", "{DE8883B1-B18F-4F5D-A5EF-A8BF650B1410}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{14FEE47E-568E-4661-B0BE-4EAA60A5BDBB}"
 EndProject
@@ -42,27 +42,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{FA6152
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Read", "Read", "{57E8D2BA-0902-45DE-84A5-ADBAEE02FF81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Client.Read.Infrastructure", "MoneyManager.Client.Read.Infrastructure\MoneyManager.Client.Read.Infrastructure.csproj", "{EE7EB747-1014-47D6-A2A3-CBCD5D13E275}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Read.Infra", "Client.Read.Infra\Client.Read.Infra.csproj", "{EE7EB747-1014-47D6-A2A3-CBCD5D13E275}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Client.Read.Application", "MoneyManager.Client.Read.Application\MoneyManager.Client.Read.Application.csproj", "{88634489-F899-4304-ACFD-08209D8EC04F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Read.App", "Client.Read.App\Client.Read.App.csproj", "{88634489-F899-4304-ACFD-08209D8EC04F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Shared", "MoneyManager.Shared\MoneyManager.Shared.csproj", "{3C48B208-FEE8-4534-A209-C23DB412F3C1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{3C48B208-FEE8-4534-A209-C23DB412F3C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Client.Read.Infrastructure.Tests", "Tests\MoneyManager.Client.Read.Infrastructure.Tests\MoneyManager.Client.Read.Infrastructure.Tests.csproj", "{CB125EF2-8F6B-46C0-8EA4-607F0DD3EE0A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Read.Infra.Tests", "Tests\Client.Read.Infra.Tests\Client.Read.Infra.Tests.csproj", "{CB125EF2-8F6B-46C0-8EA4-607F0DD3EE0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Write.Infrastructure", "MoneyManager.Write.Infrastructure\MoneyManager.Write.Infrastructure.csproj", "{8A721999-BDE5-4651-9AA5-B20199DB113F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Write.Infra", "Write.Infra\Write.Infra.csproj", "{8A721999-BDE5-4651-9AA5-B20199DB113F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Write.Infrastructure.Tests", "Tests\MoneyManager.Write.Infrastructure.Tests\MoneyManager.Write.Infrastructure.Tests.csproj", "{37C14979-6E1C-4A1C-A044-587EF81FCB54}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Write.Infra.Tests", "Tests\Write.Infra.Tests\Write.Infra.Tests.csproj", "{37C14979-6E1C-4A1C-A044-587EF81FCB54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Shared.TestTooling", "MoneyManager.Shared.TestTooling\MoneyManager.Shared.TestTooling.csproj", "{9BE7A071-0A89-410F-A94A-EFE4335B6FDF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.TestTooling", "Shared.TestTooling\Shared.TestTooling.csproj", "{9BE7A071-0A89-410F-A94A-EFE4335B6FDF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Write", "Write", "{7E2BAA7E-A735-436F-A628-E86184D13C44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Client.Write.Application", "MoneyManager.Client.Write.Application\MoneyManager.Client.Write.Application.csproj", "{367BD5FE-F27F-4F0A-9E12-FE64F95943D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Write.App", "Client.Write.App\Client.Write.App.csproj", "{367BD5FE-F27F-4F0A-9E12-FE64F95943D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Client.Write.Application.Tests", "Tests\MoneyManager.Client.Write.Application.Tests\MoneyManager.Client.Write.Application.Tests.csproj", "{25F8A5B3-6429-4251-82AD-E01CBC900B47}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Write.App.Tests", "Tests\Client.Write.App.Tests\Client.Write.App.Tests.csproj", "{25F8A5B3-6429-4251-82AD-E01CBC900B47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Client.Write.Infrastructure", "MoneyManager.Client.Write.Infrastructure\MoneyManager.Client.Write.Infrastructure.csproj", "{EFF8941E-42EF-4474-85BF-C91C018FE509}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Write.Infra", "Client.Write.Infra\Client.Write.Infra.csproj", "{EFF8941E-42EF-4474-85BF-C91C018FE509}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{EBB5BFCB-F69C-4BDF-B1ED-928F7612C337}"
 EndProject
@@ -72,15 +72,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2C16D545
 		Tests\AssemblyInfo.cs = Tests\AssemblyInfo.cs
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Client.Write.Infrastructure.Tests", "Tests\MoneyManager.Client.Write.Infrastructure.Tests\MoneyManager.Client.Write.Infrastructure.Tests.csproj", "{463F2404-4481-4644-900C-D3B79FEC6D0E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Write.Infra.Tests", "Tests\Client.Write.Infra.Tests\Client.Write.Infra.Tests.csproj", "{463F2404-4481-4644-900C-D3B79FEC6D0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Write.TestTooling", "MoneyManager.Write.TestTooling\MoneyManager.Write.TestTooling.csproj", "{E576BF03-9B6B-4FC1-AF7F-C737BC6FAFF9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Write.TestTooling", "Write.TestTooling\Write.TestTooling.csproj", "{E576BF03-9B6B-4FC1-AF7F-C737BC6FAFF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Read.TestTooling", "MoneyManager.Read.TestTooling\MoneyManager.Read.TestTooling.csproj", "{E9BF8310-B14B-485C-A6FD-1B8539E11F29}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Read.TestTooling", "Read.TestTooling\Read.TestTooling.csproj", "{E9BF8310-B14B-485C-A6FD-1B8539E11F29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Write.Api", "MoneyManager.Write.Api\MoneyManager.Write.Api.csproj", "{E58FF8A1-FEE2-423B-88A4-52FE8AD2CDBF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Write.Api", "Write.Api\Write.Api.csproj", "{E58FF8A1-FEE2-423B-88A4-52FE8AD2CDBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Read.Api", "MoneyManager.Read.Api\MoneyManager.Read.Api.csproj", "{F8AFED05-9764-4213-9787-E49FDE2624B6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Read.Api", "Read.Api\Read.Api.csproj", "{F8AFED05-9764-4213-9787-E49FDE2624B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
