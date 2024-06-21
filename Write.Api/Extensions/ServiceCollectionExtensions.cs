@@ -72,8 +72,8 @@ public static class ServiceCollectionExtensions
         );
         InMemoryCategoryRepository categoryRepository = new();
         categoryRepository.Feed(
-            Category.From(new CategorySnapshot(Guid.Parse("E06F5A93-0C3C-4BF4-B8D5-738C0772D29E"), "First category")),
-            Category.From(new CategorySnapshot(Guid.Parse("F8DE1AD3-7566-4BC0-B898-435373F6E89D"), "Second category"))
+            Category.From(new CategorySnapshot(Guid.Parse("E06F5A93-0C3C-4BF4-B8D5-738C0772D29E"), "First category", "Pattern 1")),
+            Category.From(new CategorySnapshot(Guid.Parse("F8DE1AD3-7566-4BC0-B898-435373F6E89D"), "Second category", "Pattern 2"))
         );
 
         return services

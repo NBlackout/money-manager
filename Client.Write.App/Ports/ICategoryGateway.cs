@@ -2,5 +2,5 @@ namespace Client.Write.App.Ports;
 
 public interface ICategoryGateway
 {
-    Task Create(Guid id, string label);
+    Task Create(Guid id, string label, string pattern);
 }
