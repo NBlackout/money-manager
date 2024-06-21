@@ -21,10 +21,10 @@ public sealed class HttpCategoryGatewayTests : HostFixture
         services.AddWriteDependencies().AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
     [Theory, RandomData]
-    public async Task Should_assign_label(Guid id, string label)
+    public async Task Should_create(Guid id, string label, string pattern)
     {
-        await this.sut.Create(id, label);
-        this.Verify_Post($"{ApiUrl}/categories", new { Id = id, Label = label });
+        await this.sut.Create(id, label, pattern);
+        this.Verify_Post($"{ApiUrl}/categories", new { Id = id, Label = label, Pattern = pattern });
     }
 
     private void Verify_Post(string url, object payload)

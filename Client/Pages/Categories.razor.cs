@@ -3,20 +3,17 @@
 public partial class Categories : ComponentBase
 {
     private bool isCreating;
-    private ElementReference labelElement;
 
     private CategorySummaryPresentation[]? categories;
 
     [Inject] public CategorySummaries CategorySummaries { get; set; } = null!;
     [Inject] public CreateCategory CreateCategory { get; set; } = null!;
+    [SupplyParameterFromForm] public Category? Model { get; set; }
 
-    protected override async Task OnInitializedAsync() =>
-        this.categories = await this.CategorySummaries.Execute();
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnInitializedAsync()
     {
-        if (this.isCreating)
-            await this.labelElement.FocusAsync();
+        this.Model ??= new Category();
+        this.categories = await this.CategorySummaries.Execute();
     }
 
     private void ShowCategoryForm() =>
@@ -25,13 +22,20 @@ public partial class Categories : ComponentBase
     private void HideCategoryForm() =>
         this.isCreating = false;
 
-    private async Task LabelChanged(ChangeEventArgs arg)
+    private async Task Submit()
     {
         Guid id = Guid.NewGuid();
-        string label = arg.Value!.ToString()!;
-        await this.CreateCategory.Execute(id, label);
+        string label = this.Model!.Label!;
+        string pattern = this.Model!.Pattern!;
+        await this.CreateCategory.Execute(id, label, pattern);
 
-        this.categories = this.categories!.Prepend(new CategorySummaryPresentation(id, label)).ToArray();
+        this.categories = this.categories!.Prepend(new CategorySummaryPresentation(id, label, pattern)).ToArray();
         this.HideCategoryForm();
+    }
+
+    public class Category
+    {
+        public string? Label { get; set; }
+        public string? Pattern { get; set; }
     }
 }

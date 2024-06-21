@@ -1,3 +1,3 @@
 ﻿namespace Shared.Presentation;
 
-public record CategorySummaryPresentation (Guid Id, string Label);
+public record CategorySummaryPresentation (Guid Id, string Label, string Pattern);

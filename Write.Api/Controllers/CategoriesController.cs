@@ -13,5 +13,5 @@ public class CategoriesController : ControllerBase
 
     [HttpPost]
     public async Task Create(CategoryDto dto) =>
-        await this.createCategory.Execute(dto.Id, dto.Label);
+        await this.createCategory.Execute(dto.Id, dto.Label, dto.Pattern);
 }

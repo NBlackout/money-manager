@@ -3,13 +3,17 @@
 <button class="btn btn-primary" @onclick="@ShowCategoryForm">Add new category</button>
 <ul class="list-group list-group-flush">
     <li class="list-group-item @(isCreating ? "" : "d-none")">
-        <input type="text" @ref="@labelElement" @onchange="@LabelChanged" @onblur="@HideCategoryForm" class="form-control" placeholder="Label"/>
+        <EditForm Model="Model" OnSubmit="Submit">
+            <InputText @bind-Value="Model!.Label"></InputText>
+            <InputText @bind-Value="Model!.Pattern"></InputText>
+            <button type="submit">Submit</button>
+        </EditForm>
     </li>
     @if (categories != null)
     {
         @foreach (CategorySummaryPresentation category in categories)
         {
-            <li class="list-group-item">@category.Label</li>
+            <li class="list-group-item">@category.Label (@category.Pattern)</li>
         }
     }
 </ul>

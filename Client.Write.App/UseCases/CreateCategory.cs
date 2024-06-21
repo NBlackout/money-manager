@@ -9,6 +9,6 @@ public class CreateCategory
         this.gateway = gateway;
     }
 
-    public async Task Execute(Guid id, string label) =>
-        await this.gateway.Create(id, label);
+    public async Task Execute(Guid id, string label, string pattern) =>
+        await this.gateway.Create(id, label, pattern);
 }
