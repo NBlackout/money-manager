@@ -4,7 +4,7 @@ namespace Client.Pages;
 
 public partial class Data : ComponentBase
 {
-    private const int OneMegaByte = 1024000;
+    private const int FiveMegaByte = 5 * 1024 * 1024;
 
     private string? uploadResult;
 
@@ -28,7 +28,7 @@ public partial class Data : ComponentBase
     {
         string fileName = file.Name;
         string contentType = ContentTypeOf(file);
-        Stream stream = file.OpenReadStream(OneMegaByte);
+        Stream stream = file.OpenReadStream(FiveMegaByte);
 
         await this.UploadBankStatement.Execute(fileName, contentType, stream);
     }
