@@ -1,9 +1,7 @@
-﻿using Client.Read.Infra.Gateways.Account;
+﻿using Client.Read.App.Ports;
+using Client.Read.Infra.Gateways.Account;
+using Client.Read.Infra.Gateways.Categorization;
 using Client.Read.Infra.Gateways.Category;
-using Client.Write.App.Ports;
-using Client.Write.Infra.Gateways.Transaction;
-using IAccountGateway = Client.Read.App.Ports.IAccountGateway;
-using ICategoryGateway = Client.Read.App.Ports.ICategoryGateway;
 
 namespace Client.Extensions;
 
@@ -13,9 +11,7 @@ public static class ServiceCollectionReadExtensions
     {
         return services
             .AddUseCases()
-            .AddScoped<IAccountGateway, HttpAccountGateway>()
-            .AddScoped<ICategoryGateway, HttpCategoryGateway>()
-            .AddScoped<ITransactionGateway, HttpTransactionGateway>();
+            .AddGateways();
     }
 
     private static IServiceCollection AddUseCases(this IServiceCollection services)
@@ -25,6 +21,14 @@ public static class ServiceCollectionReadExtensions
             .AddScoped<AccountDetails>()
             .AddScoped<TransactionsOfMonth>()
             .AddScoped<CategorySummaries>()
-            .AddScoped<AssignTransactionCategory>();
+            .AddScoped<CategorizationSuggestions>();
+    }
+
+    private static IServiceCollection AddGateways(this IServiceCollection services)
+    {
+        return services
+            .AddScoped<IAccountGateway, HttpAccountGateway>()
+            .AddScoped<ICategoryGateway, HttpCategoryGateway>()
+            .AddScoped<ICategorizationGateway, HttpCategorizationGateway>();
     }
 }
