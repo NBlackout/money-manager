@@ -1,0 +1,32 @@
+﻿@page "/Categorization"
+
+@if (suggestions != null)
+{
+    <table class="align-middle table table-hover table-sm">
+        <thead class="table-light">
+        <tr>
+            <th>Transaction</th>
+            <th>Amount</th>
+            <th>Category</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (CategorizationSuggestionPresentation suggestion in suggestions)
+        {
+            <tr>
+                <td>@suggestion.TransactionLabel</td>
+                <td class="text-end">
+                    <span class="@(suggestion.TransactionAmount > 0 ? "text-success" : "text-danger")">@suggestion.TransactionAmount €</span>
+                </td>
+                <td>@suggestion.CategoryLabel</td>
+                <td>
+                    <button class="btn btn-link py-0" type="button" aria-label="Approve" @onclick="@(() => Approve(suggestion))">
+                        <small class="oi oi-check"></small> Approve
+                    </button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

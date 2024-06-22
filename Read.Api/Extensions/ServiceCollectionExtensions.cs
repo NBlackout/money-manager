@@ -1,7 +1,10 @@
-﻿using Read.Infra.DataSources.AccountDetails;
+﻿using Read.Infra.DataSources;
+using Read.Infra.DataSources.AccountDetails;
 using Read.Infra.DataSources.AccountSummaries;
+using Read.Infra.DataSources.CategoriesWithPattern;
 using Read.Infra.DataSources.CategorySummaries;
 using Read.Infra.DataSources.TransactionsOfMonth;
+using Read.Infra.DataSources.TransactionsToCategorize;
 
 namespace Read.Api.Extensions;
 
@@ -16,7 +19,8 @@ public static class ServiceCollectionExtensions
             .AddScoped<AccountSummaries>()
             .AddScoped<AccountDetails>()
             .AddScoped<TransactionsOfMonth>()
-            .AddScoped<CategorySummaries>();
+            .AddScoped<CategorySummaries>()
+            .AddScoped<CategorizationSuggestions>();
     }
 
     private static IServiceCollection AddInfrastructureAdapters(this IServiceCollection services)
@@ -25,6 +29,8 @@ public static class ServiceCollectionExtensions
             .AddScoped<IAccountSummariesDataSource, RepositoryAccountSummariesDataSource>()
             .AddScoped<IAccountDetailsDataSource, RepositoryAccountDetailsDataSource>()
             .AddScoped<ITransactionsOfMonthDataSource, RepositoryTransactionsOfMonthDataSource>()
-            .AddScoped<ICategorySummariesDataSource, RepositoryCategorySummariesDataSource>();
+            .AddScoped<ICategorySummariesDataSource, RepositoryCategorySummariesDataSource>()
+            .AddScoped<ICategoriesWithPatternDataSource, RepositoryCategoriesWithPatternDataSource>()
+            .AddScoped<ITransactionsToCategorizeDataSource, RepositoryTransactionsToCategorizeDataSource>();
     }
 }
