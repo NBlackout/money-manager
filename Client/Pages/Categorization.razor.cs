@@ -12,6 +12,12 @@ public partial class Categorization : ComponentBase
         this.suggestions = await this.CategorizationSuggestions.Execute();
     }
 
+    private async Task ApproveAll()
+    {
+        foreach (CategorizationSuggestionPresentation suggestion in this.suggestions!)
+            await this.Approve(suggestion);
+    }
+
     private async Task Approve(CategorizationSuggestionPresentation suggestion)
     {
         await this.AssignTransactionCategory.Execute(suggestion.TransactionId, suggestion.CategoryId);
