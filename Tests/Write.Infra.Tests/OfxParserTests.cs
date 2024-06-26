@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Write.Infra.Exceptions;
 using Write.Infra.OfxProcessing;
 using static Shared.TestTooling.Resources.Resources;
 

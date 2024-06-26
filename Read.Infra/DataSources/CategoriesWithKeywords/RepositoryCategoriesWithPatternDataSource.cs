@@ -2,18 +2,12 @@
 
 namespace Read.Infra.DataSources.CategoriesWithKeywords;
 
-public class RepositoryCategoriesWithKeywordsDataSource : ICategoriesWithKeywordsDataSource
+public class RepositoryCategoriesWithKeywordsDataSource(InMemoryCategoryRepository repository)
+    : ICategoriesWithKeywordsDataSource
 {
-    private readonly InMemoryCategoryRepository repository;
-
-    public RepositoryCategoriesWithKeywordsDataSource(InMemoryCategoryRepository repository)
-    {
-        this.repository = repository;
-    }
-
     public Task<CategoryWithKeywords[]> Get()
     {
-        CategoryWithKeywords[] categoriesWithKeywords = this.repository.Data
+        CategoryWithKeywords[] categoriesWithKeywords = repository.Data
             .Where(c => !string.IsNullOrWhiteSpace(c.Keywords))
             .Select(c => new CategoryWithKeywords(c.Id, c.Label, c.Keywords))
             .ToArray();

@@ -1,17 +1,10 @@
 ﻿namespace Client.Write.Infra.Gateways.Category;
 
-public class HttpCategoryGateway : ICategoryGateway
+public class HttpCategoryGateway(HttpClient httpClient) : ICategoryGateway
 {
-    private readonly HttpClient httpClient;
-
-    public HttpCategoryGateway(HttpClient httpClient)
-    {
-        this.httpClient = httpClient;
-    }
-
     public async Task Create(Guid id, string label, string keywords) =>
-        (await this.httpClient.PostAsJsonAsync("categories", new CategoryDto(id, label, keywords))).EnsureSuccessStatusCode();
+        (await httpClient.PostAsJsonAsync("categories", new CategoryDto(id, label, keywords))).EnsureSuccessStatusCode();
 
     public async Task Delete(Guid id) =>
-        (await this.httpClient.DeleteAsync($"categories/{id}")).EnsureSuccessStatusCode();
+        (await httpClient.DeleteAsync($"categories/{id}")).EnsureSuccessStatusCode();
 }

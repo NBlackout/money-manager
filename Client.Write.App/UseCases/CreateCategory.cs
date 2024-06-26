@@ -1,14 +1,7 @@
 ﻿namespace Client.Write.App.UseCases;
 
-public class CreateCategory
+public class CreateCategory(ICategoryGateway gateway)
 {
-    private readonly ICategoryGateway gateway;
-
-    public CreateCategory(ICategoryGateway gateway)
-    {
-        this.gateway = gateway;
-    }
-
     public async Task Execute(Guid id, string label, string keywords) =>
-        await this.gateway.Create(id, label, keywords);
+        await gateway.Create(id, label, keywords);
 }

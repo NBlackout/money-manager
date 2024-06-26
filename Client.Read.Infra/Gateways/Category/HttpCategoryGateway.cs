@@ -1,14 +1,7 @@
 ﻿namespace Client.Read.Infra.Gateways.Category;
 
-public class HttpCategoryGateway : ICategoryGateway
+public class HttpCategoryGateway(HttpClient httpClient) : ICategoryGateway
 {
-    private readonly HttpClient httpClient;
-
-    public HttpCategoryGateway(HttpClient httpClient)
-    {
-        this.httpClient = httpClient;
-    }
-
     public async Task<CategorySummaryPresentation[]> Summaries() =>
-        (await this.httpClient.GetFromJsonAsync<CategorySummaryPresentation[]>("categories"))!;
+        (await httpClient.GetFromJsonAsync<CategorySummaryPresentation[]>("categories"))!;
 }

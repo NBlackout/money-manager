@@ -1,24 +1,14 @@
 ﻿namespace Write.App.UseCases;
 
-public class ImportBankStatement
+public class ImportBankStatement(
+    IBankRepository bankRepository,
+    IAccountRepository accountRepository,
+    ITransactionRepository transactionRepository,
+    IOfxParser ofxParser)
 {
-    private readonly IBankRepository bankRepository;
-    private readonly IAccountRepository accountRepository;
-    private readonly ITransactionRepository transactionRepository;
-    private readonly IOfxParser ofxParser;
-
-    public ImportBankStatement(IBankRepository bankRepository, IAccountRepository accountRepository,
-        ITransactionRepository transactionRepository, IOfxParser ofxParser)
-    {
-        this.bankRepository = bankRepository;
-        this.accountRepository = accountRepository;
-        this.transactionRepository = transactionRepository;
-        this.ofxParser = ofxParser;
-    }
-
     public async Task Execute(Stream stream)
     {
-        AccountStatement statement = await this.ofxParser.ExtractAccountStatement(stream);
+        AccountStatement statement = await ofxParser.ExtractAccountStatement(stream);
 
         Bank bank = await this.EnsureBankExists(statement);
         Account account = await this.EnsureAccountIsTracked(bank, statement);
@@ -30,11 +20,11 @@ public class ImportBankStatement
 
     private async Task<Bank> EnsureBankExists(AccountStatement statement)
     {
-        Bank? bank = await this.bankRepository.ByExternalIdOrDefault(statement.BankIdentifier);
+        Bank? bank = await bankRepository.ByExternalIdOrDefault(statement.BankIdentifier);
         if (bank != null)
             return bank;
 
-        Guid id = await this.bankRepository.NextIdentity();
+        Guid id = await bankRepository.NextIdentity();
 
         return statement.TrackDescribedBank(id);
     }
@@ -42,11 +32,11 @@ public class ImportBankStatement
     private async Task<Account> EnsureAccountIsTracked(Bank bank, AccountStatement statement)
     {
         ExternalId externalId = new(bank.Id, statement.AccountNumber);
-        Account? account = await this.accountRepository.ByExternalIdOrDefault(externalId);
+        Account? account = await accountRepository.ByExternalIdOrDefault(externalId);
         if (account != null)
             return account;
 
-        Guid id = await this.accountRepository.NextIdentity();
+        Guid id = await accountRepository.NextIdentity();
 
         return bank.TrackAccount(id, statement.AccountNumber, statement.Balance, statement.BalanceDate);
     }
@@ -56,7 +46,7 @@ public class ImportBankStatement
         Dictionary<string, TransactionStatement> transactionStatements =
             statement.Transactions.ToDictionary(t => t.TransactionIdentifier);
         string[] unknownExternalIds =
-            await this.transactionRepository.UnknownExternalIds(transactionStatements.Keys);
+            await transactionRepository.UnknownExternalIds(transactionStatements.Keys);
 
         List<Task<Transaction>> unknownTransactionTasks = unknownExternalIds.Select(unknownExternalId =>
             this.UnknownTransaction(account, transactionStatements[unknownExternalId])).ToList();
@@ -69,16 +59,16 @@ public class ImportBankStatement
 
     private async Task<Transaction> UnknownTransaction(Account account, TransactionStatement statement)
     {
-        Guid id = await this.transactionRepository.NextIdentity();
+        Guid id = await transactionRepository.NextIdentity();
 
         return account.AttachTransaction(id, statement.TransactionIdentifier, statement.Amount, statement.Label, statement.Date);
     }
 
     private async Task Save(Bank bank, Account account, IEnumerable<Transaction> transactions)
     {
-        await this.bankRepository.Save(bank);
-        await this.accountRepository.Save(account);
+        await bankRepository.Save(bank);
+        await accountRepository.Save(account);
         foreach (Transaction transaction in transactions)
-            await this.transactionRepository.Save(transaction);
+            await transactionRepository.Save(transaction);
     }
 }

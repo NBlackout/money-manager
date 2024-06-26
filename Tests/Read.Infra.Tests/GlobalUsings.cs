@@ -1,4 +1,3 @@
-global using Microsoft.Extensions.Hosting;
 global using Read.Api.Extensions;
 global using Read.App.Ports;
 global using Read.TestTooling;
