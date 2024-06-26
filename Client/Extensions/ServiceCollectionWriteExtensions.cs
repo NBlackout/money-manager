@@ -23,6 +23,7 @@ public static class ServiceCollectionWriteExtensions
             .AddScoped<ResumeAccountTracking>()
             .AddScoped<AssignAccountLabel>()
             .AddScoped<CreateCategory>()
+            .AddScoped<DeleteCategory>()
             .AddScoped<AssignTransactionCategory>();
     }
 

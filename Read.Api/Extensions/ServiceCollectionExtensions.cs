@@ -1,7 +1,6 @@
-﻿using Read.Infra.DataSources;
-using Read.Infra.DataSources.AccountDetails;
+﻿using Read.Infra.DataSources.AccountDetails;
 using Read.Infra.DataSources.AccountSummaries;
-using Read.Infra.DataSources.CategoriesWithPattern;
+using Read.Infra.DataSources.CategoriesWithKeywords;
 using Read.Infra.DataSources.CategorySummaries;
 using Read.Infra.DataSources.TransactionsOfMonth;
 using Read.Infra.DataSources.TransactionsToCategorize;
@@ -30,7 +29,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<IAccountDetailsDataSource, RepositoryAccountDetailsDataSource>()
             .AddScoped<ITransactionsOfMonthDataSource, RepositoryTransactionsOfMonthDataSource>()
             .AddScoped<ICategorySummariesDataSource, RepositoryCategorySummariesDataSource>()
-            .AddScoped<ICategoriesWithPatternDataSource, RepositoryCategoriesWithPatternDataSource>()
+            .AddScoped<ICategoriesWithKeywordsDataSource, RepositoryCategoriesWithKeywordsDataSource>()
             .AddScoped<ITransactionsToCategorizeDataSource, RepositoryTransactionsToCategorizeDataSource>();
     }
 }

@@ -9,6 +9,9 @@ public class HttpCategoryGateway : ICategoryGateway
         this.httpClient = httpClient;
     }
 
-    public async Task Create(Guid id, string label, string pattern) =>
-        (await this.httpClient.PostAsJsonAsync("categories", new CategoryDto(id, label, pattern))).EnsureSuccessStatusCode();
+    public async Task Create(Guid id, string label, string keywords) =>
+        (await this.httpClient.PostAsJsonAsync("categories", new CategoryDto(id, label, keywords))).EnsureSuccessStatusCode();
+
+    public async Task Delete(Guid id) =>
+        (await this.httpClient.DeleteAsync($"categories/{id}")).EnsureSuccessStatusCode();
 }

@@ -16,8 +16,18 @@ public class InMemoryCategoryRepository : ICategoryRepository
         return Task.CompletedTask;
     }
 
+    public Task Delete(Guid id)
+    {
+        this.data.Remove(id);
+
+        return Task.CompletedTask;
+    }
+
     public void Feed(params Category[] categories) =>
         categories.ToList().ForEach(category => this.data[category.Id] = category.Snapshot);
+
+    public bool Exists(Guid id) =>
+        this.data.ContainsKey(id);
 
     public void Clear() =>
         this.data.Clear();

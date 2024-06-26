@@ -1,19 +1,18 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Read.Infra.DataSources;
-using Read.Infra.DataSources.CategoriesWithPattern;
+using Read.Infra.DataSources.CategoriesWithKeywords;
 using Write.Infra.Repositories;
 using static Shared.TestTooling.Randomizer;
 
 namespace Read.Infra.Tests.DataSources;
 
-public sealed class RepositoryCategoriesWithPatternDataSourceTests : HostFixture
+public sealed class RepositoryCategoriesWithKeywordsDataSourceTests : HostFixture
 {
-    private readonly RepositoryCategoriesWithPatternDataSource sut;
+    private readonly RepositoryCategoriesWithKeywordsDataSource sut;
     private readonly InMemoryCategoryRepository categoryRepository;
 
-    public RepositoryCategoriesWithPatternDataSourceTests()
+    public RepositoryCategoriesWithKeywordsDataSourceTests()
     {
-        this.sut = this.Resolve<ICategoriesWithPatternDataSource, RepositoryCategoriesWithPatternDataSource>();
+        this.sut = this.Resolve<ICategoriesWithKeywordsDataSource, RepositoryCategoriesWithKeywordsDataSource>();
         this.categoryRepository = this.Resolve<ICategoryRepository, InMemoryCategoryRepository>();
 
         this.categoryRepository.Clear();
@@ -30,19 +29,19 @@ public sealed class RepositoryCategoriesWithPatternDataSourceTests : HostFixture
     }
 
     [Fact]
-    public async Task Should_exclude_ones_without_pattern()
+    public async Task Should_exclude_ones_without_keywords()
     {
         this.Feed(
-            Any<CategoryBuilder>() with { Pattern = "" },
-            Any<CategoryBuilder>() with { Pattern = "   " }
+            Any<CategoryBuilder>() with { Keywords = "" },
+            Any<CategoryBuilder>() with { Keywords = "   " }
         );
         await this.Verify(Array.Empty<CategoryBuilder>());
     }
 
     private async Task Verify(params CategoryBuilder[] expected)
     {
-        CategoryWithPattern[] actual = await this.sut.Get();
-        actual.Should().Equal(expected.Select(c => new CategoryWithPattern(c.Id, c.Label, c.Pattern)));
+        CategoryWithKeywords[] actual = await this.sut.Get();
+        actual.Should().Equal(expected.Select(c => new CategoryWithKeywords(c.Id, c.Label, c.Keywords)));
     }
 
     private void Feed(params CategoryBuilder[] categories) =>

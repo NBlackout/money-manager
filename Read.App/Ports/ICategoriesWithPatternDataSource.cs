@@ -1,8 +1,8 @@
 namespace Read.App.Ports;
 
-public interface ICategoriesWithPatternDataSource
+public interface ICategoriesWithKeywordsDataSource
 {
-    Task<CategoryWithPattern[]> Get();
+    Task<CategoryWithKeywords[]> Get();
 }
 
-public record CategoryWithPattern(Guid Id, string Label, string Pattern);
+public record CategoryWithKeywords(Guid Id, string Label, string Keywords);
