@@ -1,14 +1,7 @@
 ﻿namespace Client.Read.App.UseCases;
 
-public class TransactionsOfMonth
+public class TransactionsOfMonth(IAccountGateway gateway)
 {
-    private readonly IAccountGateway gateway;
-
-    public TransactionsOfMonth(IAccountGateway gateway)
-    {
-        this.gateway = gateway;
-    }
-
     public async Task<TransactionSummaryPresentation[]> Execute(Guid id, int year, int month) =>
-        await this.gateway.TransactionsOfMonth(id, year, month);
+        await gateway.TransactionsOfMonth(id, year, month);
 }

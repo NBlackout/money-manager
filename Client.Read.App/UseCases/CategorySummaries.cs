@@ -1,14 +1,7 @@
 ﻿namespace Client.Read.App.UseCases;
 
-public class CategorySummaries
+public class CategorySummaries(ICategoryGateway gateway)
 {
-    private readonly ICategoryGateway gateway;
-
-    public CategorySummaries(ICategoryGateway gateway)
-    {
-        this.gateway = gateway;
-    }
-
     public async Task<CategorySummaryPresentation[]> Execute() =>
-        await this.gateway.Summaries();
+        await gateway.Summaries();
 }

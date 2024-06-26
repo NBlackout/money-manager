@@ -1,4 +1,4 @@
-namespace Write.Infra.OfxProcessing;
+﻿namespace Write.Infra.Exceptions;
 
 public class CannotProcessOfxContent : Exception
 {

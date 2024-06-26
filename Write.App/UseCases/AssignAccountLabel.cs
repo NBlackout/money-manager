@@ -1,18 +1,11 @@
 ﻿namespace Write.App.UseCases;
 
-public class AssignAccountLabel
+public class AssignAccountLabel(IAccountRepository repository)
 {
-    private readonly IAccountRepository repository;
-
-    public AssignAccountLabel(IAccountRepository repository)
-    {
-        this.repository = repository;
-    }
-
     public async Task Execute(Guid id, string label)
     {
-        Account account = await this.repository.By(id);
+        Account account = await repository.By(id);
         account.AssignLabel(label);
-        await this.repository.Save(account);
+        await repository.Save(account);
     }
 }

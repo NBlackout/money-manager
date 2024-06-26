@@ -1,14 +1,7 @@
 ﻿namespace Client.Read.App.UseCases;
 
-public class CategorizationSuggestions
+public class CategorizationSuggestions(ICategorizationGateway gateway)
 {
-    private readonly ICategorizationGateway gateway;
-
-    public CategorizationSuggestions(ICategorizationGateway gateway)
-    {
-        this.gateway = gateway;
-    }
-
     public async Task<CategorizationSuggestionPresentation[]> Execute() =>
-        await this.gateway.Suggestions();
+        await gateway.Suggestions();
 }

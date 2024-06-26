@@ -2,16 +2,9 @@
 
 [ApiController]
 [Route("api/[controller]")]
-public class CategoriesController : ControllerBase
+public class CategoriesController(CategorySummaries categorySummaries) : ControllerBase
 {
-    private readonly CategorySummaries categorySummaries;
-
-    public CategoriesController(CategorySummaries categorySummaries)
-    {
-        this.categorySummaries = categorySummaries;
-    }
-
     [HttpGet]
     public async Task<CategorySummaryPresentation[]> Summaries() =>
-        await this.categorySummaries.Execute();
+        await categorySummaries.Execute();
 }

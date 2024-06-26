@@ -2,16 +2,9 @@
 
 [ApiController]
 [Route("api/[controller]")]
-public class CategorizationController : ControllerBase
+public class CategorizationController(CategorizationSuggestions categorizationSuggestions) : ControllerBase
 {
-    private readonly CategorizationSuggestions categorizationSuggestions;
-
-    public CategorizationController(CategorizationSuggestions categorizationSuggestions)
-    {
-        this.categorizationSuggestions = categorizationSuggestions;
-    }
-
     [HttpGet]
     public async Task<CategorizationSuggestionPresentation[]> Suggestions() =>
-        await this.categorizationSuggestions.Execute();
+        await categorizationSuggestions.Execute();
 }

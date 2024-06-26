@@ -1,18 +1,11 @@
 ﻿namespace Write.App.UseCases;
 
-public class StopAccountTracking
+public class StopAccountTracking(IAccountRepository repository)
 {
-    private readonly IAccountRepository repository;
-
-    public StopAccountTracking(IAccountRepository repository)
-    {
-        this.repository = repository;
-    }
-
     public async Task Execute(Guid id)
     {
-        Account account = await this.repository.By(id);
+        Account account = await repository.By(id);
         account.StopTracking();
-        await this.repository.Save(account);
+        await repository.Save(account);
     }
 }

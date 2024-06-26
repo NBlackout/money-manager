@@ -1,18 +1,11 @@
 ﻿namespace Write.App.UseCases;
 
-public class AssignTransactionCategory
+public class AssignTransactionCategory(ITransactionRepository repository)
 {
-    private readonly ITransactionRepository repository;
-
-    public AssignTransactionCategory(ITransactionRepository repository)
-    {
-        this.repository = repository;
-    }
-
     public async Task Execute(Guid id, Guid categoryId)
     {
-        Transaction transaction = await this.repository.By(id);
+        Transaction transaction = await repository.By(id);
         transaction.AssignCategory(categoryId);
-        await this.repository.Save(transaction);
+        await repository.Save(transaction);
     }
 }

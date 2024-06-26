@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Xml.Serialization;
+using Write.Infra.Exceptions;
 
 namespace Write.Infra.OfxProcessing;
 
