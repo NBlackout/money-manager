@@ -8,11 +8,13 @@ public partial class Categories : ComponentBase
 
     [Inject] public CategorySummaries CategorySummaries { get; set; } = null!;
     [Inject] public CreateCategory CreateCategory { get; set; } = null!;
-    [SupplyParameterFromForm] public Category? Model { get; set; }
+    [Inject] public DeleteCategory DeleteCategory { get; set; } = null!;
+
+    [SupplyParameterFromForm] public CategoryForm? Category { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        this.Model ??= new Category();
+        this.Category ??= new CategoryForm();
         this.categories = await this.CategorySummaries.Execute();
     }
 
@@ -25,17 +27,23 @@ public partial class Categories : ComponentBase
     private async Task Submit()
     {
         Guid id = Guid.NewGuid();
-        string label = this.Model!.Label!;
-        string pattern = this.Model!.Pattern!;
-        await this.CreateCategory.Execute(id, label, pattern);
+        string label = this.Category!.Label!;
+        string keywords = this.Category!.Keywords!;
+        await this.CreateCategory.Execute(id, label, keywords);
 
-        this.categories = this.categories!.Prepend(new CategorySummaryPresentation(id, label, pattern)).ToArray();
+        this.categories = this.categories!.Prepend(new CategorySummaryPresentation(id, label, keywords)).ToArray();
         this.HideCategoryForm();
     }
 
-    public class Category
+    private async Task Delete(CategorySummaryPresentation category)
     {
-        public string? Label { get; set; }
-        public string? Pattern { get; set; }
+        await this.DeleteCategory.Execute(category.Id);
+        this.categories = this.categories!.Where(c => c != category).ToArray();
     }
+}
+
+public class CategoryForm
+{
+    public string? Label { get; set; }
+    public string? Keywords { get; set; }
 }

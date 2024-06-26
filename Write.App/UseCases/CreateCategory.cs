@@ -9,9 +9,9 @@ public class CreateCategory
         this.repository = repository;
     }
 
-    public async Task Execute(Guid id, string label, string pattern)
+    public async Task Execute(Guid id, string label, string keywords)
     {
-        Category category = new(id, label, pattern);
+        Category category = new(id, label, keywords);
         await this.repository.Save(category);
     }
 }

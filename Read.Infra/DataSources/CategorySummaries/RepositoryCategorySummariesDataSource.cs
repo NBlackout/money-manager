@@ -14,7 +14,7 @@ public class RepositoryCategorySummariesDataSource : ICategorySummariesDataSourc
     public Task<CategorySummaryPresentation[]> Get()
     {
         CategorySummaryPresentation[] presentations =
-            this.repository.Data.Select(c => new CategorySummaryPresentation(c.Id, c.Label, c.Pattern)).ToArray();
+            this.repository.Data.Select(c => new CategorySummaryPresentation(c.Id, c.Label, c.Keywords)).ToArray();
 
         return Task.FromResult(presentations);
     }

@@ -3,9 +3,9 @@
 <button class="btn btn-primary" @onclick="@ShowCategoryForm">Add new category</button>
 <ul class="list-group list-group-flush">
     <li class="list-group-item @(isCreating ? "" : "d-none")">
-        <EditForm Model="Model" OnSubmit="Submit">
-            <InputText @bind-Value="Model!.Label"></InputText>
-            <InputText @bind-Value="Model!.Pattern"></InputText>
+        <EditForm Model="Category" OnSubmit="Submit">
+            <InputText @bind-Value="Category!.Label"></InputText>
+            <InputText @bind-Value="Category!.Keywords"></InputText>
             <button type="submit">Submit</button>
         </EditForm>
     </li>
@@ -13,7 +13,10 @@
     {
         @foreach (CategorySummaryPresentation category in categories)
         {
-            <li class="list-group-item">@category.Label (@category.Pattern)</li>
+            <li class="list-group-item">
+                @category.Label (@category.Keywords)
+                <button class="btn btn-link" @onclick="() => Delete(category)">Delete</button>
+            </li>
         }
     }
 </ul>

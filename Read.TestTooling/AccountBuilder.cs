@@ -1,6 +1,5 @@
 ﻿using Shared.Presentation;
 using Write.App.Model.Accounts;
-using Write.App.Model.Banks;
 
 namespace Read.TestTooling;
 
@@ -24,9 +23,6 @@ public record AccountBuilder(
         return Account.From(new AccountSnapshot(this.Id, this.BankId, this.Number, this.Label, this.Balance,
             this.BalanceDate, this.Tracked));
     }
-
-    public Bank BuildBank() =>
-        Bank.From(new BankSnapshot(this.BankId, this.BankId.ToString("N")));
 
     public AccountSummaryPresentation ToSummary() =>
         new(this.Id, this.BankId, this.Label, this.Number, this.Balance, this.BalanceDate, this.Tracked);

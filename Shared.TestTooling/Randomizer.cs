@@ -14,7 +14,6 @@ public static class Randomizer
     public static Guid Another(Guid? value) => AnythingBut(value);
     public static DateTime Another(DateTime? value) => AnythingBut(value);
     public static DateOnly Another(DateOnly? value) => AnythingBut(value);
-    public static string RandomCase(string value) => string.Join("", value.Select(x => new Random().Next() % 2 > 0 ? char.ToLower(x) : char.ToUpper(x)).ToArray());
 
     private static T AnythingBut<T>(T? _) where T : struct =>
         Any<T>();

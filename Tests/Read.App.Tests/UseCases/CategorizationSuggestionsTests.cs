@@ -1,17 +1,15 @@
 ﻿using Read.App.Ports;
 using Read.App.UseCases;
-using Read.Infra.DataSources;
-using Read.Infra.DataSources.CategoriesWithPattern;
+using Read.Infra.DataSources.CategoriesWithKeywords;
 using Read.Infra.DataSources.TransactionsToCategorize;
 using Shared.Presentation;
 using static Shared.TestTooling.Randomizer;
 
 namespace Read.App.Tests.UseCases;
 
-// TODO Make Category.Pattern nullable
 public class CategorizationSuggestionsTests
 {
-    private readonly StubbedCategoriesWithPatternDataSource categoriesDataSource = new();
+    private readonly StubbedCategoriesWithKeywordsDataSource categoriesDataSource = new();
     private readonly StubbedTransactionsToCategorizeDataSource transactionsToCategorizeDataSource = new();
     private readonly CategorizationSuggestions sut;
 
@@ -23,8 +21,8 @@ public class CategorizationSuggestionsTests
     [Fact]
     public async Task Should_give_suggestion_on_exact_match()
     {
-        CategoryWithPattern insuranceCategory = ACategoryMatching("Insurance");
-        CategoryWithPattern travelCategory = ACategoryMatching("Travel");
+        CategoryWithKeywords insuranceCategory = ACategoryMatching("Insurance");
+        CategoryWithKeywords travelCategory = ACategoryMatching("Travel");
         this.categoriesDataSource.Feed(insuranceCategory, travelCategory);
 
         TransactionToCategorize insuranceTransaction = ATransactionLabeled("Insurance");
@@ -40,7 +38,7 @@ public class CategorizationSuggestionsTests
     [Fact]
     public async Task Should_give_suggestion_on_partial_match()
     {
-        CategoryWithPattern category = ACategoryMatching("taxi");
+        CategoryWithKeywords category = ACategoryMatching("taxi");
         this.categoriesDataSource.Feed(category);
 
         TransactionToCategorize transaction = ATransactionLabeled("A TAXI fare");
@@ -50,9 +48,9 @@ public class CategorizationSuggestionsTests
     }
 
     [Fact]
-    public async Task Should_exclude_transaction_not_matching_any_pattern()
+    public async Task Should_exclude_transaction_not_matching_any_keywords()
     {
-        CategoryWithPattern category = ACategoryMatching("Food");
+        CategoryWithKeywords category = ACategoryMatching("Food");
         this.categoriesDataSource.Feed(category);
 
         TransactionToCategorize transaction = ATransactionLabeled("Electricity bill");
@@ -64,8 +62,8 @@ public class CategorizationSuggestionsTests
     [Fact]
     public async Task Should_exclude_transaction_matching_multiple_categories()
     {
-        CategoryWithPattern fuelCategory = ACategoryMatching("Fuel");
-        CategoryWithPattern cardCategory = ACategoryMatching("Card");
+        CategoryWithKeywords fuelCategory = ACategoryMatching("Fuel");
+        CategoryWithKeywords cardCategory = ACategoryMatching("Card");
         this.categoriesDataSource.Feed(fuelCategory, cardCategory);
 
         TransactionToCategorize transaction = ATransactionLabeled("Fuel payment by card");
@@ -79,12 +77,12 @@ public class CategorizationSuggestionsTests
         actual.Should().Equal(expected);
     }
 
-    private static CategoryWithPattern ACategoryMatching(string pattern) =>
-        Any<CategoryWithPattern>() with { Pattern = pattern };
+    private static CategoryWithKeywords ACategoryMatching(string keywords) =>
+        Any<CategoryWithKeywords>() with { Keywords = keywords };
 
     private static TransactionToCategorize ATransactionLabeled(string label) =>
         Any<TransactionToCategorize>() with { Label = label };
 
-    private static CategorizationSuggestionPresentation HasSuggestion(TransactionToCategorize transaction, CategoryWithPattern category) => 
+    private static CategorizationSuggestionPresentation HasSuggestion(TransactionToCategorize transaction, CategoryWithKeywords category) => 
         new(transaction.Id, transaction.Label, transaction.Amount, category.Id, category.Label);
 }

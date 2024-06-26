@@ -21,17 +21,28 @@ public sealed class HttpCategoryGatewayTests : HostFixture
         services.AddWriteDependencies().AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
     [Theory, RandomData]
-    public async Task Should_create(Guid id, string label, string pattern)
+    public async Task Should_create(Guid id, string label, string keywords)
     {
-        await this.sut.Create(id, label, pattern);
-        this.Verify_Post($"{ApiUrl}/categories", new { Id = id, Label = label, Pattern = pattern });
+        await this.sut.Create(id, label, keywords);
+        this.Verify_Post($"{ApiUrl}/categories", new { Id = id, Label = label, Keywords = keywords });
+    }
+
+    [Theory, RandomData]
+    public async Task Should_delete(Guid id)
+    {
+        await this.sut.Delete(id);
+        this.Verify_Delete($"{ApiUrl}/categories/{id}");
     }
 
     private void Verify_Post(string url, object payload)
     {
         JsonSerializerOptions jsonSerializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-        this.httpMessageHandler.Calls.Should().Equal((url, JsonSerializer.Serialize(payload, jsonSerializerOptions)));
+        this.httpMessageHandler.Calls.Should()
+            .Equal((HttpMethod.Post, url, JsonSerializer.Serialize(payload, jsonSerializerOptions)));
     }
+
+    private void Verify_Delete(string url) => 
+        this.httpMessageHandler.Calls.Should().Equal((HttpMethod.Delete, url, string.Empty));
 
     private static HttpClient CreateHttpClient(HttpMessageHandler httpResponseMessage) =>
         new(httpResponseMessage) { BaseAddress = new Uri(ApiUrl) };
