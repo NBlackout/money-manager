@@ -40,10 +40,10 @@ public partial class Categories : ComponentBase
         await this.DeleteCategory.Execute(category.Id);
         this.categories = this.categories!.Where(c => c != category).ToArray();
     }
-}
 
-public class CategoryForm
-{
-    public string? Label { get; set; }
-    public string? Keywords { get; set; }
+    public class CategoryForm
+    {
+        public string? Label { get; set; }
+        public string? Keywords { get; set; }
+    }
 }
