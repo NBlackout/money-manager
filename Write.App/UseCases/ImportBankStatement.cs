@@ -4,11 +4,11 @@ public class ImportBankStatement(
     IBankRepository bankRepository,
     IAccountRepository accountRepository,
     ITransactionRepository transactionRepository,
-    IOfxParser ofxParser)
+    IBankStatementParser bankStatementParser)
 {
     public async Task Execute(Stream stream)
     {
-        AccountStatement statement = await ofxParser.ExtractAccountStatement(stream);
+        AccountStatement statement = await bankStatementParser.ExtractAccountStatement(stream);
 
         Bank bank = await this.EnsureBankExists(statement);
         Account account = await this.EnsureAccountIsTracked(bank, statement);

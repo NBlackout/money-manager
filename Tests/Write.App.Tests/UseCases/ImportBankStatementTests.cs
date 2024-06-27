@@ -1,4 +1,4 @@
-﻿using Write.Infra.OfxProcessing;
+﻿using Write.Infra.BankStatementParsing;
 using static Shared.TestTooling.Randomizer;
 using static Write.App.Tests.UseCases.ImportBankStatementTests.Data;
 
@@ -9,7 +9,7 @@ public class ImportBankStatementTests
     private readonly InMemoryBankRepository bankRepository = new();
     private readonly InMemoryAccountRepository accountRepository = new();
     private readonly InMemoryTransactionRepository transactionRepository = new();
-    private readonly StubbedOfxParser ofxParser = new();
+    private readonly StubbedBankStatementParser bankStatementParser = new();
     private readonly ImportBankStatement sut;
 
     private Guid[] nextIds = [];
@@ -18,7 +18,7 @@ public class ImportBankStatementTests
     public ImportBankStatementTests()
     {
         this.sut = new ImportBankStatement(this.bankRepository, this.accountRepository, this.transactionRepository,
-            this.ofxParser);
+            this.bankStatementParser);
     }
 
     [Fact]
@@ -36,7 +36,7 @@ public class ImportBankStatementTests
         this.accountRepository.NextId = () => account.Id;
         this.nextIds = [aTransaction.Id, anotherTransaction.Id];
         this.transactionRepository.NextId = () => this.nextIds[this.nextIdIndex++];
-        this.ofxParser.SetAccountStatementFor(TheStream,
+        this.bankStatementParser.SetAccountStatementFor(TheStream,
             AccountStatementFrom(bank, account, aTransaction, anotherTransaction));
 
         await this.Verify(TheStream, bank, account, aTransaction, anotherTransaction);
@@ -57,7 +57,7 @@ public class ImportBankStatementTests
         this.accountRepository.NextId = () => account.Id;
         this.nextIds = [aTransaction.Id, anotherTransaction.Id];
         this.transactionRepository.NextId = () => this.nextIds[this.nextIdIndex++];
-        this.ofxParser.SetAccountStatementFor(TheStream,
+        this.bankStatementParser.SetAccountStatementFor(TheStream,
             AccountStatementFrom(bank, account, aTransaction, anotherTransaction));
 
         await this.Verify(TheStream, bank, account, aTransaction, anotherTransaction);
@@ -76,7 +76,7 @@ public class ImportBankStatementTests
         this.FeedByExternalId(bank);
         this.FeedByExternalId(existing);
         AccountStatement accountStatement = AccountStatementFrom(bank, expected);
-        this.ofxParser.SetAccountStatementFor(TheStream, accountStatement);
+        this.bankStatementParser.SetAccountStatementFor(TheStream, accountStatement);
 
         await this.Verify(TheStream, bank, expected);
     }
@@ -93,7 +93,7 @@ public class ImportBankStatementTests
 
         this.FeedByExternalId(bank);
         this.FeedByExternalId(account);
-        this.ofxParser.SetAccountStatementFor(TheStream, statement);
+        this.bankStatementParser.SetAccountStatementFor(TheStream, statement);
 
         await this.Verify(TheStream, bank, account);
     }

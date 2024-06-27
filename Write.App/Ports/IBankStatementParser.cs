@@ -1,6 +1,6 @@
 ﻿namespace Write.App.Ports;
 
-public interface IOfxParser
+public interface IBankStatementParser
 {
     Task<AccountStatement> ExtractAccountStatement(Stream stream);
 }

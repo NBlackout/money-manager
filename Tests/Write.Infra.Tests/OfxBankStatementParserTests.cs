@@ -1,17 +1,17 @@
 using Microsoft.Extensions.DependencyInjection;
+using Write.Infra.BankStatementParsing;
 using Write.Infra.Exceptions;
-using Write.Infra.OfxProcessing;
 using static Shared.TestTooling.Resources.Resources;
 
 namespace Write.Infra.Tests;
 
-public sealed class OfxParserTests : HostFixture
+public sealed class OfxBankStatementParserTests : HostFixture
 {
-    private readonly OfxParser sut;
+    private readonly OfxBankStatementParser sut;
 
-    public OfxParserTests()
+    public OfxBankStatementParserTests()
     {
-        this.sut = this.Resolve<IOfxParser, OfxParser>();
+        this.sut = this.Resolve<OfxBankStatementParser>();
     }
 
     protected override void Configure(IServiceCollection services) =>
