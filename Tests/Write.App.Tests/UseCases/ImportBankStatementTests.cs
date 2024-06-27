@@ -36,10 +36,9 @@ public class ImportBankStatementTests
         this.accountRepository.NextId = () => account.Id;
         this.nextIds = [aTransaction.Id, anotherTransaction.Id];
         this.transactionRepository.NextId = () => this.nextIds[this.nextIdIndex++];
-        this.bankStatementParser.SetAccountStatementFor(TheStream,
-            AccountStatementFrom(bank, account, aTransaction, anotherTransaction));
+        this.SetAccountStatement(AccountStatementFrom(bank, account, aTransaction, anotherTransaction));
 
-        await this.Verify(TheStream, bank, account, aTransaction, anotherTransaction);
+        await this.Verify(bank, account, aTransaction, anotherTransaction);
     }
 
     [Fact]
@@ -57,10 +56,9 @@ public class ImportBankStatementTests
         this.accountRepository.NextId = () => account.Id;
         this.nextIds = [aTransaction.Id, anotherTransaction.Id];
         this.transactionRepository.NextId = () => this.nextIds[this.nextIdIndex++];
-        this.bankStatementParser.SetAccountStatementFor(TheStream,
-            AccountStatementFrom(bank, account, aTransaction, anotherTransaction));
+        this.SetAccountStatement(AccountStatementFrom(bank, account, aTransaction, anotherTransaction));
 
-        await this.Verify(TheStream, bank, account, aTransaction, anotherTransaction);
+        await this.Verify(bank, account, aTransaction, anotherTransaction);
     }
 
     [Fact]
@@ -75,10 +73,9 @@ public class ImportBankStatementTests
 
         this.FeedByExternalId(bank);
         this.FeedByExternalId(existing);
-        AccountStatement accountStatement = AccountStatementFrom(bank, expected);
-        this.bankStatementParser.SetAccountStatementFor(TheStream, accountStatement);
+        this.SetAccountStatement(AccountStatementFrom(bank, expected));
 
-        await this.Verify(TheStream, bank, expected);
+        await this.Verify(bank, expected);
     }
 
     [Fact]
@@ -93,15 +90,15 @@ public class ImportBankStatementTests
 
         this.FeedByExternalId(bank);
         this.FeedByExternalId(account);
-        this.bankStatementParser.SetAccountStatementFor(TheStream, statement);
+        this.SetAccountStatement(statement);
 
-        await this.Verify(TheStream, bank, account);
+        await this.Verify(bank, account);
     }
 
-    private async Task Verify(Stream stream, BankBuilder expectedBank,
+    private async Task Verify(BankBuilder expectedBank,
         AccountBuilder expectedAccount, params TransactionBuilder[] expectedTransactions)
     {
-        await this.sut.Execute(stream);
+        await this.sut.Execute(TheFileName, TheStream);
 
         Bank actualBank = await this.bankRepository.By(expectedBank.Id);
         actualBank.Snapshot.Should().Be(expectedBank.ToSnapshot());
@@ -122,8 +119,12 @@ public class ImportBankStatementTests
     private void FeedByExternalId(AccountBuilder account) =>
         this.accountRepository.FeedByExternalId(new ExternalId(account.BankId, account.Number), account.Build());
 
+    private void SetAccountStatement(AccountStatement statement) =>
+        this.bankStatementParser.SetAccountStatementFor(TheFileName, TheStream, statement);
+
     internal static class Data
     {
+        public static readonly string TheFileName = "the filename";
         public static readonly MemoryStream TheStream = new([0xF0, 0x42]);
 
         public static TransactionBuilder ATransaction(Guid id, Guid accountId)
