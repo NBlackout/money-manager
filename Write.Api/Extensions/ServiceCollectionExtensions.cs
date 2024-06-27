@@ -25,7 +25,8 @@ public static class ServiceCollectionExtensions
         return services
             .AddRepositories()
             .AddScoped<IBankStatementParser, BankStatementParser>()
-            .AddScoped<OfxBankStatementParser>();
+            .AddScoped<OfxBankStatementParser>()
+            .AddScoped<CsvBankStatementParser>();
     }
 
     private static IServiceCollection AddRepositories(this IServiceCollection services)

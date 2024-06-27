@@ -6,9 +6,9 @@ public class ImportBankStatement(
     ITransactionRepository transactionRepository,
     IBankStatementParser bankStatementParser)
 {
-    public async Task Execute(Stream stream)
+    public async Task Execute(string fileName, Stream stream)
     {
-        AccountStatement statement = await bankStatementParser.ExtractAccountStatement(stream);
+        AccountStatement statement = await bankStatementParser.ExtractAccountStatement(fileName, stream);
 
         Bank bank = await this.EnsureBankExists(statement);
         Account account = await this.EnsureAccountIsTracked(bank, statement);

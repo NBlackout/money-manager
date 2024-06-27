@@ -13,7 +13,7 @@ public class AccountsController(
     public async Task Upload([FromForm] IFormFile file)
     {
         await using Stream stream = file.OpenReadStream();
-        await importBankStatement.Execute(stream);
+        await importBankStatement.Execute(file.FileName, stream);
     }
 
     [HttpPut]
