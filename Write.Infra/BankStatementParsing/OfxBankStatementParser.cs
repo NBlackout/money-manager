@@ -3,12 +3,12 @@ using System.Globalization;
 using System.Xml.Serialization;
 using Write.Infra.Exceptions;
 
-namespace Write.Infra.OfxProcessing;
+namespace Write.Infra.BankStatementParsing;
 
 [SuppressMessage("ReSharper", "StringLiteralTypo")]
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global")]
-public class OfxParser : IOfxParser
+public class OfxBankStatementParser
 {
     public Task<AccountStatement> ExtractAccountStatement(Stream stream)
     {
@@ -79,4 +79,8 @@ public class OfxParser : IOfxParser
         public decimal Amount => decimal.Parse(this.RawAmount, CultureInfo.CreateSpecificCulture("fr-FR"));
         public DateTime Date => DateTime.ParseExact(this.RawDate, "yyyyMMdd", null);
     }
+}
+
+public interface IBankToto
+{
 }

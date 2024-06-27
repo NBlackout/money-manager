@@ -1,5 +1,5 @@
 ﻿using Write.App.Model.Categories;
-using Write.Infra.OfxProcessing;
+using Write.Infra.BankStatementParsing;
 
 namespace Write.Api.Extensions;
 
@@ -20,8 +20,13 @@ public static class ServiceCollectionExtensions
             .AddScoped<DeleteCategory>();
     }
 
-    private static IServiceCollection AddInfrastructureAdapters(this IServiceCollection services) =>
-        services.AddRepositories().AddScoped<IOfxParser, OfxParser>();
+    private static IServiceCollection AddInfrastructureAdapters(this IServiceCollection services)
+    {
+        return services
+            .AddRepositories()
+            .AddScoped<IBankStatementParser, BankStatementParser>()
+            .AddScoped<OfxBankStatementParser>();
+    }
 
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {

@@ -1,6 +1,6 @@
-﻿namespace Write.Infra.OfxProcessing;
+﻿namespace Write.Infra.BankStatementParsing;
 
-public class StubbedOfxParser : IOfxParser
+public class StubbedBankStatementParser : IBankStatementParser
 {
     private readonly Dictionary<Stream, AccountStatement> results = new();
 
