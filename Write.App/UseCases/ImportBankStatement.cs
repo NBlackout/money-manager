@@ -1,7 +1,6 @@
 ﻿namespace Write.App.UseCases;
 
 public class ImportBankStatement(
-    IBankRepository bankRepository,
     IAccountRepository accountRepository,
     ICategoryRepository categoryRepository,
     ITransactionRepository transactionRepository,
@@ -11,35 +10,22 @@ public class ImportBankStatement(
     {
         AccountStatement statement = await bankStatementParser.Extract(fileName, stream);
 
-        Bank bank = await this.EnsureBankExists(statement);
-        Account account = await this.EnsureAccountExists(bank, statement);
+        Account account = await this.EnsureAccountExists(statement);
         account.Synchronize(statement.Balance, statement.BalanceDate);
         (Category[] categories, Transaction[] transactions) = await this.NewTransactions(account, statement);
 
-        await this.Save(bank, account, categories, transactions);
+        await this.Save(account, categories, transactions);
     }
 
-    private async Task<Bank> EnsureBankExists(AccountStatement statement)
+    private async Task<Account> EnsureAccountExists(AccountStatement statement)
     {
-        Bank? bank = await bankRepository.ByExternalIdOrDefault(statement.BankIdentifier);
-        if (bank != null)
-            return bank;
-
-        Guid id = await bankRepository.NextIdentity();
-
-        return statement.TrackDescribedBank(id);
-    }
-
-    private async Task<Account> EnsureAccountExists(Bank bank, AccountStatement statement)
-    {
-        ExternalId externalId = new(bank.Id, statement.AccountNumber);
-        Account? account = await accountRepository.ByExternalIdOrDefault(externalId);
+        Account? account = await accountRepository.ByOrDefault(statement.AccountNumber);
         if (account != null)
             return account;
 
         Guid id = await accountRepository.NextIdentity();
 
-        return bank.TrackAccount(id, statement.AccountNumber, statement.Balance, statement.BalanceDate);
+        return Account.StartTracking(id, statement.AccountNumber, statement.Balance, statement.BalanceDate);
     }
 
     private async Task<(Category[], Transaction[])> NewTransactions(Account account, AccountStatement statement)
@@ -55,15 +41,16 @@ public class ImportBankStatement(
             {
                 newTransactions.Add(account.AttachTransaction(id, newTransactionStatement.TransactionIdentifier,
                     newTransactionStatement.Amount, newTransactionStatement.Label, newTransactionStatement.Date, null));
-                
+
                 continue;
             }
 
             if (newCategories.ContainsKey(newTransactionStatement.Category))
             {
                 newTransactions.Add(account.AttachTransaction(id, newTransactionStatement.TransactionIdentifier,
-                    newTransactionStatement.Amount, newTransactionStatement.Label, newTransactionStatement.Date, newCategories[newTransactionStatement.Category]));
-                
+                    newTransactionStatement.Amount, newTransactionStatement.Label, newTransactionStatement.Date,
+                    newCategories[newTransactionStatement.Category]));
+
                 continue;
             }
 
@@ -92,9 +79,8 @@ public class ImportBankStatement(
         return statement.Transactions.Where(t => unknownExternalIds.Contains(t.TransactionIdentifier)).ToArray();
     }
 
-    private async Task Save(Bank bank, Account account, Category[] categories, Transaction[] transactions)
+    private async Task Save(Account account, Category[] categories, Transaction[] transactions)
     {
-        await bankRepository.Save(bank);
         await accountRepository.Save(account);
         foreach (Category category in categories)
             await categoryRepository.Save(category);

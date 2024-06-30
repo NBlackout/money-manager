@@ -2,30 +2,19 @@
 
 namespace Read.Infra.DataSources.AccountSummaries;
 
-public class RepositoryAccountSummariesDataSource : IAccountSummariesDataSource
+public class RepositoryAccountSummariesDataSource(InMemoryAccountRepository accountRepository)
+    : IAccountSummariesDataSource
 {
-    private readonly InMemoryBankRepository bankRepository;
-    private readonly InMemoryAccountRepository accountRepository;
-
-    public RepositoryAccountSummariesDataSource(InMemoryBankRepository bankRepository,
-        InMemoryAccountRepository accountRepository)
-    {
-        this.bankRepository = bankRepository;
-        this.accountRepository = accountRepository;
-    }
-
     public Task<AccountSummaryPresentation[]> Get()
     {
-        AccountSummaryPresentation[] summaries = this.accountRepository.Data
-            .Select(account => ToSummary(this.bankRepository.Data.Single(b => b.Id == account.BankId), account))
-            .ToArray();
+        AccountSummaryPresentation[] summaries = accountRepository.Data.Select(ToSummary).ToArray();
 
         return Task.FromResult(summaries);
     }
 
-    private static AccountSummaryPresentation ToSummary(BankSnapshot bank, AccountSnapshot account)
+    private static AccountSummaryPresentation ToSummary(AccountSnapshot account)
     {
-        return new AccountSummaryPresentation(account.Id, bank.Id, account.Label, account.Number,
+        return new AccountSummaryPresentation(account.Id, account.Label, account.Number,
             account.Balance, account.BalanceDate);
     }
 }
