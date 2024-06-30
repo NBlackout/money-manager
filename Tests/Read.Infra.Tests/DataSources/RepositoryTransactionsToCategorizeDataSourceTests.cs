@@ -14,8 +14,6 @@ public sealed class RepositoryTransactionsToCategorizeDataSourceTests : HostFixt
     {
         this.sut = this.Resolve<ITransactionsToCategorizeDataSource, RepositoryTransactionsToCategorizeDataSource>();
         this.categoryRepository = this.Resolve<ITransactionRepository, InMemoryTransactionRepository>();
-
-        this.categoryRepository.Clear();
     }
 
     protected override void Configure(IServiceCollection services) =>
@@ -45,9 +43,9 @@ public sealed class RepositoryTransactionsToCategorizeDataSourceTests : HostFixt
     private void Feed(params TransactionBuilder[] categories) =>
         this.categoryRepository.Feed(categories.Select(c => c.Build()).ToArray());
 
-    private static TransactionBuilder ATransactionWithoutCategory() => 
+    private static TransactionBuilder ATransactionWithoutCategory() =>
         Any<TransactionBuilder>() with { Category = null };
 
-    private static TransactionBuilder ATransactionWithCategory() => 
+    private static TransactionBuilder ATransactionWithCategory() =>
         Any<TransactionBuilder>() with { Category = Any<CategoryBuilder>() };
 }

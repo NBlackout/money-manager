@@ -32,7 +32,4 @@ public class InMemoryTransactionRepository : ITransactionRepository
 
     public void Feed(params Transaction[] transactions) =>
         transactions.ToList().ForEach(transaction => this.Save(transaction));
-
-    public void Clear() =>
-        this.data.Clear();
 }
