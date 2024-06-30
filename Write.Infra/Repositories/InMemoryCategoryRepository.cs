@@ -5,9 +5,16 @@ public class InMemoryCategoryRepository : ICategoryRepository
     private readonly Dictionary<Guid, CategorySnapshot> data = new();
 
     public IEnumerable<CategorySnapshot> Data => this.data.Values.Select(c => c);
+    public Func<Guid> NextId { get; set; } = null!;
 
+    public Task<Guid> NextIdentity() =>
+        Task.FromResult(this.NextId());
+    
     public Task<Category> By(Guid id) =>
         Task.FromResult(Category.From(this.data[id]));
+
+    public Task<Category> By(string label) => 
+        Task.FromResult(Category.From(this.data.Single(a => a.Value.Label == label).Value));
 
     public Task Save(Category category)
     {

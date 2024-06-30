@@ -7,6 +7,6 @@ public record CategoryBuilder(Guid Id, string Label, string Keywords)
     public Category Build() =>
         Category.From(this.ToSnapshot());
 
-    private CategorySnapshot ToSnapshot() =>
+    public CategorySnapshot ToSnapshot() =>
         new(this.Id, this.Label, this.Keywords);
 }
