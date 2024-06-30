@@ -25,40 +25,14 @@
 
         HighchartsRenderer renderer = new(new Highcharts
         {
-            Title = new Title
-            {
-                Text = "Area chart with negative values"
-            },
-            XAxis =
-            [
-                new()
-                {
-                    Categories = ["Apples", "Oranges", "Pears", "Grapes", "Bananas"]
-                }
-            ],
-            Credits = new Credits
-            {
-                Enabled = false
-            },
+            Title = new Title { Text = "Area chart with negative values" },
+            XAxis = [new XAxis { Categories = ["Apples", "Oranges", "Pears", "Grapes", "Bananas"] }],
+            Credits = new Credits { Enabled = false },
             Series =
             [
-                new AreaSeries
-                {
-                    Name = "John",
-                    Data = johnData
-                },
-
-                new AreaSeries
-                {
-                    Name = "Jane",
-                    Data = janeData
-                },
-
-                new AreaSeries
-                {
-                    Name = "Joe",
-                    Data = joeData
-                }
+                new AreaSeries { Name = "John", Data = johnData },
+                new AreaSeries { Name = "Jane", Data = janeData },
+                new AreaSeries { Name = "Joe", Data = joeData }
             ]
         });
 

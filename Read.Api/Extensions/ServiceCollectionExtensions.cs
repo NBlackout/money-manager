@@ -1,5 +1,6 @@
 ﻿using Read.Infra.DataSources.AccountDetails;
 using Read.Infra.DataSources.AccountSummaries;
+using Read.Infra.DataSources.BudgetSummaries;
 using Read.Infra.DataSources.CategoriesWithKeywords;
 using Read.Infra.DataSources.CategorySummaries;
 using Read.Infra.DataSources.TransactionsOfMonth;
@@ -19,7 +20,8 @@ public static class ServiceCollectionExtensions
             .AddScoped<AccountDetails>()
             .AddScoped<TransactionsOfMonth>()
             .AddScoped<CategorySummaries>()
-            .AddScoped<CategorizationSuggestions>();
+            .AddScoped<CategorizationSuggestions>()
+            .AddScoped<BudgetSummaries>();
     }
 
     private static IServiceCollection AddInfrastructureAdapters(this IServiceCollection services)
@@ -30,6 +32,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<ITransactionsOfMonthDataSource, RepositoryTransactionsOfMonthDataSource>()
             .AddScoped<ICategorySummariesDataSource, RepositoryCategorySummariesDataSource>()
             .AddScoped<ICategoriesWithKeywordsDataSource, RepositoryCategoriesWithKeywordsDataSource>()
-            .AddScoped<ITransactionsToCategorizeDataSource, RepositoryTransactionsToCategorizeDataSource>();
+            .AddScoped<ITransactionsToCategorizeDataSource, RepositoryTransactionsToCategorizeDataSource>()
+            .AddScoped<IBudgetSummariesDataSource, RepositoryBudgetSummariesDataSource>();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Client.Write.App.Ports;
 using Client.Write.Infra.Gateways.Account;
 using Client.Write.Infra.Gateways.BankStatement;
+using Client.Write.Infra.Gateways.Budget;
 using Client.Write.Infra.Gateways.Category;
 using Client.Write.Infra.Gateways.Transaction;
 
@@ -24,7 +25,8 @@ public static class ServiceCollectionWriteExtensions
             .AddScoped<AssignAccountLabel>()
             .AddScoped<CreateCategory>()
             .AddScoped<DeleteCategory>()
-            .AddScoped<AssignTransactionCategory>();
+            .AddScoped<AssignTransactionCategory>()
+            .AddScoped<DefineBudget>();
     }
 
     private static IServiceCollection AddGateways(this IServiceCollection services)
@@ -33,6 +35,7 @@ public static class ServiceCollectionWriteExtensions
             .AddScoped<IBankStatementGateway, HttpBankStatementGateway>()
             .AddScoped<IAccountGateway, HttpAccountGateway>()
             .AddScoped<ICategoryGateway, HttpCategoryGateway>()
-            .AddScoped<ITransactionGateway, HttpTransactionGateway>();
+            .AddScoped<ITransactionGateway, HttpTransactionGateway>()
+            .AddScoped<IBudgetGateway, HttpBudgetGateway>();
     }
 }

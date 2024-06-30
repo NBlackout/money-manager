@@ -1,11 +1,6 @@
 ﻿namespace Write.App.Model;
 
-public abstract class DomainEntity
+public abstract class DomainEntity(Guid id)
 {
-    public Guid Id { get; }
-
-    protected DomainEntity(Guid id)
-    {
-        this.Id = id;
-    }
+    public Guid Id { get; } = id;
 }

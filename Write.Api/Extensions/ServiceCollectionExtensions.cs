@@ -14,7 +14,8 @@ public static class ServiceCollectionExtensions
             .AddScoped<AssignAccountLabel>()
             .AddScoped<AssignTransactionCategory>()
             .AddScoped<CreateCategory>()
-            .AddScoped<DeleteCategory>();
+            .AddScoped<DeleteCategory>()
+            .AddScoped<DefineBudget>();
     }
 
     private static IServiceCollection AddInfrastructureAdapters(this IServiceCollection services)
@@ -31,6 +32,7 @@ public static class ServiceCollectionExtensions
         InMemoryAccountRepository accountRepository = new() { NextId = Guid.NewGuid };
         InMemoryCategoryRepository categoryRepository = new() { NextId = Guid.NewGuid };
         InMemoryTransactionRepository transactionRepository = new() { NextId = Guid.NewGuid };
+        InMemoryBudgetRepository budgetRepository = new();
 
         return services
             .AddSingleton<IAccountRepository>(accountRepository)
@@ -38,6 +40,8 @@ public static class ServiceCollectionExtensions
             .AddSingleton<ITransactionRepository>(transactionRepository)
             .AddSingleton(transactionRepository)
             .AddSingleton<ICategoryRepository>(categoryRepository)
-            .AddSingleton(categoryRepository);
+            .AddSingleton(categoryRepository)
+            .AddSingleton<IBudgetRepository>(budgetRepository)
+            .AddSingleton(budgetRepository);
     }
 }
