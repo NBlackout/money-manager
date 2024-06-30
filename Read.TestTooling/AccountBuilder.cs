@@ -9,23 +9,14 @@ public record AccountBuilder(
     string Label,
     string Number,
     decimal Balance,
-    DateTime BalanceDate,
-    bool Tracked)
+    DateTime BalanceDate)
 {
-    public static AccountBuilder Create()
-    {
-        return new AccountBuilder(Guid.NewGuid(), Guid.Parse("04150905-B6AD-4D9F-AB2B-191AB9B11A9D"), "Account label",
-            "6793254", 12.34m, DateTime.Parse("2020-04-12"), true);
-    }
-
-    public Account Build()
-    {
-        return Account.From(new AccountSnapshot(this.Id, this.BankId, this.Number, this.Label, this.Balance,
-            this.BalanceDate, this.Tracked));
-    }
+    public Account Build() =>
+        Account.From(new AccountSnapshot(this.Id, this.BankId, this.Number, this.Label, this.Balance,
+            this.BalanceDate));
 
     public AccountSummaryPresentation ToSummary() =>
-        new(this.Id, this.BankId, this.Label, this.Number, this.Balance, this.BalanceDate, this.Tracked);
+        new(this.Id, this.BankId, this.Label, this.Number, this.Balance, this.BalanceDate);
 
     public AccountDetailsPresentation ToDetails() =>
         new(this.Id, this.Label, this.Number, this.Balance, this.BalanceDate);

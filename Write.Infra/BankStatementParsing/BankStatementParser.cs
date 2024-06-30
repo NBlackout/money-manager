@@ -5,7 +5,7 @@ public class BankStatementParser(
     CsvBankStatementParser csvBankStatementParser)
     : IBankStatementParser
 {
-    public Task<AccountStatement> ExtractAccountStatement(string fileName, Stream stream)
+    public Task<AccountStatement> Extract(string fileName, Stream stream)
     {
         return Path.GetExtension(fileName) switch
         {

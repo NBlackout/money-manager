@@ -11,18 +11,6 @@ public record TransactionBuilder(
     DateTime Date,
     CategoryBuilder? Category)
 {
-    public static TransactionBuilder Create()
-    {
-        return new TransactionBuilder(
-            Guid.NewGuid(),
-            Guid.Parse("D5611488-65FE-469E-BA46-32D4E0730C08"),
-            1234.56m,
-            "Label",
-            DateTime.Parse("2021-06-01"),
-            CategoryBuilder.Create()
-        );
-    }
-
     public Transaction Build()
     {
         return Transaction.From(
