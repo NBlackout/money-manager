@@ -1,0 +1,21 @@
+@page "/budgets"
+
+<button class="btn btn-primary" @onclick="@ShowBudgetForm">Add new budget</button>
+<ul class="list-group list-group-flush">
+    <li class="list-group-item @(isCreating ? "" : "d-none")">
+        <EditForm Model="Budget" OnSubmit="Submit">
+            <InputText @bind-Value="Budget!.Label"></InputText>
+            <InputNumber @bind-Value="Budget!.Amount"></InputNumber>
+            <button type="submit">Submit</button>
+        </EditForm>
+    </li>
+    @if (budgets != null)
+    {
+        @foreach (BudgetSummaryPresentation budget in budgets)
+        {
+            <li class="list-group-item">
+                @budget.Name (@budget.Amount)
+            </li>
+        }
+    }
+</ul>

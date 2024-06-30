@@ -1,5 +1,6 @@
 ﻿using Client.Read.App.Ports;
 using Client.Read.Infra.Gateways.Account;
+using Client.Read.Infra.Gateways.Budget;
 using Client.Read.Infra.Gateways.Categorization;
 using Client.Read.Infra.Gateways.Category;
 
@@ -21,7 +22,8 @@ public static class ServiceCollectionReadExtensions
             .AddScoped<AccountDetails>()
             .AddScoped<TransactionsOfMonth>()
             .AddScoped<CategorySummaries>()
-            .AddScoped<CategorizationSuggestions>();
+            .AddScoped<CategorizationSuggestions>()
+            .AddScoped<BudgetSummaries>();
     }
 
     private static IServiceCollection AddGateways(this IServiceCollection services)
@@ -29,6 +31,7 @@ public static class ServiceCollectionReadExtensions
         return services
             .AddScoped<IAccountGateway, HttpAccountGateway>()
             .AddScoped<ICategoryGateway, HttpCategoryGateway>()
-            .AddScoped<ICategorizationGateway, HttpCategorizationGateway>();
+            .AddScoped<ICategorizationGateway, HttpCategorizationGateway>()
+            .AddScoped<IBudgetGateway, HttpBudgetGateway>();
     }
 }

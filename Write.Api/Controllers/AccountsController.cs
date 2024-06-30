@@ -2,9 +2,7 @@
 
 [ApiController]
 [Route("api/[controller]")]
-public class AccountsController(
-    ImportBankStatement importBankStatement,
-    AssignAccountLabel assignAccountLabel)
+public class AccountsController(ImportBankStatement importBankStatement, AssignAccountLabel assignAccountLabel)
     : ControllerBase
 {
     [HttpPost]
