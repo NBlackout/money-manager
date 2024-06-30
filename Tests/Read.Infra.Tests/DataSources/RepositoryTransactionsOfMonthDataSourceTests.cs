@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Read.Infra.DataSources.TransactionsOfMonth;
 using Write.Infra.Repositories;
+using static Shared.TestTooling.Randomizer;
 
 namespace Read.Infra.Tests.DataSources;
 
@@ -28,7 +29,7 @@ public sealed class RepositoryTransactionsOfMonthDataSourceTests : HostFixture
     {
         TransactionBuilder transactionBefore = SomeTransaction(accountId, DateTime.Parse("2023-03-31"));
         TransactionBuilder aTransactionThisMonth =
-            SomeTransaction(accountId, DateTime.Parse("2023-04-03"), Randomizer.Any<CategoryBuilder>());
+            SomeTransaction(accountId, DateTime.Parse("2023-04-03"), Any<CategoryBuilder>());
         TransactionBuilder anotherTransactionThisMonth = SomeTransaction(accountId, DateTime.Parse("2023-04-16"));
         TransactionBuilder transactionAfter = SomeTransaction(accountId, DateTime.Parse("2023-05-01"));
         TransactionBuilder transactionOfAnotherAccount =
@@ -53,5 +54,5 @@ public sealed class RepositoryTransactionsOfMonthDataSourceTests : HostFixture
 
     private static TransactionBuilder
         SomeTransaction(Guid accountId, DateTime date, CategoryBuilder? category = null) =>
-        TransactionBuilder.Create() with { AccountId = accountId, Date = date, Category = category };
+        Any<TransactionBuilder>() with { AccountId = accountId, Date = date, Category = category };
 }

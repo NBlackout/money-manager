@@ -8,7 +8,7 @@ public class ImportBankStatement(
 {
     public async Task Execute(string fileName, Stream stream)
     {
-        AccountStatement statement = await bankStatementParser.ExtractAccountStatement(fileName, stream);
+        AccountStatement statement = await bankStatementParser.Extract(fileName, stream);
 
         Bank bank = await this.EnsureBankExists(statement);
         Account account = await this.EnsureAccountIsTracked(bank, statement);

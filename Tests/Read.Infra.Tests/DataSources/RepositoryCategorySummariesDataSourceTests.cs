@@ -21,7 +21,7 @@ public sealed class RepositoryCategorySummariesDataSourceTests : HostFixture
         services.AddWriteDependencies().AddReadDependencies();
 
     [Theory, RandomData]
-    public async Task Should_retrieve_tracked_category_summaries(CategoryBuilder[] expected)
+    public async Task Should_retrieve_categories(CategoryBuilder[] expected)
     {
         this.categoryRepository.Feed(expected.Select(c => c.Build()).ToArray());
         CategorySummaryPresentation[] actual = await this.sut.Get();

@@ -2,5 +2,5 @@
 
 public interface IBankStatementParser
 {
-    Task<AccountStatement> ExtractAccountStatement(string fileName, Stream stream);
+    Task<AccountStatement> Extract(string fileName, Stream stream);
 }

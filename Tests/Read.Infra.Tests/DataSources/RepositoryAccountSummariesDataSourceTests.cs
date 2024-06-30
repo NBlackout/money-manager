@@ -2,6 +2,7 @@
 using Read.Infra.DataSources.AccountSummaries;
 using Write.App.Model.Banks;
 using Write.Infra.Repositories;
+using static Shared.TestTooling.Randomizer;
 
 namespace Read.Infra.Tests.DataSources;
 
@@ -25,16 +26,15 @@ public sealed class RepositoryAccountSummariesDataSourceTests : HostFixture
         services.AddWriteDependencies().AddReadDependencies();
 
     [Theory, RandomData]
-    public async Task Should_retrieve_tracked_account_summaries(Bank aBank, Bank anotherBank)
+    public async Task Should_retrieve_summaries(Bank aBank, Bank anotherBank)
     {
         this.bankRepository.Feed(aBank, anotherBank);
 
-        AccountBuilder checking = AccountBuilder.Create() with { BankId = aBank.Id, Tracked = true };
-        AccountBuilder saving = AccountBuilder.Create() with { BankId = aBank.Id, Tracked = true };
-        AccountBuilder notTracked = AccountBuilder.Create() with { BankId = anotherBank.Id, Tracked = false };
-        this.accountRepository.Feed(checking.Build(), saving.Build(), notTracked.Build());
+        AccountBuilder anAccount = Any<AccountBuilder>() with { BankId = aBank.Id };
+        AccountBuilder anotherAccount = Any<AccountBuilder>() with { BankId = anotherBank.Id };
+        this.accountRepository.Feed(anAccount.Build(), anotherAccount.Build());
 
         AccountSummaryPresentation[] actual = await this.sut.Get();
-        actual.Should().Equal(checking.ToSummary(), saving.ToSummary(), notTracked.ToSummary());
+        actual.Should().Equal(anAccount.ToSummary(), anotherAccount.ToSummary());
     }
 }

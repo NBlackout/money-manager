@@ -26,6 +26,6 @@ public class RepositoryAccountSummariesDataSource : IAccountSummariesDataSource
     private static AccountSummaryPresentation ToSummary(BankSnapshot bank, AccountSnapshot account)
     {
         return new AccountSummaryPresentation(account.Id, bank.Id, account.Label, account.Number,
-            account.Balance, account.BalanceDate, account.Tracked);
+            account.Balance, account.BalanceDate);
     }
 }

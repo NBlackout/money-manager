@@ -26,7 +26,7 @@ public class OfxBankStatementParser
             throw CannotProcessOfxContent.DueToMissingBalanceNode();
 
         TransactionStatement[] transactions = statementResponse.StatementTransactions
-            .Select(t => new TransactionStatement(t.Identifier, t.Amount, t.Label, t.Date)).ToArray();
+            .Select(t => new TransactionStatement(t.Identifier, t.Amount, t.Label, t.Date, null)).ToArray();
 
         return Task.FromResult(new AccountStatement(statementResponse.BankAccount.BankIdentifier,
             statementResponse.BankAccount.AccountNumber, availableBalance.Amount, availableBalance.Date, transactions));
@@ -79,8 +79,4 @@ public class OfxBankStatementParser
         public decimal Amount => decimal.Parse(this.RawAmount, CultureInfo.CreateSpecificCulture("fr-FR"));
         public DateTime Date => DateTime.ParseExact(this.RawDate, "yyyyMMdd", null);
     }
-}
-
-public interface IBankToto
-{
 }

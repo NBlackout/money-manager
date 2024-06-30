@@ -12,8 +12,6 @@ public static class ServiceCollectionExtensions
     {
         return services
             .AddScoped<ImportBankStatement>()
-            .AddScoped<StopAccountTracking>()
-            .AddScoped<ResumeAccountTracking>()
             .AddScoped<AssignAccountLabel>()
             .AddScoped<AssignTransactionCategory>()
             .AddScoped<CreateCategory>()

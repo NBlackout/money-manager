@@ -41,11 +41,12 @@ public class CsvBankStatementParser
 
     private static TransactionStatement TransactionFrom(string identifier, string[] columns)
     {
-        DateTime transactionDate = DateTime.Parse(columns[0]);
-        string transactionLabel = columns[2];
-        decimal transactionAmount = ParseDecimal(columns[5]);
+        decimal amount = ParseDecimal(columns[5]);
+        string label = columns[2];
+        DateTime date = DateTime.Parse(columns[0]);
+        string category = columns[4];
 
-        return new TransactionStatement(identifier, transactionAmount, transactionLabel, transactionDate);
+        return new TransactionStatement(identifier, amount, label, date, category);
     }
 
     private static AccountStatement AccountFrom(string number, decimal balance, TransactionStatement[] transactions) =>

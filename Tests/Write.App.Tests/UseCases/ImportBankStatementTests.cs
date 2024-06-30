@@ -12,87 +12,47 @@ public class ImportBankStatementTests
     private readonly StubbedBankStatementParser bankStatementParser = new();
     private readonly ImportBankStatement sut;
 
-    private Guid[] nextIds = [];
-    private int nextIdIndex;
-
     public ImportBankStatementTests()
     {
         this.sut = new ImportBankStatement(this.bankRepository, this.accountRepository, this.transactionRepository,
             this.bankStatementParser);
     }
 
-    [Fact]
-    public async Task Should_track_unknown_bank_and_account()
+    [Theory, RandomData]
+    public async Task Should_track_unknown_bank_and_account(BankBuilder bank, AccountBuilder account)
     {
-        BankBuilder bank = BankBuilder.Create();
-        AccountBuilder account = AccountBuilder.Create() with
-        {
-            BankId = bank.Id, Number = "Number", Label = "Number", Tracked = true
-        };
-        TransactionBuilder aTransaction = ATransaction(Guid.NewGuid(), account.Id);
-        TransactionBuilder anotherTransaction = ATransaction(Guid.NewGuid(), account.Id);
+        this.FeedNextId(bank);
+        this.FeedNextId(account);
+        this.Feed(AccountStatementFrom(bank, account));
 
-        this.bankRepository.NextId = () => bank.Id;
-        this.accountRepository.NextId = () => account.Id;
-        this.nextIds = [aTransaction.Id, anotherTransaction.Id];
-        this.transactionRepository.NextId = () => this.nextIds[this.nextIdIndex++];
-        this.SetAccountStatement(AccountStatementFrom(bank, account, aTransaction, anotherTransaction));
-
-        await this.Verify(bank, account, aTransaction, anotherTransaction);
+        await this.Verify(bank, account with { BankId = bank.Id, Label = account.Number });
     }
 
-    [Fact]
-    public async Task Should_track_unknown_account()
+    [Theory, RandomData]
+    public async Task Should_track_unknown_account(BankBuilder bank, AccountBuilder account)
     {
-        BankBuilder bank = BankBuilder.Create();
-        AccountBuilder account = AccountBuilder.Create() with
-        {
-            BankId = bank.Id, Number = "Number", Label = "Number", Tracked = true
-        };
-        TransactionBuilder aTransaction = ATransaction(Guid.NewGuid(), account.Id);
-        TransactionBuilder anotherTransaction = ATransaction(Guid.NewGuid(), account.Id);
+        this.Feed(bank);
+        this.FeedNextId(account);
+        this.Feed(AccountStatementFrom(bank, account));
 
-        this.FeedByExternalId(bank);
-        this.accountRepository.NextId = () => account.Id;
-        this.nextIds = [aTransaction.Id, anotherTransaction.Id];
-        this.transactionRepository.NextId = () => this.nextIds[this.nextIdIndex++];
-        this.SetAccountStatement(AccountStatementFrom(bank, account, aTransaction, anotherTransaction));
-
-        await this.Verify(bank, account, aTransaction, anotherTransaction);
+        await this.Verify(bank, account with { BankId = bank.Id, Label = account.Number });
     }
 
-    [Fact]
-    public async Task Should_synchronize_already_tracked_account()
+    [Theory, RandomData]
+    public async Task Should_synchronize_account(BankBuilder bank)
     {
-        BankBuilder bank = BankBuilder.Create();
-        AccountBuilder existing = AccountBuilder.Create() with
-        {
-            BankId = bank.Id, Balance = 100.00m, BalanceDate = DateTime.Today.AddDays(-12), Tracked = true
-        };
-        AccountBuilder expected = existing with { Balance = 1337.42m, BalanceDate = DateTime.Today };
+        AccountBuilder account = AnAccountFrom(bank);
+        TransactionBuilder aTransaction = ATransactionFrom(account);
+        TransactionBuilder anotherTransaction = ATransactionFrom(account);
 
-        this.FeedByExternalId(bank);
-        this.FeedByExternalId(existing);
-        this.SetAccountStatement(AccountStatementFrom(bank, expected));
+        this.Feed(bank);
+        this.Feed(account);
 
-        await this.Verify(bank, expected);
-    }
+        this.FeedNextId(aTransaction, anotherTransaction);
 
-    [Fact]
-    public async Task Should_skip_no_longer_tracked_account()
-    {
-        BankBuilder bank = Any<BankBuilder>();
-        AccountBuilder account = Any<AccountBuilder>() with { BankId = bank.Id, Tracked = false };
-        AccountStatement statement = Any<AccountStatement>() with
-        {
-            BankIdentifier = bank.ExternalId, AccountNumber = account.Number, Transactions = []
-        };
-
-        this.FeedByExternalId(bank);
-        this.FeedByExternalId(account);
-        this.SetAccountStatement(statement);
-
-        await this.Verify(bank, account);
+        AccountBuilder expected = account with { Balance = Another(account.Balance), BalanceDate = DateTime.Today };
+        this.Feed(AccountStatementFrom(bank, expected, aTransaction, anotherTransaction));
+        await this.Verify(bank, expected, aTransaction, anotherTransaction);
     }
 
     private async Task Verify(BankBuilder expectedBank,
@@ -113,33 +73,46 @@ public class ImportBankStatementTests
         }
     }
 
-    private void FeedByExternalId(BankBuilder bank) =>
+    private void Feed(BankBuilder bank) =>
         this.bankRepository.FeedByExternalId(bank.ExternalId, bank.Build());
 
-    private void FeedByExternalId(AccountBuilder account) =>
+    private void Feed(AccountBuilder account) =>
         this.accountRepository.FeedByExternalId(new ExternalId(account.BankId, account.Number), account.Build());
 
-    private void SetAccountStatement(AccountStatement statement) =>
-        this.bankStatementParser.SetAccountStatementFor(TheFileName, TheStream, statement);
+    private void FeedNextId(BankBuilder bank) =>
+        this.bankRepository.NextId = () => bank.Id;
+
+    private void FeedNextId(AccountBuilder account) =>
+        this.accountRepository.NextId = () => account.Id;
+
+    private void FeedNextId(params TransactionBuilder[] transactions)
+    {
+        int nextIdIndex = 0;
+        this.transactionRepository.NextId = () => transactions[nextIdIndex++].Id;
+    }
+
+    private void Feed(AccountStatement accountStatement) =>
+        this.bankStatementParser.Feed(TheFileName, TheStream, accountStatement);
 
     internal static class Data
     {
         public static readonly string TheFileName = "the filename";
         public static readonly MemoryStream TheStream = new([0xF0, 0x42]);
 
-        public static TransactionBuilder ATransaction(Guid id, Guid accountId)
-        {
-            return TransactionBuilder.For(id) with
-            {
-                AccountId = accountId, ExternalId = id.ToString(), CategoryId = null
-            };
-        }
+        public static AccountBuilder AnAccountFrom(BankBuilder bank) =>
+            Any<AccountBuilder>() with { BankId = bank.Id };
+
+        public static TransactionBuilder ATransactionFrom(AccountBuilder account) =>
+            Any<TransactionBuilder>() with { AccountId = account.Id, CategoryId = null, CategoryLabel = null };
 
         public static AccountStatement AccountStatementFrom(BankBuilder bank, AccountBuilder account,
             params TransactionBuilder[] transactions)
         {
             return new AccountStatement(bank.ExternalId, account.Number, account.Balance, account.BalanceDate,
-                transactions.Select(t => new TransactionStatement(t.ExternalId, t.Amount, t.Label, t.Date)).ToArray());
+                transactions
+                    .Select(t => new TransactionStatement(t.ExternalId, t.Amount, t.Label, t.Date, t.CategoryLabel))
+                    .ToArray()
+            );
         }
     }
 }
