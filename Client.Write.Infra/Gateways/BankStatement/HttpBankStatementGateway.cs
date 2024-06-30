@@ -2,15 +2,8 @@
 
 namespace Client.Write.Infra.Gateways.BankStatement;
 
-public class HttpBankStatementGateway : IBankStatementGateway
+public class HttpBankStatementGateway(HttpClient httpClient) : IBankStatementGateway
 {
-    private readonly HttpClient httpClient;
-
-    public HttpBankStatementGateway(HttpClient httpClient)
-    {
-        this.httpClient = httpClient;
-    }
-
     public async Task Upload(string fileName, string contentType, Stream stream)
     {
         StreamContent fileContent = new(stream);
@@ -19,7 +12,7 @@ public class HttpBankStatementGateway : IBankStatementGateway
         using MultipartFormDataContent content = new();
         content.Add(fileContent, "file", fileName);
 
-        HttpResponseMessage response = await this.httpClient.PostAsync("accounts", content);
+        HttpResponseMessage response = await httpClient.PostAsync("accounts", content);
         response.EnsureSuccessStatusCode();
     }
 }

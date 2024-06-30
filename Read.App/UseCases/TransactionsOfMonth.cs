@@ -1,14 +1,7 @@
 ﻿namespace Read.App.UseCases;
 
-public class TransactionsOfMonth
+public class TransactionsOfMonth(ITransactionsOfMonthDataSource dataSource)
 {
-    private readonly ITransactionsOfMonthDataSource dataSource;
-
-    public TransactionsOfMonth(ITransactionsOfMonthDataSource dataSource)
-    {
-        this.dataSource = dataSource;
-    }
-
     public async Task<TransactionSummaryPresentation[]> Execute(Guid accountId, int year, int month) =>
-        await this.dataSource.Get(accountId, year, month);
+        await dataSource.Get(accountId, year, month);
 }

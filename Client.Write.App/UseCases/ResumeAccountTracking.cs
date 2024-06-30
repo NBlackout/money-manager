@@ -1,14 +1,7 @@
 ﻿namespace Client.Write.App.UseCases;
 
-public class ResumeAccountTracking
+public class ResumeAccountTracking(IAccountGateway gateway)
 {
-    private readonly IAccountGateway gateway;
-
-    public ResumeAccountTracking(IAccountGateway gateway)
-    {
-        this.gateway = gateway;
-    }
-
     public async Task Execute(Guid id) =>
-        await this.gateway.ResumeTracking(id);
+        await gateway.ResumeTracking(id);
 }
