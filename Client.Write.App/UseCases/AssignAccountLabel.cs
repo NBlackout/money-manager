@@ -1,14 +1,7 @@
 ﻿namespace Client.Write.App.UseCases;
 
-public class AssignAccountLabel
+public class AssignAccountLabel(IAccountGateway gateway)
 {
-    private readonly IAccountGateway gateway;
-
-    public AssignAccountLabel(IAccountGateway gateway)
-    {
-        this.gateway = gateway;
-    }
-
     public async Task Execute(Guid id, string label) =>
-        await this.gateway.AssignLabel(id, label);
+        await gateway.AssignLabel(id, label);
 }

@@ -1,21 +1,13 @@
 ﻿namespace Read.App.UseCases;
 
-public class CategorizationSuggestions
+public class CategorizationSuggestions(
+    ICategoriesWithKeywordsDataSource categoriesDataSource,
+    ITransactionsToCategorizeDataSource transactionsToCategorizeDataSource)
 {
-    private readonly ICategoriesWithKeywordsDataSource categoriesDataSource;
-    private readonly ITransactionsToCategorizeDataSource transactionsToCategorizeDataSource;
-
-    public CategorizationSuggestions(ICategoriesWithKeywordsDataSource categoriesDataSource,
-        ITransactionsToCategorizeDataSource transactionsToCategorizeDataSource)
-    {
-        this.categoriesDataSource = categoriesDataSource;
-        this.transactionsToCategorizeDataSource = transactionsToCategorizeDataSource;
-    }
-
     public async Task<CategorizationSuggestionPresentation[]> Execute()
     {
-        CategoryWithKeywords[] categories = await this.categoriesDataSource.Get();
-        TransactionToCategorize[] transactions = await this.transactionsToCategorizeDataSource.Get();
+        CategoryWithKeywords[] categories = await categoriesDataSource.Get();
+        TransactionToCategorize[] transactions = await transactionsToCategorizeDataSource.Get();
 
         return Match(transactions, categories);
     }
