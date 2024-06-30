@@ -13,8 +13,6 @@ public sealed class RepositoryAccountSummariesDataSourceTests : HostFixture
     {
         this.sut = this.Resolve<IAccountSummariesDataSource, RepositoryAccountSummariesDataSource>();
         this.accountRepository = this.Resolve<IAccountRepository, InMemoryAccountRepository>();
-
-        this.accountRepository.Clear();
     }
 
     protected override void Configure(IServiceCollection services) =>

@@ -13,8 +13,6 @@ public sealed class RepositoryCategorySummariesDataSourceTests : HostFixture
     {
         this.sut = this.Resolve<ICategorySummariesDataSource, RepositoryCategorySummariesDataSource>();
         this.categoryRepository = this.Resolve<ICategoryRepository, InMemoryCategoryRepository>();
-
-        this.categoryRepository.Clear();
     }
 
     protected override void Configure(IServiceCollection services) =>

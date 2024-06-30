@@ -14,8 +14,6 @@ public sealed class RepositoryCategoriesWithKeywordsDataSourceTests : HostFixtur
     {
         this.sut = this.Resolve<ICategoriesWithKeywordsDataSource, RepositoryCategoriesWithKeywordsDataSource>();
         this.categoryRepository = this.Resolve<ICategoryRepository, InMemoryCategoryRepository>();
-
-        this.categoryRepository.Clear();
     }
 
     protected override void Configure(IServiceCollection services) =>

@@ -33,10 +33,4 @@ public class InMemoryAccountRepository : IAccountRepository
 
     public void Feed(params Account[] accounts) =>
         accounts.ToList().ForEach(account => this.data[account.Id] = account.Snapshot);
-
-    public void Clear()
-    {
-        this.data.Clear();
-        this.dataByExternalId.Clear();
-    }
 }

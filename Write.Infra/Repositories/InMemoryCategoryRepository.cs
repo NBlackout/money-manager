@@ -9,14 +9,14 @@ public class InMemoryCategoryRepository : ICategoryRepository
 
     public Task<Guid> NextIdentity() =>
         Task.FromResult(this.NextId());
-    
+
     public Task<Category> By(Guid id) =>
         Task.FromResult(Category.From(this.data[id]));
 
     public Task<Category?> ByOrDefault(string label)
     {
         CategorySnapshot? snapshot = this.data.Values.SingleOrDefault(a => a.Label == label);
-        return Task.FromResult(snapshot != null ?Category.From(snapshot): null);
+        return Task.FromResult(snapshot != null ? Category.From(snapshot) : null);
     }
 
     public Task Save(Category category)
@@ -38,7 +38,4 @@ public class InMemoryCategoryRepository : ICategoryRepository
 
     public bool Exists(Guid id) =>
         this.data.ContainsKey(id);
-
-    public void Clear() =>
-        this.data.Clear();
 }
