@@ -24,7 +24,7 @@ public sealed class RepositoryAccountDetailsDataSourceTests : HostFixture
     public async Task Should_retrieve_account_details(AccountBuilder account)
     {
         this.repository.Feed(account.Build());
-        AccountDetailsPresentation actual = await this.sut.Get(account.Id);
+        AccountDetailsPresentation actual = await this.sut.By(account.Id);
         actual.Should().Be(account.ToDetails());
     }
 }

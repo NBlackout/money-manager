@@ -5,7 +5,7 @@ namespace Read.Infra.DataSources.TransactionsToCategorize;
 public class RepositoryTransactionsToCategorizeDataSource(InMemoryTransactionRepository repository)
     : ITransactionsToCategorizeDataSource
 {
-    public Task<TransactionToCategorize[]> Get()
+    public Task<TransactionToCategorize[]> All()
     {
         TransactionToCategorize[] transactions = repository.Data
             .Where(t => t.CategoryId is null)

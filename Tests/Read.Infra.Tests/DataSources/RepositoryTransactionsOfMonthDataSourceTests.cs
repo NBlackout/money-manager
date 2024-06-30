@@ -37,7 +37,7 @@ public sealed class RepositoryTransactionsOfMonthDataSourceTests : HostFixture
         this.Feed(transactionBefore, aTransactionThisMonth, anotherTransactionThisMonth, transactionAfter,
             transactionOfAnotherAccount);
 
-        TransactionSummaryPresentation[] actual = await this.sut.Get(accountId, 2023, 04);
+        TransactionSummaryPresentation[] actual = await this.sut.By(accountId, 2023, 04);
         actual.Should().Equal(aTransactionThisMonth.ToSummary(), anotherTransactionThisMonth.ToSummary());
     }
 

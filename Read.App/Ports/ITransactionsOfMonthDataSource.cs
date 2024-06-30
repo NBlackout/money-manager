@@ -2,5 +2,5 @@
 
 public interface ITransactionsOfMonthDataSource
 {
-    Task<TransactionSummaryPresentation[]> Get(Guid accountId, int year, int month);
+    Task<TransactionSummaryPresentation[]> By(Guid accountId, int year, int month);
 }

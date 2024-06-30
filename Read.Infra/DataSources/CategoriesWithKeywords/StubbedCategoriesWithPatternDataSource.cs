@@ -4,7 +4,7 @@ public class StubbedCategoriesWithKeywordsDataSource : ICategoriesWithKeywordsDa
 {
     private readonly List<CategoryWithKeywords> categoriesWithKeywords = [];
 
-    public Task<CategoryWithKeywords[]> Get() =>
+    public Task<CategoryWithKeywords[]> All() =>
         Task.FromResult(this.categoriesWithKeywords.ToArray());
 
     public void Feed(params CategoryWithKeywords[] categoriesWithKeywords) =>

@@ -4,7 +4,7 @@ public class StubbedAccountDetailsDataSource : IAccountDetailsDataSource
 {
     private readonly Dictionary<Guid, AccountDetailsPresentation> dataSource = new();
 
-    public Task<AccountDetailsPresentation> Get(Guid id) =>
+    public Task<AccountDetailsPresentation> By(Guid id) =>
         Task.FromResult(this.dataSource[id]);
 
     public void Feed(Guid id, AccountDetailsPresentation expected) =>

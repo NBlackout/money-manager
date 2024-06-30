@@ -3,5 +3,5 @@
 public class AccountDetails(IAccountDetailsDataSource dataSource)
 {
     public async Task<AccountDetailsPresentation> Execute(Guid id) => 
-        await dataSource.Get(id);
+        await dataSource.By(id);
 }
