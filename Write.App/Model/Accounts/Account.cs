@@ -2,15 +2,15 @@
 
 public class Account : DomainEntity
 {
-    private readonly ExternalId externalId;
+    private readonly string externalId;
     private string label;
     private decimal balance;
     private DateTime balanceDate;
 
     public AccountSnapshot Snapshot =>
-        new(this.Id, this.externalId.BankId, this.externalId.Number, this.label, this.balance, this.balanceDate);
+        new(this.Id, this.externalId, this.label, this.balance, this.balanceDate);
 
-    private Account(Guid id, ExternalId externalId, string label, decimal balance, DateTime balanceDate)
+    private Account(Guid id, string externalId, string label, decimal balance, DateTime balanceDate)
         : base(id)
     {
         this.externalId = externalId;
@@ -20,12 +20,10 @@ public class Account : DomainEntity
     }
 
     public static Account From(AccountSnapshot snapshot) =>
-        new(snapshot.Id, new ExternalId(snapshot.BankId, snapshot.Number), snapshot.Label, snapshot.Balance,
-            snapshot.BalanceDate);
+        new(snapshot.Id, snapshot.Number, snapshot.Label, snapshot.Balance, snapshot.BalanceDate);
 
-    public static Account StartTracking(Guid id, Guid bankId, string accountNumber, decimal balance,
-        DateTime balanceDate) =>
-        new(id, new ExternalId(bankId, accountNumber), accountNumber, balance, balanceDate);
+    public static Account StartTracking(Guid id, string accountNumber, decimal balance, DateTime balanceDate) =>
+        new(id, accountNumber, accountNumber, balance, balanceDate);
 
     public void Synchronize(decimal updatedBalance, DateTime updatedBalanceDate)
     {
@@ -36,7 +34,7 @@ public class Account : DomainEntity
     public void AssignLabel(string newLabel) =>
         this.label = newLabel;
 
-    public Transaction AttachTransaction(Guid transactionId, string transactionExternalId, decimal amount,
+    public Transaction AttachTransaction(Guid transactionId, string externalId, decimal amount,
         string transactionLabel, DateTime date, Category? category) =>
-        new(transactionId, this.Id, transactionExternalId, amount, transactionLabel, date, category);
+        new(transactionId, this.Id, externalId, amount, transactionLabel, date, category);
 }

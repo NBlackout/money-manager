@@ -28,8 +28,9 @@ public class OfxBankStatementParser
         TransactionStatement[] transactions = statementResponse.StatementTransactions
             .Select(t => new TransactionStatement(t.Identifier, t.Amount, t.Label, t.Date, null)).ToArray();
 
-        return Task.FromResult(new AccountStatement(statementResponse.BankAccount.BankIdentifier,
-            statementResponse.BankAccount.AccountNumber, availableBalance.Amount, availableBalance.Date, transactions));
+        return Task.FromResult(new AccountStatement(statementResponse.BankAccount.AccountNumber,
+            availableBalance.Amount, availableBalance.Date, transactions)
+        );
     }
 
     [XmlRoot("OFX")]

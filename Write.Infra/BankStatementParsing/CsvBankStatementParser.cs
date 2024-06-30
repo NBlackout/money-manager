@@ -50,7 +50,7 @@ public class CsvBankStatementParser
     }
 
     private static AccountStatement AccountFrom(string number, decimal balance, TransactionStatement[] transactions) =>
-        new("1234567890", number, balance, DateTime.Parse("2000-01-01"), transactions.ToArray());
+        new(number, balance, DateTime.Parse("2000-01-01"), transactions.ToArray());
 
     private static decimal ParseDecimal(string value) =>
         decimal.Parse(value.Replace(",", ".").Replace(" ", string.Empty), CultureInfo.InvariantCulture);

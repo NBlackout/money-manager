@@ -28,14 +28,11 @@ public static class ServiceCollectionExtensions
 
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        InMemoryBankRepository bankRepository = new() { NextId = Guid.NewGuid };
         InMemoryAccountRepository accountRepository = new() { NextId = Guid.NewGuid };
         InMemoryCategoryRepository categoryRepository = new() { NextId = Guid.NewGuid };
         InMemoryTransactionRepository transactionRepository = new() { NextId = Guid.NewGuid };
 
         return services
-            .AddSingleton<IBankRepository>(bankRepository)
-            .AddSingleton(bankRepository)
             .AddSingleton<IAccountRepository>(accountRepository)
             .AddSingleton(accountRepository)
             .AddSingleton<ITransactionRepository>(transactionRepository)
