@@ -6,8 +6,8 @@ public class CategorizationSuggestions(
 {
     public async Task<CategorizationSuggestionPresentation[]> Execute()
     {
-        CategoryWithKeywords[] categories = await categoriesDataSource.Get();
-        TransactionToCategorize[] transactions = await transactionsToCategorizeDataSource.Get();
+        CategoryWithKeywords[] categories = await categoriesDataSource.All();
+        TransactionToCategorize[] transactions = await transactionsToCategorizeDataSource.All();
 
         return Match(transactions, categories);
     }

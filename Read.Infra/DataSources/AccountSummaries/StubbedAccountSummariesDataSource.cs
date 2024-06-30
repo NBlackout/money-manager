@@ -4,7 +4,7 @@ public class StubbedAccountSummariesDataSource : IAccountSummariesDataSource
 {
     private AccountSummaryPresentation[] data = null!;
 
-    public Task<AccountSummaryPresentation[]> Get() =>
+    public Task<AccountSummaryPresentation[]> All() =>
         Task.FromResult(this.data);
 
     public void Feed(AccountSummaryPresentation[] summaries) =>

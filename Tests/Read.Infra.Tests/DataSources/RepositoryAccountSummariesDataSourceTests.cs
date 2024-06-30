@@ -25,7 +25,7 @@ public sealed class RepositoryAccountSummariesDataSourceTests : HostFixture
     {
         this.accountRepository.Feed(accounts.Select(a => a.Build()).ToArray());
 
-        AccountSummaryPresentation[] actual = await this.sut.Get();
+        AccountSummaryPresentation[] actual = await this.sut.All();
         actual.Should().Equal(accounts.Select(a => a.ToSummary()));
     }
 }

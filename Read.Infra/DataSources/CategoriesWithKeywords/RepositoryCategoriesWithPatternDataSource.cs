@@ -5,7 +5,7 @@ namespace Read.Infra.DataSources.CategoriesWithKeywords;
 public class RepositoryCategoriesWithKeywordsDataSource(InMemoryCategoryRepository repository)
     : ICategoriesWithKeywordsDataSource
 {
-    public Task<CategoryWithKeywords[]> Get()
+    public Task<CategoryWithKeywords[]> All()
     {
         CategoryWithKeywords[] categoriesWithKeywords = repository.Data
             .Where(c => !string.IsNullOrWhiteSpace(c.Keywords))

@@ -38,7 +38,7 @@ public sealed class RepositoryTransactionsToCategorizeDataSourceTests : HostFixt
 
     private async Task Verify(params TransactionBuilder[] expected)
     {
-        TransactionToCategorize[] actual = await this.sut.Get();
+        TransactionToCategorize[] actual = await this.sut.All();
         actual.Should().Equal(expected.Select(t => new TransactionToCategorize(t.Id, t.Label, t.Amount)));
     }
 

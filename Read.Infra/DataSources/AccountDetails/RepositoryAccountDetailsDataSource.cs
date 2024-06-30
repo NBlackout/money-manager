@@ -4,7 +4,7 @@ namespace Read.Infra.DataSources.AccountDetails;
 
 public class RepositoryAccountDetailsDataSource(InMemoryAccountRepository accountRepository) : IAccountDetailsDataSource
 {
-    public async Task<AccountDetailsPresentation> Get(Guid id)
+    public async Task<AccountDetailsPresentation> By(Guid id)
     {
         Account account = await accountRepository.By(id);
 

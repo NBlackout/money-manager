@@ -40,7 +40,7 @@ public sealed class RepositoryCategoriesWithKeywordsDataSourceTests : HostFixtur
 
     private async Task Verify(params CategoryBuilder[] expected)
     {
-        CategoryWithKeywords[] actual = await this.sut.Get();
+        CategoryWithKeywords[] actual = await this.sut.All();
         actual.Should().Equal(expected.Select(c => new CategoryWithKeywords(c.Id, c.Label, c.Keywords)));
     }
 

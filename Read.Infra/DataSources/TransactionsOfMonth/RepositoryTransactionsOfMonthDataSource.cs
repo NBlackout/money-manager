@@ -8,7 +8,7 @@ public class RepositoryTransactionsOfMonthDataSource(
     InMemoryCategoryRepository categoryRepository)
     : ITransactionsOfMonthDataSource
 {
-    public Task<TransactionSummaryPresentation[]> Get(Guid accountId, int year, int month)
+    public Task<TransactionSummaryPresentation[]> By(Guid accountId, int year, int month)
     {
         TransactionSummaryPresentation[] presentations = transactionRepository.Data
             .Where(t => t.AccountId == accountId && t.Date.Year == year && t.Date.Month == month)

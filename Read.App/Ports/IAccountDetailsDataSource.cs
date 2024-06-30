@@ -2,5 +2,5 @@
 
 public interface IAccountDetailsDataSource
 {
-    Task<AccountDetailsPresentation> Get(Guid id);
+    Task<AccountDetailsPresentation> By(Guid id);
 }
