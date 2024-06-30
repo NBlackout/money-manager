@@ -13,8 +13,11 @@ public class InMemoryCategoryRepository : ICategoryRepository
     public Task<Category> By(Guid id) =>
         Task.FromResult(Category.From(this.data[id]));
 
-    public Task<Category> By(string label) => 
-        Task.FromResult(Category.From(this.data.Single(a => a.Value.Label == label).Value));
+    public Task<Category?> ByOrDefault(string label)
+    {
+        CategorySnapshot? snapshot = this.data.Values.SingleOrDefault(a => a.Label == label);
+        return Task.FromResult(snapshot != null ?Category.From(snapshot): null);
+    }
 
     public Task Save(Category category)
     {
