@@ -3,6 +3,7 @@
 public class ImportBankStatement(
     IBankRepository bankRepository,
     IAccountRepository accountRepository,
+    ICategoryRepository categoryRepository,
     ITransactionRepository transactionRepository,
     IBankStatementParser bankStatementParser)
 {
@@ -11,9 +12,9 @@ public class ImportBankStatement(
         AccountStatement statement = await bankStatementParser.Extract(fileName, stream);
 
         Bank bank = await this.EnsureBankExists(statement);
-        Account account = await this.EnsureAccountIsTracked(bank, statement);
+        Account account = await this.EnsureAccountExists(bank, statement);
         account.Synchronize(statement.Balance, statement.BalanceDate);
-        Transaction[] transactions = await this.UnknownTransactions(account, statement);
+        Transaction[] transactions = await this.NewTransactions(account, statement);
 
         await this.Save(bank, account, transactions);
     }
@@ -29,7 +30,7 @@ public class ImportBankStatement(
         return statement.TrackDescribedBank(id);
     }
 
-    private async Task<Account> EnsureAccountIsTracked(Bank bank, AccountStatement statement)
+    private async Task<Account> EnsureAccountExists(Bank bank, AccountStatement statement)
     {
         ExternalId externalId = new(bank.Id, statement.AccountNumber);
         Account? account = await accountRepository.ByExternalIdOrDefault(externalId);
@@ -41,30 +42,41 @@ public class ImportBankStatement(
         return bank.TrackAccount(id, statement.AccountNumber, statement.Balance, statement.BalanceDate);
     }
 
-    private async Task<Transaction[]> UnknownTransactions(Account account, AccountStatement statement)
+    private async Task<Transaction[]> NewTransactions(Account account, AccountStatement statement)
     {
-        Dictionary<string, TransactionStatement> transactionStatements =
-            statement.Transactions.ToDictionary(t => t.TransactionIdentifier);
-        string[] unknownExternalIds =
-            await transactionRepository.UnknownExternalIds(transactionStatements.Keys);
+        TransactionStatement[] newTransactionStatements = await this.NewTransactionStatements(statement);
 
-        List<Task<Transaction>> unknownTransactionTasks = unknownExternalIds.Select(unknownExternalId =>
-            this.UnknownTransaction(account, transactionStatements[unknownExternalId])).ToList();
-        
-        // Stryker disable all: TODO find a way to cover this instruction. Because we return Task.FromResult in test doubles, tasks are already completed...
-        await Task.WhenAll(unknownTransactionTasks);
+        List<Transaction> newTransactions = [];
+        foreach (TransactionStatement newTransactionStatement in newTransactionStatements)
+        {
+            Guid id = await transactionRepository.NextIdentity();
+            Category? category = await this.CategoryFrom(newTransactionStatement);
 
-        return unknownTransactionTasks.Select(task => task.Result).ToArray();
+            newTransactions.Add(account.AttachTransaction(id, newTransactionStatement.TransactionIdentifier,
+                newTransactionStatement.Amount, newTransactionStatement.Label, newTransactionStatement.Date, category));
+        }
+
+        return newTransactions.ToArray();
     }
 
-    private async Task<Transaction> UnknownTransaction(Account account, TransactionStatement statement)
+    private async Task<TransactionStatement[]> NewTransactionStatements(AccountStatement statement)
     {
-        Guid id = await transactionRepository.NextIdentity();
+        string[] unknownExternalIds = await transactionRepository.UnknownExternalIds(
+            statement.Transactions.Select(t => t.TransactionIdentifier).ToArray()
+        );
 
-        return account.AttachTransaction(id, statement.TransactionIdentifier, statement.Amount, statement.Label, statement.Date);
+        return statement.Transactions.Where(t => unknownExternalIds.Contains(t.TransactionIdentifier)).ToArray();
     }
 
-    private async Task Save(Bank bank, Account account, IEnumerable<Transaction> transactions)
+    private async Task<Category?> CategoryFrom(TransactionStatement statement)
+    {
+        if (statement.Category == null)
+            return null;
+
+        return await categoryRepository.By(statement.Category);
+    }
+
+    private async Task Save(Bank bank, Account account, Transaction[] transactions)
     {
         await bankRepository.Save(bank);
         await accountRepository.Save(account);

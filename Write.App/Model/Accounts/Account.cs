@@ -37,6 +37,6 @@ public class Account : DomainEntity
         this.label = newLabel;
 
     public Transaction AttachTransaction(Guid transactionId, string transactionExternalId, decimal amount,
-        string transactionLabel, DateTime date) =>
-        new(transactionId, this.Id, transactionExternalId, amount, transactionLabel, date);
+        string transactionLabel, DateTime date, Category? category) =>
+        new(transactionId, this.Id, transactionExternalId, amount, transactionLabel, date, category);
 }

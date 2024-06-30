@@ -1,4 +1,5 @@
-﻿using Write.Infra.BankStatementParsing;
+﻿using Write.App.Model.Categories;
+using Write.Infra.BankStatementParsing;
 using static Shared.TestTooling.Randomizer;
 using static Write.App.Tests.UseCases.ImportBankStatementTests.Data;
 
@@ -8,38 +9,39 @@ public class ImportBankStatementTests
 {
     private readonly InMemoryBankRepository bankRepository = new();
     private readonly InMemoryAccountRepository accountRepository = new();
+    private readonly InMemoryCategoryRepository categoryRepository = new();
     private readonly InMemoryTransactionRepository transactionRepository = new();
     private readonly StubbedBankStatementParser bankStatementParser = new();
     private readonly ImportBankStatement sut;
 
     public ImportBankStatementTests()
     {
-        this.sut = new ImportBankStatement(this.bankRepository, this.accountRepository, this.transactionRepository,
-            this.bankStatementParser);
+        this.sut = new ImportBankStatement(this.bankRepository, this.accountRepository, this.categoryRepository,
+            this.transactionRepository, this.bankStatementParser);
     }
 
     [Theory, RandomData]
     public async Task Should_track_unknown_bank_and_account(BankBuilder bank, AccountBuilder account)
     {
-        this.FeedNextId(bank);
-        this.FeedNextId(account);
+        this.FeedNextIdOf(bank);
+        this.FeedNextIdOf(account);
         this.Feed(AccountStatementFrom(bank, account));
 
-        await this.Verify(bank, account with { BankId = bank.Id, Label = account.Number });
+        await this.Verify(bank, account with { BankId = bank.Id, Label = account.Number }, []);
     }
 
     [Theory, RandomData]
     public async Task Should_track_unknown_account(BankBuilder bank, AccountBuilder account)
     {
         this.Feed(bank);
-        this.FeedNextId(account);
+        this.FeedNextIdOf(account);
         this.Feed(AccountStatementFrom(bank, account));
 
-        await this.Verify(bank, account with { BankId = bank.Id, Label = account.Number });
+        await this.Verify(bank, account with { BankId = bank.Id, Label = account.Number }, []);
     }
 
     [Theory, RandomData]
-    public async Task Should_synchronize_account(BankBuilder bank)
+    public async Task Should_synchronize_known_account(BankBuilder bank)
     {
         AccountBuilder account = AnAccountFrom(bank);
         TransactionBuilder aTransaction = ATransactionFrom(account);
@@ -47,16 +49,31 @@ public class ImportBankStatementTests
 
         this.Feed(bank);
         this.Feed(account);
+        this.FeedNextIdsOf(aTransaction, anotherTransaction);
+        this.Feed(AccountStatementFrom(bank, account, aTransaction, anotherTransaction));
 
-        this.FeedNextId(aTransaction, anotherTransaction);
-
-        AccountBuilder expected = account with { Balance = Another(account.Balance), BalanceDate = DateTime.Today };
-        this.Feed(AccountStatementFrom(bank, expected, aTransaction, anotherTransaction));
-        await this.Verify(bank, expected, aTransaction, anotherTransaction);
+        await this.Verify(bank, account, [], aTransaction, anotherTransaction);
     }
 
-    private async Task Verify(BankBuilder expectedBank,
-        AccountBuilder expectedAccount, params TransactionBuilder[] expectedTransactions)
+    [Theory, RandomData]
+    public async Task Should_assign_existing_category_to_transactions(BankBuilder bank)
+    {
+        AccountBuilder account = AnAccountFrom(bank);
+        CategoryBuilder category = Any<CategoryBuilder>();
+        TransactionBuilder aTransaction = ATransactionFrom(account, category);
+        TransactionBuilder anotherTransaction = ATransactionFrom(account, category);
+
+        this.Feed(bank);
+        this.Feed(account);
+        this.Feed(category);
+        this.FeedNextIdsOf(aTransaction, anotherTransaction);
+        this.Feed(AccountStatementFrom(bank, account, aTransaction, anotherTransaction));
+
+        await this.Verify(bank, account, [], aTransaction, anotherTransaction);
+    }
+
+    private async Task Verify(BankBuilder expectedBank, AccountBuilder expectedAccount,
+        CategoryBuilder[] expectedCategories, params TransactionBuilder[] expectedTransactions)
     {
         await this.sut.Execute(TheFileName, TheStream);
 
@@ -65,6 +82,12 @@ public class ImportBankStatementTests
 
         Account actualAccount = await this.accountRepository.By(expectedAccount.Id);
         actualAccount.Snapshot.Should().Be(expectedAccount.ToSnapshot());
+
+        foreach (CategoryBuilder expectedCategory in expectedCategories)
+        {
+            Category actualCategory = await this.categoryRepository.By(expectedCategory.Id);
+            actualCategory.Snapshot.Should().Be(expectedCategory.ToSnapshot());
+        }
 
         foreach (TransactionBuilder expectedTransaction in expectedTransactions)
         {
@@ -79,13 +102,16 @@ public class ImportBankStatementTests
     private void Feed(AccountBuilder account) =>
         this.accountRepository.FeedByExternalId(new ExternalId(account.BankId, account.Number), account.Build());
 
-    private void FeedNextId(BankBuilder bank) =>
+    private void Feed(CategoryBuilder category) =>
+        this.categoryRepository.Feed(category.Build());
+
+    private void FeedNextIdOf(BankBuilder bank) =>
         this.bankRepository.NextId = () => bank.Id;
 
-    private void FeedNextId(AccountBuilder account) =>
+    private void FeedNextIdOf(AccountBuilder account) =>
         this.accountRepository.NextId = () => account.Id;
 
-    private void FeedNextId(params TransactionBuilder[] transactions)
+    private void FeedNextIdsOf(params TransactionBuilder[] transactions)
     {
         int nextIdIndex = 0;
         this.transactionRepository.NextId = () => transactions[nextIdIndex++].Id;
@@ -102,8 +128,11 @@ public class ImportBankStatementTests
         public static AccountBuilder AnAccountFrom(BankBuilder bank) =>
             Any<AccountBuilder>() with { BankId = bank.Id };
 
-        public static TransactionBuilder ATransactionFrom(AccountBuilder account) =>
-            Any<TransactionBuilder>() with { AccountId = account.Id, CategoryId = null, CategoryLabel = null };
+        public static TransactionBuilder ATransactionFrom(AccountBuilder account, CategoryBuilder? category = null) =>
+            Any<TransactionBuilder>() with
+            {
+                AccountId = account.Id, CategoryId = category?.Id, CategoryLabel = category?.Label
+            };
 
         public static AccountStatement AccountStatementFrom(BankBuilder bank, AccountBuilder account,
             params TransactionBuilder[] transactions)

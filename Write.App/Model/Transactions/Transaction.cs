@@ -12,8 +12,9 @@ public class Transaction : DomainEntity
     public TransactionSnapshot Snapshot =>
         new(this.Id, this.accountId, this.externalId, this.amount, this.label, this.date, this.categoryId);
 
-    internal Transaction(Guid id, Guid accountId, string externalId, decimal amount, string label, DateTime date) :
-        this(id, accountId, externalId, amount, label, date, null)
+    internal Transaction(Guid id, Guid accountId, string externalId, decimal amount, string label, DateTime date,
+        Category? category) :
+        this(id, accountId, externalId, amount, label, date, category?.Id)
     {
     }
 
