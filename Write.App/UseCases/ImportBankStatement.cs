@@ -14,9 +14,9 @@ public class ImportBankStatement(
         Bank bank = await this.EnsureBankExists(statement);
         Account account = await this.EnsureAccountExists(bank, statement);
         account.Synchronize(statement.Balance, statement.BalanceDate);
-        Transaction[] transactions = await this.NewTransactions(account, statement);
+        (Category[] categories, Transaction[] transactions) = await this.NewTransactions(account, statement);
 
-        await this.Save(bank, account, transactions);
+        await this.Save(bank, account, categories, transactions);
     }
 
     private async Task<Bank> EnsureBankExists(AccountStatement statement)
@@ -42,21 +42,45 @@ public class ImportBankStatement(
         return bank.TrackAccount(id, statement.AccountNumber, statement.Balance, statement.BalanceDate);
     }
 
-    private async Task<Transaction[]> NewTransactions(Account account, AccountStatement statement)
+    private async Task<(Category[], Transaction[])> NewTransactions(Account account, AccountStatement statement)
     {
         TransactionStatement[] newTransactionStatements = await this.NewTransactionStatements(statement);
 
+        Dictionary<string, Category> newCategories = [];
         List<Transaction> newTransactions = [];
         foreach (TransactionStatement newTransactionStatement in newTransactionStatements)
         {
             Guid id = await transactionRepository.NextIdentity();
-            Category? category = await this.CategoryFrom(newTransactionStatement);
+            if (newTransactionStatement.Category == null)
+            {
+                newTransactions.Add(account.AttachTransaction(id, newTransactionStatement.TransactionIdentifier,
+                    newTransactionStatement.Amount, newTransactionStatement.Label, newTransactionStatement.Date, null));
+                
+                continue;
+            }
+
+            if (newCategories.ContainsKey(newTransactionStatement.Category))
+            {
+                newTransactions.Add(account.AttachTransaction(id, newTransactionStatement.TransactionIdentifier,
+                    newTransactionStatement.Amount, newTransactionStatement.Label, newTransactionStatement.Date, newCategories[newTransactionStatement.Category]));
+                
+                continue;
+            }
+
+            Category? category = await categoryRepository.ByOrDefault(newTransactionStatement.Category);
+            if (category == null)
+            {
+                category = new Category(await categoryRepository.NextIdentity(), newTransactionStatement.Category!,
+                    newTransactionStatement.Category!);
+
+                newCategories.Add(newTransactionStatement.Category, category);
+            }
 
             newTransactions.Add(account.AttachTransaction(id, newTransactionStatement.TransactionIdentifier,
                 newTransactionStatement.Amount, newTransactionStatement.Label, newTransactionStatement.Date, category));
         }
 
-        return newTransactions.ToArray();
+        return (newCategories.Values.ToArray(), newTransactions.ToArray());
     }
 
     private async Task<TransactionStatement[]> NewTransactionStatements(AccountStatement statement)
@@ -68,18 +92,12 @@ public class ImportBankStatement(
         return statement.Transactions.Where(t => unknownExternalIds.Contains(t.TransactionIdentifier)).ToArray();
     }
 
-    private async Task<Category?> CategoryFrom(TransactionStatement statement)
-    {
-        if (statement.Category == null)
-            return null;
-
-        return await categoryRepository.By(statement.Category);
-    }
-
-    private async Task Save(Bank bank, Account account, Transaction[] transactions)
+    private async Task Save(Bank bank, Account account, Category[] categories, Transaction[] transactions)
     {
         await bankRepository.Save(bank);
         await accountRepository.Save(account);
+        foreach (Category category in categories)
+            await categoryRepository.Save(category);
         foreach (Transaction transaction in transactions)
             await transactionRepository.Save(transaction);
     }

@@ -56,10 +56,9 @@ public class ImportBankStatementTests
     }
 
     [Theory, RandomData]
-    public async Task Should_assign_existing_category_to_transactions(BankBuilder bank)
+    public async Task Should_assign_existing_category_to_transactions(BankBuilder bank, CategoryBuilder category)
     {
         AccountBuilder account = AnAccountFrom(bank);
-        CategoryBuilder category = Any<CategoryBuilder>();
         TransactionBuilder aTransaction = ATransactionFrom(account, category);
         TransactionBuilder anotherTransaction = ATransactionFrom(account, category);
 
@@ -69,7 +68,24 @@ public class ImportBankStatementTests
         this.FeedNextIdsOf(aTransaction, anotherTransaction);
         this.Feed(AccountStatementFrom(bank, account, aTransaction, anotherTransaction));
 
-        await this.Verify(bank, account, [], aTransaction, anotherTransaction);
+        await this.Verify(bank, account, [category], aTransaction, anotherTransaction);
+    }
+
+    [Theory, RandomData]
+    public async Task Should_assign_new_category_to_transactions(BankBuilder bank, CategoryBuilder category)
+    {
+        AccountBuilder account = AnAccountFrom(bank);
+        TransactionBuilder aTransaction = ATransactionFrom(account, category);
+        TransactionBuilder anotherTransaction = ATransactionFrom(account, category);
+
+        this.Feed(bank);
+        this.Feed(account);
+        this.FeedNextIdsOf(category);
+        this.FeedNextIdsOf(aTransaction, anotherTransaction);
+        this.Feed(AccountStatementFrom(bank, account, aTransaction, anotherTransaction));
+
+        await this.Verify(bank, account, [category with { Keywords = category.Label }], aTransaction,
+            anotherTransaction);
     }
 
     private async Task Verify(BankBuilder expectedBank, AccountBuilder expectedAccount,
@@ -110,6 +126,12 @@ public class ImportBankStatementTests
 
     private void FeedNextIdOf(AccountBuilder account) =>
         this.accountRepository.NextId = () => account.Id;
+
+    private void FeedNextIdsOf(params CategoryBuilder[] categories)
+    {
+        int nextIdIndex = 0;
+        this.categoryRepository.NextId = () => categories[nextIdIndex++].Id;
+    }
 
     private void FeedNextIdsOf(params TransactionBuilder[] transactions)
     {
