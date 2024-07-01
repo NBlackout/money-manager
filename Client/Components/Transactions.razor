@@ -1,6 +1,6 @@
-﻿@if (transactions != null)
+﻿@if (Inflow != null)
 {
-    <h3>Transactions</h3>
+    <h3>Entrées</h3>
     <table class="align-middle table table-hover table-sm">
         <thead class="table-light">
         <tr>
@@ -12,7 +12,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (TransactionSummaryPresentation transaction in transactions)
+        @foreach (TransactionSummaryPresentation transaction in Inflow)
         {
             <tr>
                 <td>
@@ -31,7 +31,7 @@
                 </td>
                 <td>@transaction.Label</td>
                 <td class="text-end">
-                    <span class="@(transaction.Amount > 0 ? "text-success" : "text-danger")">@transaction.Amount €</span>
+                    <span class="text-success">@transaction.Amount €</span>
                 </td>
                 <td class="text-end">@transaction.Date.ToShortDateString()</td>
             </tr>
@@ -41,10 +41,57 @@
         <tr>
             <td colspan="3" class="text-end fw-bold">Total</td>
             <td class="text-end">
-                @{
-                    decimal total = transactions.Sum(t => t.Amount);
-                }
-                <span class="@(total > 0 ? "text-success" : "text-danger")">@total €</span>
+                <span class="text-success">@Inflow.Sum(t => t.Amount) €</span>
+            </td>
+            <td></td>
+        </tr>
+        </tfoot>
+    </table>
+}
+@if (Outflow != null)
+{
+    <h3>Sorties</h3>
+    <table class="align-middle table table-hover table-sm">
+        <thead class="table-light">
+        <tr>
+            <th></th>
+            <th>Category</th>
+            <th class="transaction-label">Label</th>
+            <th>Amount</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (TransactionSummaryPresentation transaction in Outflow)
+        {
+            <tr>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-link py-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <small class="oi oi-tag"></small>
+                        </button>
+                        <TransactionLabelAssignment Id="@transaction.Id" OnCategoryAssigned="OnCategoryAssigned"></TransactionLabelAssignment>
+                    </div>
+                </td>
+                <td>
+                    @if (transaction.Category != null)
+                    {
+                        <span>@transaction.Category</span>
+                    }
+                </td>
+                <td>@transaction.Label</td>
+                <td class="text-end">
+                    <span class="text-danger">@transaction.Amount €</span>
+                </td>
+                <td class="text-end">@transaction.Date.ToShortDateString()</td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="3" class="text-end fw-bold">Total</td>
+            <td class="text-end">
+                <span class="text-danger">@Outflow.Sum(t => t.Amount) €</span>
             </td>
             <td></td>
         </tr>
