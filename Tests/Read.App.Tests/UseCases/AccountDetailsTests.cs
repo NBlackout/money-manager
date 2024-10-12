@@ -15,7 +15,7 @@ public class AccountDetailsTests
     }
 
     [Theory, RandomData]
-    public async Task Should_retrieve_account_details(AccountDetailsPresentation expected)
+    public async Task Retrieves_account_details(AccountDetailsPresentation expected)
     {
         this.dataSource.Feed(expected.Id, expected);
         AccountDetailsPresentation actual = await this.sut.Execute(expected.Id);

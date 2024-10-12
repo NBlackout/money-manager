@@ -19,7 +19,7 @@ public class CategorizationSuggestionsTests
     }
 
     [Fact]
-    public async Task Should_give_suggestion_on_exact_match()
+    public async Task Gives_suggestion_on_exact_match()
     {
         CategoryWithKeywords insuranceCategory = ACategoryMatching("Insurance");
         CategoryWithKeywords travelCategory = ACategoryMatching("Travel");
@@ -36,7 +36,7 @@ public class CategorizationSuggestionsTests
     }
 
     [Fact]
-    public async Task Should_give_suggestion_on_partial_match()
+    public async Task Gives_suggestion_on_partial_match()
     {
         CategoryWithKeywords category = ACategoryMatching("taxi");
         this.categoriesDataSource.Feed(category);
@@ -48,7 +48,7 @@ public class CategorizationSuggestionsTests
     }
 
     [Fact]
-    public async Task Should_exclude_transaction_not_matching_any_keywords()
+    public async Task Excludes_transaction_not_matching_any_keywords()
     {
         CategoryWithKeywords category = ACategoryMatching("Food");
         this.categoriesDataSource.Feed(category);
@@ -60,7 +60,7 @@ public class CategorizationSuggestionsTests
     }
     
     [Fact]
-    public async Task Should_exclude_transaction_matching_multiple_categories()
+    public async Task Excludes_transaction_matching_multiple_categories()
     {
         CategoryWithKeywords fuelCategory = ACategoryMatching("Fuel");
         CategoryWithKeywords cardCategory = ACategoryMatching("Card");

@@ -20,7 +20,7 @@ public sealed class HttpCategoryGatewayTests : HostFixture
         services.AddReadDependencies().AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
     [Theory, RandomData]
-    public async Task Should_retrieve_category_summaries(CategorySummaryPresentation[] expected)
+    public async Task Retrieves_category_summaries(CategorySummaryPresentation[] expected)
     {
         this.httpMessageHandler.Feed($"{ApiUrl}/categories", expected);
         CategorySummaryPresentation[] actual = await this.sut.Summaries();

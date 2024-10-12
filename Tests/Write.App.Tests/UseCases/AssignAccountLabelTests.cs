@@ -13,7 +13,7 @@ public class AssignAccountLabelTests
     }
 
     [Theory, RandomData]
-    public async Task Should_assign_account_label(AccountBuilder account)
+    public async Task Assigns_account_label(AccountBuilder account)
     {
         this.repository.Feed(account.Build());
 

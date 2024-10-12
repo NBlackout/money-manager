@@ -19,7 +19,7 @@ public sealed class RepositoryAccountSummariesDataSourceTests : HostFixture
         services.AddWriteDependencies().AddReadDependencies();
 
     [Theory, RandomData]
-    public async Task Should_retrieve_summaries(AccountBuilder[] accounts)
+    public async Task Retrieves_summaries(AccountBuilder[] accounts)
     {
         this.accountRepository.Feed(accounts.Select(a => a.Build()).ToArray());
 

@@ -17,7 +17,7 @@ public sealed class CsvBankStatementParserTests : HostFixture
         services.AddWriteDependencies();
 
     [Fact]
-    public async Task Should_extract_account_statement()
+    public async Task Extracts_account_statement()
     {
         AccountStatement expected = new("00012345000", 12345.67m, DateTime.Parse("2000-01-01"),
             new TransactionStatement("1", -300.21m, "The debit", DateTime.Parse("2023-04-18"), "Debit parent"),

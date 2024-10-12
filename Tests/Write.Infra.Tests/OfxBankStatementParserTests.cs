@@ -18,7 +18,7 @@ public sealed class OfxBankStatementParserTests : HostFixture
         services.AddWriteDependencies();
 
     [Fact]
-    public async Task Should_extract_account_statement()
+    public async Task Extracts_account_statement()
     {
         AccountStatement expected = new("00012345000", 12345.67m, DateTime.Parse("2023-04-13"),
             new TransactionStatement("TheDebitId", -300.21m, "The debit", DateTime.Parse("2023-04-18"), null),
@@ -28,7 +28,7 @@ public sealed class OfxBankStatementParserTests : HostFixture
     }
 
     [Fact]
-    public async Task Should_tell_when_bank_identifier_is_missing()
+    public async Task Tells_when_bank_identifier_is_missing()
     {
         await this.Invoking(s => s.Verify_Failure(new MemoryStream(MissingBankIdentifierOfxSample)))
             .Should()
@@ -36,7 +36,7 @@ public sealed class OfxBankStatementParserTests : HostFixture
     }
 
     [Fact]
-    public async Task Should_tell_when_account_number_is_missing()
+    public async Task Tells_when_account_number_is_missing()
     {
         await this.Invoking(s => s.Verify_Failure(new MemoryStream(MissingAccountNumberOfxSample)))
             .Should()
@@ -44,7 +44,7 @@ public sealed class OfxBankStatementParserTests : HostFixture
     }
 
     [Fact]
-    public async Task Should_tell_when_balance_is_missing()
+    public async Task Tells_when_balance_is_missing()
     {
         await this.Invoking(s => s.Verify_Failure(new MemoryStream(MissingBalanceOfxSample)))
             .Should()

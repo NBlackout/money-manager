@@ -13,7 +13,7 @@ public class ResumeAccountTrackingTests
     }
 
     [Theory, RandomData]
-    public async Task Should_resume_account_tracking(Guid id)
+    public async Task Resumes_account_tracking(Guid id)
     {
         await this.sut.Execute(id);
         this.gateway.ResumeTrackingCalls.Should().Equal(id);

@@ -20,14 +20,14 @@ public sealed class RepositoryCategoriesWithKeywordsDataSourceTests : HostFixtur
         services.AddWriteDependencies().AddReadDependencies();
 
     [Theory, RandomData]
-    public async Task Should_retrieve_categories(CategoryBuilder[] expected)
+    public async Task Retrieves_categories(CategoryBuilder[] expected)
     {
         this.Feed(expected);
         await this.Verify(expected);
     }
 
     [Fact]
-    public async Task Should_exclude_ones_without_keywords()
+    public async Task Excludes_ones_without_keywords()
     {
         this.Feed(
             Any<CategoryBuilder>() with { Keywords = "" },

@@ -13,7 +13,7 @@ public class AssignTransactionCategoryTests
     }
 
     [Theory, RandomData]
-    public async Task Should_assign_transaction_category(TransactionBuilder transaction)
+    public async Task Assigns_transaction_category(TransactionBuilder transaction)
     {
         this.repository.Feed(transaction.Build());
 
