@@ -13,7 +13,7 @@ public class CreateCategoryTests
     }
 
     [Theory, RandomData]
-    public async Task Should_create_category(CategorySnapshot expected)
+    public async Task Creates_category(CategorySnapshot expected)
     {
         await this.sut.Execute(expected.Id, expected.Label, expected.Keywords);
         Category actual = await this.repository.By(expected.Id);

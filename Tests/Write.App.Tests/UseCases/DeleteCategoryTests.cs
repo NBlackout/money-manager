@@ -12,7 +12,7 @@ public class DeleteCategoryTests
     }
 
     [Theory, RandomData]
-    public async Task Should_delete_category(CategoryBuilder category)
+    public async Task Deletes_category(CategoryBuilder category)
     {
         this.repository.Feed(category.Build());
         await this.sut.Execute(category.Id);

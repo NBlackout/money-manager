@@ -20,7 +20,7 @@ public class ImportBankStatementTests
     }
 
     [Theory, RandomData]
-    public async Task Should_track_unknown_bank_and_account(AccountBuilder account)
+    public async Task Tracks_unknown_bank_and_account(AccountBuilder account)
     {
         this.FeedNextIdOf(account);
         this.Feed(AccountStatementFrom(account));
@@ -29,7 +29,7 @@ public class ImportBankStatementTests
     }
 
     [Theory, RandomData]
-    public async Task Should_track_unknown_account(AccountBuilder account)
+    public async Task Tracks_unknown_account(AccountBuilder account)
     {
         this.FeedNextIdOf(account);
         this.Feed(AccountStatementFrom(account));
@@ -38,7 +38,7 @@ public class ImportBankStatementTests
     }
 
     [Theory, RandomData]
-    public async Task Should_synchronize_known_account(AccountBuilder account)
+    public async Task Synchronizes_known_account(AccountBuilder account)
     {
         TransactionBuilder aTransaction = ATransactionFrom(account);
         TransactionBuilder anotherTransaction = ATransactionFrom(account);
@@ -51,7 +51,7 @@ public class ImportBankStatementTests
     }
 
     [Theory, RandomData]
-    public async Task Should_assign_existing_category_to_transactions(AccountBuilder account, CategoryBuilder category)
+    public async Task Assigns_existing_category_to_transactions(AccountBuilder account, CategoryBuilder category)
     {
         TransactionBuilder aTransaction = ATransactionFrom(account, category);
         TransactionBuilder anotherTransaction = ATransactionFrom(account, category);
@@ -65,7 +65,7 @@ public class ImportBankStatementTests
     }
 
     [Theory, RandomData]
-    public async Task Should_assign_new_category_to_transactions(AccountBuilder account, CategoryBuilder category)
+    public async Task Assigns_new_category_to_transactions(AccountBuilder account, CategoryBuilder category)
     {
         TransactionBuilder aTransaction = ATransactionFrom(account, category);
         TransactionBuilder anotherTransaction = ATransactionFrom(account, category);

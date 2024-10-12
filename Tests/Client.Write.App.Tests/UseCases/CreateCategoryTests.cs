@@ -13,7 +13,7 @@ public class CreateCategoryTests
     }
 
     [Theory, RandomData]
-    public async Task Should_create_category(Guid id, string label, string keywords)
+    public async Task Creates_category(Guid id, string label, string keywords)
     {
         await this.sut.Execute(id, label, keywords);
         this.gateway.CreateCalls.Should().Equal((id, label, keywords));

@@ -13,7 +13,7 @@ public class CategorizationSuggestionsTests
     }
 
     [Theory, RandomData]
-    public async Task Should_retrieve_account_summaries(CategorizationSuggestionPresentation[] expected)
+    public async Task Retrieves_account_summaries(CategorizationSuggestionPresentation[] expected)
     {
         this.gateway.Feed(expected);
         CategorizationSuggestionPresentation[] actual = await this.sut.Execute();

@@ -20,7 +20,7 @@ public sealed class RepositoryTransactionsToCategorizeDataSourceTests : HostFixt
         services.AddWriteDependencies().AddReadDependencies();
 
     [Fact]
-    public async Task Should_retrieve_transactions_not_already_categorized()
+    public async Task Retrieves_transactions_not_already_categorized()
     {
         TransactionBuilder[] expected = [ATransactionWithoutCategory(), ATransactionWithoutCategory()];
         this.Feed(expected);
@@ -28,7 +28,7 @@ public sealed class RepositoryTransactionsToCategorizeDataSourceTests : HostFixt
     }
 
     [Fact]
-    public async Task Should_exclude_ones_already_categorized()
+    public async Task Excludes_ones_already_categorized()
     {
         this.Feed(ATransactionWithCategory());
         await this.Verify(Array.Empty<TransactionBuilder>());

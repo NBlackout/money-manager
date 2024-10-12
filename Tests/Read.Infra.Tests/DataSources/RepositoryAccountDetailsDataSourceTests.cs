@@ -19,7 +19,7 @@ public sealed class RepositoryAccountDetailsDataSourceTests : HostFixture
         services.AddWriteDependencies().AddReadDependencies();
 
     [Theory, RandomData]
-    public async Task Should_retrieve_account_details(AccountBuilder account)
+    public async Task Retrieves_account_details(AccountBuilder account)
     {
         this.accountRepository.Feed(account.Build());
         AccountDetailsPresentation actual = await this.sut.By(account.Id);

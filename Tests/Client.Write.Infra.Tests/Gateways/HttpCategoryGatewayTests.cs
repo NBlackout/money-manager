@@ -21,14 +21,14 @@ public sealed class HttpCategoryGatewayTests : HostFixture
         services.AddWriteDependencies().AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
     [Theory, RandomData]
-    public async Task Should_create(Guid id, string label, string keywords)
+    public async Task Creates(Guid id, string label, string keywords)
     {
         await this.sut.Create(id, label, keywords);
         this.Verify_Post($"{ApiUrl}/categories", new { Id = id, Label = label, Keywords = keywords });
     }
 
     [Theory, RandomData]
-    public async Task Should_delete(Guid id)
+    public async Task Deletes(Guid id)
     {
         await this.sut.Delete(id);
         this.Verify_Delete($"{ApiUrl}/categories/{id}");

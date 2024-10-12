@@ -20,7 +20,7 @@ public sealed class HttpCategorizationGatewayTests : HostFixture
         services.AddReadDependencies().AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
     [Theory, RandomData]
-    public async Task Should_retrieve_categorization_suggestions(CategorizationSuggestionPresentation[] expected)
+    public async Task Retrieves_categorization_suggestions(CategorizationSuggestionPresentation[] expected)
     {
         this.httpMessageHandler.Feed($"{ApiUrl}/categorization", expected);
         CategorizationSuggestionPresentation[] actual = await this.sut.Suggestions();

@@ -21,14 +21,14 @@ public sealed class HttpAccountGatewayTests : HostFixture
         services.AddWriteDependencies().AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
     [Theory, RandomData]
-    public async Task Should_stop_tracking(Guid id)
+    public async Task Stops_tracking(Guid id)
     {
         await this.sut.StopTracking(id);
         this.Verify_Put($"{ApiUrl}/accounts/{id}/tracking", new { Enabled = false });
     }
 
     [Theory, RandomData]
-    public async Task Should_resume_tracking(Guid id)
+    public async Task Resumes_tracking(Guid id)
     {
         await this.sut.ResumeTracking(id);
         this.Verify_Put($"{ApiUrl}/accounts/{id}/tracking", new { Enabled = true });
@@ -36,7 +36,7 @@ public sealed class HttpAccountGatewayTests : HostFixture
 
 
     [Theory, RandomData]
-    public async Task Should_assign_label(Guid id, string label)
+    public async Task Assigns_label(Guid id, string label)
     {
         await this.sut.AssignLabel(id, label);
         this.Verify_Put($"{ApiUrl}/accounts/{id}/label", new { Label = label });

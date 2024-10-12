@@ -17,7 +17,7 @@ public class BankStatementParserTests : HostFixture
         services.AddWriteDependencies();
 
     [Fact]
-    public async Task Should_extract_ofx_account_statement()
+    public async Task Extracts_ofx_account_statement()
     {
         AccountStatement expected = new("00012345000", 12345.67m, DateTime.Parse("2023-04-13"),
             new TransactionStatement("TheDebitId", -300.21m, "The debit", DateTime.Parse("2023-04-18"), null),
@@ -27,7 +27,7 @@ public class BankStatementParserTests : HostFixture
     }
 
     [Fact]
-    public async Task Should_extract_csv_account_statement()
+    public async Task Extracts_csv_account_statement()
     {
         AccountStatement expected = new("00012345000", 12345.67m, DateTime.Parse("2000-01-01"),
             new TransactionStatement("1", -300.21m, "The debit", DateTime.Parse("2023-04-18"), "Debit parent"),

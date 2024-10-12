@@ -22,7 +22,7 @@ public sealed class RepositoryTransactionsOfMonthDataSourceTests : HostFixture
         services.AddWriteDependencies().AddReadDependencies();
 
     [Theory, RandomData]
-    public async Task Should_retrieve_transactions_of_month(Guid accountId)
+    public async Task Retrieves_transactions_of_month(Guid accountId)
     {
         TransactionBuilder aTransaction = ATransactionOn(accountId, DateTime.Parse("2023-04-03"));
         TransactionBuilder anotherTransaction = ATransactionOn(accountId, DateTime.Parse("2023-04-16"));
@@ -32,14 +32,14 @@ public sealed class RepositoryTransactionsOfMonthDataSourceTests : HostFixture
     }
 
     [Theory, RandomData]
-    public async Task Should_not_give_transactions_of_another_account(TransactionBuilder transaction)
+    public async Task Does_not_give_transactions_of_another_account(TransactionBuilder transaction)
     {
         this.Feed(transaction);
         await this.Verify(Another(transaction.AccountId), transaction.Date.Year, transaction.Date.Month, []);
     }
 
     [Theory, RandomData]
-    public async Task Should_exclude_transactions_of_another_period(TransactionBuilder transaction)
+    public async Task Excludes_transactions_of_another_period(TransactionBuilder transaction)
     {
         this.Feed(transaction);
         await this.Verify(transaction.AccountId, Another(transaction.Date.Year), transaction.Date.Month, []);

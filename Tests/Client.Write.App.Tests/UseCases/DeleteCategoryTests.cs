@@ -13,7 +13,7 @@ public class DeleteCategoryTests
     }
 
     [Theory, RandomData]
-    public async Task Should_delete_category(Guid id)
+    public async Task Deletes_category(Guid id)
     {
         await this.sut.Execute(id);
         this.gateway.DeleteCalls.Should().Equal(id);

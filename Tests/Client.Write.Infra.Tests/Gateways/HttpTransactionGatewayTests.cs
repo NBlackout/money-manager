@@ -21,7 +21,7 @@ public sealed class HttpTransactionGatewayTests : HostFixture
         services.AddWriteDependencies().AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
     [Theory, RandomData]
-    public async Task Should_assign_category(Guid transactionId, Guid categoryId)
+    public async Task Assigns_category(Guid transactionId, Guid categoryId)
     {
         await this.sut.AssignCategory(transactionId, categoryId);
         this.Verify_Put($"{ApiUrl}/transactions/{transactionId}/category", new { CategoryId = categoryId });

@@ -13,7 +13,7 @@ public class AssignAccountLabelTests
     }
 
     [Theory, RandomData]
-    public async Task Should_assign_account_label(Guid id, string label)
+    public async Task Assigns_account_label(Guid id, string label)
     {
         await this.sut.Execute(id, label);
         this.gateway.AssignLabelCalls.Should().Equal((id, label));
