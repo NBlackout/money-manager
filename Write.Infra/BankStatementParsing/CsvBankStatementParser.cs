@@ -4,9 +4,17 @@ namespace Write.Infra.BankStatementParsing;
 
 public class CsvBankStatementParser
 {
+    private const char ColumnSeparator = ';';
+    private const int TransactionDateIndex = 0;
+    private const int TransactionLabelIndex = 2;
+    private const int TransactionCategoryIndex = 4;
+    private const int TransactionAmountIndex = 5;
+    private const int AccountNumberIndex = 7;
+    private const int AccountBalanceIndex = 9;
+
     public async Task<AccountStatement> ExtractAccountStatement(Stream stream)
     {
-        List<string> lines = await LinesFrom(stream);
+        List<string> lines = await ReadLinesFrom(stream);
 
         List<TransactionStatement> transactions = [];
         string? accountNumber = null;
@@ -14,43 +22,47 @@ public class CsvBankStatementParser
 
         foreach (string line in lines.Skip(1))
         {
-            string[] columns = line.Split(';');
+            string[] columns = line.Split(ColumnSeparator);
 
-            if (accountNumber == null)
-            {
-                accountNumber = columns[7];
-                balance = ParseDecimal(columns[9]);
-            }
+            accountNumber ??= columns[AccountNumberIndex];
+            balance = DecimalOrDefault(columns[AccountBalanceIndex]) ?? balance;
 
-            string transactionIdentifier = (transactions.Count + 1).ToString();
+            string transactionIdentifier = NextIdentifierUsing(transactions);
             transactions.Add(TransactionFrom(transactionIdentifier, columns));
         }
 
         return AccountFrom(accountNumber!, balance!.Value, transactions.ToArray());
     }
 
-    private static async Task<List<string>> LinesFrom(Stream stream)
+    private static async Task<List<string>> ReadLinesFrom(Stream stream)
     {
-        using StreamReader reader = new(stream);
         List<string> lines = [];
 
+        using StreamReader reader = new(stream);
         while (!reader.EndOfStream)
             lines.Add((await reader.ReadLineAsync())!.Replace("\"", string.Empty));
+
         return lines;
     }
 
+    private static string NextIdentifierUsing(List<TransactionStatement> transactions) =>
+        $"{transactions.Count + 1}";
+
     private static TransactionStatement TransactionFrom(string identifier, string[] columns)
     {
-        decimal amount = ParseDecimal(columns[5]);
-        string label = columns[2];
-        DateTime date = DateTime.Parse(columns[0]);
-        string category = columns[4];
+        decimal amount = ParseDecimal(columns[TransactionAmountIndex]);
+        string label = columns[TransactionLabelIndex];
+        DateTime date = DateTime.Parse(columns[TransactionDateIndex]);
+        string category = columns[TransactionCategoryIndex];
 
         return new TransactionStatement(identifier, amount, label, date, category);
     }
 
     private static AccountStatement AccountFrom(string number, decimal balance, TransactionStatement[] transactions) =>
         new(number, balance, DateTime.Parse("2000-01-01"), transactions.ToArray());
+
+    private static decimal? DecimalOrDefault(string value) =>
+        string.IsNullOrEmpty(value) is false ? ParseDecimal(value) : null;
 
     private static decimal ParseDecimal(string value) =>
         decimal.Parse(value.Replace(",", ".").Replace(" ", string.Empty), CultureInfo.InvariantCulture);
