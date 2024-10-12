@@ -39,7 +39,7 @@ public class ImportBankStatement(
             Guid id = await transactionRepository.NextIdentity();
             if (newTransactionStatement.Category == null)
             {
-                newTransactions.Add(account.AttachTransaction(id, newTransactionStatement.TransactionIdentifier,
+                newTransactions.Add(account.AttachTransaction(id, newTransactionStatement.Identifier,
                     newTransactionStatement.Amount, newTransactionStatement.Label, newTransactionStatement.Date, null));
 
                 continue;
@@ -47,7 +47,7 @@ public class ImportBankStatement(
 
             if (newCategories.ContainsKey(newTransactionStatement.Category))
             {
-                newTransactions.Add(account.AttachTransaction(id, newTransactionStatement.TransactionIdentifier,
+                newTransactions.Add(account.AttachTransaction(id, newTransactionStatement.Identifier,
                     newTransactionStatement.Amount, newTransactionStatement.Label, newTransactionStatement.Date,
                     newCategories[newTransactionStatement.Category]));
 
@@ -63,7 +63,7 @@ public class ImportBankStatement(
                 newCategories.Add(newTransactionStatement.Category, category);
             }
 
-            newTransactions.Add(account.AttachTransaction(id, newTransactionStatement.TransactionIdentifier,
+            newTransactions.Add(account.AttachTransaction(id, newTransactionStatement.Identifier,
                 newTransactionStatement.Amount, newTransactionStatement.Label, newTransactionStatement.Date, category));
         }
 
@@ -73,10 +73,10 @@ public class ImportBankStatement(
     private async Task<TransactionStatement[]> NewTransactionStatements(AccountStatement statement)
     {
         string[] unknownExternalIds = await transactionRepository.UnknownExternalIds(
-            statement.Transactions.Select(t => t.TransactionIdentifier).ToArray()
+            statement.Transactions.Select(t => t.Identifier).ToArray()
         );
 
-        return statement.Transactions.Where(t => unknownExternalIds.Contains(t.TransactionIdentifier)).ToArray();
+        return statement.Transactions.Where(t => unknownExternalIds.Contains(t.Identifier)).ToArray();
     }
 
     private async Task Save(Account account, Category[] categories, Transaction[] transactions)
