@@ -72,9 +72,9 @@ namespace Shared.TestTooling.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] MissingAccountBalance {
+        public static byte[] MissingAccountBalanceOnNewestTransactions {
             get {
-                object obj = ResourceManager.GetObject("MissingAccountBalance", resourceCulture);
+                object obj = ResourceManager.GetObject("MissingAccountBalanceOnNewestTransactions", resourceCulture);
                 return ((byte[])(obj));
             }
         }
