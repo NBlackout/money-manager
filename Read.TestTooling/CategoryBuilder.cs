@@ -1,8 +1,10 @@
-﻿using Shared.Presentation;
+﻿using System.Diagnostics.CodeAnalysis;
+using Shared.Presentation;
 using Write.App.Model.Categories;
 
 namespace Read.TestTooling;
 
+[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 public record CategoryBuilder(Guid Id, string Label, string Keywords)
 {
     public Category Build() =>

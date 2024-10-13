@@ -56,7 +56,7 @@ public class CategorizationSuggestionsTests
         TransactionToCategorize transaction = ATransactionLabeled("Electricity bill");
         this.transactionsToCategorizeDataSource.Feed(transaction);
 
-        await this.Verify(Array.Empty<CategorizationSuggestionPresentation>());
+        await this.Verify([]);
     }
     
     [Fact]
@@ -69,7 +69,7 @@ public class CategorizationSuggestionsTests
         TransactionToCategorize transaction = ATransactionLabeled("Fuel payment by card");
         this.transactionsToCategorizeDataSource.Feed(transaction);
 
-        await this.Verify(Array.Empty<CategorizationSuggestionPresentation>());
+        await this.Verify([]);
     }
     private async Task Verify(params CategorizationSuggestionPresentation[] expected)
     {

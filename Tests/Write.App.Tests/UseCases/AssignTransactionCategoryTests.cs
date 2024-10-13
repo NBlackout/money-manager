@@ -1,6 +1,4 @@
-﻿using static Shared.TestTooling.Randomizer;
-
-namespace Write.App.Tests.UseCases;
+﻿namespace Write.App.Tests.UseCases;
 
 public class AssignTransactionCategoryTests
 {
@@ -13,11 +11,10 @@ public class AssignTransactionCategoryTests
     }
 
     [Theory, RandomData]
-    public async Task Assigns_transaction_category(TransactionBuilder transaction)
+    public async Task Assigns_transaction_category(TransactionBuilder transaction, Guid categoryId)
     {
         this.repository.Feed(transaction.Build());
 
-        Guid categoryId = Another(transaction.CategoryId);
         await this.sut.Execute(transaction.Id, categoryId);
 
         Transaction actual = await this.repository.By(transaction.Id);

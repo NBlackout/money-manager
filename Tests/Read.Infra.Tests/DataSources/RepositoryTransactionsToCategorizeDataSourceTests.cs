@@ -31,7 +31,7 @@ public sealed class RepositoryTransactionsToCategorizeDataSourceTests : HostFixt
     public async Task Excludes_ones_already_categorized()
     {
         this.Feed(ATransactionWithCategory());
-        await this.Verify(Array.Empty<TransactionBuilder>());
+        await this.Verify([]);
     }
 
     private async Task Verify(params TransactionBuilder[] expected)

@@ -126,7 +126,7 @@ public class ImportBankStatementTests
 
     internal static class Data
     {
-        public static readonly string TheFileName = "the filename";
+        public const string TheFileName = "the filename";
         public static readonly MemoryStream TheStream = new([0xF0, 0x42]);
 
         public static TransactionBuilder ATransactionFrom(AccountBuilder account, CategoryBuilder? category = null) =>

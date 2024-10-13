@@ -1,7 +1,9 @@
-﻿using Write.App.Model.Transactions;
+﻿using System.Diagnostics.CodeAnalysis;
+using Write.App.Model.Transactions;
 
 namespace Write.TestTooling;
 
+[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 public record TransactionBuilder(
     Guid Id,
     Guid AccountId,

@@ -2,7 +2,7 @@
 
 public class SpyBudgetGateway : IBudgetGateway
 {
-    public List<(Guid, string, decimal)> DefineCalls { get; } = new();
+    public List<(Guid, string, decimal)> DefineCalls { get; } = [];
 
     public Task Define(Guid id, string name, decimal amount)
     {

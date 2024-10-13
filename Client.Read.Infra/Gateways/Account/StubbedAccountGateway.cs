@@ -15,8 +15,8 @@ public class StubbedAccountGateway : IAccountGateway
     public Task<TransactionSummaryPresentation[]> TransactionsOfMonth(Guid id, int year, int month) =>
         Task.FromResult(this.data[(id, year, month)]);
 
-    public void Feed(AccountSummaryPresentation[] summaries) =>
-        this.summaries = summaries;
+    public void Feed(AccountSummaryPresentation[] expected) =>
+        this.summaries = expected;
 
     public void Feed(Guid id, AccountDetailsPresentation expected) =>
         this.details[id] = expected;

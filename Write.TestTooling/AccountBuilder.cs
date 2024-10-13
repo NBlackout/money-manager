@@ -1,7 +1,9 @@
-﻿using Write.App.Model.Accounts;
+﻿using System.Diagnostics.CodeAnalysis;
+using Write.App.Model.Accounts;
 
 namespace Write.TestTooling;
 
+[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 public record AccountBuilder(Guid Id, string Number, string Label, decimal Balance, DateTime BalanceDate)
 {
     public Account Build() =>

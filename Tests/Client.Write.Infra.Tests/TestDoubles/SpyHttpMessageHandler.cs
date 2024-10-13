@@ -2,7 +2,7 @@
 
 internal class SpyHttpMessageHandler : HttpMessageHandler
 {
-    public List<(HttpMethod, string, string)> Calls { get; } = new();
+    public List<(HttpMethod, string, string)> Calls { get; } = [];
 
     protected override async Task<HttpResponseMessage> SendAsync(
         HttpRequestMessage request,

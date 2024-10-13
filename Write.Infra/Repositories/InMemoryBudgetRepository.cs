@@ -5,7 +5,7 @@ namespace Write.Infra.Repositories;
 
 public class InMemoryBudgetRepository : IBudgetRepository
 {
-    private readonly Dictionary<Guid, BudgetSnapshot> data = [];
+    private readonly Dictionary<Guid, BudgetSnapshot> data = new();
 
     public IEnumerable<BudgetSnapshot> Data => this.data.Values.Select(c => c);
 
