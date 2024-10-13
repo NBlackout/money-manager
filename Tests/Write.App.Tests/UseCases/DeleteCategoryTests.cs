@@ -2,7 +2,6 @@
 
 namespace Write.App.Tests.UseCases;
 
-// TODO prevent deletion of used category 
 public class DeleteCategoryTests
 {
     private readonly InMemoryCategoryRepository repository = new();

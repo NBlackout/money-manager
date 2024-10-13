@@ -5,3 +5,13 @@
 - Check naming everywhere
 - Redirect to /accounts after successful synchronization
 - Auto formatting tool
+- Display account balance of given month (along with transactions)
+- Balance date hard-coded to 2020-01-01
+- Categorization table background is white
+- Change transaction category -> dropdown list with search?
+- Prevent deletion of used category
+- Category deduplication
+- DateTime to DateOnly
+- Rename budget in its own use case
+- Change budget amount implies providing begin date
+- Synchronization allows multiple files to be uploaded but only one is working

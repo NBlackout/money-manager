@@ -2,11 +2,11 @@
 
 public class SpyBudgetGateway : IBudgetGateway
 {
-    public List<(Guid, string, decimal)> DefineCalls { get; } = [];
+    public List<(Guid, string, decimal, DateOnly)> DefineCalls { get; } = [];
 
-    public Task Define(Guid id, string name, decimal amount)
+    public Task Define(Guid id, string name, decimal amount, DateOnly beginDate)
     {
-        this.DefineCalls.Add((id, name, amount));
+        this.DefineCalls.Add((id, name, amount, beginDate));
 
         return Task.CompletedTask;
     }

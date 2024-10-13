@@ -13,9 +13,9 @@ public class DefineBudgetTests
     }
 
     [Theory, RandomData]
-    public async Task Defines_budget(Guid id, string name, decimal amount)
+    public async Task Defines_budget(Guid id, string name, decimal amount, DateOnly beginDate)
     {
-        await this.sut.Execute(id, name, amount);
-        this.gateway.DefineCalls.Should().Equal((id, name, amount));
+        await this.sut.Execute(id, name, amount, beginDate);
+        this.gateway.DefineCalls.Should().Equal((id, name, amount, beginDate));
     }
 }
