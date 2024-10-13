@@ -23,7 +23,7 @@ public sealed class HttpAccountGatewayTests : HostFixture
     [Theory, RandomData]
     public async Task Retrieves_account_summaries(AccountSummaryPresentation[] expected)
     {
-        this.httpMessageHandler.Feed($"{ApiUrl}/accounts", expected);
+        this.Feed("accounts", expected);
         AccountSummaryPresentation[] actual = await this.sut.Summaries();
         actual.Should().Equal(expected);
     }
@@ -31,7 +31,7 @@ public sealed class HttpAccountGatewayTests : HostFixture
     [Theory, RandomData]
     public async Task Retrieves_account_details(AccountDetailsPresentation expected)
     {
-        this.httpMessageHandler.Feed($"{ApiUrl}/accounts/{expected.Id}", expected);
+        this.Feed($"accounts/{expected.Id}", expected);
         AccountDetailsPresentation actual = await this.sut.Details(expected.Id);
         actual.Should().Be(expected);
     }
@@ -43,10 +43,13 @@ public sealed class HttpAccountGatewayTests : HostFixture
         int month,
         TransactionSummaryPresentation[] expected)
     {
-        this.httpMessageHandler.Feed($"{ApiUrl}/accounts/{accountId}/transactions?year={year}&month={month}", expected);
+        this.Feed($"accounts/{accountId}/transactions?year={year}&month={month}", expected);
         TransactionSummaryPresentation[] actual = await this.sut.TransactionsOfMonth(accountId, year, month);
         actual.Should().Equal(expected);
     }
+
+    private void Feed(string url, object expected) =>
+        this.httpMessageHandler.Feed($"{ApiUrl}/{url}", expected);
 
     private static HttpClient CreateHttpClient(HttpMessageHandler httpMessageHandler) =>
         new(httpMessageHandler) { BaseAddress = new Uri(ApiUrl) };

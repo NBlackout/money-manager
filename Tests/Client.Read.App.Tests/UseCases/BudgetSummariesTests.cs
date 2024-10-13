@@ -15,8 +15,16 @@ public class BudgetSummariesTests
     [Theory, RandomData]
     public async Task Retrieves_budget_summaries(BudgetSummaryPresentation[] expected)
     {
-        this.gateway.Feed(expected);
+        this.Feed(expected);
+        await this.Verify(expected);
+    }
+
+    private async Task Verify(BudgetSummaryPresentation[] expected)
+    {
         BudgetSummaryPresentation[] actual = await this.sut.Execute();
         actual.Should().Equal(expected);
     }
+
+    private void Feed(BudgetSummaryPresentation[] expected) =>
+        this.gateway.Feed(expected);
 }

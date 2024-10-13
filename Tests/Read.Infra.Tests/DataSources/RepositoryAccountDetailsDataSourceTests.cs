@@ -18,8 +18,18 @@ public sealed class RepositoryAccountDetailsDataSourceTests : HostFixture
     [Theory, RandomData]
     public async Task Retrieves_account_details(AccountBuilder account)
     {
-        this.accountRepository.Feed(account.ToSnapshot());
+        this.Feed(account);
+        await this.Verify(account);
+    }
+
+    private async Task Verify(AccountBuilder account)
+    {
         AccountDetailsPresentation actual = await this.sut.By(account.Id);
         actual.Should().Be(account.ToDetails());
+    }
+
+    private void Feed(AccountBuilder account)
+    {
+        this.accountRepository.Feed(account.ToSnapshot());
     }
 }

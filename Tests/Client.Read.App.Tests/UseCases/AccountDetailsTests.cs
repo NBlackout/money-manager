@@ -15,8 +15,16 @@ public class AccountDetailsTests
     [Theory, RandomData]
     public async Task Retrieves_account_details(AccountDetailsPresentation expected)
     {
-        this.gateway.Feed(expected.Id, expected);
+        this.Feed(expected);
+        await this.Verify(expected);
+    }
+
+    private async Task Verify(AccountDetailsPresentation expected)
+    {
         AccountDetailsPresentation actual = await this.sut.Execute(expected.Id);
         actual.Should().Be(expected);
     }
+
+    private void Feed(AccountDetailsPresentation expected) =>
+        this.gateway.Feed(expected.Id, expected);
 }

@@ -15,8 +15,16 @@ public class CategorySummariesTests
     [Theory, RandomData]
     public async Task Retrieves_category_summaries(CategorySummaryPresentation[] expected)
     {
-        this.gateway.Feed(expected);
+        this.Feed(expected);
+        await this.Verify(expected);
+    }
+
+    private async Task Verify(CategorySummaryPresentation[] expected)
+    {
         CategorySummaryPresentation[] actual = await this.sut.Execute();
         actual.Should().Equal(expected);
     }
+
+    private void Feed(CategorySummaryPresentation[] expected) =>
+        this.gateway.Feed(expected);
 }

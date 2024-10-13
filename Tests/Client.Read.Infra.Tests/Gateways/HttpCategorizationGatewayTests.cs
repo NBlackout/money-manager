@@ -23,10 +23,13 @@ public sealed class HttpCategorizationGatewayTests : HostFixture
     [Theory, RandomData]
     public async Task Retrieves_categorization_suggestions(CategorizationSuggestionPresentation[] expected)
     {
-        this.httpMessageHandler.Feed($"{ApiUrl}/categorization", expected);
+        this.Feed("categorization", expected);
         CategorizationSuggestionPresentation[] actual = await this.sut.Suggestions();
         actual.Should().Equal(expected);
     }
+
+    private void Feed(object url, object expected) =>
+        this.httpMessageHandler.Feed($"{ApiUrl}/{url}", expected);
 
     private static HttpClient CreateHttpClient(HttpMessageHandler httpMessageHandler) =>
         new(httpMessageHandler) { BaseAddress = new Uri(ApiUrl) };
