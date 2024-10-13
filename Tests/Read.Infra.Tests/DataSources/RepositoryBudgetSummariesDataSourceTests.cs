@@ -43,7 +43,7 @@ public sealed class RepositoryBudgetSummariesDataSourceTests : HostFixture
     public async Task Retrieves_budget_beginning_this_month(decimal amount)
     {
         BudgetBuilder expected = ABudget() with { Amount = amount, BeginDate = ThisMonth, TotalAmount = amount };
-        this.budgetRepository.Feed(expected.ToSnapshot());
+        this.Feed(expected);
 
         await this.Verify(expected);
     }

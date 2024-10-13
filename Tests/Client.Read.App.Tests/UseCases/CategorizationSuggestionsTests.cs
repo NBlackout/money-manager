@@ -15,8 +15,16 @@ public class CategorizationSuggestionsTests
     [Theory, RandomData]
     public async Task Retrieves_account_summaries(CategorizationSuggestionPresentation[] expected)
     {
-        this.gateway.Feed(expected);
+        this.Feed(expected);
+        await this.Verify(expected);
+    }
+
+    private async Task Verify(CategorizationSuggestionPresentation[] expected)
+    {
         CategorizationSuggestionPresentation[] actual = await this.sut.Execute();
         actual.Should().Equal(expected);
     }
+
+    private void Feed(CategorizationSuggestionPresentation[] expected) =>
+        this.gateway.Feed(expected);
 }

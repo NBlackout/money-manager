@@ -18,9 +18,16 @@ public sealed class RepositoryAccountSummariesDataSourceTests : HostFixture
     [Theory, RandomData]
     public async Task Retrieves_summaries(AccountBuilder[] accounts)
     {
-        this.accountRepository.Feed(accounts.Select(a => a.ToSnapshot()).ToArray());
+        this.Feed(accounts);
+        await this.Verify(accounts);
+    }
 
+    private async Task Verify(AccountBuilder[] accounts)
+    {
         AccountSummaryPresentation[] actual = await this.sut.All();
         actual.Should().Equal(accounts.Select(a => a.ToSummary()));
     }
+
+    private void Feed(AccountBuilder[] accounts) =>
+        this.accountRepository.Feed(accounts.Select(a => a.ToSnapshot()).ToArray());
 }

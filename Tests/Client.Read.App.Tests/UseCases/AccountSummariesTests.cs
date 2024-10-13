@@ -15,8 +15,16 @@ public class AccountSummariesTests
     [Theory, RandomData]
     public async Task Retrieves_account_summaries(AccountSummaryPresentation[] expected)
     {
-        this.gateway.Feed(expected);
+        this.Fed(expected);
+        await this.Verify(expected);
+    }
+
+    private async Task Verify(AccountSummaryPresentation[] expected)
+    {
         AccountSummaryPresentation[] actual = await this.sut.Execute();
         actual.Should().Equal(expected);
     }
+
+    private void Fed(AccountSummaryPresentation[] expected) =>
+        this.gateway.Feed(expected);
 }

@@ -19,8 +19,16 @@ public class TransactionsOfMonthTests
         int month,
         TransactionSummaryPresentation[] expected)
     {
-        this.gateway.Feed(accountId, year, month, expected);
+        this.Feed(accountId, year, month, expected);
+        await this.Verify(accountId, year, month, expected);
+    }
+
+    private async Task Verify(Guid accountId, int year, int month, TransactionSummaryPresentation[] expected)
+    {
         TransactionSummaryPresentation[] actual = await this.sut.Execute(accountId, year, month);
         actual.Should().Equal(expected);
     }
+
+    private void Feed(Guid accountId, int year, int month, TransactionSummaryPresentation[] expected) =>
+        this.gateway.Feed(accountId, year, month, expected);
 }

@@ -23,10 +23,13 @@ public sealed class HttpCategoryGatewayTests : HostFixture
     [Theory, RandomData]
     public async Task Retrieves_category_summaries(CategorySummaryPresentation[] expected)
     {
-        this.httpMessageHandler.Feed($"{ApiUrl}/categories", expected);
+        this.Feed("categories", expected);
         CategorySummaryPresentation[] actual = await this.sut.Summaries();
         actual.Should().Equal(expected);
     }
+
+    private void Feed(object url, object expected) =>
+        this.httpMessageHandler.Feed($"{ApiUrl}/{url}", expected);
 
     private static HttpClient CreateHttpClient(HttpMessageHandler httpMessageHandler) =>
         new(httpMessageHandler) { BaseAddress = new Uri(ApiUrl) };
