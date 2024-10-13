@@ -2,7 +2,7 @@
 
 @if (accounts != null && budgets != null)
 {
-    <div>Total budget : @(budgets.Sum(b => b.Amount))</div>
+    <div>Total budget : @(budgets.Sum(b => b.TotalAmount))</div>
 }
 <button class="btn btn-primary" @onclick="@ShowBudgetForm">Add new budget</button>
 <ul class="list-group list-group-flush">

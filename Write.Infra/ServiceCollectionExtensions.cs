@@ -8,7 +8,7 @@ namespace Write.Infra;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddWriteInfra(this IServiceCollection services) =>
-        services.AddUseCases().AddInfrastructureAdapters();
+        services.AddUseCases().AddAdapters();
 
     private static IServiceCollection AddUseCases(this IServiceCollection services)
     {
@@ -21,7 +21,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<DefineBudget>();
     }
 
-    private static IServiceCollection AddInfrastructureAdapters(this IServiceCollection services)
+    private static IServiceCollection AddAdapters(this IServiceCollection services)
     {
         return services
             .AddRepositories()
