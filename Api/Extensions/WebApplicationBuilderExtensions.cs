@@ -1,4 +1,5 @@
 using Read.Api;
+using Shared.Infra;
 using Write.Api;
 
 namespace Api.Extensions;
@@ -10,6 +11,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services
             .AddSwaggerDependencies()
             .AddBlazorDependencies()
+            .AddSharedInfra()
             .AddWrite()
             .AddRead();
     }

@@ -17,3 +17,12 @@
 - Better date display in transactions of month (month and year are redundant)
 - Introduce `CurrentMonth` of something like that to replace `new DateOnly(DateTime.Now.Year, DateTime.Now.Month, 1)`
 - Clear all `EditForm` on save so that next create only has placeholders and not previously saved values
+- Move `HostFixture` in `Shared.Infra.TestTooling` and register all read & write infra
+- Always introduce `Feed` and `Verify`
+- `using static Shared.TestTooling.Randomizer` in `GlobalUsings`
+- `AddUseCases` should move back in primary adapters
+- Multiple requests issued on transaction of month navigation
+- Refresh account list on account rename 
+- Indent budget fake accounts below reference account
+  - Use year browsing instead of month
+  - Show all fake transaction of given year

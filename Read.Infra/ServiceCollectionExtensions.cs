@@ -12,11 +12,11 @@ namespace Read.Infra;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddReadInfra(this IServiceCollection services)
+    public static IServiceCollection AddReadInfra(this IServiceCollection services)
     {
-        services
+        return services
             .AddUseCases()
-            .AddInfrastructureAdapters();
+            .AddAdapters();
     }
 
     private static IServiceCollection AddUseCases(this IServiceCollection services)
@@ -30,9 +30,9 @@ public static class ServiceCollectionExtensions
             .AddScoped<BudgetSummaries>();
     }
 
-    private static void AddInfrastructureAdapters(this IServiceCollection services)
+    private static IServiceCollection AddAdapters(this IServiceCollection services)
     {
-        services
+        return services
             .AddScoped<IAccountSummariesDataSource, RepositoryAccountSummariesDataSource>()
             .AddScoped<IAccountDetailsDataSource, RepositoryAccountDetailsDataSource>()
             .AddScoped<ITransactionsOfMonthDataSource, RepositoryTransactionsOfMonthDataSource>()

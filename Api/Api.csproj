@@ -7,6 +7,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Read.Api\Read.Api.csproj" />
+        <ProjectReference Include="..\Shared.Infra\Shared.Infra.csproj" />
         <ProjectReference Include="..\Write.Api\Write.Api.csproj" />
         <ProjectReference Include="..\Client\Client.csproj" />
     </ItemGroup>
