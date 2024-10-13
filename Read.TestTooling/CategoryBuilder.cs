@@ -7,8 +7,8 @@ namespace Read.TestTooling;
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 public record CategoryBuilder(Guid Id, string Label, string Keywords)
 {
-    public Category Build() =>
-        Category.From(new CategorySnapshot(this.Id, this.Label, this.Keywords));
+    public CategorySnapshot ToSnapshot() =>
+        new(this.Id, this.Label, this.Keywords);
 
     public CategorySummaryPresentation ToSummary() =>
         new(this.Id, this.Label, this.Keywords);

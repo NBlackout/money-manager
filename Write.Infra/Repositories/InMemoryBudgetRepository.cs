@@ -27,9 +27,6 @@ public class InMemoryBudgetRepository : IBudgetRepository
         return Task.CompletedTask;
     }
 
-    public void Feed(params Budget[] budgets) =>
-        this.Feed(budgets.Select(b => b.Snapshot).ToArray());
-
     public void Feed(params BudgetSnapshot[] budgets) =>
         budgets.ToList().ForEach(budget => this.data[budget.Id] = budget);
 }

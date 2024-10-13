@@ -43,5 +43,5 @@ public sealed class RepositoryCategoriesWithKeywordsDataSourceTests : HostFixtur
     }
 
     private void Feed(params CategoryBuilder[] categories) =>
-        this.categoryRepository.Feed(categories.Select(c => c.Build()).ToArray());
+        this.categoryRepository.Feed(categories.Select(c => c.ToSnapshot()).ToArray());
 }

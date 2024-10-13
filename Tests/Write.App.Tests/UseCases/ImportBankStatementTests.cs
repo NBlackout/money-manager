@@ -20,7 +20,7 @@ public class ImportBankStatementTests
     }
 
     [Theory, RandomData]
-    public async Task Tracks_unknown_bank_and_account(AccountBuilder account)
+    public async Task Tracks_unknown_bank_and_account(AccountSnapshot account)
     {
         this.FeedNextIdOf(account);
         this.Feed(AccountStatementFrom(account));
@@ -29,7 +29,7 @@ public class ImportBankStatementTests
     }
 
     [Theory, RandomData]
-    public async Task Tracks_unknown_account(AccountBuilder account)
+    public async Task Tracks_unknown_account(AccountSnapshot account)
     {
         this.FeedNextIdOf(account);
         this.Feed(AccountStatementFrom(account));
@@ -38,84 +38,84 @@ public class ImportBankStatementTests
     }
 
     [Theory, RandomData]
-    public async Task Synchronizes_known_account(AccountBuilder account)
+    public async Task Synchronizes_known_account(AccountSnapshot account)
     {
-        TransactionBuilder aTransaction = ATransactionFrom(account);
-        TransactionBuilder anotherTransaction = ATransactionFrom(account);
+        TransactionSnapshot aTransaction = ATransactionFrom(account);
+        TransactionSnapshot anotherTransaction = ATransactionFrom(account);
 
         this.Feed(account);
         this.FeedNextIdsOf(aTransaction, anotherTransaction);
-        this.Feed(AccountStatementFrom(account, aTransaction, anotherTransaction));
+        this.Feed(AccountStatementFrom(account, (aTransaction, null), (anotherTransaction, null)));
 
         await this.Verify(account, [], aTransaction, anotherTransaction);
     }
 
     [Theory, RandomData]
-    public async Task Assigns_existing_category_to_transactions(AccountBuilder account, CategoryBuilder category)
+    public async Task Assigns_existing_category_to_transactions(AccountSnapshot account, CategorySnapshot category)
     {
-        TransactionBuilder aTransaction = ATransactionFrom(account, category);
-        TransactionBuilder anotherTransaction = ATransactionFrom(account, category);
+        TransactionSnapshot aTransaction = ATransactionFrom(account, category);
+        TransactionSnapshot anotherTransaction = ATransactionFrom(account, category);
 
         this.Feed(account);
         this.Feed(category);
         this.FeedNextIdsOf(aTransaction, anotherTransaction);
-        this.Feed(AccountStatementFrom(account, aTransaction, anotherTransaction));
+        this.Feed(AccountStatementFrom(account, (aTransaction, category.Label), (anotherTransaction, category.Label)));
 
         await this.Verify(account, [category], aTransaction, anotherTransaction);
     }
 
     [Theory, RandomData]
-    public async Task Assigns_new_category_to_transactions(AccountBuilder account, CategoryBuilder category)
+    public async Task Assigns_new_category_to_transactions(AccountSnapshot account, CategorySnapshot category)
     {
-        TransactionBuilder aTransaction = ATransactionFrom(account, category);
-        TransactionBuilder anotherTransaction = ATransactionFrom(account, category);
+        TransactionSnapshot aTransaction = ATransactionFrom(account, category);
+        TransactionSnapshot anotherTransaction = ATransactionFrom(account, category);
 
         this.Feed(account);
         this.FeedNextIdsOf(category);
         this.FeedNextIdsOf(aTransaction, anotherTransaction);
-        this.Feed(AccountStatementFrom(account, aTransaction, anotherTransaction));
+        this.Feed(AccountStatementFrom(account, (aTransaction, category.Label), (anotherTransaction, category.Label)));
 
         await this.Verify(account, [category with { Keywords = category.Label }], aTransaction,
             anotherTransaction);
     }
 
-    private async Task Verify(AccountBuilder expectedAccount, CategoryBuilder[] expectedCategories,
-        params TransactionBuilder[] expectedTransactions)
+    private async Task Verify(AccountSnapshot expectedAccount, CategorySnapshot[] expectedCategories,
+        params TransactionSnapshot[] expectedTransactions)
     {
         await this.sut.Execute(TheFileName, TheStream);
 
         Account actualAccount = await this.accountRepository.By(expectedAccount.Id);
-        actualAccount.Snapshot.Should().Be(expectedAccount.ToSnapshot());
+        actualAccount.Snapshot.Should().Be(expectedAccount);
 
-        foreach (CategoryBuilder expectedCategory in expectedCategories)
+        foreach (CategorySnapshot expectedCategory in expectedCategories)
         {
             Category actualCategory = await this.categoryRepository.By(expectedCategory.Id);
-            actualCategory.Snapshot.Should().Be(expectedCategory.ToSnapshot());
+            actualCategory.Snapshot.Should().Be(expectedCategory);
         }
 
-        foreach (TransactionBuilder expectedTransaction in expectedTransactions)
+        foreach (TransactionSnapshot expectedTransaction in expectedTransactions)
         {
             Transaction actualTransaction = await this.transactionRepository.By(expectedTransaction.Id);
-            actualTransaction.Snapshot.Should().Be(expectedTransaction.ToSnapshot());
+            actualTransaction.Snapshot.Should().Be(expectedTransaction);
         }
     }
 
-    private void Feed(AccountBuilder account) =>
-        this.accountRepository.FeedByExternalId(account.Number, account.Build());
+    private void Feed(AccountSnapshot account) =>
+        this.accountRepository.FeedByExternalId(account.Number, account);
 
-    private void Feed(CategoryBuilder category) =>
-        this.categoryRepository.Feed(category.Build());
+    private void Feed(CategorySnapshot category) =>
+        this.categoryRepository.Feed(category);
 
-    private void FeedNextIdOf(AccountBuilder account) =>
+    private void FeedNextIdOf(AccountSnapshot account) =>
         this.accountRepository.NextId = () => account.Id;
 
-    private void FeedNextIdsOf(params CategoryBuilder[] categories)
+    private void FeedNextIdsOf(params CategorySnapshot[] categories)
     {
         int nextIdIndex = 0;
         this.categoryRepository.NextId = () => categories[nextIdIndex++].Id;
     }
 
-    private void FeedNextIdsOf(params TransactionBuilder[] transactions)
+    private void FeedNextIdsOf(params TransactionSnapshot[] transactions)
     {
         int nextIdIndex = 0;
         this.transactionRepository.NextId = () => transactions[nextIdIndex++].Id;
@@ -129,17 +129,16 @@ public class ImportBankStatementTests
         public const string TheFileName = "the filename";
         public static readonly MemoryStream TheStream = new([0xF0, 0x42]);
 
-        public static TransactionBuilder ATransactionFrom(AccountBuilder account, CategoryBuilder? category = null) =>
-            Any<TransactionBuilder>() with
-            {
-                AccountId = account.Id, CategoryId = category?.Id, CategoryLabel = category?.Label
-            };
+        public static TransactionSnapshot
+            ATransactionFrom(AccountSnapshot account, CategorySnapshot? category = null) =>
+            Any<TransactionSnapshot>() with { AccountId = account.Id, CategoryId = category?.Id };
 
-        public static AccountStatement AccountStatementFrom(AccountBuilder account,
-            params TransactionBuilder[] transactions)
+        public static AccountStatement AccountStatementFrom(AccountSnapshot account,
+            params (TransactionSnapshot Transaction, string? CategoryLabel)[] transactions)
         {
             return new AccountStatement(account.Number, account.Balance, account.BalanceDate, transactions
-                .Select(t => new TransactionStatement(t.ExternalId, t.Amount, t.Label, t.Date, t.CategoryLabel))
+                .Select(t => new TransactionStatement(t.Transaction.ExternalId, t.Transaction.Amount,
+                    t.Transaction.Label, t.Transaction.Date, t.CategoryLabel))
                 .ToArray()
             );
         }
