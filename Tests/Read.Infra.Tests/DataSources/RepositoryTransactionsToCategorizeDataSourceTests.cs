@@ -41,7 +41,7 @@ public sealed class RepositoryTransactionsToCategorizeDataSourceTests : HostFixt
     }
 
     private void Feed(params TransactionBuilder[] categories) =>
-        this.categoryRepository.Feed(categories.Select(c => c.Build()).ToArray());
+        this.categoryRepository.Feed(categories.Select(c => c.ToSnapshot()).ToArray());
 
     private static TransactionBuilder ATransactionWithoutCategory() =>
         Any<TransactionBuilder>() with { Category = null };

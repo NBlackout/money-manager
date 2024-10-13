@@ -33,8 +33,8 @@ public class InMemoryCategoryRepository : ICategoryRepository
         return Task.CompletedTask;
     }
 
-    public void Feed(params Category[] categories) =>
-        categories.ToList().ForEach(category => this.data[category.Id] = category.Snapshot);
+    public void Feed(params CategorySnapshot[] categories) =>
+        categories.ToList().ForEach(category => this.data[category.Id] = category);
 
     public bool Exists(Guid id) =>
         this.data.ContainsKey(id);

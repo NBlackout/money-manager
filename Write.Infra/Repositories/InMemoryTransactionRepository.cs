@@ -30,6 +30,6 @@ public class InMemoryTransactionRepository : ITransactionRepository
         return Task.CompletedTask;
     }
 
-    public void Feed(params Transaction[] transactions) =>
-        transactions.ToList().ForEach(transaction => this.Save(transaction));
+    public void Feed(params TransactionSnapshot[] transactions) =>
+        transactions.ToList().ForEach(transaction => this.data[transaction.Id] = transaction);
 }

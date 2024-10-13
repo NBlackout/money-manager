@@ -13,20 +13,8 @@ public record TransactionBuilder(
     DateTime Date,
     CategoryBuilder? Category)
 {
-    public Transaction Build()
-    {
-        return Transaction.From(
-            new TransactionSnapshot(
-                this.Id,
-                this.AccountId,
-                "External id",
-                this.Amount,
-                this.Label,
-                this.Date,
-                this.Category?.Id
-            )
-        );
-    }
+    public TransactionSnapshot ToSnapshot() =>
+        new(this.Id, this.AccountId, "External id", this.Amount, this.Label, this.Date, this.Category?.Id);
 
     public TransactionSummaryPresentation ToSummary() =>
         new(this.Id, this.Amount, this.Label, this.Date, this.Category?.Label);

@@ -57,9 +57,9 @@ public sealed class RepositoryTransactionsOfMonthDataSourceTests : HostFixture
         foreach (TransactionBuilder transaction in transactions)
         {
             if (transaction.Category != null)
-                this.categoryRepository.Feed(transaction.Category.Build());
+                this.categoryRepository.Feed(transaction.Category.ToSnapshot());
 
-            this.transactionRepository.Feed(transaction.Build());
+            this.transactionRepository.Feed(transaction.ToSnapshot());
         }
     }
 

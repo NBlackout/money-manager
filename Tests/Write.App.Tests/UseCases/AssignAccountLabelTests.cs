@@ -13,14 +13,14 @@ public class AssignAccountLabelTests
     }
 
     [Theory, RandomData]
-    public async Task Assigns_account_label(AccountBuilder account)
+    public async Task Assigns_account_label(AccountSnapshot account)
     {
-        this.repository.Feed(account.Build());
+        this.repository.Feed(account);
 
         string newLabel = Another(account.Label);
         await this.sut.Execute(account.Id, newLabel);
 
         Account actual = await this.repository.By(account.Id);
-        actual.Snapshot.Should().Be(account.ToSnapshot() with { Label = newLabel });
+        actual.Snapshot.Should().Be(account with { Label = newLabel });
     }
 }

@@ -21,7 +21,7 @@ public sealed class RepositoryBudgetSummariesDataSourceTests : HostFixture
     [Theory, RandomData]
     public async Task Retrieves_budgets(BudgetBuilder[] expected)
     {
-        this.budgetRepository.Feed(expected.Select(c => c.Build()).ToArray());
+        this.budgetRepository.Feed(expected.Select(c => c.ToSnapshot()).ToArray());
         BudgetSummaryPresentation[] actual = await this.sut.All();
         actual.Should().Equal(expected.Select(c => c.ToSummary()));
     }

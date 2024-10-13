@@ -21,7 +21,7 @@ public sealed class RepositoryCategorySummariesDataSourceTests : HostFixture
     [Theory, RandomData]
     public async Task Retrieves_categories(CategoryBuilder[] expected)
     {
-        this.categoryRepository.Feed(expected.Select(c => c.Build()).ToArray());
+        this.categoryRepository.Feed(expected.Select(c => c.ToSnapshot()).ToArray());
         CategorySummaryPresentation[] actual = await this.sut.All();
         actual.Should().Equal(expected.Select(c => c.ToSummary()));
     }

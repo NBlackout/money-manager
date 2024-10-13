@@ -28,9 +28,9 @@ public class InMemoryAccountRepository : IAccountRepository
         return Task.CompletedTask;
     }
 
-    public void FeedByExternalId(string externalId, Account account) =>
-        this.dataByExternalId.Add(externalId, account.Snapshot);
+    public void Feed(params AccountSnapshot[] accounts) =>
+        accounts.ToList().ForEach(account => this.data[account.Id] = account);
 
-    public void Feed(params Account[] accounts) =>
-        accounts.ToList().ForEach(account => this.data[account.Id] = account.Snapshot);
+    public void FeedByExternalId(string externalId, AccountSnapshot account) =>
+        this.dataByExternalId.Add(externalId, account);
 }

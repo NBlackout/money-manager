@@ -1,4 +1,6 @@
-﻿namespace Write.App.Tests.UseCases;
+﻿using Write.App.Model.Categories;
+
+namespace Write.App.Tests.UseCases;
 
 // TODO prevent deletion of used category 
 public class DeleteCategoryTests
@@ -12,9 +14,9 @@ public class DeleteCategoryTests
     }
 
     [Theory, RandomData]
-    public async Task Deletes_category(CategoryBuilder category)
+    public async Task Deletes_category(CategorySnapshot category)
     {
-        this.repository.Feed(category.Build());
+        this.repository.Feed(category);
         await this.sut.Execute(category.Id);
         bool exists = this.repository.Exists(category.Id);
         exists.Should().BeFalse();
