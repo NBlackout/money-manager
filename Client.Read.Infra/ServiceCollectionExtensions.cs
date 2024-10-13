@@ -1,14 +1,15 @@
-﻿using Client.Read.App.Ports;
+﻿using Client.Read.App.UseCases;
 using Client.Read.Infra.Gateways.Account;
 using Client.Read.Infra.Gateways.Budget;
 using Client.Read.Infra.Gateways.Categorization;
 using Client.Read.Infra.Gateways.Category;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Client.Extensions;
+namespace Client.Read.Infra;
 
-public static class ServiceCollectionReadExtensions
+public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddReadDependencies(this IServiceCollection services)
+    public static IServiceCollection AddReadInfra(this IServiceCollection services)
     {
         return services
             .AddUseCases()

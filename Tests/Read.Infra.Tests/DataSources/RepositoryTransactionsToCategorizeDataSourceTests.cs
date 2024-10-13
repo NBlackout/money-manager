@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Read.Infra.DataSources.TransactionsToCategorize;
+using Write.Infra;
 using Write.Infra.Repositories;
 using static Shared.TestTooling.Randomizer;
 
@@ -17,7 +18,7 @@ public sealed class RepositoryTransactionsToCategorizeDataSourceTests : HostFixt
     }
 
     protected override void Configure(IServiceCollection services) =>
-        services.AddWriteDependencies().AddReadDependencies();
+        services.AddWriteInfra().AddReadInfra();
 
     [Fact]
     public async Task Retrieves_transactions_not_already_categorized()

@@ -1,5 +1,4 @@
 ﻿using System.Text.Json;
-using Client.Extensions;
 using Client.Write.Infra.Gateways.Budget;
 using Client.Write.Infra.Tests.TestDoubles;
 
@@ -18,7 +17,7 @@ public sealed class HttpBudgetGatewayTests : HostFixture
     }
 
     protected override void Configure(IServiceCollection services) =>
-        services.AddWriteDependencies().AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
+        services.AddWriteInfra().AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
     [Theory, RandomData]
     public async Task Defines(Guid id, string name, decimal amount)

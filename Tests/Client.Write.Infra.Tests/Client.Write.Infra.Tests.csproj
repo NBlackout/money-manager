@@ -3,7 +3,6 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Client.Write.App\Client.Write.App.csproj" />
       <ProjectReference Include="..\..\Client.Write.Infra\Client.Write.Infra.csproj" />
-      <ProjectReference Include="..\..\Client\Client.csproj" />
     </ItemGroup>
 
 </Project>

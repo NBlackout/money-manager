@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+﻿using Client.Read.Infra;
+using Client.Write.Infra;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
-namespace Client.Extensions;
+namespace Client;
 
 public static class WebAssemblyHostBuilderExtensions
 {
@@ -8,7 +10,7 @@ public static class WebAssemblyHostBuilderExtensions
     {
         builder.Services
             .AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress + "api/") })
-            .AddWriteDependencies()
-            .AddReadDependencies();
+            .AddWriteInfra()
+            .AddReadInfra();
     }
 }
