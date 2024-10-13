@@ -1,5 +1,6 @@
 using Client.Read.Infra.Gateways.Account;
 using Client.Read.Infra.Tests.TestDoubles;
+using Shared.Infra.TestTooling;
 using Shared.Presentation;
 
 namespace Client.Read.Infra.Tests.Gateways;
@@ -17,7 +18,7 @@ public sealed class HttpAccountGatewayTests : HostFixture
     }
 
     protected override void Configure(IServiceCollection services) =>
-        services.AddReadInfra().AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
+        services.AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
     [Theory, RandomData]
     public async Task Retrieves_account_summaries(AccountSummaryPresentation[] expected)

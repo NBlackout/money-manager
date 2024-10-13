@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using Client.Write.Infra.Gateways.Category;
 using Client.Write.Infra.Tests.TestDoubles;
+using Shared.Infra.TestTooling;
 
 namespace Client.Write.Infra.Tests.Gateways;
 
@@ -17,7 +18,7 @@ public sealed class HttpCategoryGatewayTests : HostFixture
     }
 
     protected override void Configure(IServiceCollection services) =>
-        services.AddWriteInfra().AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
+        services.AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
     [Theory, RandomData]
     public async Task Creates(Guid id, string label, string keywords)

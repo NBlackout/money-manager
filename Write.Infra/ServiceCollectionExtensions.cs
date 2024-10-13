@@ -7,7 +7,7 @@ namespace Write.Infra;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddWriteInfra(this IServiceCollection services) =>
+    public static IServiceCollection AddServerWriteInfra(this IServiceCollection services) =>
         services.AddUseCases().AddAdapters();
 
     private static IServiceCollection AddUseCases(this IServiceCollection services)

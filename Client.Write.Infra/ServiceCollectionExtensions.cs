@@ -10,7 +10,7 @@ namespace Client.Write.Infra;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddWriteInfra(this IServiceCollection services)
+    public static IServiceCollection AddClientWriteInfra(this IServiceCollection services)
     {
         return services
             .AddUseCases()

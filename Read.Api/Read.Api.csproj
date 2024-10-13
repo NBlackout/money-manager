@@ -6,6 +6,6 @@
     <ItemGroup>
         <ProjectReference Include="..\Read.App\Read.App.csproj"/>
         <ProjectReference Include="..\Read.Infra\Read.Infra.csproj"/>
-        <ProjectReference Include="..\Shared\Shared.csproj"/>
+        <ProjectReference Include="..\Shared\Shared.csproj" />
     </ItemGroup>
 </Project>

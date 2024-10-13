@@ -1,6 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Read.Infra.DataSources.AccountSummaries;
-using Write.Infra;
+﻿using Read.Infra.DataSources.AccountSummaries;
+using Shared.Infra.TestTooling;
 using Write.Infra.Repositories;
 
 namespace Read.Infra.Tests.DataSources;
@@ -15,9 +14,6 @@ public sealed class RepositoryAccountSummariesDataSourceTests : HostFixture
         this.sut = this.Resolve<IAccountSummariesDataSource, RepositoryAccountSummariesDataSource>();
         this.accountRepository = this.Resolve<IAccountRepository, InMemoryAccountRepository>();
     }
-
-    protected override void Configure(IServiceCollection services) =>
-        services.AddWriteInfra().AddReadInfra();
 
     [Theory, RandomData]
     public async Task Retrieves_summaries(AccountBuilder[] accounts)

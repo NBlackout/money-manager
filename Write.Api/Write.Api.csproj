@@ -4,7 +4,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Shared\Shared.csproj"/>
+        <ProjectReference Include="..\Shared\Shared.csproj" />
         <ProjectReference Include="..\Write.App\Write.App.csproj"/>
         <ProjectReference Include="..\Write.Infra\Write.Infra.csproj"/>
     </ItemGroup>
