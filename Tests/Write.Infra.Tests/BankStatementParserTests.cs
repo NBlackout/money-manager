@@ -20,9 +20,9 @@ public class BankStatementParserTests : HostFixture
     [Fact]
     public async Task Extracts_ofx_account_statement()
     {
-        AccountStatement expected = new("00012345000", 12345.67m, DateTime.Parse("2023-04-13"),
-            new TransactionStatement("TheDebitId", -300.21m, "The debit", DateTime.Parse("2023-04-18"), null),
-            new TransactionStatement("TheCreditId", 100.95m, "The credit", DateTime.Parse("2023-04-17"), null)
+        AccountStatement expected = new("00012345000", 12345.67m, DateOnly.Parse("2023-04-13"),
+            new TransactionStatement("TheDebitId", -300.21m, "The debit", DateOnly.Parse("2023-04-18"), null),
+            new TransactionStatement("TheCreditId", 100.95m, "The credit", DateOnly.Parse("2023-04-17"), null)
         );
         await this.Verify("sample.ofx", OfxSample, expected);
     }
@@ -30,9 +30,9 @@ public class BankStatementParserTests : HostFixture
     [Fact]
     public async Task Extracts_csv_account_statement()
     {
-        AccountStatement expected = new("00012345000", 12345.67m, DateTime.Parse("2000-01-01"),
-            new TransactionStatement("1", -300.21m, "The debit", DateTime.Parse("2023-04-18"), "Debit parent"),
-            new TransactionStatement("2", 100.95m, "The credit", DateTime.Parse("2023-04-17"), "Credit parent")
+        AccountStatement expected = new("00012345000", 12345.67m, DateOnly.Parse("2000-01-01"),
+            new TransactionStatement("1", -300.21m, "The debit", DateOnly.Parse("2023-04-18"), "Debit parent"),
+            new TransactionStatement("2", 100.95m, "The credit", DateOnly.Parse("2023-04-17"), "Credit parent")
         );
         await this.Verify("sample.csv", CsvSample, expected);
     }

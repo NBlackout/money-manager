@@ -67,7 +67,7 @@ public class OfxBankStatementParser
         [XmlElement("DTASOF")] public string RawDate { get; init; } = null!;
         [XmlElement("BALAMT")] public decimal Amount { get; init; }
 
-        public DateTime Date => DateTime.ParseExact(this.RawDate, "yyyyMMddHHmmss", null);
+        public DateOnly Date => DateOnly.ParseExact(this.RawDate, "yyyyMMddHHmmss", null);
     }
 
     public class StatementTransaction
@@ -78,6 +78,6 @@ public class OfxBankStatementParser
         [XmlElement("NAME")] public string Label { get; init; } = null!;
 
         public decimal Amount => decimal.Parse(this.RawAmount, CultureInfo.CreateSpecificCulture("fr-FR"));
-        public DateTime Date => DateTime.ParseExact(this.RawDate, "yyyyMMdd", null);
+        public DateOnly Date => DateOnly.ParseExact(this.RawDate, "yyyyMMdd", null);
     }
 }

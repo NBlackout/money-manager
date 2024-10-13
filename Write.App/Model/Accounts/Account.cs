@@ -5,12 +5,12 @@ public class Account : DomainEntity
     private readonly string externalId;
     private string label;
     private decimal balance;
-    private DateTime balanceDate;
+    private DateOnly balanceDate;
 
     public AccountSnapshot Snapshot =>
         new(this.Id, this.externalId, this.label, this.balance, this.balanceDate);
 
-    private Account(Guid id, string externalId, string label, decimal balance, DateTime balanceDate)
+    private Account(Guid id, string externalId, string label, decimal balance, DateOnly balanceDate)
         : base(id)
     {
         this.externalId = externalId;
@@ -22,10 +22,10 @@ public class Account : DomainEntity
     public static Account From(AccountSnapshot snapshot) =>
         new(snapshot.Id, snapshot.Number, snapshot.Label, snapshot.Balance, snapshot.BalanceDate);
 
-    public static Account StartTracking(Guid id, string accountNumber, decimal balance, DateTime balanceDate) =>
+    public static Account StartTracking(Guid id, string accountNumber, decimal balance, DateOnly balanceDate) =>
         new(id, accountNumber, accountNumber, balance, balanceDate);
 
-    public void Synchronize(decimal updatedBalance, DateTime updatedBalanceDate)
+    public void Synchronize(decimal updatedBalance, DateOnly updatedBalanceDate)
     {
         this.balance = updatedBalance;
         this.balanceDate = updatedBalanceDate;
@@ -35,6 +35,6 @@ public class Account : DomainEntity
         this.label = newLabel;
 
     public Transaction AttachTransaction(Guid transactionId, string externalId, decimal amount,
-        string transactionLabel, DateTime date, Category? category) =>
+        string transactionLabel, DateOnly date, Category? category) =>
         new(transactionId, this.Id, externalId, amount, transactionLabel, date, category);
 }

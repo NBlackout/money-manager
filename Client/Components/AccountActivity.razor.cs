@@ -5,8 +5,8 @@ public partial class AccountActivity : ComponentBase
     private bool isEditing;
     private ElementReference labelElement;
 
-    private List<DateTime> months = [];
-    private DateTime currentMonth;
+    private List<DateOnly> months = [];
+    private DateOnly currentMonth;
     private AccountDetailsPresentation? account;
     private TransactionSummaryPresentation[]? transactions;
 
@@ -20,7 +20,7 @@ public partial class AccountActivity : ComponentBase
     {
         this.months = LoadMonthsRange();
         this.account = await this.AccountDetails.Execute(this.Id);
-        await this.LoadTransactionsOf(new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1));
+        await this.LoadTransactionsOf(new DateOnly(DateTime.Today.Year, DateTime.Today.Month, 1));
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -55,7 +55,7 @@ public partial class AccountActivity : ComponentBase
     }
 
     private async Task ShowTransactionsOfMonth(ChangeEventArgs args) =>
-        await this.LoadTransactionsOf(DateTime.ParseExact(args.Value!.ToString()!, "yyyy-MM-dd", null));
+        await this.LoadTransactionsOf(DateOnly.ParseExact(args.Value!.ToString()!, "yyyy-MM-dd", null));
 
     private async Task ShowFirstMonthTransactions() =>
         await this.LoadTransactionsOf(this.months.First());
@@ -69,20 +69,20 @@ public partial class AccountActivity : ComponentBase
     private async Task ShowLastMonthTransactions() =>
         await this.LoadTransactionsOf(this.months.Last());
 
-    private async Task LoadTransactionsOf(DateTime month)
+    private async Task LoadTransactionsOf(DateOnly month)
     {
         this.currentMonth = month;
         this.transactions =
             await this.TransactionsOfMonth.Execute(this.Id, this.currentMonth.Year, this.currentMonth.Month);
     }
 
-    private static List<DateTime> LoadMonthsRange()
+    private static List<DateOnly> LoadMonthsRange()
     {
-        DateTime januaryLastYear = new(DateTime.Today.Year - 1, 1, 1);
-        DateTime nextMonth = DateTime.Today.AddMonths(1);
+        DateOnly januaryLastYear = new(DateTime.Today.Year - 1, 1, 1);
+        DateOnly nextMonth = DateOnly.FromDateTime(DateTime.Today).AddMonths(1);
 
-        List<DateTime> months = [];
-        for (DateTime date = januaryLastYear; date < nextMonth; date = date.AddMonths(1))
+        List<DateOnly> months = [];
+        for (DateOnly date = januaryLastYear; date < nextMonth; date = date.AddMonths(1))
             months.Add(date);
 
         return months;

@@ -25,8 +25,8 @@ public sealed class RepositoryTransactionsOfMonthDataSourceTests : HostFixture
     [Theory, RandomData]
     public async Task Retrieves_transactions_of_month(Guid accountId)
     {
-        TransactionBuilder aTransaction = ATransactionOn(accountId, DateTime.Parse("2023-04-03"));
-        TransactionBuilder anotherTransaction = ATransactionOn(accountId, DateTime.Parse("2023-04-16"));
+        TransactionBuilder aTransaction = ATransactionOn(accountId, DateOnly.Parse("2023-04-03"));
+        TransactionBuilder anotherTransaction = ATransactionOn(accountId, DateOnly.Parse("2023-04-16"));
         this.Feed(aTransaction, anotherTransaction);
 
         await this.Verify(accountId, 2023, 04, aTransaction.ToSummary(), anotherTransaction.ToSummary());
@@ -64,6 +64,6 @@ public sealed class RepositoryTransactionsOfMonthDataSourceTests : HostFixture
         }
     }
 
-    private static TransactionBuilder ATransactionOn(Guid accountId, DateTime date) =>
+    private static TransactionBuilder ATransactionOn(Guid accountId, DateOnly date) =>
         Any<TransactionBuilder>() with { AccountId = accountId, Date = date };
 }

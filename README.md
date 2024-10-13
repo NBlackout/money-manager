@@ -6,12 +6,14 @@
 - Redirect to /accounts after successful synchronization
 - Auto formatting tool
 - Display account balance of given month (along with transactions)
-- Balance date hard-coded to 2020-01-01
+- Balance date hard-coded to `2020-01-01`
 - Categorization table background is white
 - Change transaction category -> dropdown list with search?
 - Prevent deletion of used category
 - Category deduplication
-- DateTime to DateOnly
-- Rename budget in its own use case
+- Allow to rename budget (in its own use case though)
 - Change budget amount implies providing begin date
 - Synchronization allows multiple files to be uploaded but only one is working
+- Better date display in transactions of month (month and year are redundant)
+- Introduce `CurrentMonth` of something like that to replace `new DateOnly(DateTime.Now.Year, DateTime.Now.Month, 1)`
+- Clear all `EditForm` on save so that next create only has placeholders and not previously saved values

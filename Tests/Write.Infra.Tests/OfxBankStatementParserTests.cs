@@ -21,9 +21,9 @@ public sealed class OfxBankStatementParserTests : HostFixture
     [Fact]
     public async Task Extracts_account_statement()
     {
-        AccountStatement expected = new("00012345000", 12345.67m, DateTime.Parse("2023-04-13"),
-            new TransactionStatement("TheDebitId", -300.21m, "The debit", DateTime.Parse("2023-04-18"), null),
-            new TransactionStatement("TheCreditId", 100.95m, "The credit", DateTime.Parse("2023-04-17"), null)
+        AccountStatement expected = new("00012345000", 12345.67m, DateOnly.Parse("2023-04-13"),
+            new TransactionStatement("TheDebitId", -300.21m, "The debit", DateOnly.Parse("2023-04-18"), null),
+            new TransactionStatement("TheCreditId", 100.95m, "The credit", DateOnly.Parse("2023-04-17"), null)
         );
         await this.Verify(new MemoryStream(OfxSample), expected);
     }
