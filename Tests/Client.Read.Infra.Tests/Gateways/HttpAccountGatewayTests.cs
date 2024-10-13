@@ -17,7 +17,7 @@ public sealed class HttpAccountGatewayTests : HostFixture
     }
 
     protected override void Configure(IServiceCollection services) =>
-        services.AddReadDependencies().AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
+        services.AddReadInfra().AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
     [Theory, RandomData]
     public async Task Retrieves_account_summaries(AccountSummaryPresentation[] expected)

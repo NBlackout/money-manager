@@ -1,4 +1,6 @@
-﻿using Read.Infra.DataSources.AccountDetails;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Read.App.UseCases;
+using Read.Infra.DataSources.AccountDetails;
 using Read.Infra.DataSources.AccountSummaries;
 using Read.Infra.DataSources.BudgetSummaries;
 using Read.Infra.DataSources.CategoriesWithKeywords;
@@ -6,11 +8,11 @@ using Read.Infra.DataSources.CategorySummaries;
 using Read.Infra.DataSources.TransactionsOfMonth;
 using Read.Infra.DataSources.TransactionsToCategorize;
 
-namespace Read.Api.Extensions;
+namespace Read.Infra;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddReadDependencies(this IServiceCollection services)
+    public static void AddReadInfra(this IServiceCollection services)
     {
         services
             .AddUseCases()

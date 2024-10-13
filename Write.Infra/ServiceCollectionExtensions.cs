@@ -1,10 +1,13 @@
-﻿using Write.Infra.BankStatementParsing;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Write.App.UseCases;
+using Write.Infra.BankStatementParsing;
+using Write.Infra.Repositories;
 
-namespace Write.Api.Extensions;
+namespace Write.Infra;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddWriteDependencies(this IServiceCollection services) =>
+    public static IServiceCollection AddWriteInfra(this IServiceCollection services) =>
         services.AddUseCases().AddInfrastructureAdapters();
 
     private static IServiceCollection AddUseCases(this IServiceCollection services)

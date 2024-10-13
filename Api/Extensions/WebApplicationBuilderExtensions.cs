@@ -1,5 +1,5 @@
-using Read.Api.Extensions;
-using Write.Api.Extensions;
+using Read.Api;
+using Write.Api;
 
 namespace Api.Extensions;
 
@@ -10,8 +10,8 @@ public static class WebApplicationBuilderExtensions
         builder.Services
             .AddSwaggerDependencies()
             .AddBlazorDependencies()
-            .AddWriteDependencies()
-            .AddReadDependencies();
+            .AddWrite()
+            .AddRead();
     }
 
     private static IServiceCollection AddSwaggerDependencies(this IServiceCollection services)

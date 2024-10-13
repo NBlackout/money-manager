@@ -1,4 +1,6 @@
-﻿namespace Write.Api.Controllers;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Write.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

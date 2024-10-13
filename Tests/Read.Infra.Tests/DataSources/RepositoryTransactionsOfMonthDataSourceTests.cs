@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Read.Infra.DataSources.TransactionsOfMonth;
+using Write.Infra;
 using Write.Infra.Repositories;
 using static Shared.TestTooling.Randomizer;
 
@@ -19,7 +20,7 @@ public sealed class RepositoryTransactionsOfMonthDataSourceTests : HostFixture
     }
 
     protected override void Configure(IServiceCollection services) =>
-        services.AddWriteDependencies().AddReadDependencies();
+        services.AddWriteInfra().AddReadInfra();
 
     [Theory, RandomData]
     public async Task Retrieves_transactions_of_month(Guid accountId)

@@ -1,15 +1,16 @@
-﻿using Client.Write.App.Ports;
+﻿using Client.Write.App.UseCases;
 using Client.Write.Infra.Gateways.Account;
 using Client.Write.Infra.Gateways.BankStatement;
 using Client.Write.Infra.Gateways.Budget;
 using Client.Write.Infra.Gateways.Category;
 using Client.Write.Infra.Gateways.Transaction;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Client.Extensions;
+namespace Client.Write.Infra;
 
-public static class ServiceCollectionWriteExtensions
+public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddWriteDependencies(this IServiceCollection services)
+    public static IServiceCollection AddWriteInfra(this IServiceCollection services)
     {
         return services
             .AddUseCases()

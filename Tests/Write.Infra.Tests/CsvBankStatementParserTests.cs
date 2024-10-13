@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Write.Api;
 using Write.Infra.BankStatementParsing;
 using static Shared.TestTooling.Resources.Resources;
 
@@ -14,7 +15,7 @@ public sealed class CsvBankStatementParserTests : HostFixture
     }
 
     protected override void Configure(IServiceCollection services) =>
-        services.AddWriteDependencies();
+        services.AddWrite();
 
     [Fact]
     public async Task Extracts_account_statement()
