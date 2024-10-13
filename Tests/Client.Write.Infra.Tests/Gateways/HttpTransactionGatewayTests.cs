@@ -29,8 +29,8 @@ public sealed class HttpTransactionGatewayTests : HostFixture
 
     private void Verify_Put(string url, object payload)
     {
-        JsonSerializerOptions jsonSerializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-        this.httpMessageHandler.Calls.Should().Equal((HttpMethod.Put, url, JsonSerializer.Serialize(payload, jsonSerializerOptions)));
+        this.httpMessageHandler.Calls.Should().Equal((HttpMethod.Put, url,
+            JsonSerializer.Serialize(payload, Defaults.JsonSerializerOptions)));
     }
 
     private static HttpClient CreateHttpClient(HttpMessageHandler httpResponseMessage) =>

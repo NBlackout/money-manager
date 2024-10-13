@@ -1,8 +1,10 @@
-﻿using Shared.Presentation;
+﻿using System.Diagnostics.CodeAnalysis;
+using Shared.Presentation;
 using Write.App.Model.Transactions;
 
 namespace Read.TestTooling;
 
+[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 public record TransactionBuilder(
     Guid Id,
     Guid AccountId,

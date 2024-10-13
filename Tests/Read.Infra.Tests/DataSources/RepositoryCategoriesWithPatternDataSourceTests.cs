@@ -33,7 +33,7 @@ public sealed class RepositoryCategoriesWithKeywordsDataSourceTests : HostFixtur
             Any<CategoryBuilder>() with { Keywords = "" },
             Any<CategoryBuilder>() with { Keywords = "   " }
         );
-        await this.Verify(Array.Empty<CategoryBuilder>());
+        await this.Verify([]);
     }
 
     private async Task Verify(params CategoryBuilder[] expected)

@@ -2,7 +2,7 @@
 
 public class SpyTransactionGateway : ITransactionGateway
 {
-    public List<(Guid, Guid)> AssignCategoryCalls { get; } = new();
+    public List<(Guid, Guid)> AssignCategoryCalls { get; } = [];
 
     public Task AssignCategory(Guid transactionId, Guid categoryId)
     {

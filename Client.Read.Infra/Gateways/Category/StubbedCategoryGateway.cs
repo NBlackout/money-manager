@@ -7,6 +7,6 @@ public class StubbedCategoryGateway : ICategoryGateway
     public Task<CategorySummaryPresentation[]> Summaries() =>
         Task.FromResult(this.summaries);
 
-    public void Feed(params CategorySummaryPresentation[] summaries) =>
-        this.summaries = summaries;
+    public void Feed(params CategorySummaryPresentation[] expected) =>
+        this.summaries = expected;
 }

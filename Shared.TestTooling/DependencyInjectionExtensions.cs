@@ -22,11 +22,11 @@ public static class DependencyInjectionExtensions
         where TImplementation : TContract =>
         scope.ServiceProvider.Resolve<TContract, TImplementation>();
 
-    public static TContract Resolve<TContract>(this IServiceProvider serviceProvider)
+    private static TContract Resolve<TContract>(this IServiceProvider serviceProvider)
         where TContract : notnull =>
         serviceProvider.GetRequiredService<TContract>();
 
-    public static TImplementation Resolve<TContract, TImplementation>(this IServiceProvider serviceProvider)
+    private static TImplementation Resolve<TContract, TImplementation>(this IServiceProvider serviceProvider)
         where TContract : notnull
         where TImplementation : TContract =>
         (TImplementation)serviceProvider.GetRequiredService<TContract>();

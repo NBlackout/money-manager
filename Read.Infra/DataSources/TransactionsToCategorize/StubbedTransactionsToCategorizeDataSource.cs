@@ -7,6 +7,6 @@ public class StubbedTransactionsToCategorizeDataSource : ITransactionsToCategori
     public Task<TransactionToCategorize[]> All() =>
         Task.FromResult(this.transactionsToCategorize.ToArray());
 
-    public void Feed(params TransactionToCategorize[] transactionsToCategorize) =>
-        this.transactionsToCategorize.AddRange(transactionsToCategorize);
+    public void Feed(params TransactionToCategorize[] expected) =>
+        this.transactionsToCategorize.AddRange(expected);
 }

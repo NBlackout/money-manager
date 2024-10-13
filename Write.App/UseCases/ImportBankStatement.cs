@@ -45,11 +45,11 @@ public class ImportBankStatement(
                 continue;
             }
 
-            if (newCategories.ContainsKey(newTransactionStatement.Category))
+            if (newCategories.TryGetValue(newTransactionStatement.Category, out Category? newCategory))
             {
                 newTransactions.Add(account.AttachTransaction(id, newTransactionStatement.Identifier,
                     newTransactionStatement.Amount, newTransactionStatement.Label, newTransactionStatement.Date,
-                    newCategories[newTransactionStatement.Category]));
+                    newCategory));
 
                 continue;
             }

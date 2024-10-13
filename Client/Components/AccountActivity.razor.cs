@@ -5,7 +5,7 @@ public partial class AccountActivity : ComponentBase
     private bool isEditing;
     private ElementReference labelElement;
 
-    private List<DateTime> months = new();
+    private List<DateTime> months = [];
     private DateTime currentMonth;
     private AccountDetailsPresentation? account;
     private TransactionSummaryPresentation[]? transactions;
@@ -81,7 +81,7 @@ public partial class AccountActivity : ComponentBase
         DateTime januaryLastYear = new(DateTime.Today.Year - 1, 1, 1);
         DateTime nextMonth = DateTime.Today.AddMonths(1);
 
-        List<DateTime> months = new();
+        List<DateTime> months = [];
         for (DateTime date = januaryLastYear; date < nextMonth; date = date.AddMonths(1))
             months.Add(date);
 

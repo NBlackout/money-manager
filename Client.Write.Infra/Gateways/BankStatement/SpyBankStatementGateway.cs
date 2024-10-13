@@ -2,7 +2,7 @@
 
 public class SpyBankStatementGateway : IBankStatementGateway
 {
-    public List<(string, string, Stream)> Calls { get; } = new();
+    public List<(string, string, Stream)> Calls { get; } = [];
 
     public Task Upload(string fileName, string contentType, Stream stream)
     {

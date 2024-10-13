@@ -10,8 +10,12 @@ namespace Read.Api.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddReadDependencies(this IServiceCollection services) =>
-        services.AddUseCases().AddInfrastructureAdapters();
+    public static void AddReadDependencies(this IServiceCollection services)
+    {
+        services
+            .AddUseCases()
+            .AddInfrastructureAdapters();
+    }
 
     private static IServiceCollection AddUseCases(this IServiceCollection services)
     {
@@ -24,9 +28,9 @@ public static class ServiceCollectionExtensions
             .AddScoped<BudgetSummaries>();
     }
 
-    private static IServiceCollection AddInfrastructureAdapters(this IServiceCollection services)
+    private static void AddInfrastructureAdapters(this IServiceCollection services)
     {
-        return services
+        services
             .AddScoped<IAccountSummariesDataSource, RepositoryAccountSummariesDataSource>()
             .AddScoped<IAccountDetailsDataSource, RepositoryAccountDetailsDataSource>()
             .AddScoped<ITransactionsOfMonthDataSource, RepositoryTransactionsOfMonthDataSource>()

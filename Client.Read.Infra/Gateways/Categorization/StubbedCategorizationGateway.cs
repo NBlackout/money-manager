@@ -7,6 +7,6 @@ public class StubbedCategorizationGateway : ICategorizationGateway
     public Task<CategorizationSuggestionPresentation[]> Suggestions() =>
         Task.FromResult(this.suggestions);
 
-    public void Feed(CategorizationSuggestionPresentation[] suggestions) =>
-        this.suggestions = suggestions;
+    public void Feed(CategorizationSuggestionPresentation[] expected) =>
+        this.suggestions = expected;
 }

@@ -36,12 +36,11 @@ public sealed class HttpCategoryGatewayTests : HostFixture
 
     private void Verify_Post(string url, object payload)
     {
-        JsonSerializerOptions jsonSerializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
         this.httpMessageHandler.Calls.Should()
-            .Equal((HttpMethod.Post, url, JsonSerializer.Serialize(payload, jsonSerializerOptions)));
+            .Equal((HttpMethod.Post, url, JsonSerializer.Serialize(payload, Defaults.JsonSerializerOptions)));
     }
 
-    private void Verify_Delete(string url) => 
+    private void Verify_Delete(string url) =>
         this.httpMessageHandler.Calls.Should().Equal((HttpMethod.Delete, url, string.Empty));
 
     private static HttpClient CreateHttpClient(HttpMessageHandler httpResponseMessage) =>

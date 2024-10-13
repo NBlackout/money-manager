@@ -2,9 +2,9 @@
 
 public class SpyAccountGateway : IAccountGateway
 {
-    public List<Guid> StopTrackingCalls { get; } = new();
-    public List<Guid> ResumeTrackingCalls { get; } = new();
-    public List<(Guid, string)> AssignLabelCalls { get; } = new();
+    public List<Guid> StopTrackingCalls { get; } = [];
+    public List<Guid> ResumeTrackingCalls { get; } = [];
+    public List<(Guid, string)> AssignLabelCalls { get; } = [];
 
     public Task StopTracking(Guid id)
     {

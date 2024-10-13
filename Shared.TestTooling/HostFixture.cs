@@ -23,12 +23,12 @@ public abstract class HostFixture : IDisposable
     {
     }
 
-    public TImplementation Resolve<TContract, TImplementation>()
+    protected TImplementation Resolve<TContract, TImplementation>()
         where TContract : notnull
         where TImplementation : TContract =>
         this.scope.Resolve<TContract, TImplementation>();
 
-    public TContract Resolve<TContract>() where TContract : notnull =>
+    protected TContract Resolve<TContract>() where TContract : notnull =>
         this.scope.Resolve<TContract>();
 
     protected TOptions ResolveOptions<TOptions>() where TOptions : class =>
