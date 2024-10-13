@@ -12,13 +12,11 @@ public class AccountsController(
     public async Task<AccountSummaryPresentation[]> Summaries() =>
         await accountSummaries.Execute();
 
-    [HttpGet]
-    [Route("{id:guid}")]
+    [HttpGet("{id:guid}")]
     public async Task<AccountDetailsPresentation> Details(Guid id) =>
         await accountDetails.Execute(id);
 
-    [HttpGet]
-    [Route("{id:guid}/transactions")]
+    [HttpGet("{id:guid}/transactions")]
     public async Task<TransactionSummaryPresentation[]> Details(Guid id, [FromQuery] int year,
         [FromQuery] int month) =>
         await transactionsOfMonth.Execute(id, year, month);
