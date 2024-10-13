@@ -1,6 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Read.Infra.DataSources.CategorySummaries;
-using Write.Infra;
+﻿using Read.Infra.DataSources.CategorySummaries;
+using Shared.Infra.TestTooling;
 using Write.Infra.Repositories;
 
 namespace Read.Infra.Tests.DataSources;
@@ -15,9 +14,6 @@ public sealed class RepositoryCategorySummariesDataSourceTests : HostFixture
         this.sut = this.Resolve<ICategorySummariesDataSource, RepositoryCategorySummariesDataSource>();
         this.categoryRepository = this.Resolve<ICategoryRepository, InMemoryCategoryRepository>();
     }
-
-    protected override void Configure(IServiceCollection services) =>
-        services.AddWriteInfra().AddReadInfra();
 
     [Theory, RandomData]
     public async Task Retrieves_categories(CategoryBuilder[] expected)

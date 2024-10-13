@@ -1,6 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Read.Infra.DataSources.TransactionsToCategorize;
-using Write.Infra;
+﻿using Read.Infra.DataSources.TransactionsToCategorize;
+using Shared.Infra.TestTooling;
 using Write.Infra.Repositories;
 using static Shared.TestTooling.Randomizer;
 
@@ -16,9 +15,6 @@ public sealed class RepositoryTransactionsToCategorizeDataSourceTests : HostFixt
         this.sut = this.Resolve<ITransactionsToCategorizeDataSource, RepositoryTransactionsToCategorizeDataSource>();
         this.categoryRepository = this.Resolve<ITransactionRepository, InMemoryTransactionRepository>();
     }
-
-    protected override void Configure(IServiceCollection services) =>
-        services.AddWriteInfra().AddReadInfra();
 
     [Fact]
     public async Task Retrieves_transactions_not_already_categorized()

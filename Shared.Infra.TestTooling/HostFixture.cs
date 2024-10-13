@@ -1,7 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Client.Read.Infra;
+using Client.Write.Infra;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Read.Infra;
+using Shared.TestTooling;
+using Write.Infra;
 
-namespace Shared.TestTooling;
+namespace Shared.Infra.TestTooling;
 
 public abstract class HostFixture : IDisposable
 {
@@ -11,7 +16,18 @@ public abstract class HostFixture : IDisposable
     protected HostFixture()
     {
         this.host = Host.CreateDefaultBuilder()
-            .ConfigureServices(this.Configure)
+            .ConfigureServices(s =>
+            {
+                s
+                    .AddSharedInfra()
+                    .AddScoped(_ => new HttpClient())
+                    .AddServerWriteInfra()
+                    .AddServerReadInfra()
+                    .AddClientWriteInfra()
+                    .AddClientReadInfra();
+
+                this.Configure(s);
+            })
             .UseEnvironment("Development")
             .Build();
 

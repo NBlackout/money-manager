@@ -1,6 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Read.Infra.DataSources.CategoriesWithKeywords;
-using Write.Infra;
+﻿using Read.Infra.DataSources.CategoriesWithKeywords;
+using Shared.Infra.TestTooling;
 using Write.Infra.Repositories;
 using static Shared.TestTooling.Randomizer;
 
@@ -16,9 +15,6 @@ public sealed class RepositoryCategoriesWithKeywordsDataSourceTests : HostFixtur
         this.sut = this.Resolve<ICategoriesWithKeywordsDataSource, RepositoryCategoriesWithKeywordsDataSource>();
         this.categoryRepository = this.Resolve<ICategoryRepository, InMemoryCategoryRepository>();
     }
-
-    protected override void Configure(IServiceCollection services) =>
-        services.AddWriteInfra().AddReadInfra();
 
     [Theory, RandomData]
     public async Task Retrieves_categories(CategoryBuilder[] expected)

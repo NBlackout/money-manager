@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using Client.Write.Infra.Gateways.Transaction;
 using Client.Write.Infra.Tests.TestDoubles;
+using Shared.Infra.TestTooling;
 
 namespace Client.Write.Infra.Tests.Gateways;
 
@@ -17,7 +18,7 @@ public sealed class HttpTransactionGatewayTests : HostFixture
     }
 
     protected override void Configure(IServiceCollection services) =>
-        services.AddWriteInfra().AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
+        services.AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
     [Theory, RandomData]
     public async Task Assigns_category(Guid transactionId, Guid categoryId)

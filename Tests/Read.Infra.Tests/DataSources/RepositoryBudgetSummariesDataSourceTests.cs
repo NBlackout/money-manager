@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Read.Infra.DataSources.BudgetSummaries;
-using Shared.Infra;
 using Shared.Infra.DateOnlyProvider;
+using Shared.Infra.TestTooling;
 using Shared.Ports;
-using Write.Infra;
 using Write.Infra.Repositories;
 using static Shared.TestTooling.Randomizer;
 
@@ -28,7 +27,7 @@ public sealed class RepositoryBudgetSummariesDataSourceTests : HostFixture
 
     protected override void Configure(IServiceCollection services)
     {
-        services.AddSharedInfra().AddWriteInfra().AddReadInfra().AddSingleton<IDateOnlyProvider>(this.dateOnlyProvider);
+        services.AddSingleton<IDateOnlyProvider>(this.dateOnlyProvider);
     }
 
     [Theory, RandomData]
@@ -53,7 +52,7 @@ public sealed class RepositoryBudgetSummariesDataSourceTests : HostFixture
     [Fact]
     public async Task Retrieves_budgets_beginning_last_month()
     {
-        BudgetBuilder expected = ABudget() with { Amount = 12, BeginDate = ThisMonth, TotalAmount = 24 };
+        BudgetBuilder expected = ABudget() with { Amount = 12, BeginDate = LastMonth, TotalAmount = 24 };
         this.Feed(expected);
 
         await this.Verify(expected);

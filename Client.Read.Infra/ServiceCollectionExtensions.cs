@@ -9,7 +9,7 @@ namespace Client.Read.Infra;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddReadInfra(this IServiceCollection services)
+    public static IServiceCollection AddClientReadInfra(this IServiceCollection services)
     {
         return services
             .AddUseCases()

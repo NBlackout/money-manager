@@ -6,5 +6,5 @@ namespace Write.Api;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddWrite(this IServiceCollection services) =>
-        services.AddWriteInfra();
+        services.AddServerWriteInfra();
 }

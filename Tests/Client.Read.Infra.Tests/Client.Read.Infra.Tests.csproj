@@ -3,6 +3,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Client.Read.App\Client.Read.App.csproj" />
       <ProjectReference Include="..\..\Client.Read.Infra\Client.Read.Infra.csproj" />
+      <ProjectReference Include="..\..\Shared.Infra.TestTooling\Shared.Infra.TestTooling.csproj" />
       <ProjectReference Include="..\..\Shared\Shared.csproj" />
     </ItemGroup>
 
