@@ -10,7 +10,7 @@ public record TransactionBuilder(
     Guid AccountId,
     decimal Amount,
     string Label,
-    DateTime Date,
+    DateOnly Date,
     CategoryBuilder? Category)
 {
     public TransactionSnapshot ToSnapshot() =>

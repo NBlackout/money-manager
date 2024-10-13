@@ -9,7 +9,7 @@ public partial class Transactions : ComponentBase
     private TransactionSummaryPresentation[]? Outflow => this.transactions?.Where(t => t.Amount <= 0).ToArray();
 
     [Parameter] public Guid AccountId { get; set; }
-    [Parameter] public DateTime Month { get; set; }
+    [Parameter] public DateOnly Month { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {

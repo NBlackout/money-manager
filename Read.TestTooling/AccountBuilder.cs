@@ -5,7 +5,7 @@ using Write.App.Model.Accounts;
 namespace Read.TestTooling;
 
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-public record AccountBuilder(Guid Id, string Label, string Number, decimal Balance, DateTime BalanceDate)
+public record AccountBuilder(Guid Id, string Label, string Number, decimal Balance, DateOnly BalanceDate)
 {
     public AccountSnapshot ToSnapshot() =>
         new(this.Id, this.Number, this.Label, this.Balance, this.BalanceDate);

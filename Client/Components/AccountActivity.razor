@@ -43,7 +43,7 @@
                         <span class="oi oi-media-step-backward"></span>
                     </button>
                     <select @onchange="@ShowTransactionsOfMonth" class="form-select border-dark">
-                        @foreach (DateTime month in months)
+                        @foreach (DateOnly month in months)
                         {
                             <option selected="@(month == currentMonth)" value="@month.ToString("yyyy-MM-dd")">@month.ToString("MMMM yyyy")</option>
                         }
