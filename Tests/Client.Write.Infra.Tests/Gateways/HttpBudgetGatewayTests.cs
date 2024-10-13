@@ -20,10 +20,10 @@ public sealed class HttpBudgetGatewayTests : HostFixture
         services.AddWriteInfra().AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
     [Theory, RandomData]
-    public async Task Defines(Guid id, string name, decimal amount)
+    public async Task Defines(Guid id, string name, decimal amount, DateOnly beginDate)
     {
-        await this.sut.Define(id, name, amount);
-        this.Verify_Post($"{ApiUrl}/budgets", new { Id = id, Name = name, Amount = amount });
+        await this.sut.Define(id, name, amount, beginDate);
+        this.Verify_Post($"{ApiUrl}/budgets", new { Id = id, Name = name, Amount = amount, BeginDate = beginDate });
     }
 
     private void Verify_Post(string url, object payload)

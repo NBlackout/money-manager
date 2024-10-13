@@ -7,7 +7,7 @@ public class RepositoryBudgetSummariesDataSource(InMemoryBudgetRepository reposi
     public Task<BudgetSummaryPresentation[]> All()
     {
         BudgetSummaryPresentation[] presentations =
-            repository.Data.Select(c => new BudgetSummaryPresentation(c.Id, c.Name, c.Amount)).ToArray();
+            repository.Data.Select(c => new BudgetSummaryPresentation(c.Id, c.Name, c.Amount, c.BeginDate)).ToArray();
 
         return Task.FromResult(presentations);
     }

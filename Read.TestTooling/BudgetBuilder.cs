@@ -5,11 +5,11 @@ using Write.App.Model.Budgets;
 namespace Read.TestTooling;
 
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-public record BudgetBuilder(Guid Id, string Name, decimal Amount)
+public record BudgetBuilder(Guid Id, string Name, decimal Amount, DateOnly BeginDate)
 {
     public BudgetSnapshot ToSnapshot() =>
-        new(this.Id, this.Name, this.Amount);
+        new(this.Id, this.Name, this.Amount, this.BeginDate);
 
     public BudgetSummaryPresentation ToSummary() =>
-        new(this.Id, this.Name, this.Amount);
+        new(this.Id, this.Name, this.Amount, this.BeginDate);
 }
