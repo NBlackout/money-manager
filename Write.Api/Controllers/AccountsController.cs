@@ -12,8 +12,7 @@ public class AccountsController(ImportBankStatement importBankStatement, AssignA
         await importBankStatement.Execute(file.FileName, stream);
     }
 
-    [HttpPut]
-    [Route("{id:guid}/label")]
+    [HttpPut("{id:guid}/label")]
     public async Task AssignLabel(Guid id, AccountLabelDto dto) =>
         await assignAccountLabel.Execute(id, dto.Label);
 }

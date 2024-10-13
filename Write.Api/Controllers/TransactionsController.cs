@@ -4,8 +4,7 @@
 [Route("api/[controller]")]
 public class TransactionsController(AssignTransactionCategory assignTransactionCategory) : ControllerBase
 {
-    [HttpPut]
-    [Route("{id:guid}/category")]
+    [HttpPut("{id:guid}/category")]
     public async Task AssignCategory(Guid id, TransactionCategoryDto dto) =>
         await assignTransactionCategory.Execute(id, dto.CategoryId);
 }
