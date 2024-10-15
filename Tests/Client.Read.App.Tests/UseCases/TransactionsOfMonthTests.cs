@@ -11,7 +11,7 @@ public class TransactionsOfMonthTests
     }
 
     [Theory, RandomData]
-    public async Task Retrieves_transactions_of_month(
+    public async Task Gives_transactions_of_month(
         Guid accountId,
         int year,
         int month,

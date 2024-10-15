@@ -11,7 +11,7 @@ public record AccountBuilder(Guid Id, string Label, string Number, decimal Balan
         new(this.Id, this.Number, this.Label, this.Balance, this.BalanceDate);
 
     public AccountSummaryPresentation ToSummary() =>
-        new(this.Id, this.Label, this.Number, this.Balance, this.BalanceDate);
+        new(this.Id, this.Label, this.Number, this.Balance);
 
     public AccountDetailsPresentation ToDetails() =>
         new(this.Id, this.Label, this.Number, this.Balance, this.BalanceDate);

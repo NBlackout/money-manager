@@ -14,7 +14,7 @@ public sealed class InMemoryAccountDetailsDataSourceTests : HostFixture
     }
 
     [Theory, RandomData]
-    public async Task Retrieves_account_details(AccountBuilder account)
+    public async Task Gives_account_details(AccountBuilder account)
     {
         this.Feed(account);
         await this.Verify(account);

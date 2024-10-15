@@ -11,7 +11,7 @@ public class CategorySummariesTests
     }
 
     [Theory, RandomData]
-    public async Task Retrieves_category_summaries(CategorySummaryPresentation[] expected)
+    public async Task Gives_category_summaries(CategorySummaryPresentation[] expected)
     {
         this.dataSource.Feed(expected);
         CategorySummaryPresentation[] actual = await this.sut.Execute();

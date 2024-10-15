@@ -7,14 +7,9 @@ namespace Read.Infra.Tests.DataSources;
 
 public sealed class InMemoryBudgetSummariesDataSourceTests : HostFixture
 {
-    private static readonly DateOnly Today = DateOnly.Parse("2024-01-01");
-    private static readonly DateOnly ThisMonth = DateOnly.Parse("2024-01-12");
-    private static readonly DateOnly LastMonth = DateOnly.Parse("2023-12-10");
-    private static readonly DateOnly NextMonth = DateOnly.Parse("2024-02-01");
-
     private readonly InMemoryBudgetSummariesDataSource sut;
     private readonly InMemoryBudgetRepository budgetRepository;
-    private readonly StubbedDateOnlyProvider dateOnlyProvider = new(Today);
+    private readonly StubbedDateOnlyProvider dateOnlyProvider = new();
 
     public InMemoryBudgetSummariesDataSourceTests()
     {
@@ -22,46 +17,48 @@ public sealed class InMemoryBudgetSummariesDataSourceTests : HostFixture
         this.budgetRepository = this.Resolve<IBudgetRepository, InMemoryBudgetRepository>();
     }
 
-    protected override void Configure(IServiceCollection services)
-    {
+    protected override void Configure(IServiceCollection services) =>
         services.AddSingleton<IDateOnlyProvider>(this.dateOnlyProvider);
+
+    [Theory, RandomData]
+    public async Task Gives_budget_beginning_today(decimal amount, DateOnly today)
+    {
+        BudgetBuilder budget = ABudget(today, amount);
+        this.TodayIs(today);
+        this.Feed(budget);
+
+        await this.Verify(budget with { TotalAmount = amount });
     }
 
     [Theory, RandomData]
-    public async Task Retrieves_budget_beginning_today(decimal amount)
+    public async Task Gives_budget_beginning_this_month(decimal amount)
     {
-        BudgetBuilder expected = ABudget() with { Amount = amount, BeginDate = Today, TotalAmount = amount };
+        BudgetBuilder expected = ABudget(DateOnly.Parse("2024-01-12"), amount);
+        this.TodayIs(DateOnly.Parse("2024-01-01"));
         this.Feed(expected);
 
-        await this.Verify(expected);
-    }
-
-    [Theory, RandomData]
-    public async Task Retrieves_budget_beginning_this_month(decimal amount)
-    {
-        BudgetBuilder expected = ABudget() with { Amount = amount, BeginDate = ThisMonth, TotalAmount = amount };
-        this.Feed(expected);
-
-        await this.Verify(expected);
+        await this.Verify(expected with { TotalAmount = amount });
     }
 
 
     [Fact]
-    public async Task Retrieves_budgets_beginning_last_month()
+    public async Task Gives_budgets_beginning_last_month()
     {
-        BudgetBuilder expected = ABudget() with { Amount = 12, BeginDate = LastMonth, TotalAmount = 24 };
-        this.Feed(expected);
+        BudgetBuilder budget = ABudget(DateOnly.Parse("2023-12-10"), 12);
+        this.TodayIs(DateOnly.Parse("2024-01-01"));
+        this.Feed(budget);
 
-        await this.Verify(expected);
+        await this.Verify(budget with { TotalAmount = 24 });
     }
 
-    [Fact]
-    public async Task Retrieves_budgets_beginning_next_month()
+    [Theory, RandomData]
+    public async Task Gives_budgets_beginning_next_month(decimal amount)
     {
-        BudgetBuilder expected = ABudget() with { BeginDate = NextMonth, TotalAmount = 0 };
-        this.Feed(expected);
+        BudgetBuilder budget = ABudget(DateOnly.Parse("2024-02-01"), amount);
+        this.TodayIs(DateOnly.Parse("2024-01-01"));
+        this.Feed(budget);
 
-        await this.Verify(expected);
+        await this.Verify(budget with { TotalAmount = 0 });
     }
 
     private async Task Verify(BudgetBuilder expected)
@@ -73,6 +70,9 @@ public sealed class InMemoryBudgetSummariesDataSourceTests : HostFixture
     private void Feed(BudgetBuilder expected) =>
         this.budgetRepository.Feed(expected.ToSnapshot());
 
-    private static BudgetBuilder ABudget() =>
-        Any<BudgetBuilder>();
+    private void TodayIs(DateOnly today) =>
+        this.dateOnlyProvider.Today = today;
+
+    private static BudgetBuilder ABudget(DateOnly beginDate, decimal amount) =>
+        Any<BudgetBuilder>() with { BeginDate = beginDate, Amount = amount };
 }

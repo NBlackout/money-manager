@@ -11,7 +11,7 @@ public class CategorizationSuggestionsTests
     }
 
     [Theory, RandomData]
-    public async Task Retrieves_account_summaries(CategorizationSuggestionPresentation[] expected)
+    public async Task Gives_account_summaries(CategorizationSuggestionPresentation[] expected)
     {
         this.Feed(expected);
         await this.Verify(expected);

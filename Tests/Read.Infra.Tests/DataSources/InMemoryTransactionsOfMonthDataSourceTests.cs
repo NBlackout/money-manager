@@ -16,7 +16,7 @@ public sealed class InMemoryTransactionsOfMonthDataSourceTests : HostFixture
     }
 
     [Theory, RandomData]
-    public async Task Retrieves_transactions_of_month(Guid accountId)
+    public async Task Gives_transactions_of_month(Guid accountId)
     {
         TransactionBuilder aTransaction = ATransactionOn(accountId, DateOnly.Parse("2023-04-03"));
         TransactionBuilder anotherTransaction = ATransactionOn(accountId, DateOnly.Parse("2023-04-16"));

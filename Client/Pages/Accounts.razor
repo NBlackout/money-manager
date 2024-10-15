@@ -4,21 +4,40 @@
 
 <div class="container">
     <div class="row gx-0">
-        @if (accounts != null)
+        @if (accounts != null || budgets != null)
         {
             <ul class="col-3 list-group">
-                @foreach (AccountSummaryPresentation account in accounts)
+                @if (accounts != null)
                 {
-                    <li class="list-group-item @(account.Id == SelectedId ? "selected" : "")" @onclick="@(() => ShowDetails(account.Id))">
-                        <p class="account-label fw-bold d-flex justify-content-between">
-                            @account.Label
-                            <span class="oi oi-chevron-right"></span>
-                        </p>
-                        <p class="d-flex justify-content-between">
-                            @account.Number
-                            <span class="text-success">@account.Balance €</span>
-                        </p>
-                    </li>
+                    @foreach (AccountSummaryPresentation account in accounts)
+                    {
+                        <li class="list-group-item @(account.Id == SelectedId ? "selected" : "")" @onclick="@(() => ShowDetails(account.Id))">
+                            <p class="account-label fw-bold d-flex justify-content-between">
+                                @account.Label
+                                <span class="oi oi-chevron-right"></span>
+                            </p>
+                            <p class="d-flex justify-content-between">
+                                @account.Number
+                                <span class="text-success">@account.Balance €</span>
+                            </p>
+                        </li>
+                    }
+                }
+                @if (budgets != null)
+                {
+                    @foreach (BudgetSummaryPresentation budget in budgets)
+                    {
+                        <li class="list-group-item">
+                            <p class="account-label fw-bold d-flex justify-content-between">
+                                @budget.Name
+                                <span class="oi oi-chevron-right"></span>
+                            </p>
+                            <p class="d-flex justify-content-between">
+                                @budget.BeginDate.ToString("Y")
+                                <span class="text-success">@budget.TotalAmount €</span>
+                            </p>
+                        </li>
+                    }
                 }
             </ul>
             <div class="col-9">

@@ -14,7 +14,7 @@ public sealed class InMemoryTransactionsToCategorizeDataSourceTests : HostFixtur
     }
 
     [Fact]
-    public async Task Retrieves_transactions_not_already_categorized()
+    public async Task Gives_transactions_not_already_categorized()
     {
         TransactionBuilder[] expected = [ATransactionWithoutCategory(), ATransactionWithoutCategory()];
         this.Feed(expected);

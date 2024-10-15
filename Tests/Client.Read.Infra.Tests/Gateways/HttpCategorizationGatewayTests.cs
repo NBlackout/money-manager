@@ -16,7 +16,7 @@ public sealed class HttpCategorizationGatewayTests : HostFixture
         services.AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
     [Theory, RandomData]
-    public async Task Retrieves_categorization_suggestions(CategorizationSuggestionPresentation[] expected)
+    public async Task Gives_categorization_suggestions(CategorizationSuggestionPresentation[] expected)
     {
         this.Feed("categorization", expected);
         CategorizationSuggestionPresentation[] actual = await this.sut.Suggestions();
