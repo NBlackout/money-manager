@@ -11,7 +11,7 @@ public class AccountSummariesTests
     }
 
     [Theory, RandomData]
-    public async Task Retrieves_account_summaries(AccountSummaryPresentation[] expected)
+    public async Task Gives_account_summaries(AccountSummaryPresentation[] expected)
     {
         this.Fed(expected);
         await this.Verify(expected);

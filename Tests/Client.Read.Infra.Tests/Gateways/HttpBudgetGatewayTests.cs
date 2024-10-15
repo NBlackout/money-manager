@@ -16,7 +16,7 @@ public sealed class HttpBudgetGatewayTests : HostFixture
         services.AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
     [Theory, RandomData]
-    public async Task Retrieves_budget_summaries(BudgetSummaryPresentation[] expected)
+    public async Task Gives_budget_summaries(BudgetSummaryPresentation[] expected)
     {
         this.Feed("budgets", expected);
         BudgetSummaryPresentation[] actual = await this.sut.Summaries();

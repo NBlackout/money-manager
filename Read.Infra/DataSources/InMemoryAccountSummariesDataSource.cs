@@ -10,9 +10,6 @@ public class InMemoryAccountSummariesDataSource(InMemoryAccountRepository accoun
         return Task.FromResult(summaries);
     }
 
-    private static AccountSummaryPresentation ToSummary(AccountSnapshot account)
-    {
-        return new AccountSummaryPresentation(account.Id, account.Label, account.Number,
-            account.Balance, account.BalanceDate);
-    }
+    private static AccountSummaryPresentation ToSummary(AccountSnapshot account) =>
+        new(account.Id, account.Label, account.Number, account.Balance);
 }

@@ -16,7 +16,7 @@ public sealed class HttpAccountGatewayTests : HostFixture
         services.AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
     [Theory, RandomData]
-    public async Task Retrieves_account_summaries(AccountSummaryPresentation[] expected)
+    public async Task Gives_account_summaries(AccountSummaryPresentation[] expected)
     {
         this.Feed("accounts", expected);
         AccountSummaryPresentation[] actual = await this.sut.Summaries();
@@ -24,7 +24,7 @@ public sealed class HttpAccountGatewayTests : HostFixture
     }
 
     [Theory, RandomData]
-    public async Task Retrieves_account_details(AccountDetailsPresentation expected)
+    public async Task Gives_account_details(AccountDetailsPresentation expected)
     {
         this.Feed($"accounts/{expected.Id}", expected);
         AccountDetailsPresentation actual = await this.sut.Details(expected.Id);
@@ -32,7 +32,7 @@ public sealed class HttpAccountGatewayTests : HostFixture
     }
 
     [Theory, RandomData]
-    public async Task Retrieves_transactions_of_month(
+    public async Task Gives_transactions_of_month(
         Guid accountId,
         int year,
         int month,

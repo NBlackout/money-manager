@@ -14,7 +14,7 @@ public sealed class InMemoryCategoriesWithKeywordsDataSourceTests : HostFixture
     }
 
     [Theory, RandomData]
-    public async Task Retrieves_categories(CategoryBuilder[] expected)
+    public async Task Gives_categories(CategoryBuilder[] expected)
     {
         this.Feed(expected);
         await this.Verify(expected);
