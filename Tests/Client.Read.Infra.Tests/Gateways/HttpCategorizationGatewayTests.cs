@@ -1,9 +1,4 @@
-﻿using Client.Read.Infra.Gateways.Categorization;
-using Client.Read.Infra.Tests.TestDoubles;
-using Shared.Infra.TestTooling;
-using Shared.Presentation;
-
-namespace Client.Read.Infra.Tests.Gateways;
+﻿namespace Client.Read.Infra.Tests.Gateways;
 
 public sealed class HttpCategorizationGatewayTests : HostFixture
 {

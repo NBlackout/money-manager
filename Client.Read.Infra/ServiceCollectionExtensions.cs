@@ -1,8 +1,5 @@
 ﻿using Client.Read.App.UseCases;
-using Client.Read.Infra.Gateways.Account;
-using Client.Read.Infra.Gateways.Budget;
-using Client.Read.Infra.Gateways.Categorization;
-using Client.Read.Infra.Gateways.Category;
+using Client.Read.Infra.Gateways;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Client.Read.Infra;

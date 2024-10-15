@@ -1,6 +1,4 @@
-﻿using Client.Read.Infra.Gateways.Category;
-
-namespace Client.Read.App.Tests.UseCases;
+﻿namespace Client.Read.App.Tests.UseCases;
 
 public class CategorySummariesTests
 {

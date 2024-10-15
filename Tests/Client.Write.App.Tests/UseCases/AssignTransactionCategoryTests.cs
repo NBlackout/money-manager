@@ -1,4 +1,4 @@
-﻿using Client.Write.Infra.Gateways.Transaction;
+﻿using Client.Write.App.Tests.TestDoubles;
 
 namespace Client.Write.App.Tests.UseCases;
 

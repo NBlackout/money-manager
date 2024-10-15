@@ -1,9 +1,4 @@
 ﻿using Client.Write.App.UseCases;
-using Client.Write.Infra.Gateways.Account;
-using Client.Write.Infra.Gateways.BankStatement;
-using Client.Write.Infra.Gateways.Budget;
-using Client.Write.Infra.Gateways.Category;
-using Client.Write.Infra.Gateways.Transaction;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Client.Write.Infra;
