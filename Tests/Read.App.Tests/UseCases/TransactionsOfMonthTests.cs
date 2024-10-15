@@ -1,8 +1,4 @@
-﻿using Read.App.UseCases;
-using Read.Infra.DataSources.TransactionsOfMonth;
-using Shared.Presentation;
-
-namespace Read.App.Tests.UseCases;
+﻿namespace Read.App.Tests.UseCases;
 
 public class TransactionsOfMonthTests
 {

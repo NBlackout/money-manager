@@ -1,4 +1,4 @@
-﻿using Client.Write.Infra.Gateways.Category;
+﻿using Client.Write.App.Tests.TestDoubles;
 
 namespace Client.Write.App.Tests.UseCases;
 

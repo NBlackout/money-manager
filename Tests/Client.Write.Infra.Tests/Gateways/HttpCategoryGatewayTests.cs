@@ -1,7 +1,5 @@
 ﻿using System.Text.Json;
-using Client.Write.Infra.Gateways.Category;
-using Client.Write.Infra.Tests.TestDoubles;
-using Shared.Infra.TestTooling;
+using Client.Write.Infra.Gateways;
 
 namespace Client.Write.Infra.Tests.Gateways;
 

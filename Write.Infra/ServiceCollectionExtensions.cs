@@ -7,8 +7,13 @@ namespace Write.Infra;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddServerWriteInfra(this IServiceCollection services) =>
-        services.AddUseCases().AddAdapters();
+    public static IServiceCollection AddServerWriteInfra(this IServiceCollection services)
+    {
+        return services
+            .AddUseCases()
+            .AddRepositories()
+            .AddParsers();
+    }
 
     private static IServiceCollection AddUseCases(this IServiceCollection services)
     {
@@ -19,15 +24,6 @@ public static class ServiceCollectionExtensions
             .AddScoped<CreateCategory>()
             .AddScoped<DeleteCategory>()
             .AddScoped<DefineBudget>();
-    }
-
-    private static IServiceCollection AddAdapters(this IServiceCollection services)
-    {
-        return services
-            .AddRepositories()
-            .AddScoped<IBankStatementParser, BankStatementParser>()
-            .AddScoped<OfxBankStatementParser>()
-            .AddScoped<CsvBankStatementParser>();
     }
 
     private static IServiceCollection AddRepositories(this IServiceCollection services)
@@ -46,5 +42,13 @@ public static class ServiceCollectionExtensions
             .AddSingleton(categoryRepository)
             .AddSingleton<IBudgetRepository>(budgetRepository)
             .AddSingleton(budgetRepository);
+    }
+
+    private static IServiceCollection AddParsers(this IServiceCollection services)
+    {
+        return services
+            .AddScoped<IBankStatementParser, BankStatementParser>()
+            .AddScoped<OfxBankStatementParser>()
+            .AddScoped<CsvBankStatementParser>();
     }
 }

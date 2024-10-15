@@ -1,12 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Read.App.UseCases;
-using Read.Infra.DataSources.AccountDetails;
-using Read.Infra.DataSources.AccountSummaries;
-using Read.Infra.DataSources.BudgetSummaries;
-using Read.Infra.DataSources.CategoriesWithKeywords;
-using Read.Infra.DataSources.CategorySummaries;
-using Read.Infra.DataSources.TransactionsOfMonth;
-using Read.Infra.DataSources.TransactionsToCategorize;
+using Read.Infra.DataSources;
 
 namespace Read.Infra;
 
@@ -16,7 +10,7 @@ public static class ServiceCollectionExtensions
     {
         return services
             .AddUseCases()
-            .AddAdapters();
+            .AddDataSources();
     }
 
     private static IServiceCollection AddUseCases(this IServiceCollection services)
@@ -30,15 +24,15 @@ public static class ServiceCollectionExtensions
             .AddScoped<BudgetSummaries>();
     }
 
-    private static IServiceCollection AddAdapters(this IServiceCollection services)
+    private static IServiceCollection AddDataSources(this IServiceCollection services)
     {
         return services
-            .AddScoped<IAccountSummariesDataSource, RepositoryAccountSummariesDataSource>()
-            .AddScoped<IAccountDetailsDataSource, RepositoryAccountDetailsDataSource>()
-            .AddScoped<ITransactionsOfMonthDataSource, RepositoryTransactionsOfMonthDataSource>()
-            .AddScoped<ICategorySummariesDataSource, RepositoryCategorySummariesDataSource>()
-            .AddScoped<ICategoriesWithKeywordsDataSource, RepositoryCategoriesWithKeywordsDataSource>()
-            .AddScoped<ITransactionsToCategorizeDataSource, RepositoryTransactionsToCategorizeDataSource>()
-            .AddScoped<IBudgetSummariesDataSource, RepositoryBudgetSummariesDataSource>();
+            .AddScoped<IAccountSummariesDataSource, InMemoryAccountSummariesDataSource>()
+            .AddScoped<IAccountDetailsDataSource, InMemoryAccountDetailsDataSource>()
+            .AddScoped<ITransactionsOfMonthDataSource, InMemoryTransactionsOfMonthDataSource>()
+            .AddScoped<ICategorySummariesDataSource, InMemoryCategorySummariesDataSource>()
+            .AddScoped<ICategoriesWithKeywordsDataSource, InMemoryCategoriesWithKeywordsDataSource>()
+            .AddScoped<ITransactionsToCategorizeDataSource, InMemoryTransactionsToCategorizeDataSource>()
+            .AddScoped<IBudgetSummariesDataSource, InMemoryBudgetSummariesDataSource>();
     }
 }

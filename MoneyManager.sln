@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Read", "Read", "{5CA57638-A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Read.Infra.Tests", "Tests\Read.Infra.Tests\Read.Infra.Tests.csproj", "{F79E20DF-4DC0-45B8-860F-20957853CF90}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SolutionItems", "_SolutionItems", "{E1C7432F-7C18-4B3D-B449-CCB12FBC368C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__SolutionItems", "__SolutionItems", "{E1C7432F-7C18-4B3D-B449-CCB12FBC368C}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\ci.yml = .github\workflows\ci.yml
 		.gitignore = .gitignore

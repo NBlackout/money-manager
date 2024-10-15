@@ -1,9 +1,4 @@
-﻿using Read.App.Ports;
-using Read.App.UseCases;
-using Read.Infra.DataSources.CategoriesWithKeywords;
-using Read.Infra.DataSources.TransactionsToCategorize;
-using Shared.Presentation;
-using static Shared.TestTooling.Randomizer;
+﻿using static Shared.TestTooling.Randomizer;
 
 namespace Read.App.Tests.UseCases;
 
