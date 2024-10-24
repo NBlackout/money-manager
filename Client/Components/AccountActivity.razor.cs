@@ -8,10 +8,8 @@ public partial class AccountActivity : ComponentBase
     private List<DateOnly> months = [];
     private DateOnly currentMonth;
     private AccountDetailsPresentation? account;
-    private TransactionSummaryPresentation[]? transactions;
 
     [Inject] private AccountDetails AccountDetails { get; set; } = null!;
-    [Inject] private TransactionsOfMonth TransactionsOfMonth { get; set; } = null!;
     [Inject] private AssignAccountLabel AssignAccountLabel { get; set; } = null!;
 
     [Parameter] public Guid Id { get; set; }
@@ -19,8 +17,8 @@ public partial class AccountActivity : ComponentBase
     protected override async Task OnParametersSetAsync()
     {
         this.months = LoadMonthsRange();
+        this.currentMonth = new DateOnly(DateTime.Today.Year, DateTime.Today.Month, 1);
         this.account = await this.AccountDetails.Execute(this.Id);
-        await this.LoadTransactionsOf(new DateOnly(DateTime.Today.Year, DateTime.Today.Month, 1));
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -44,37 +42,20 @@ public partial class AccountActivity : ComponentBase
         this.ExitEditMode();
     }
 
-    private void OnCategoryAssigned((Guid TransactionId, string CategoryLabel) args)
-    {
-        TransactionSummaryPresentation transaction = this.transactions!.Single(t => t.Id == args.TransactionId);
+    private void ShowTransactionsOfMonth(ChangeEventArgs args) =>
+        this.currentMonth = DateOnly.ParseExact(args.Value!.ToString()!, "yyyy-MM-dd", null);
 
-        TransactionSummaryPresentation[] updatedTransactions = this.transactions!.ToArray();
-        int transactionIndex = updatedTransactions.ToList().IndexOf(transaction);
-        updatedTransactions[transactionIndex] = transaction with { Category = args.CategoryLabel };
-        this.transactions = updatedTransactions;
-    }
+    private void ShowFirstMonthTransactions() =>
+        this.currentMonth = this.months.First();
 
-    private async Task ShowTransactionsOfMonth(ChangeEventArgs args) =>
-        await this.LoadTransactionsOf(DateOnly.ParseExact(args.Value!.ToString()!, "yyyy-MM-dd", null));
+    private void ShowPreviousMonthTransactions() =>
+        this.currentMonth = this.currentMonth.AddMonths(-1);
 
-    private async Task ShowFirstMonthTransactions() =>
-        await this.LoadTransactionsOf(this.months.First());
+    private void ShowNextMonthTransactions() =>
+        this.currentMonth = this.currentMonth.AddMonths(+1);
 
-    private async Task ShowPreviousMonthTransactions() =>
-        await this.LoadTransactionsOf(this.currentMonth.AddMonths(-1));
-
-    private async Task ShowNextMonthTransactions() =>
-        await this.LoadTransactionsOf(this.currentMonth.AddMonths(1));
-
-    private async Task ShowLastMonthTransactions() =>
-        await this.LoadTransactionsOf(this.months.Last());
-
-    private async Task LoadTransactionsOf(DateOnly month)
-    {
-        this.currentMonth = month;
-        this.transactions =
-            await this.TransactionsOfMonth.Execute(this.Id, this.currentMonth.Year, this.currentMonth.Month);
-    }
+    private void ShowLastMonthTransactions() =>
+        this.currentMonth = this.months.Last();
 
     private static List<DateOnly> LoadMonthsRange()
     {

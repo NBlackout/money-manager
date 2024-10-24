@@ -25,7 +25,7 @@
 - Move port param and result closer to usage (VO or just below port)
 - Check naming everywhere
 - Categorization table background is white
-- Multiple requests issued on transaction of month navigation
+- Two transactions of month requests on account switch
 - Introduce `CurrentMonth` of something like that to replace `new DateOnly(DateTime.Now.Year, DateTime.Now.Month, 1)`
 - `using static Shared.TestTooling.Randomizer` in `GlobalUsings`
 - Set `ApiUrl` in `StubbedHttpMessageHandler` privately to replace `new(httpMessageHandler) { BaseAddress = new Uri(ApiUrl) };` with `new(httpMessageHandler)`
