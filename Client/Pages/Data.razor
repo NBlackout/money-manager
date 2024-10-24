@@ -1,6 +1,6 @@
 ﻿@page "/data"
 
-<InputFile OnChange="UploadBankStatementFile"></InputFile>
+<InputFile OnChange="UploadBankStatementFile" accept=".csv,.ofx" multiple></InputFile>
 @if (uploadResult != null)
 {
     <div>@uploadResult</div>

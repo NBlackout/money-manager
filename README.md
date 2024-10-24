@@ -17,7 +17,6 @@
 - Account empty state
 
 ## Bug
-- Synchronization allows multiple files to be uploaded but only one is working
 
 ## Testing
 - Contract testing
