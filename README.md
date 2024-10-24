@@ -11,7 +11,6 @@
 - Indent budget fake accounts below reference account
   - Use year browsing instead of month
   - Show all fake transaction of given year
-- Better date display in transactions of month (month and year are redundant)
 - Display account balance of given month (along with transactions)
 - Clear all `EditForm` on save so that next create only has placeholders and not previously saved values
 - Account empty state

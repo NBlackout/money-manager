@@ -8,21 +8,14 @@
             <th>Category</th>
             <th class="transaction-label">Label</th>
             <th>Amount</th>
-            <th>Date</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
         @foreach (TransactionSummaryPresentation transaction in Inflow)
         {
             <tr>
-                <td>
-                    <div class="dropdown">
-                        <button class="btn btn-link py-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <small class="oi oi-tag"></small>
-                        </button>
-                        <TransactionLabelAssignment Id="@transaction.Id" OnCategoryAssigned="OnCategoryAssigned"></TransactionLabelAssignment>
-                    </div>
-                </td>
+                <td>@transaction.Date.ToString("dd/MM")</td>
                 <td>
                     @if (transaction.Category != null)
                     {
@@ -33,7 +26,14 @@
                 <td class="text-end">
                     <span class="text-success">@transaction.Amount €</span>
                 </td>
-                <td class="text-end">@transaction.Date.ToShortDateString()</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-link py-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <small class="oi oi-tag"></small>
+                        </button>
+                        <TransactionLabelAssignment Id="@transaction.Id" OnCategoryAssigned="OnCategoryAssigned"></TransactionLabelAssignment>
+                    </div>
+                </td>
             </tr>
         }
         </tbody>
@@ -65,14 +65,7 @@
         @foreach (TransactionSummaryPresentation transaction in Outflow)
         {
             <tr>
-                <td>
-                    <div class="dropdown">
-                        <button class="btn btn-link py-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <small class="oi oi-tag"></small>
-                        </button>
-                        <TransactionLabelAssignment Id="@transaction.Id" OnCategoryAssigned="OnCategoryAssigned"></TransactionLabelAssignment>
-                    </div>
-                </td>
+                <td>@transaction.Date.ToString("dd/MM")</td>
                 <td>
                     @if (transaction.Category != null)
                     {
@@ -83,7 +76,14 @@
                 <td class="text-end">
                     <span class="text-danger">@transaction.Amount €</span>
                 </td>
-                <td class="text-end">@transaction.Date.ToShortDateString()</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-link py-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <small class="oi oi-tag"></small>
+                        </button>
+                        <TransactionLabelAssignment Id="@transaction.Id" OnCategoryAssigned="OnCategoryAssigned"></TransactionLabelAssignment>
+                    </div>
+                </td>
             </tr>
         }
         </tbody>
