@@ -14,6 +14,7 @@
 - Better date display in transactions of month (month and year are redundant)
 - Display account balance of given month (along with transactions)
 - Clear all `EditForm` on save so that next create only has placeholders and not previously saved values
+- Account empty state
 
 ## Bug
 - Synchronization allows multiple files to be uploaded but only one is working
@@ -26,7 +27,6 @@
 - Move port param and result closer to usage (VO or just below port)
 - Check naming everywhere
 - Categorization table background is white
-- Balance date hard-coded to `2020-01-01`
 - Multiple requests issued on transaction of month navigation
 - Introduce `CurrentMonth` of something like that to replace `new DateOnly(DateTime.Now.Year, DateTime.Now.Month, 1)`
 - `using static Shared.TestTooling.Randomizer` in `GlobalUsings`

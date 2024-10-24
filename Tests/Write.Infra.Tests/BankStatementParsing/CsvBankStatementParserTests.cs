@@ -21,9 +21,9 @@ public sealed class CsvBankStatementParserTests : HostFixture
             new AccountStatement(
                 "00012345000",
                 12345.67m,
-                DateOnly.Parse("2000-01-01"),
-                new TransactionStatement("1", -300.21m, "The debit", DateOnly.Parse("2023-04-18"), "Debit parent"),
-                new TransactionStatement("2", 100.95m, "The credit", DateOnly.Parse("2023-04-17"), "Credit parent")
+                DateOnly.Parse("2023-04-18"),
+                new TransactionStatement("00012345000_1", -300.21m, "The debit", DateOnly.Parse("2023-04-18"), "Debit parent"),
+                new TransactionStatement("00012345000_2", 100.95m, "The credit", DateOnly.Parse("2023-04-17"), "Credit parent")
             )
         );
     }
@@ -36,9 +36,9 @@ public sealed class CsvBankStatementParserTests : HostFixture
             new AccountStatement(
                 "1234",
                 12345.67m,
-                DateOnly.Parse("2000-01-01"),
-                new TransactionStatement("1", -56.78m, "Debit 2", DateOnly.Parse("2020-01-02"), "Debit parent"),
-                new TransactionStatement("2", -12.34m, "Debit 1", DateOnly.Parse("2020-01-01"), "Debit parent")
+                DateOnly.Parse("2020-01-01"),
+                new TransactionStatement("1234_1", -56.78m, "Debit 2", DateOnly.Parse("2020-01-02"), "Debit parent"),
+                new TransactionStatement("1234_2", -12.34m, "Debit 1", DateOnly.Parse("2020-01-01"), "Debit parent")
             )
         );
     }
