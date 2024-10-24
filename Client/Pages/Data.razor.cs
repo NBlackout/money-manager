@@ -14,7 +14,7 @@ public partial class Data : ComponentBase
     {
         try
         {
-            await this.Upload(args.File);
+            await this.Upload(args.GetMultipleFiles());
 
             this.uploadResult = "Bank statement successfully imported";
         }
@@ -22,6 +22,12 @@ public partial class Data : ComponentBase
         {
             this.uploadResult = e.Message;
         }
+    }
+
+    private async Task Upload(IEnumerable<IBrowserFile> files)
+    {
+        foreach (IBrowserFile file in files)
+            await this.Upload(file);
     }
 
     private async Task Upload(IBrowserFile file)
