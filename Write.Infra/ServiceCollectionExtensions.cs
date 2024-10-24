@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Write.App.UseCases;
 using Write.Infra.BankStatementParsing;
 using Write.Infra.Repositories;
 
@@ -10,20 +9,8 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddServerWriteInfra(this IServiceCollection services)
     {
         return services
-            .AddUseCases()
             .AddRepositories()
             .AddParsers();
-    }
-
-    private static IServiceCollection AddUseCases(this IServiceCollection services)
-    {
-        return services
-            .AddScoped<ImportBankStatement>()
-            .AddScoped<AssignAccountLabel>()
-            .AddScoped<AssignTransactionCategory>()
-            .AddScoped<CreateCategory>()
-            .AddScoped<DeleteCategory>()
-            .AddScoped<DefineBudget>();
     }
 
     private static IServiceCollection AddRepositories(this IServiceCollection services)

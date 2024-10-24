@@ -6,23 +6,8 @@ namespace Read.Infra;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddServerReadInfra(this IServiceCollection services)
-    {
-        return services
-            .AddUseCases()
-            .AddDataSources();
-    }
-
-    private static IServiceCollection AddUseCases(this IServiceCollection services)
-    {
-        return services
-            .AddScoped<AccountSummaries>()
-            .AddScoped<AccountDetails>()
-            .AddScoped<TransactionsOfMonth>()
-            .AddScoped<CategorySummaries>()
-            .AddScoped<CategorizationSuggestions>()
-            .AddScoped<BudgetSummaries>();
-    }
+    public static IServiceCollection AddServerReadInfra(this IServiceCollection services) =>
+        services.AddDataSources();
 
     private static IServiceCollection AddDataSources(this IServiceCollection services)
     {
