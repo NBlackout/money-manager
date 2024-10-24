@@ -28,7 +28,6 @@
 - Multiple requests issued on transaction of month navigation
 - Introduce `CurrentMonth` of something like that to replace `new DateOnly(DateTime.Now.Year, DateTime.Now.Month, 1)`
 - `using static Shared.TestTooling.Randomizer` in `GlobalUsings`
-- `AddUseCases` should move back in primary adapters
 - Set `ApiUrl` in `StubbedHttpMessageHandler` privately to replace `new(httpMessageHandler) { BaseAddress = new Uri(ApiUrl) };` with `new(httpMessageHandler)`
 
 ## Tooling
