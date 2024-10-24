@@ -10,10 +10,11 @@ public class CsvBankStatementParser
         BankStatementRow[] rows = lines.Skip(1).Select(BankStatementRow.From).ToArray();
 
         string accountNumber = rows.First().AccountNumber;
-        decimal accountBalance = rows.First(r => r.AccountBalance.HasValue).AccountBalance!.Value;
-        TransactionStatement[] transactions = rows.Select((r, i) => r.ToTransactionStatement($"{i + 1}")).ToArray();
+        BankStatementRow firstRowWithBalance = rows.First(r => r.AccountBalance.HasValue);
+        decimal accountBalance = firstRowWithBalance.AccountBalance!.Value;
+        TransactionStatement[] transactions = rows.Select((r) => r.ToTransactionStatement()).ToArray();
 
-        return new AccountStatement(accountNumber, accountBalance, DateOnly.Parse("2000-01-01"), transactions);
+        return new AccountStatement(accountNumber, accountBalance, firstRowWithBalance.TransactionDate, transactions);
     }
 
     private static async Task<List<string>> ReadLinesFrom(Stream stream)
@@ -28,6 +29,7 @@ public class CsvBankStatementParser
     }
 
     private record BankStatementRow(
+        int RowNumber,
         DateOnly TransactionDate,
         string TransactionLabel,
         string TransactionCategory,
@@ -44,10 +46,10 @@ public class CsvBankStatementParser
         private const int AccountNumberIndex = 7;
         private const int AccountBalanceIndex = 9;
 
-        public TransactionStatement ToTransactionStatement(string identifier)
+        public TransactionStatement ToTransactionStatement()
         {
             return new TransactionStatement(
-                identifier,
+                this.AccountNumber + "_" + this.RowNumber,
                 this.TransactionAmount,
                 this.TransactionLabel,
                 this.TransactionDate,
@@ -55,11 +57,12 @@ public class CsvBankStatementParser
             );
         }
 
-        public static BankStatementRow From(string line)
+        public static BankStatementRow From(string line, int lineNumber)
         {
             string[] columns = line.Split(ColumnSeparator);
 
             return new BankStatementRow(
+                lineNumber + 1,
                 DateOnly.Parse(columns[TransactionDateIndex]),
                 columns[TransactionLabelIndex],
                 columns[TransactionCategoryIndex],
