@@ -24,11 +24,8 @@ public partial class Data : ComponentBase
         }
     }
 
-    private async Task Upload(IEnumerable<IBrowserFile> files)
-    {
-        foreach (IBrowserFile file in files)
-            await this.Upload(file);
-    }
+    private async Task Upload(IEnumerable<IBrowserFile> files) =>
+        await Task.WhenAll(files.Select(this.Upload));
 
     private async Task Upload(IBrowserFile file)
     {

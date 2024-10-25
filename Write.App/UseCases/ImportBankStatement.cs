@@ -57,8 +57,7 @@ public class ImportBankStatement(
             Category? category = await categoryRepository.ByOrDefault(newTransactionStatement.Category);
             if (category == null)
             {
-                category = new Category(await categoryRepository.NextIdentity(), newTransactionStatement.Category!,
-                    newTransactionStatement.Category!);
+                category = new Category(await categoryRepository.NextIdentity(), newTransactionStatement.Category!);
 
                 newCategories.Add(newTransactionStatement.Category, category);
             }

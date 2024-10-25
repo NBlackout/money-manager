@@ -1,5 +1,3 @@
-using static Shared.TestTooling.Randomizer;
-
 namespace Write.App.Tests.UseCases;
 
 public class AssignAccountLabelTests

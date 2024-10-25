@@ -14,8 +14,10 @@
 - Display account balance of given month (along with transactions)
 - Clear all `EditForm` on save so that next create only has placeholders and not previously saved values
 - Account empty state
+- Deduplicate category on import using both `ToLower` and `Trim`
 
 ## Bug
+- Nullable category label during import
 
 ## Testing
 - Contract testing
@@ -29,6 +31,7 @@
 - Introduce `CurrentMonth` of something like that to replace `new DateOnly(DateTime.Now.Year, DateTime.Now.Month, 1)`
 - `using static Shared.TestTooling.Randomizer` in `GlobalUsings`
 - Set `ApiUrl` in `StubbedHttpMessageHandler` privately to replace `new(httpMessageHandler) { BaseAddress = new Uri(ApiUrl) };` with `new(httpMessageHandler)`
+- `Trim` in use cases ? Maybe with a `Label` VO ?
 
 ## Tooling
 - Auto formatting tool

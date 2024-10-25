@@ -1,3 +1,5 @@
+using Write.App.Model.Exceptions;
+
 namespace Write.Infra.Repositories;
 
 public class InMemoryCategoryRepository : ICategoryRepository
@@ -17,6 +19,14 @@ public class InMemoryCategoryRepository : ICategoryRepository
     {
         CategorySnapshot? snapshot = this.data.Values.SingleOrDefault(a => a.Label == label);
         return Task.FromResult(snapshot != null ? Category.From(snapshot) : null);
+    }
+
+    public Task EnsureUnique(string label)
+    {
+        if (this.data.Values.Any(c => c.Label.ToLower().Trim() == label.ToLower().Trim()))
+            throw new DuplicateCategoryException();
+
+        return Task.CompletedTask;
     }
 
     public Task Save(Category category)

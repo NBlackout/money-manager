@@ -1,6 +1,5 @@
 ﻿using Write.App.Model.Categories;
 using Write.Infra.BankStatementParsing;
-using static Shared.TestTooling.Randomizer;
 using static Write.App.Tests.UseCases.ImportBankStatementTests.Data;
 
 namespace Write.App.Tests.UseCases;
