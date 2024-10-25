@@ -11,5 +11,5 @@ public class InMemoryAccountSummariesDataSource(InMemoryAccountRepository accoun
     }
 
     private static AccountSummaryPresentation ToSummary(AccountSnapshot account) =>
-        new(account.Id.Value, account.Label, account.Number, account.Balance);
+        new(account.Id.Value, account.Label, account.Number, account.BalanceAmount);
 }

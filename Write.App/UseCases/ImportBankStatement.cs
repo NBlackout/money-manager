@@ -11,7 +11,7 @@ public class ImportBankStatement(
         AccountStatement statement = await bankStatementParser.Extract(fileName, stream);
 
         Account account = await this.EnsureAccountExists(statement);
-        account.Synchronize(statement.Balance, statement.BalanceDate);
+        account.Synchronize(statement.Balance);
         (Category[] categories, Transaction[] transactions) = await this.NewTransactions(account, statement);
 
         await this.Save(account, categories, transactions);
@@ -25,7 +25,7 @@ public class ImportBankStatement(
 
         AccountId id = await accountRepository.NextIdentity();
 
-        return Account.StartTracking(id, statement.AccountNumber, statement.Balance, statement.BalanceDate);
+        return Account.StartTracking(id, statement.AccountNumber, statement.Balance);
     }
 
     private async Task<(Category[], Transaction[])> NewTransactions(Account account, AccountStatement statement)

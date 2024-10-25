@@ -1,7 +1,3 @@
 namespace Write.App.Ports;
 
-public record AccountStatement(
-    string AccountNumber,
-    decimal Balance,
-    DateOnly BalanceDate,
-    params TransactionStatement[] Transactions);
+public record AccountStatement(string AccountNumber, Balance Balance, params TransactionStatement[] Transactions);

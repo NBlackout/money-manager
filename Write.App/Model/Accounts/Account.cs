@@ -4,32 +4,26 @@ public class Account : DomainEntity<AccountId>
 {
     private readonly string externalId;
     private string label;
-    private decimal balance;
-    private DateOnly balanceDate;
+    private Balance balance;
 
     public AccountSnapshot Snapshot =>
-        new(this.Id, this.externalId, this.label, this.balance, this.balanceDate);
+        new(this.Id, this.externalId, this.label, this.balance.Amount, this.balance.BalanceDate);
 
-    private Account(AccountId id, string externalId, string label, decimal balance, DateOnly balanceDate)
-        : base(id)
+    private Account(AccountId id, string externalId, string label, Balance balance) : base(id)
     {
         this.externalId = externalId;
         this.label = label;
         this.balance = balance;
-        this.balanceDate = balanceDate;
     }
 
     public static Account From(AccountSnapshot snapshot) =>
-        new(snapshot.Id, snapshot.Number, snapshot.Label, snapshot.Balance, snapshot.BalanceDate);
+        new(snapshot.Id, snapshot.Number, snapshot.Label, new Balance(snapshot.BalanceAmount, snapshot.BalanceDate));
 
-    public static Account StartTracking(AccountId id, string accountNumber, decimal balance, DateOnly balanceDate) =>
-        new(id, accountNumber, accountNumber, balance, balanceDate);
+    public static Account StartTracking(AccountId id, string accountNumber, Balance balance) =>
+        new(id, accountNumber, accountNumber, balance);
 
-    public void Synchronize(decimal updatedBalance, DateOnly updatedBalanceDate)
-    {
-        this.balance = updatedBalance;
-        this.balanceDate = updatedBalanceDate;
-    }
+    public void Synchronize(Balance newBalance) =>
+        this.balance = newBalance;
 
     public void AssignLabel(string newLabel) =>
         this.label = newLabel;

@@ -29,7 +29,7 @@ public class OfxBankStatementParser
             .Select(t => new TransactionStatement(t.Identifier, t.Amount, t.Label, t.Date, null)).ToArray();
 
         return Task.FromResult(new AccountStatement(statementResponse.BankAccount.AccountNumber,
-            availableBalance.Amount, availableBalance.Date, transactions)
+            new Balance(availableBalance.Amount, availableBalance.Date), transactions)
         );
     }
 

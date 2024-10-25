@@ -14,7 +14,11 @@ public class CsvBankStatementParser
         decimal accountBalance = firstRowWithBalance.AccountBalance!.Value;
         TransactionStatement[] transactions = rows.Select((r) => r.ToTransactionStatement()).ToArray();
 
-        return new AccountStatement(accountNumber, accountBalance, firstRowWithBalance.TransactionDate, transactions);
+        return new AccountStatement(
+            accountNumber,
+            new Balance(accountBalance, firstRowWithBalance.TransactionDate),
+            transactions
+        );
     }
 
     private static async Task<List<string>> ReadLinesFrom(Stream stream)
