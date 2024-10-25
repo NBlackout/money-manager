@@ -1,4 +1,5 @@
 ﻿using Write.App.Model.Categories;
+using Write.App.Model.ValueObjects;
 
 namespace Write.Api.Controllers;
 
@@ -8,7 +9,7 @@ public class CategoriesController(CreateCategory createCategory, DeleteCategory 
 {
     [HttpPost]
     public async Task Create(CategoryDto dto) =>
-        await createCategory.Execute(new CategoryId(dto.Id), dto.Label, dto.Keywords);
+        await createCategory.Execute(new CategoryId(dto.Id), new Label(dto.Label), dto.Keywords);
 
     [HttpDelete("{id:guid}")]
     public async Task Delete(Guid id) =>

@@ -1,4 +1,5 @@
 using Write.App.Model.Exceptions;
+using Write.App.Model.ValueObjects;
 
 namespace Write.Infra.Repositories;
 
@@ -15,15 +16,15 @@ public class InMemoryCategoryRepository : ICategoryRepository
     public Task<Category> By(CategoryId id) =>
         Task.FromResult(Category.From(this.data[id]));
 
-    public Task<Category?> ByOrDefault(string label)
+    public Task<Category?> ByOrDefault(Label label)
     {
-        CategorySnapshot? snapshot = this.data.Values.SingleOrDefault(a => a.Label == label);
+        CategorySnapshot? snapshot = this.data.Values.SingleOrDefault(c => new Label(c.Label) == label);
         return Task.FromResult(snapshot != null ? Category.From(snapshot) : null);
     }
 
-    public Task EnsureUnique(string label)
+    public Task EnsureUnique(Label label)
     {
-        if (this.data.Values.Any(c => c.Label.ToLower().Trim() == label.ToLower().Trim()))
+        if (this.data.Values.Any(c => new Label(c.Label) == label))
             throw new DuplicateCategoryException();
 
         return Task.CompletedTask;

@@ -1,7 +1,5 @@
-﻿using Shared.Infra.TestTooling;
-using Write.App.Model.Accounts;
+﻿using Write.App.Model.Accounts;
 using Write.Infra.BankStatementParsing;
-using static Shared.TestTooling.Resources.Resources;
 
 namespace Write.Infra.Tests.BankStatementParsing;
 
@@ -20,8 +18,10 @@ public class BankStatementParserTests : HostFixture
         AccountStatement expected = new(
             "00012345000",
             new Balance(12345.67m, DateOnly.Parse("2023-04-13")),
-            new TransactionStatement("TheDebitId", -300.21m, "The debit", DateOnly.Parse("2023-04-18"), null),
-            new TransactionStatement("TheCreditId", 100.95m, "The credit", DateOnly.Parse("2023-04-17"), null)
+            new TransactionStatement("TheDebitId", -300.21m, new Label("The debit"), DateOnly.Parse("2023-04-18"),
+                null),
+            new TransactionStatement("TheCreditId", 100.95m, new Label("The credit"), DateOnly.Parse("2023-04-17"),
+                null)
         );
         await this.Verify("sample.ofx", OfxSample, expected);
     }
@@ -32,8 +32,10 @@ public class BankStatementParserTests : HostFixture
         AccountStatement expected = new(
             "00012345000",
             new Balance(12345.67m, DateOnly.Parse("2023-04-18")),
-            new TransactionStatement("00012345000_1", -300.21m, "The debit", DateOnly.Parse("2023-04-18"), "Debit parent"),
-            new TransactionStatement("00012345000_2", 100.95m, "The credit", DateOnly.Parse("2023-04-17"), "Credit parent")
+            new TransactionStatement("00012345000_1", -300.21m, new Label("The debit"), DateOnly.Parse("2023-04-18"),
+                new Label("Debit parent")),
+            new TransactionStatement("00012345000_2", 100.95m, new Label("The credit"), DateOnly.Parse("2023-04-17"),
+                new Label("Credit parent"))
         );
         await this.Verify("sample.csv", CsvSample, expected);
     }

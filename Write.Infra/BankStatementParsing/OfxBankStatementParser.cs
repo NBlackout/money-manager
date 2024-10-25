@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Xml.Serialization;
+using Write.App.Model.ValueObjects;
 using Write.Infra.Exceptions;
 
 namespace Write.Infra.BankStatementParsing;
@@ -26,7 +27,7 @@ public class OfxBankStatementParser
             throw CannotProcessOfxContent.DueToMissingBalanceNode();
 
         TransactionStatement[] transactions = statementResponse.StatementTransactions
-            .Select(t => new TransactionStatement(t.Identifier, t.Amount, t.Label, t.Date, null)).ToArray();
+            .Select(t => new TransactionStatement(t.Identifier, t.Amount, new Label(t.Label), t.Date, null)).ToArray();
 
         return Task.FromResult(new AccountStatement(statementResponse.BankAccount.AccountNumber,
             new Balance(availableBalance.Amount, availableBalance.Date), transactions)

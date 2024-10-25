@@ -5,20 +5,22 @@ public class Transaction : DomainEntity<TransactionId>
     private readonly AccountId accountId;
     private readonly string externalId;
     private readonly decimal amount;
-    private readonly string label;
+    private readonly Label label;
     private readonly DateOnly date;
     private CategoryId? categoryId;
 
     public TransactionSnapshot Snapshot =>
-        new(this.Id, this.accountId, this.externalId, this.amount, this.label, this.date, this.categoryId);
+        new(this.Id, this.accountId, this.externalId, this.amount, this.label.Value, this.date, this.categoryId);
 
-    internal Transaction(TransactionId id, AccountId accountId, string externalId, decimal amount, string label, DateOnly date,
+    internal Transaction(TransactionId id, AccountId accountId, string externalId, decimal amount, Label label,
+        DateOnly date,
         Category? category) :
         this(id, accountId, externalId, amount, label, date, category?.Id)
     {
     }
 
-    private Transaction(TransactionId id, AccountId accountId, string externalId, decimal amount, string label, DateOnly date,
+    private Transaction(TransactionId id, AccountId accountId, string externalId, decimal amount, Label label,
+        DateOnly date,
         CategoryId? categoryId) : base(id)
     {
         this.accountId = accountId;
@@ -29,12 +31,12 @@ public class Transaction : DomainEntity<TransactionId>
         this.categoryId = categoryId;
     }
 
-    public static Transaction From(TransactionSnapshot snapshot)
-    {
-        return new Transaction(snapshot.Id, snapshot.AccountId, snapshot.ExternalId, snapshot.Amount, snapshot.Label,
-            snapshot.Date, snapshot.CategoryId);
-    }
-
     public void AssignCategory(CategoryId newCategoryId) =>
         this.categoryId = newCategoryId;
+
+    public static Transaction From(TransactionSnapshot snapshot)
+    {
+        return new Transaction(snapshot.Id, snapshot.AccountId, snapshot.ExternalId, snapshot.Amount,
+            new Label(snapshot.Label), snapshot.Date, snapshot.CategoryId);
+    }
 }

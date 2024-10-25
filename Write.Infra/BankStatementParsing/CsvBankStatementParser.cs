@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using Write.App.Model.ValueObjects;
 
 namespace Write.Infra.BankStatementParsing;
 
@@ -55,9 +56,9 @@ public class CsvBankStatementParser
             return new TransactionStatement(
                 this.AccountNumber + "_" + this.RowNumber,
                 this.TransactionAmount,
-                this.TransactionLabel,
+                new Label(this.TransactionLabel),
                 this.TransactionDate,
-                this.TransactionCategory
+                new Label(this.TransactionCategory)
             );
         }
 

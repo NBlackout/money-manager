@@ -11,18 +11,18 @@ public class AssignAccountLabelTests
     }
 
     [Theory, RandomData]
-    public async Task Assigns_account_label(AccountSnapshot account)
+    public async Task Assigns_account_label(AccountSnapshot account, Label newLabel)
     {
         this.Feed(account);
-        await this.Verify(account, Another(account.Label));
+        await this.Verify(account, newLabel);
     }
 
-    private async Task Verify(AccountSnapshot account, string newLabel)
+    private async Task Verify(AccountSnapshot account, Label label)
     {
-        await this.sut.Execute(account.Id, newLabel);
+        await this.sut.Execute(account.Id, label);
 
         Account actual = await this.repository.By(account.Id);
-        actual.Snapshot.Should().Be(account with { Label = newLabel });
+        actual.Snapshot.Should().Be(account with { Label = label.Value });
     }
 
     private void Feed(AccountSnapshot account) =>

@@ -2,21 +2,21 @@
 
 public class Category : DomainEntity<CategoryId>
 {
-    private readonly string label;
+    private readonly Label label;
     private readonly string keywords;
 
-    public CategorySnapshot Snapshot => new(this.Id, this.label, this.keywords);
+    public CategorySnapshot Snapshot => new(this.Id, this.label.Value, this.keywords);
 
-    internal Category(CategoryId id, string label) : this(id, label, label)
+    internal Category(CategoryId id, Label label) : this(id, label, label.Value)
     {
     }
 
-    internal Category(CategoryId id, string label, string keywords) : base(id)
+    internal Category(CategoryId id, Label label, string keywords) : base(id)
     {
         this.label = label;
         this.keywords = keywords;
     }
 
     public static Category From(CategorySnapshot snapshot) =>
-        new(snapshot.Id, snapshot.Label, snapshot.Keywords);
+        new(snapshot.Id, new Label(snapshot.Label), snapshot.Keywords);
 }

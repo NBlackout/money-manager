@@ -32,7 +32,7 @@ public class ImportBankStatement(
     {
         TransactionStatement[] newTransactionStatements = await this.NewTransactionStatements(statement);
 
-        Dictionary<string, Category> newCategories = [];
+        Dictionary<Label, Category> newCategories = [];
         List<Transaction> newTransactions = [];
         foreach (TransactionStatement newTransactionStatement in newTransactionStatements)
         {

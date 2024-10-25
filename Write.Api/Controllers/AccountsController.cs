@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Write.App.Model.Accounts;
+using Write.App.Model.ValueObjects;
 
 namespace Write.Api.Controllers;
 
@@ -17,5 +18,5 @@ public class AccountsController(ImportBankStatement importBankStatement, AssignA
 
     [HttpPut("{id:guid}/label")]
     public async Task AssignLabel(Guid id, AccountLabelDto dto) =>
-        await assignAccountLabel.Execute(new AccountId(id), dto.Label);
+        await assignAccountLabel.Execute(new AccountId(id), new Label(dto.Label));
 }
