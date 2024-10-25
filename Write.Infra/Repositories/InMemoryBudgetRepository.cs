@@ -5,11 +5,11 @@ namespace Write.Infra.Repositories;
 
 public class InMemoryBudgetRepository : IBudgetRepository
 {
-    private readonly Dictionary<Guid, BudgetSnapshot> data = new();
+    private readonly Dictionary<BudgetId, BudgetSnapshot> data = new();
 
     public IEnumerable<BudgetSnapshot> Data => this.data.Values.Select(c => c);
 
-    public Budget By(Guid id) =>
+    public Budget By(BudgetId id) =>
         Budget.From(this.data[id]);
 
     public Task EnsureNotAlreadyDefined(string name)

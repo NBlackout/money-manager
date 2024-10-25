@@ -1,4 +1,7 @@
-﻿namespace Write.Api.Controllers;
+﻿using Write.App.Model.Categories;
+using Write.App.Model.Transactions;
+
+namespace Write.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -6,5 +9,5 @@ public class TransactionsController(AssignTransactionCategory assignTransactionC
 {
     [HttpPut("{id:guid}/category")]
     public async Task AssignCategory(Guid id, TransactionCategoryDto dto) =>
-        await assignTransactionCategory.Execute(id, dto.CategoryId);
+        await assignTransactionCategory.Execute(new TransactionId(id), new CategoryId(dto.CategoryId));
 }

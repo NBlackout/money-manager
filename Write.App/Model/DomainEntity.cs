@@ -1,6 +1,6 @@
 ﻿namespace Write.App.Model;
 
-public abstract class DomainEntity(Guid id)
+public abstract class DomainEntity<TId>(TId id)
 {
-    public Guid Id { get; } = id;
+    public TId Id { get; } = id;
 }

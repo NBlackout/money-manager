@@ -2,16 +2,16 @@
 
 public class InMemoryTransactionRepository : ITransactionRepository
 {
-    private readonly Dictionary<Guid, TransactionSnapshot> data = new();
+    private readonly Dictionary<TransactionId, TransactionSnapshot> data = new();
     private readonly List<string> knownExternalIds = [];
 
     public IEnumerable<TransactionSnapshot> Data => this.data.Values.Select(t => t);
-    public Func<Guid> NextId { get; set; } = null!;
+    public Func<TransactionId> NextId { get; set; } = null!;
 
-    public Task<Guid> NextIdentity() =>
+    public Task<TransactionId> NextIdentity() =>
         Task.FromResult(this.NextId());
 
-    public Task<Transaction> By(Guid id) =>
+    public Task<Transaction> By(TransactionId id) =>
         Task.FromResult(Transaction.From(this.data[id]));
 
     public Task<string[]> UnknownExternalIds(IEnumerable<string> externalIds)

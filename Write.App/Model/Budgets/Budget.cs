@@ -1,6 +1,6 @@
 namespace Write.App.Model.Budgets;
 
-public class Budget : DomainEntity
+public class Budget : DomainEntity<BudgetId>
 {
     private readonly string name;
     private readonly decimal amount;
@@ -8,7 +8,7 @@ public class Budget : DomainEntity
 
     public BudgetSnapshot Snapshot => new(this.Id, this.name, this.amount, this.beginDate);
 
-    internal Budget(Guid id, string name, decimal amount, DateOnly beginDate) : base(id)
+    internal Budget(BudgetId id, string name, decimal amount, DateOnly beginDate) : base(id)
     {
         this.name = name;
         this.amount = amount;

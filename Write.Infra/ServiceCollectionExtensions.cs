@@ -15,9 +15,9 @@ public static class ServiceCollectionExtensions
 
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        InMemoryAccountRepository accountRepository = new() { NextId = Guid.NewGuid };
-        InMemoryCategoryRepository categoryRepository = new() { NextId = Guid.NewGuid };
-        InMemoryTransactionRepository transactionRepository = new() { NextId = Guid.NewGuid };
+        InMemoryAccountRepository accountRepository = new() { NextId = () => new AccountId(Guid.NewGuid()) };
+        InMemoryCategoryRepository categoryRepository = new() { NextId = () => new CategoryId(Guid.NewGuid()) };
+        InMemoryTransactionRepository transactionRepository = new() { NextId = () => new TransactionId(Guid.NewGuid()) };
         InMemoryBudgetRepository budgetRepository = new();
 
         return services

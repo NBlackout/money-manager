@@ -2,16 +2,16 @@
 
 public class InMemoryAccountRepository : IAccountRepository
 {
-    private readonly Dictionary<Guid, AccountSnapshot> data = new();
+    private readonly Dictionary<AccountId, AccountSnapshot> data = new();
     private readonly Dictionary<string, AccountSnapshot> dataByExternalId = new();
 
     public IEnumerable<AccountSnapshot> Data => this.data.Values.Select(a => a);
-    public Func<Guid> NextId { get; set; } = null!;
+    public Func<AccountId> NextId { get; set; } = null!;
 
-    public Task<Guid> NextIdentity() =>
+    public Task<AccountId> NextIdentity() =>
         Task.FromResult(this.NextId());
 
-    public Task<Account> By(Guid id) =>
+    public Task<Account> By(AccountId id) =>
         Task.FromResult(Account.From(this.data[id]));
 
     public Task<Account?> ByOrDefault(string externalId) =>

@@ -23,7 +23,7 @@ public class ImportBankStatement(
         if (account != null)
             return account;
 
-        Guid id = await accountRepository.NextIdentity();
+        AccountId id = await accountRepository.NextIdentity();
 
         return Account.StartTracking(id, statement.AccountNumber, statement.Balance, statement.BalanceDate);
     }
@@ -36,7 +36,7 @@ public class ImportBankStatement(
         List<Transaction> newTransactions = [];
         foreach (TransactionStatement newTransactionStatement in newTransactionStatements)
         {
-            Guid id = await transactionRepository.NextIdentity();
+            TransactionId id = await transactionRepository.NextIdentity();
             if (newTransactionStatement.Category == null)
             {
                 newTransactions.Add(account.AttachTransaction(id, newTransactionStatement.Identifier,

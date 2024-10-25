@@ -1,3 +1,3 @@
 namespace Write.App.Model.Budgets;
 
-public record BudgetSnapshot(Guid Id, string Name, decimal Amount, DateOnly BeginDate);
+public record BudgetSnapshot(BudgetId Id, string Name, decimal Amount, DateOnly BeginDate);

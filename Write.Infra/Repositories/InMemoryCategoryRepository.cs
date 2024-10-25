@@ -4,15 +4,15 @@ namespace Write.Infra.Repositories;
 
 public class InMemoryCategoryRepository : ICategoryRepository
 {
-    private readonly Dictionary<Guid, CategorySnapshot> data = new();
+    private readonly Dictionary<CategoryId, CategorySnapshot> data = new();
 
     public IEnumerable<CategorySnapshot> Data => this.data.Values.Select(c => c);
-    public Func<Guid> NextId { get; set; } = null!;
+    public Func<CategoryId> NextId { get; set; } = null!;
 
-    public Task<Guid> NextIdentity() =>
+    public Task<CategoryId> NextIdentity() =>
         Task.FromResult(this.NextId());
 
-    public Task<Category> By(Guid id) =>
+    public Task<Category> By(CategoryId id) =>
         Task.FromResult(Category.From(this.data[id]));
 
     public Task<Category?> ByOrDefault(string label)
@@ -36,7 +36,7 @@ public class InMemoryCategoryRepository : ICategoryRepository
         return Task.CompletedTask;
     }
 
-    public Task Delete(Guid id)
+    public Task Delete(CategoryId id)
     {
         this.data.Remove(id);
 
@@ -46,6 +46,6 @@ public class InMemoryCategoryRepository : ICategoryRepository
     public void Feed(params CategorySnapshot[] categories) =>
         categories.ToList().ForEach(category => this.data[category.Id] = category);
 
-    public bool Exists(Guid id) =>
+    public bool Exists(CategoryId id) =>
         this.data.ContainsKey(id);
 }

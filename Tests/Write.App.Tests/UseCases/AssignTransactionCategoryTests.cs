@@ -1,4 +1,6 @@
-﻿namespace Write.App.Tests.UseCases;
+﻿using Write.App.Model.Categories;
+
+namespace Write.App.Tests.UseCases;
 
 public class AssignTransactionCategoryTests
 {
@@ -11,13 +13,13 @@ public class AssignTransactionCategoryTests
     }
 
     [Theory, RandomData]
-    public async Task Assigns_transaction_category(TransactionSnapshot transaction, Guid categoryId)
+    public async Task Assigns_transaction_category(TransactionSnapshot transaction, CategoryId categoryId)
     {
         this.Feed(transaction);
         await this.Verify(transaction, categoryId);
     }
 
-    private async Task Verify(TransactionSnapshot transaction, Guid categoryId)
+    private async Task Verify(TransactionSnapshot transaction, CategoryId categoryId)
     {
         await this.sut.Execute(transaction.Id, categoryId);
 

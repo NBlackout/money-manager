@@ -8,7 +8,7 @@ namespace Read.TestTooling;
 public record CategoryBuilder(Guid Id, string Label, string Keywords)
 {
     public CategorySnapshot ToSnapshot() =>
-        new(this.Id, this.Label, this.Keywords);
+        new(new CategoryId(this.Id), this.Label, this.Keywords);
 
     public CategorySummaryPresentation ToSummary() =>
         new(this.Id, this.Label, this.Keywords);

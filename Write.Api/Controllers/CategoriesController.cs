@@ -1,4 +1,6 @@
-﻿namespace Write.Api.Controllers;
+﻿using Write.App.Model.Categories;
+
+namespace Write.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -6,9 +8,9 @@ public class CategoriesController(CreateCategory createCategory, DeleteCategory 
 {
     [HttpPost]
     public async Task Create(CategoryDto dto) =>
-        await createCategory.Execute(dto.Id, dto.Label, dto.Keywords);
+        await createCategory.Execute(new CategoryId(dto.Id), dto.Label, dto.Keywords);
 
     [HttpDelete("{id:guid}")]
     public async Task Delete(Guid id) =>
-        await deleteCategory.Execute(id);
+        await deleteCategory.Execute(new CategoryId(id));
 }

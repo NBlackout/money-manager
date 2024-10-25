@@ -10,7 +10,7 @@ public class InMemoryTransactionsOfMonthDataSource(
     public Task<TransactionSummaryPresentation[]> By(Guid accountId, int year, int month)
     {
         TransactionSummaryPresentation[] presentations = transactionRepository.Data
-            .Where(t => t.AccountId == accountId && t.Date.Year == year && t.Date.Month == month)
+            .Where(t => t.AccountId == new AccountId(accountId) && t.Date.Year == year && t.Date.Month == month)
             .Select(this.ToPresentation)
             .ToArray();
 
@@ -19,11 +19,11 @@ public class InMemoryTransactionsOfMonthDataSource(
 
     private TransactionSummaryPresentation ToPresentation(TransactionSnapshot transaction)
     {
-        string? categoryLabel = transaction.CategoryId.HasValue
-            ? categoryRepository.Data.Single(c => c.Id == transaction.CategoryId.Value).Label
+        string? categoryLabel = transaction.CategoryId is not null
+            ? categoryRepository.Data.Single(c => c.Id == transaction.CategoryId).Label
             : null;
 
-        return new TransactionSummaryPresentation(transaction.Id, transaction.Amount, transaction.Label,
+        return new TransactionSummaryPresentation(transaction.Id.Value, transaction.Amount, transaction.Label,
             transaction.Date, categoryLabel);
     }
 }
