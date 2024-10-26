@@ -71,7 +71,7 @@ public class ImportBankStatement(
 
     private async Task<TransactionStatement[]> NewTransactionStatements(AccountStatement statement)
     {
-        string[] unknownExternalIds = await transactionRepository.UnknownExternalIds(
+        ExternalId[] unknownExternalIds = await transactionRepository.UnknownExternalIds(
             statement.Transactions.Select(t => t.Identifier).ToArray()
         );
 

@@ -16,7 +16,7 @@ public class CsvBankStatementParser
         TransactionStatement[] transactions = rows.Select((r) => r.ToTransactionStatement()).ToArray();
 
         return new AccountStatement(
-            accountNumber,
+            new ExternalId(accountNumber),
             new Balance(accountBalance, firstRowWithBalance.TransactionDate),
             transactions
         );
@@ -54,7 +54,7 @@ public class CsvBankStatementParser
         public TransactionStatement ToTransactionStatement()
         {
             return new TransactionStatement(
-                this.AccountNumber + "_" + this.RowNumber,
+                new ExternalId(this.AccountNumber + "_" + this.RowNumber),
                 this.TransactionAmount,
                 new Label(this.TransactionLabel),
                 this.TransactionDate,

@@ -1,3 +1,3 @@
 ﻿namespace Write.App.Ports;
 
-public record TransactionStatement(string Identifier, decimal Amount, Label Label, DateOnly Date, Label? Category);
+public record TransactionStatement(ExternalId Identifier, decimal Amount, Label Label, DateOnly Date, Label? Category);

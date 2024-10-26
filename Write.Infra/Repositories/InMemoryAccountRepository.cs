@@ -1,4 +1,6 @@
-﻿namespace Write.Infra.Repositories;
+﻿using Write.App.Model.ValueObjects;
+
+namespace Write.Infra.Repositories;
 
 public class InMemoryAccountRepository : IAccountRepository
 {
@@ -14,8 +16,8 @@ public class InMemoryAccountRepository : IAccountRepository
     public Task<Account> By(AccountId id) =>
         Task.FromResult(Account.From(this.data[id]));
 
-    public Task<Account?> ByOrDefault(string externalId) =>
-        Task.FromResult(this.dataByExternalId.TryGetValue(externalId, out AccountSnapshot? value)
+    public Task<Account?> ByOrDefault(ExternalId externalId) =>
+        Task.FromResult(this.dataByExternalId.TryGetValue(externalId.Value, out AccountSnapshot? value)
             ? Account.From(value)
             : null);
 

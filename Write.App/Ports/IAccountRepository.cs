@@ -4,6 +4,6 @@ public interface IAccountRepository
 {
     Task<AccountId> NextIdentity();
     Task<Account> By(AccountId id);
-    Task<Account?> ByOrDefault(string externalId);
+    Task<Account?> ByOrDefault(ExternalId externalId);
     Task Save(Account account);
 }

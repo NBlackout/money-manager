@@ -135,10 +135,17 @@ public class ImportBankStatementTests
         public static AccountStatement AccountStatementFrom(AccountSnapshot account,
             params (TransactionSnapshot Transaction, string? CategoryLabel)[] transactions)
         {
-            return new AccountStatement(account.Number, new Balance(account.BalanceAmount, account.BalanceDate),
+            return new AccountStatement(
+                new ExternalId(account.Number),
+                new Balance(account.BalanceAmount, account.BalanceDate),
                 transactions
-                    .Select(t => new TransactionStatement(t.Transaction.ExternalId, t.Transaction.Amount,
-                        new Label(t.Transaction.Label), t.Transaction.Date, Label.From(t.CategoryLabel)))
+                    .Select(t => new TransactionStatement(
+                        new ExternalId(t.Transaction.ExternalId),
+                        t.Transaction.Amount,
+                        new Label(t.Transaction.Label),
+                        t.Transaction.Date,
+                        Label.From(t.CategoryLabel))
+                    )
                     .ToArray()
             );
         }
