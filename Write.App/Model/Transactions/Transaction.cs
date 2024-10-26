@@ -4,22 +4,23 @@ public class Transaction : DomainEntity<TransactionId>
 {
     private readonly AccountId accountId;
     private readonly ExternalId externalId;
-    private readonly decimal amount;
+    private readonly Amount amount;
     private readonly Label label;
     private readonly DateOnly date;
     private CategoryId? categoryId;
 
     public TransactionSnapshot Snapshot =>
-        new(this.Id, this.accountId, this.externalId.Value, this.amount, this.label.Value, this.date, this.categoryId);
+        new(this.Id, this.accountId, this.externalId.Value, this.amount.Value, this.label.Value, this.date,
+            this.categoryId);
 
-    internal Transaction(TransactionId id, AccountId accountId, ExternalId externalId, decimal amount, Label label,
+    internal Transaction(TransactionId id, AccountId accountId, ExternalId externalId, Amount amount, Label label,
         DateOnly date,
         Category? category) :
         this(id, accountId, externalId, amount, label, date, category?.Id)
     {
     }
 
-    private Transaction(TransactionId id, AccountId accountId, ExternalId externalId, decimal amount, Label label,
+    private Transaction(TransactionId id, AccountId accountId, ExternalId externalId, Amount amount, Label label,
         DateOnly date,
         CategoryId? categoryId) : base(id)
     {
@@ -36,7 +37,7 @@ public class Transaction : DomainEntity<TransactionId>
 
     public static Transaction From(TransactionSnapshot snapshot)
     {
-        return new Transaction(snapshot.Id, snapshot.AccountId, new ExternalId(snapshot.ExternalId), snapshot.Amount,
-            new Label(snapshot.Label), snapshot.Date, snapshot.CategoryId);
+        return new Transaction(snapshot.Id, snapshot.AccountId, new ExternalId(snapshot.ExternalId),
+            new Amount(snapshot.Amount), new Label(snapshot.Label), snapshot.Date, snapshot.CategoryId);
     }
 }

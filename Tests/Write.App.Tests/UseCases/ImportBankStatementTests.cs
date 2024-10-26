@@ -141,7 +141,7 @@ public class ImportBankStatementTests
                 transactions
                     .Select(t => new TransactionStatement(
                         new ExternalId(t.Transaction.ExternalId),
-                        t.Transaction.Amount,
+                        new Amount(t.Transaction.Amount),
                         new Label(t.Transaction.Label),
                         t.Transaction.Date,
                         Label.From(t.CategoryLabel))

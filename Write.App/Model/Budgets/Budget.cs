@@ -2,13 +2,13 @@ namespace Write.App.Model.Budgets;
 
 public class Budget : DomainEntity<BudgetId>
 {
-    private readonly string name;
-    private readonly decimal amount;
+    private readonly Label name;
+    private readonly Amount amount;
     private readonly DateOnly beginDate;
 
-    public BudgetSnapshot Snapshot => new(this.Id, this.name, this.amount, this.beginDate);
+    public BudgetSnapshot Snapshot => new(this.Id, this.name.Value, this.amount.Value, this.beginDate);
 
-    internal Budget(BudgetId id, string name, decimal amount, DateOnly beginDate) : base(id)
+    internal Budget(BudgetId id, Label name, Amount amount, DateOnly beginDate) : base(id)
     {
         this.name = name;
         this.amount = amount;
@@ -16,5 +16,5 @@ public class Budget : DomainEntity<BudgetId>
     }
 
     public static Budget From(BudgetSnapshot snapshot) =>
-        new(snapshot.Id, snapshot.Name, snapshot.Amount, snapshot.BeginDate);
+        new(snapshot.Id, new Label(snapshot.Name), new Amount(snapshot.Amount), snapshot.BeginDate);
 }

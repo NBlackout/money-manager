@@ -21,14 +21,14 @@ public sealed class OfxBankStatementParserTests : HostFixture
             new Balance(12345.67m, DateOnly.Parse("2023-04-13")),
             new TransactionStatement(
                 new ExternalId("TheDebitId"),
-                -300.21m,
+                new Amount(-300.21m),
                 new Label("The debit"),
                 DateOnly.Parse("2023-04-18"),
                 null
             ),
             new TransactionStatement(
                 new ExternalId("TheCreditId"),
-                100.95m,
+                new Amount(100.95m),
                 new Label("The credit"),
                 DateOnly.Parse("2023-04-17"),
                 null

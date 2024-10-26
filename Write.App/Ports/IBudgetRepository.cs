@@ -4,6 +4,6 @@ namespace Write.App.Ports;
 
 public interface IBudgetRepository
 {
-    Task EnsureNotAlreadyDefined(string name);
+    Task EnsureNotAlreadyDefined(Label name);
     Task Save(Budget budget);
 }

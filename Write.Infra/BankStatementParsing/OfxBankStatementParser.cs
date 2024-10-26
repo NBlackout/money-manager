@@ -29,7 +29,7 @@ public class OfxBankStatementParser
         TransactionStatement[] transactions = statementResponse.StatementTransactions
             .Select(t => new TransactionStatement(
                 new ExternalId(t.Identifier),
-                t.Amount,
+                new Amount(t.Amount),
                 new Label(t.Label),
                 t.Date,
                 null)

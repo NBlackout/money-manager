@@ -1,5 +1,6 @@
 using Write.App.Model.Budgets;
 using Write.App.Model.Exceptions;
+using Write.App.Model.ValueObjects;
 
 namespace Write.Infra.Repositories;
 
@@ -12,9 +13,9 @@ public class InMemoryBudgetRepository : IBudgetRepository
     public Budget By(BudgetId id) =>
         Budget.From(this.data[id]);
 
-    public Task EnsureNotAlreadyDefined(string name)
+    public Task EnsureNotAlreadyDefined(Label name)
     {
-        if (this.data.Values.Any(b => b.Name == name))
+        if (this.data.Values.Any(b => new Label(b.Name) == name))
             throw new BudgetAlreadyDefinedException();
 
         return Task.CompletedTask;

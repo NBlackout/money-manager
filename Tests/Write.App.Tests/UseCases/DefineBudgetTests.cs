@@ -29,7 +29,7 @@ public class DefineBudgetTests
 
     private async Task Verify(BudgetSnapshot expected)
     {
-        await this.sut.Execute(expected.Id, expected.Name, expected.Amount, expected.BeginDate);
+        await this.sut.Execute(expected.Id, new Label(expected.Name), new Amount(expected.Amount), expected.BeginDate);
 
         Budget actual = this.budgetRepository.By(expected.Id);
         actual.Snapshot.Should().Be(expected);

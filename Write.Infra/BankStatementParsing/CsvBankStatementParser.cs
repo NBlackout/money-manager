@@ -55,7 +55,7 @@ public class CsvBankStatementParser
         {
             return new TransactionStatement(
                 new ExternalId(this.AccountNumber + "_" + this.RowNumber),
-                this.TransactionAmount,
+                new Amount(this.TransactionAmount),
                 new Label(this.TransactionLabel),
                 this.TransactionDate,
                 new Label(this.TransactionCategory)

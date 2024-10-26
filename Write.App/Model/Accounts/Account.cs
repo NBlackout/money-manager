@@ -25,7 +25,7 @@ public class Account : DomainEntity<AccountId>
     public void AssignLabel(Label newLabel) =>
         this.label = newLabel;
 
-    public Transaction AttachTransaction(TransactionId transactionId, ExternalId externalId, decimal amount,
+    public Transaction AttachTransaction(TransactionId transactionId, ExternalId externalId, Amount amount,
         Label transactionLabel, DateOnly date, Category? category) =>
         new(transactionId, this.Id, externalId, amount, transactionLabel, date, category);
 
