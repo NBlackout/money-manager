@@ -1,6 +1,4 @@
-﻿using static Shared.TestTooling.Randomizer;
-
-namespace Read.App.Tests.UseCases;
+﻿namespace Read.App.Tests.UseCases;
 
 public class CategorizationSuggestionsTests
 {
