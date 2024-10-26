@@ -8,12 +8,12 @@ public class CsvBankStatementParser
     public async Task<AccountStatement> ExtractAccountStatement(Stream stream)
     {
         List<string> lines = await ReadLinesFrom(stream);
-        BankStatementRow[] rows = lines.Skip(1).Select(BankStatementRow.From).ToArray();
+        BankStatementRow[] rows = [..lines.Skip(1).Select(BankStatementRow.From)];
 
         string accountNumber = rows.First().AccountNumber;
         BankStatementRow firstRowWithBalance = rows.First(r => r.AccountBalance.HasValue);
         decimal accountBalance = firstRowWithBalance.AccountBalance!.Value;
-        TransactionStatement[] transactions = rows.Select((r) => r.ToTransactionStatement()).ToArray();
+        TransactionStatement[] transactions = [..rows.Select((r) => r.ToTransactionStatement())];
 
         return new AccountStatement(
             new ExternalId(accountNumber),

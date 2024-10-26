@@ -27,5 +27,5 @@ public sealed class InMemoryAccountSummariesDataSourceTests : HostFixture
     }
 
     private void Feed(AccountBuilder[] accounts) =>
-        this.accountRepository.Feed(accounts.Select(a => a.ToSnapshot()).ToArray());
+        this.accountRepository.Feed([..accounts.Select(a => a.ToSnapshot())]);
 }

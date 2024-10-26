@@ -66,16 +66,16 @@ public class ImportBankStatement(
                 newTransactionStatement.Amount, newTransactionStatement.Label, newTransactionStatement.Date, category));
         }
 
-        return (newCategories.Values.ToArray(), newTransactions.ToArray());
+        return ([..newCategories.Values], [..newTransactions]);
     }
 
     private async Task<TransactionStatement[]> NewTransactionStatements(AccountStatement statement)
     {
         ExternalId[] unknownExternalIds = await transactionRepository.UnknownExternalIds(
-            statement.Transactions.Select(t => t.Identifier).ToArray()
+            [..statement.Transactions.Select(t => t.Identifier)]
         );
 
-        return statement.Transactions.Where(t => unknownExternalIds.Contains(t.Identifier)).ToArray();
+        return [..statement.Transactions.Where(t => unknownExternalIds.Contains(t.Identifier))];
     }
 
     private async Task Save(Account account, Category[] categories, Transaction[] transactions)

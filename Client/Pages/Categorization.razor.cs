@@ -21,6 +21,6 @@ public partial class Categorization : ComponentBase
     private async Task Approve(CategorizationSuggestionPresentation suggestion)
     {
         await this.AssignTransactionCategory.Execute(suggestion.TransactionId, suggestion.CategoryId);
-        this.suggestions = this.suggestions!.Where(s => s != suggestion).ToArray();
+        this.suggestions = [..this.suggestions!.Where(s => s != suggestion)];
     }
 }

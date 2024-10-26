@@ -9,10 +9,12 @@ public class InMemoryTransactionsOfMonthDataSource(
 {
     public Task<TransactionSummaryPresentation[]> By(Guid accountId, int year, int month)
     {
-        TransactionSummaryPresentation[] presentations = transactionRepository.Data
-            .Where(t => t.AccountId == new AccountId(accountId) && t.Date.Year == year && t.Date.Month == month)
-            .Select(this.ToPresentation)
-            .ToArray();
+        TransactionSummaryPresentation[] presentations =
+        [
+            ..transactionRepository.Data
+                .Where(t => t.AccountId == new AccountId(accountId) && t.Date.Year == year && t.Date.Month == month)
+                .Select(this.ToPresentation)
+        ];
 
         return Task.FromResult(presentations);
     }

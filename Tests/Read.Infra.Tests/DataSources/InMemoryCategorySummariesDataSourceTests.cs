@@ -27,5 +27,5 @@ public sealed class InMemoryCategorySummariesDataSourceTests : HostFixture
     }
 
     private void Feed(CategoryBuilder[] expected) =>
-        this.categoryRepository.Feed(expected.Select(c => c.ToSnapshot()).ToArray());
+        this.categoryRepository.Feed([..expected.Select(c => c.ToSnapshot())]);
 }

@@ -138,15 +138,16 @@ public class ImportBankStatementTests
             return new AccountStatement(
                 new ExternalId(account.Number),
                 new Balance(account.BalanceAmount, account.BalanceDate),
-                transactions
-                    .Select(t => new TransactionStatement(
-                        new ExternalId(t.Transaction.ExternalId),
-                        new Amount(t.Transaction.Amount),
-                        new Label(t.Transaction.Label),
-                        t.Transaction.Date,
-                        Label.From(t.CategoryLabel))
-                    )
-                    .ToArray()
+                [
+                    ..transactions
+                        .Select(t => new TransactionStatement(
+                            new ExternalId(t.Transaction.ExternalId),
+                            new Amount(t.Transaction.Amount),
+                            new Label(t.Transaction.Label),
+                            t.Transaction.Date,
+                            Label.From(t.CategoryLabel))
+                        )
+                ]
             );
         }
     }

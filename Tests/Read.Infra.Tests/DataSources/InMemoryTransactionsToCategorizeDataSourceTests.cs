@@ -35,7 +35,7 @@ public sealed class InMemoryTransactionsToCategorizeDataSourceTests : HostFixtur
     }
 
     private void Feed(params TransactionBuilder[] categories) =>
-        this.categoryRepository.Feed(categories.Select(c => c.ToSnapshot()).ToArray());
+        this.categoryRepository.Feed([..categories.Select(c => c.ToSnapshot())]);
 
     private static TransactionBuilder ATransactionWithoutCategory() =>
         Any<TransactionBuilder>() with { Category = null };

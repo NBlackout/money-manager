@@ -31,14 +31,15 @@ public partial class Categories : ComponentBase
         string keywords = this.Category!.Keywords!;
         await this.CreateCategory.Execute(id, label, keywords);
 
-        this.categories = this.categories!.Prepend(new CategorySummaryPresentation(id, label, keywords)).ToArray();
+        this.categories = [..this.categories!.Prepend(new CategorySummaryPresentation(id, label, keywords))];
+        this.Category = new CategoryForm();
         this.HideCategoryForm();
     }
 
     private async Task Delete(CategorySummaryPresentation category)
     {
         await this.DeleteCategory.Execute(category.Id);
-        this.categories = this.categories!.Where(c => c != category).ToArray();
+        this.categories = [..this.categories!.Where(c => c != category)];
     }
 
     public class CategoryForm

@@ -20,7 +20,7 @@ public partial class Transactions : ComponentBase
     {
         TransactionSummaryPresentation transaction = this.transactions!.Single(t => t.Id == args.TransactionId);
 
-        TransactionSummaryPresentation[] updatedTransactions = this.transactions!.ToArray();
+        TransactionSummaryPresentation[] updatedTransactions = [..this.transactions!];
         int transactionIndex = updatedTransactions.ToList().IndexOf(transaction);
         updatedTransactions[transactionIndex] = transaction with { Category = args.CategoryLabel };
         this.transactions = updatedTransactions;

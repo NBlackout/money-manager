@@ -5,7 +5,7 @@ public class InMemoryAccountSummariesDataSource(InMemoryAccountRepository accoun
 {
     public Task<AccountSummaryPresentation[]> All()
     {
-        AccountSummaryPresentation[] summaries = accountRepository.Data.Select(ToSummary).ToArray();
+        AccountSummaryPresentation[] summaries = [..accountRepository.Data.Select(ToSummary)];
 
         return Task.FromResult(summaries);
     }

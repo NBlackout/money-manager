@@ -34,7 +34,8 @@ public partial class Budgets : ComponentBase
         DateOnly beginDate = this.Budget!.BeginDate!.Value;
         await this.DefineBudget.Execute(id, name, amount, beginDate);
 
-        this.budgets = this.budgets!.Prepend(new BudgetSummaryPresentation(id, name, amount, beginDate, amount)).ToArray();
+        this.budgets = [..this.budgets!.Prepend(new BudgetSummaryPresentation(id, name, amount, beginDate, amount))];
+        this.Budget = new BudgetForm { BeginDate = new DateOnly(DateTime.Now.Year, DateTime.Now.Month, 1) };
         this.HideBudgetForm();
     }
 

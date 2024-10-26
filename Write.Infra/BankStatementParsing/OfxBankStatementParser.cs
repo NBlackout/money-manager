@@ -26,15 +26,17 @@ public class OfxBankStatementParser
         if (availableBalance is null)
             throw CannotProcessOfxContent.DueToMissingBalanceNode();
 
-        TransactionStatement[] transactions = statementResponse.StatementTransactions
-            .Select(t => new TransactionStatement(
-                new ExternalId(t.Identifier),
-                new Amount(t.Amount),
-                new Label(t.Label),
-                t.Date,
-                null)
-            )
-            .ToArray();
+        TransactionStatement[] transactions =
+        [
+            ..statementResponse.StatementTransactions
+                .Select(t => new TransactionStatement(
+                    new ExternalId(t.Identifier),
+                    new Amount(t.Amount),
+                    new Label(t.Label),
+                    t.Date,
+                    null)
+                )
+        ];
 
         return Task.FromResult(
             new AccountStatement(

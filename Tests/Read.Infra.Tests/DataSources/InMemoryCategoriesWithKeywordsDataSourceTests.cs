@@ -37,5 +37,5 @@ public sealed class InMemoryCategoriesWithKeywordsDataSourceTests : HostFixture
     }
 
     private void Feed(params CategoryBuilder[] categories) =>
-        this.categoryRepository.Feed(categories.Select(c => c.ToSnapshot()).ToArray());
+        this.categoryRepository.Feed([..categories.Select(c => c.ToSnapshot())]);
 }
