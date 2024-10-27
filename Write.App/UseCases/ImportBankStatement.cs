@@ -4,7 +4,8 @@ public class ImportBankStatement(
     IAccountRepository accountRepository,
     ICategoryRepository categoryRepository,
     ITransactionRepository transactionRepository,
-    IBankStatementParser bankStatementParser)
+    IBankStatementParser bankStatementParser
+)
 {
     public async Task Execute(string fileName, Stream stream)
     {
@@ -39,17 +40,32 @@ public class ImportBankStatement(
             TransactionId id = await transactionRepository.NextIdentity();
             if (newTransactionStatement.Category == null)
             {
-                newTransactions.Add(account.AttachTransaction(id, newTransactionStatement.Identifier,
-                    newTransactionStatement.Amount, newTransactionStatement.Label, newTransactionStatement.Date, null));
+                newTransactions.Add(
+                    account.AttachTransaction(
+                        id,
+                        newTransactionStatement.Identifier,
+                        newTransactionStatement.Amount,
+                        newTransactionStatement.Label,
+                        newTransactionStatement.Date,
+                        null
+                    )
+                );
 
                 continue;
             }
 
             if (newCategories.TryGetValue(newTransactionStatement.Category, out Category? newCategory))
             {
-                newTransactions.Add(account.AttachTransaction(id, newTransactionStatement.Identifier,
-                    newTransactionStatement.Amount, newTransactionStatement.Label, newTransactionStatement.Date,
-                    newCategory));
+                newTransactions.Add(
+                    account.AttachTransaction(
+                        id,
+                        newTransactionStatement.Identifier,
+                        newTransactionStatement.Amount,
+                        newTransactionStatement.Label,
+                        newTransactionStatement.Date,
+                        newCategory
+                    )
+                );
 
                 continue;
             }
@@ -62,8 +78,16 @@ public class ImportBankStatement(
                 newCategories.Add(newTransactionStatement.Category, category);
             }
 
-            newTransactions.Add(account.AttachTransaction(id, newTransactionStatement.Identifier,
-                newTransactionStatement.Amount, newTransactionStatement.Label, newTransactionStatement.Date, category));
+            newTransactions.Add(
+                account.AttachTransaction(
+                    id,
+                    newTransactionStatement.Identifier,
+                    newTransactionStatement.Amount,
+                    newTransactionStatement.Label,
+                    newTransactionStatement.Date,
+                    category
+                )
+            );
         }
 
         return ([..newCategories.Values], [..newTransactions]);

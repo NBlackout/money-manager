@@ -40,7 +40,8 @@ public class CsvBankStatementParser
         string TransactionCategory,
         decimal TransactionAmount,
         string AccountNumber,
-        decimal? AccountBalance)
+        decimal? AccountBalance
+    )
     {
         private const char ColumnSeparator = ';';
 

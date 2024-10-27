@@ -9,7 +9,7 @@ public partial class TransactionLabelAssignment : ComponentBase
 
     [Parameter] public Guid Id { get; set; }
     [Parameter] public EventCallback<(Guid, string)> OnCategoryAssigned { get; set; }
-    
+
     protected override async Task OnInitializedAsync() =>
         this.categories = await this.CategorySummaries.Execute();
 

@@ -23,10 +23,7 @@ public sealed class InMemoryCategoriesWithKeywordsDataSourceTests : HostFixture
     [Fact]
     public async Task Excludes_ones_without_keywords()
     {
-        this.Feed(
-            Any<CategoryBuilder>() with { Keywords = "" },
-            Any<CategoryBuilder>() with { Keywords = "   " }
-        );
+        this.Feed(Any<CategoryBuilder>() with { Keywords = "" }, Any<CategoryBuilder>() with { Keywords = "   " });
         await this.Verify([]);
     }
 

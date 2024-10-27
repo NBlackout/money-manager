@@ -7,9 +7,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddWrite(this IServiceCollection services)
     {
-        return services
-            .AddUseCases()
-            .AddServerWriteInfra();
+        return services.AddUseCases().AddServerWriteInfra();
     }
 
     private static IServiceCollection AddUseCases(this IServiceCollection services)

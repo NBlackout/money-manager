@@ -2,6 +2,6 @@
 
 public class AccountDetails(IAccountGateway gateway)
 {
-    public async Task<AccountDetailsPresentation> Execute(Guid id) => 
+    public async Task<AccountDetailsPresentation> Execute(Guid id) =>
         await gateway.Details(id);
 }

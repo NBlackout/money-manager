@@ -14,7 +14,7 @@ public class OfxBankStatementParser
     public Task<AccountStatement> ExtractAccountStatement(Stream stream)
     {
         XmlSerializer serializer = new(typeof(Ofx));
-        Ofx root = (Ofx)serializer.Deserialize(stream)!;
+        Ofx root = (Ofx) serializer.Deserialize(stream)!;
 
         StatementResponse statementResponse = root.BankMessageSetResponse!.StatementResponses.First();
         AvailableBalance? availableBalance = statementResponse.AvailableBalance;
@@ -28,14 +28,15 @@ public class OfxBankStatementParser
 
         TransactionStatement[] transactions =
         [
-            ..statementResponse.StatementTransactions
-                .Select(t => new TransactionStatement(
+            ..statementResponse.StatementTransactions.Select(
+                t => new TransactionStatement(
                     new ExternalId(t.Identifier),
                     new Amount(t.Amount),
                     new Label(t.Label),
                     t.Date,
-                    null)
+                    null
                 )
+            )
         ];
 
         return Task.FromResult(

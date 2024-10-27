@@ -51,7 +51,7 @@ public class CategorizationSuggestionsTests
 
         await this.Verify([]);
     }
-    
+
     [Fact]
     public async Task Excludes_transaction_matching_multiple_categories()
     {
@@ -64,6 +64,7 @@ public class CategorizationSuggestionsTests
 
         await this.Verify([]);
     }
+
     private async Task Verify(params CategorizationSuggestionPresentation[] expected)
     {
         CategorizationSuggestionPresentation[] actual = await this.sut.Execute();
@@ -76,6 +77,8 @@ public class CategorizationSuggestionsTests
     private static TransactionToCategorize ATransactionLabeled(string label) =>
         Any<TransactionToCategorize>() with { Label = label };
 
-    private static CategorizationSuggestionPresentation HasSuggestion(TransactionToCategorize transaction, CategoryWithKeywords category) => 
+    private static CategorizationSuggestionPresentation HasSuggestion(
+        TransactionToCategorize transaction,
+        CategoryWithKeywords category) =>
         new(transaction.Id, transaction.Label, transaction.Amount, category.Id, category.Label);
 }

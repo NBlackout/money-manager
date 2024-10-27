@@ -40,7 +40,8 @@ public sealed class OfxBankStatementParserTests : HostFixture
     [Fact]
     public async Task Tells_when_bank_identifier_is_missing()
     {
-        await this.Invoking(s => s.Verify_Failure(new MemoryStream(MissingBankIdentifierOfxSample)))
+        await this
+            .Invoking(s => s.Verify_Failure(new MemoryStream(MissingBankIdentifierOfxSample)))
             .Should()
             .ThrowAsync<CannotProcessOfxContent>();
     }
@@ -48,7 +49,8 @@ public sealed class OfxBankStatementParserTests : HostFixture
     [Fact]
     public async Task Tells_when_account_number_is_missing()
     {
-        await this.Invoking(s => s.Verify_Failure(new MemoryStream(MissingAccountNumberOfxSample)))
+        await this
+            .Invoking(s => s.Verify_Failure(new MemoryStream(MissingAccountNumberOfxSample)))
             .Should()
             .ThrowAsync<CannotProcessOfxContent>();
     }
@@ -56,7 +58,8 @@ public sealed class OfxBankStatementParserTests : HostFixture
     [Fact]
     public async Task Tells_when_balance_is_missing()
     {
-        await this.Invoking(s => s.Verify_Failure(new MemoryStream(MissingBalanceOfxSample)))
+        await this
+            .Invoking(s => s.Verify_Failure(new MemoryStream(MissingBalanceOfxSample)))
             .Should()
             .ThrowAsync<CannotProcessOfxContent>();
     }

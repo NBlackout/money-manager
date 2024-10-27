@@ -15,33 +15,34 @@ public abstract class HostFixture : IDisposable
 
     protected HostFixture()
     {
-        this.host = Host.CreateDefaultBuilder()
-            .ConfigureServices(s =>
-            {
-                s
-                    .AddSharedInfra()
-                    .AddScoped(_ => new HttpClient())
-                    .AddServerWriteInfra()
-                    .AddServerReadInfra()
-                    .AddClientWriteInfra()
-                    .AddClientReadInfra();
+        this.host = Host
+            .CreateDefaultBuilder()
+            .ConfigureServices(
+                s =>
+                {
+                    s
+                        .AddSharedInfra()
+                        .AddScoped(_ => new HttpClient())
+                        .AddServerWriteInfra()
+                        .AddServerReadInfra()
+                        .AddClientWriteInfra()
+                        .AddClientReadInfra();
 
-                this.Configure(s);
-            })
+                    this.Configure(s);
+                }
+            )
             .UseEnvironment("Development")
             .Build();
 
         this.scope = this.host.Services.CreateScope();
     }
 
-
     protected virtual void Configure(IServiceCollection services)
     {
     }
 
     protected TImplementation Resolve<TContract, TImplementation>()
-        where TContract : notnull
-        where TImplementation : TContract =>
+        where TContract : notnull where TImplementation : TContract =>
         this.scope.Resolve<TContract, TImplementation>();
 
     protected TContract Resolve<TContract>() where TContract : notnull =>
@@ -58,7 +59,8 @@ public abstract class HostFixture : IDisposable
 
     protected virtual void Dispose(bool disposing)
     {
-        if (!disposing) return;
+        if (!disposing)
+            return;
 
         this.scope.Dispose();
         this.host.Dispose();

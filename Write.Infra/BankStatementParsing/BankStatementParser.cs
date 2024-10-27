@@ -2,8 +2,8 @@
 
 public class BankStatementParser(
     OfxBankStatementParser ofxBankStatementParser,
-    CsvBankStatementParser csvBankStatementParser)
-    : IBankStatementParser
+    CsvBankStatementParser csvBankStatementParser
+) : IBankStatementParser
 {
     public Task<AccountStatement> Extract(string fileName, Stream stream)
     {

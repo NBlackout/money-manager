@@ -11,8 +11,14 @@
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 
-    <Target Name="CopyMutationLaunchSettings" BeforeTargets="Build" Condition="'$(ProjectName.EndsWith(`.App`))' == true And '$(ProjectName.StartsWith(`Shared.`))' == false">
-        <Copy SourceFiles="../launchSettings.json" DestinationFiles="$(MSBuildProjectDirectory)/Properties/launchSettings.json" SkipUnchangedFiles="true" />
+    <Target
+        Name="CopyMutationLaunchSettings"
+        BeforeTargets="Build"
+        Condition="'$(ProjectName.EndsWith(`.App`))' == true And '$(ProjectName.StartsWith(`Shared.`))' == false">
+        <Copy
+            SourceFiles="../launchSettings.json"
+            DestinationFiles="$(MSBuildProjectDirectory)/Properties/launchSettings.json"
+            SkipUnchangedFiles="true" />
     </Target>
 
 </Project>

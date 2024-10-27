@@ -5,7 +5,9 @@ public class InMemoryCategorySummariesDataSource(InMemoryCategoryRepository repo
     public Task<CategorySummaryPresentation[]> All()
     {
         CategorySummaryPresentation[] presentations =
-            [..repository.Data.Select(c => new CategorySummaryPresentation(c.Id.Value, c.Label, c.Keywords))];
+        [
+            ..repository.Data.Select(c => new CategorySummaryPresentation(c.Id.Value, c.Label, c.Keywords))
+        ];
 
         return Task.FromResult(presentations);
     }

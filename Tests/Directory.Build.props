@@ -1,6 +1,6 @@
 <Project>
 
-    <Import Project="../Directory.Build.props"/>
+    <Import Project="../Directory.Build.props" />
 
     <PropertyGroup>
         <IsPackable>false</IsPackable>
@@ -8,11 +8,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="FluentAssertions" Version="6.12.1"/>
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" Condition="'$(ProjectName.EndsWith(`Infra.Tests`))' == true"/>
-        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1" Condition="'$(ProjectName.EndsWith(`Infra.Tests`))' == true"/>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1"/>
-        <PackageReference Include="xunit" Version="2.9.2"/>
+        <PackageReference Include="FluentAssertions" Version="6.12.1" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1"
+                          Condition="'$(ProjectName.EndsWith(`Infra.Tests`))' == true" />
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1"
+                          Condition="'$(ProjectName.EndsWith(`Infra.Tests`))' == true" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+        <PackageReference Include="xunit" Version="2.9.2" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
@@ -24,21 +26,23 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Shared.TestTooling\Shared.TestTooling.csproj"/>
+        <ProjectReference Include="..\..\Shared.TestTooling\Shared.TestTooling.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <Using Include="FluentAssertions"/>
-        <Using Include="Shared.TestTooling"/>
-        <Using Include="Shared.TestTooling.AutoFixture"/>
-        <Using Include="Shared.TestTooling.Resources"/>
-        <Using Include="Xunit"/>
+        <Using Include="FluentAssertions" />
+        <Using Include="Shared.TestTooling" />
+        <Using Include="Shared.TestTooling.AutoFixture" />
+        <Using Include="Shared.TestTooling.Resources" />
+        <Using Include="Xunit" />
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Include="..\AssemblyInfo.cs" Link="Properties\AssemblyInfo.cs"/>
-        <Compile Include="..\AssemblyInfo.App.cs" Link="Properties\AssemblyInfo.App.cs" Condition="'$(ProjectName.EndsWith(`App.Tests`))' == true"/>
-        <Compile Include="..\AssemblyInfo.Infra.cs" Link="Properties\AssemblyInfo.Infra.cs" Condition="'$(ProjectName.EndsWith(`Infra.Tests`))' == true"/>
+        <Compile Include="..\AssemblyInfo.cs" Link="Properties\AssemblyInfo.cs" />
+        <Compile Include="..\AssemblyInfo.App.cs" Link="Properties\AssemblyInfo.App.cs"
+                 Condition="'$(ProjectName.EndsWith(`App.Tests`))' == true" />
+        <Compile Include="..\AssemblyInfo.Infra.cs" Link="Properties\AssemblyInfo.Infra.cs"
+                 Condition="'$(ProjectName.EndsWith(`Infra.Tests`))' == true" />
     </ItemGroup>
 
 </Project>

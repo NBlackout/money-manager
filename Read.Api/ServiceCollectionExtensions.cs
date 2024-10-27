@@ -7,9 +7,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddRead(this IServiceCollection services)
     {
-        return services
-            .AddUseCases()
-            .AddServerReadInfra();
+        return services.AddUseCases().AddServerReadInfra();
     }
 
     private static IServiceCollection AddUseCases(this IServiceCollection services)

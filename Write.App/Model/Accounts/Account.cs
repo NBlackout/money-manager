@@ -25,13 +25,22 @@ public class Account : DomainEntity<AccountId>
     public void AssignLabel(Label newLabel) =>
         this.label = newLabel;
 
-    public Transaction AttachTransaction(TransactionId transactionId, ExternalId externalId, Amount amount,
-        Label transactionLabel, DateOnly date, Category? category) =>
+    public Transaction AttachTransaction(
+        TransactionId transactionId,
+        ExternalId externalId,
+        Amount amount,
+        Label transactionLabel,
+        DateOnly date,
+        Category? category) =>
         new(transactionId, this.Id, externalId, amount, transactionLabel, date, category);
 
     public static Account From(AccountSnapshot snapshot)
     {
-        return new Account(snapshot.Id, new ExternalId(snapshot.Number), new Label(snapshot.Label),
-            new Balance(snapshot.BalanceAmount, snapshot.BalanceDate));
+        return new Account(
+            snapshot.Id,
+            new ExternalId(snapshot.Number),
+            new Label(snapshot.Label),
+            new Balance(snapshot.BalanceAmount, snapshot.BalanceDate)
+        );
     }
 }

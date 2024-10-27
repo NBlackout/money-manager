@@ -32,7 +32,6 @@ public sealed class HttpAccountGatewayTests : HostFixture
         this.Verify_Put($"{ApiUrl}/accounts/{id}/tracking", new { Enabled = true });
     }
 
-
     [Theory, RandomData]
     public async Task Assigns_label(Guid id, string label)
     {
@@ -42,8 +41,11 @@ public sealed class HttpAccountGatewayTests : HostFixture
 
     private void Verify_Put(string url, object payload)
     {
-        this.httpMessageHandler.Calls.Should().Equal((HttpMethod.Put, url,
-            JsonSerializer.Serialize(payload, Defaults.JsonSerializerOptions)));
+        this
+            .httpMessageHandler
+            .Calls
+            .Should()
+            .Equal((HttpMethod.Put, url, JsonSerializer.Serialize(payload, Defaults.JsonSerializerOptions)));
     }
 
     private static HttpClient CreateHttpClient(HttpMessageHandler httpResponseMessage) =>

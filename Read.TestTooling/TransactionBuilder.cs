@@ -13,7 +13,8 @@ public record TransactionBuilder(
     decimal Amount,
     string Label,
     DateOnly Date,
-    CategoryBuilder? Category)
+    CategoryBuilder? Category
+)
 {
     public TransactionSnapshot ToSnapshot()
     {

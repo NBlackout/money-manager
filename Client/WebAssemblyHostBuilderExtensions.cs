@@ -8,7 +8,8 @@ public static class WebAssemblyHostBuilderExtensions
 {
     public static void AddServices(this WebAssemblyHostBuilder builder)
     {
-        builder.Services
+        builder
+            .Services
             .AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress + "api/") })
             .AddWrite()
             .AddRead();
@@ -16,9 +17,7 @@ public static class WebAssemblyHostBuilderExtensions
 
     private static IServiceCollection AddWrite(this IServiceCollection services)
     {
-        return services
-            .AddWriteUseCases()
-            .AddClientWriteInfra();
+        return services.AddWriteUseCases().AddClientWriteInfra();
     }
 
     private static IServiceCollection AddWriteUseCases(this IServiceCollection services)
@@ -36,9 +35,7 @@ public static class WebAssemblyHostBuilderExtensions
 
     private static IServiceCollection AddRead(this IServiceCollection services)
     {
-        return services
-            .AddReadUseCases()
-            .AddClientReadInfra();
+        return services.AddReadUseCases().AddClientReadInfra();
     }
 
     private static IServiceCollection AddReadUseCases(this IServiceCollection services)

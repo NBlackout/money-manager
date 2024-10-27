@@ -27,7 +27,10 @@ public sealed class HttpBudgetGatewayTests : HostFixture
 
     private void Verify_Post(string url, object payload)
     {
-        this.httpMessageHandler.Calls.Should()
+        this
+            .httpMessageHandler
+            .Calls
+            .Should()
             .Equal((HttpMethod.Post, url, JsonSerializer.Serialize(payload, Defaults.JsonSerializerOptions)));
     }
 

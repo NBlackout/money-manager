@@ -10,5 +10,6 @@ public class HttpAccountGateway(HttpClient httpClient) : IAccountGateway
 
     public async Task<TransactionSummaryPresentation[]> TransactionsOfMonth(Guid id, int year, int month) =>
         (await httpClient.GetFromJsonAsync<TransactionSummaryPresentation[]>(
-            $"accounts/{id}/transactions?year={year}&month={month}"))!;
+            $"accounts/{id}/transactions?year={year}&month={month}"
+        ))!;
 }

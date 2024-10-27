@@ -7,7 +7,8 @@ public class InMemoryTransactionsToCategorizeDataSource(InMemoryTransactionRepos
     {
         TransactionToCategorize[] transactions =
         [
-            ..repository.Data
+            ..repository
+                .Data
                 .Where(t => t.CategoryId is null)
                 .Select(t => new TransactionToCategorize(t.Id.Value, t.Label, t.Amount))
         ];

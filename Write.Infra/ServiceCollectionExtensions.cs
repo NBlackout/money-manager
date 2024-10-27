@@ -8,16 +8,15 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddServerWriteInfra(this IServiceCollection services)
     {
-        return services
-            .AddRepositories()
-            .AddParsers();
+        return services.AddRepositories().AddParsers();
     }
 
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         InMemoryAccountRepository accountRepository = new() { NextId = () => new AccountId(Guid.NewGuid()) };
         InMemoryCategoryRepository categoryRepository = new() { NextId = () => new CategoryId(Guid.NewGuid()) };
-        InMemoryTransactionRepository transactionRepository = new() { NextId = () => new TransactionId(Guid.NewGuid()) };
+        InMemoryTransactionRepository transactionRepository =
+            new() { NextId = () => new TransactionId(Guid.NewGuid()) };
         InMemoryBudgetRepository budgetRepository = new();
 
         return services

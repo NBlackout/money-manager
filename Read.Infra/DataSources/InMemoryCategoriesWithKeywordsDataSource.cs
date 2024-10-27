@@ -7,7 +7,8 @@ public class InMemoryCategoriesWithKeywordsDataSource(InMemoryCategoryRepository
     {
         CategoryWithKeywords[] categoriesWithKeywords =
         [
-            ..repository.Data
+            ..repository
+                .Data
                 .Where(c => !string.IsNullOrWhiteSpace(c.Keywords))
                 .Select(c => new CategoryWithKeywords(c.Id.Value, c.Label, c.Keywords))
         ];

@@ -5,7 +5,8 @@ namespace Shared.TestTooling;
 
 public static class Randomizer
 {
-    public static T Any<T>() => RandomData.Fixture.Create<T>();
+    public static T Any<T>() =>
+        RandomData.Fixture.Create<T>();
 
     public static T Another<T>(T value)
     {

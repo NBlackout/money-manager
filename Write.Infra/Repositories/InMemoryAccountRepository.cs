@@ -17,9 +17,9 @@ public class InMemoryAccountRepository : IAccountRepository
         Task.FromResult(Account.From(this.data[id]));
 
     public Task<Account?> ByOrDefault(ExternalId externalId) =>
-        Task.FromResult(this.dataByExternalId.TryGetValue(externalId.Value, out AccountSnapshot? value)
-            ? Account.From(value)
-            : null);
+        Task.FromResult(
+            this.dataByExternalId.TryGetValue(externalId.Value, out AccountSnapshot? value) ? Account.From(value) : null
+        );
 
     public Task Save(Account account)
     {

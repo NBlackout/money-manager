@@ -2,6 +2,6 @@
 
 public class DeleteCategory(ICategoryGateway gateway)
 {
-    public async Task Execute(Guid id) => 
+    public async Task Execute(Guid id) =>
         await gateway.Delete(id);
 }

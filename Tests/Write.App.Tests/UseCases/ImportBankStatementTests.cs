@@ -14,8 +14,12 @@ public class ImportBankStatementTests
 
     public ImportBankStatementTests()
     {
-        this.sut = new ImportBankStatement(this.accountRepository, this.categoryRepository,
-            this.transactionRepository, this.bankStatementParser);
+        this.sut = new ImportBankStatement(
+            this.accountRepository,
+            this.categoryRepository,
+            this.transactionRepository,
+            this.bankStatementParser
+        );
     }
 
     [Theory, RandomData]
@@ -74,11 +78,12 @@ public class ImportBankStatementTests
         this.FeedNextIdsOf(aTransaction, anotherTransaction);
         this.Feed(AccountStatementFrom(account, (aTransaction, category.Label), (anotherTransaction, category.Label)));
 
-        await this.Verify(account, [category with { Keywords = category.Label }], aTransaction,
-            anotherTransaction);
+        await this.Verify(account, [category with { Keywords = category.Label }], aTransaction, anotherTransaction);
     }
 
-    private async Task Verify(AccountSnapshot expectedAccount, CategorySnapshot[] expectedCategories,
+    private async Task Verify(
+        AccountSnapshot expectedAccount,
+        CategorySnapshot[] expectedCategories,
         params TransactionSnapshot[] expectedTransactions)
     {
         await this.sut.Execute(TheFileName, TheStream);
@@ -128,25 +133,28 @@ public class ImportBankStatementTests
         public const string TheFileName = "the filename";
         public static readonly MemoryStream TheStream = new([0xF0, 0x42]);
 
-        public static TransactionSnapshot
-            ATransactionFrom(AccountSnapshot account, CategorySnapshot? category = null) =>
+        public static TransactionSnapshot ATransactionFrom(
+            AccountSnapshot account,
+            CategorySnapshot? category = null) =>
             Any<TransactionSnapshot>() with { AccountId = account.Id, CategoryId = category?.Id };
 
-        public static AccountStatement AccountStatementFrom(AccountSnapshot account,
+        public static AccountStatement AccountStatementFrom(
+            AccountSnapshot account,
             params (TransactionSnapshot Transaction, string? CategoryLabel)[] transactions)
         {
             return new AccountStatement(
                 new ExternalId(account.Number),
                 new Balance(account.BalanceAmount, account.BalanceDate),
                 [
-                    ..transactions
-                        .Select(t => new TransactionStatement(
+                    ..transactions.Select(
+                        t => new TransactionStatement(
                             new ExternalId(t.Transaction.ExternalId),
                             new Amount(t.Transaction.Amount),
                             new Label(t.Transaction.Label),
                             t.Transaction.Date,
-                            Label.From(t.CategoryLabel))
+                            Label.From(t.CategoryLabel)
                         )
+                    )
                 ]
             );
         }

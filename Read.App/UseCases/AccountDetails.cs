@@ -2,6 +2,6 @@
 
 public class AccountDetails(IAccountDetailsDataSource dataSource)
 {
-    public async Task<AccountDetailsPresentation> Execute(Guid id) => 
+    public async Task<AccountDetailsPresentation> Execute(Guid id) =>
         await dataSource.By(id);
 }

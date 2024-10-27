@@ -4,14 +4,15 @@ namespace Read.Infra.DataSources;
 
 public class InMemoryTransactionsOfMonthDataSource(
     InMemoryTransactionRepository transactionRepository,
-    InMemoryCategoryRepository categoryRepository)
-    : ITransactionsOfMonthDataSource
+    InMemoryCategoryRepository categoryRepository
+) : ITransactionsOfMonthDataSource
 {
     public Task<TransactionSummaryPresentation[]> By(Guid accountId, int year, int month)
     {
         TransactionSummaryPresentation[] presentations =
         [
-            ..transactionRepository.Data
+            ..transactionRepository
+                .Data
                 .Where(t => t.AccountId == new AccountId(accountId) && t.Date.Year == year && t.Date.Month == month)
                 .Select(this.ToPresentation)
         ];
@@ -25,7 +26,12 @@ public class InMemoryTransactionsOfMonthDataSource(
             ? categoryRepository.Data.Single(c => c.Id == transaction.CategoryId).Label
             : null;
 
-        return new TransactionSummaryPresentation(transaction.Id.Value, transaction.Amount, transaction.Label,
-            transaction.Date, categoryLabel);
+        return new TransactionSummaryPresentation(
+            transaction.Id.Value,
+            transaction.Amount,
+            transaction.Label,
+            transaction.Date,
+            categoryLabel
+        );
     }
 }

@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?OFX OFXHEADER="200" VERSION="220" SECURITY="NONE" OLDFILEUID="NONE" NEWFILEUID="NONE" ?>
+
 <OFX>
-	<BANKMSGSRSV1>
-		<STMTTRNRS>
-			<STMTRS>
-				<CURDEF>EUR</CURDEF>
-				<BANKACCTFROM>
-					<ACCTID>00012345000</ACCTID>
-					<ACCTTYPE>CHECKING</ACCTTYPE>
-				</BANKACCTFROM>
-				<AVAILBAL>
-					<DTASOF>20230413000000</DTASOF>
-					<BALAMT>12345.67</BALAMT>
-				</AVAILBAL>
-				<BANKTRANLIST>
-					<STMTTRN>
-						<DTPOSTED>20230417</DTPOSTED>
-						<TRNTYPE>CREDIT</TRNTYPE>
-						<TRNAMT>+100,95</TRNAMT>
-						<FITID>TheCreditId</FITID>
-						<NAME>The credit</NAME>
-					</STMTTRN>
-					<DTSTART>20230101</DTSTART>
-					<DTEND>20230413</DTEND>
-				</BANKTRANLIST>
-			</STMTRS>
-		</STMTTRNRS>
-	</BANKMSGSRSV1>
+    <BANKMSGSRSV1>
+        <STMTTRNRS>
+            <STMTRS>
+                <CURDEF>EUR</CURDEF>
+                <BANKACCTFROM>
+                    <ACCTID>00012345000</ACCTID>
+                    <ACCTTYPE>CHECKING</ACCTTYPE>
+                </BANKACCTFROM>
+                <AVAILBAL>
+                    <DTASOF>20230413000000</DTASOF>
+                    <BALAMT>12345.67</BALAMT>
+                </AVAILBAL>
+                <BANKTRANLIST>
+                    <STMTTRN>
+                        <DTPOSTED>20230417</DTPOSTED>
+                        <TRNTYPE>CREDIT</TRNTYPE>
+                        <TRNAMT>+100,95</TRNAMT>
+                        <FITID>TheCreditId</FITID>
+                        <NAME>The credit</NAME>
+                    </STMTTRN>
+                    <DTSTART>20230101</DTSTART>
+                    <DTEND>20230413</DTEND>
+                </BANKTRANLIST>
+            </STMTRS>
+        </STMTTRNRS>
+    </BANKMSGSRSV1>
 </OFX>

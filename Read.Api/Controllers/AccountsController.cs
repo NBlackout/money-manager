@@ -5,8 +5,8 @@
 public class AccountsController(
     AccountSummaries accountSummaries,
     AccountDetails accountDetails,
-    TransactionsOfMonth transactionsOfMonth)
-    : ControllerBase
+    TransactionsOfMonth transactionsOfMonth
+) : ControllerBase
 {
     [HttpGet]
     public async Task<AccountSummaryPresentation[]> Summaries() =>
@@ -17,7 +17,6 @@ public class AccountsController(
         await accountDetails.Execute(id);
 
     [HttpGet("{id:guid}/transactions")]
-    public async Task<TransactionSummaryPresentation[]> Details(Guid id, [FromQuery] int year,
-        [FromQuery] int month) =>
+    public async Task<TransactionSummaryPresentation[]> Details(Guid id, [FromQuery] int year, [FromQuery] int month) =>
         await transactionsOfMonth.Execute(id, year, month);
 }

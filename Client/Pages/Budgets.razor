@@ -8,8 +8,8 @@
 <ul class="list-group list-group-flush">
     <li class="list-group-item @(isCreating ? "" : "d-none")">
         <EditForm Model="Budget" OnSubmit="Submit">
-            <InputText @bind-Value="Budget!.Label"></InputText>
-            <InputNumber @bind-Value="Budget!.Amount"></InputNumber>
+            <InputText @bind-Value="Budget!.Label" placeholder="Label"></InputText>
+            <InputNumber @bind-Value="Budget!.Amount" placeholder="Amount"></InputNumber>
             <InputDate @bind-Value="Budget!.BeginDate" Type="InputDateType.Month"></InputDate>
             <button type="submit">Submit</button>
         </EditForm>

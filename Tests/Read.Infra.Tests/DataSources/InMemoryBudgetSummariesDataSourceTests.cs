@@ -40,7 +40,6 @@ public sealed class InMemoryBudgetSummariesDataSourceTests : HostFixture
         await this.Verify(expected with { TotalAmount = amount });
     }
 
-
     [Fact]
     public async Task Gives_budgets_beginning_last_month()
     {
