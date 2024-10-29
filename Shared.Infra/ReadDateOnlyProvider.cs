@@ -1,6 +1,4 @@
-using Shared.Ports;
-
-namespace Shared.Infra.DateOnlyProvider;
+namespace Shared.Infra;
 
 public class ReadDateOnlyProvider : IDateOnlyProvider
 {

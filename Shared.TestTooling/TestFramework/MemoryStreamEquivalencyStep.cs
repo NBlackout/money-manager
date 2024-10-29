@@ -1,7 +1,6 @@
-﻿using FluentAssertions;
-using FluentAssertions.Equivalency;
+﻿using FluentAssertions.Equivalency;
 
-namespace Shared.TestTooling;
+namespace Shared.TestTooling.TestFramework;
 
 public class MemoryStreamEquivalencyStep : IEquivalencyStep
 {

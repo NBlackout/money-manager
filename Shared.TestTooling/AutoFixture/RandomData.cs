@@ -1,6 +1,4 @@
-﻿using AutoFixture;
-
-namespace Shared.TestTooling.AutoFixture;
+﻿namespace Shared.TestTooling.AutoFixture;
 
 public static class RandomData
 {

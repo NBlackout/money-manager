@@ -1,5 +1,3 @@
-using AutoFixture.Xunit2;
-
 namespace Shared.TestTooling.AutoFixture;
 
 public class InlineRandomDataAttribute(params object?[] values)

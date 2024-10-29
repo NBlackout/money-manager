@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using Shared.TestTooling.AutoFixture;
+﻿using Shared.TestTooling.AutoFixture;
 
 namespace Shared.TestTooling;
 

@@ -1,6 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Infra.DateOnlyProvider;
-using Shared.Ports;
 
 namespace Shared.Infra;
 
