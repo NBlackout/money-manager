@@ -3,17 +3,11 @@ using Client.Write.Infra.Gateways;
 
 namespace Client.Write.Infra.Tests.Gateways;
 
-public sealed class HttpTransactionGatewayTests : HostFixture
+public sealed class HttpTransactionGatewayTests : InfraFixture<ITransactionGateway, HttpTransactionGateway>
 {
     private const string ApiUrl = "http://localhost";
 
     private readonly SpyHttpMessageHandler httpMessageHandler = new();
-    private readonly HttpTransactionGateway sut;
-
-    public HttpTransactionGatewayTests()
-    {
-        this.sut = this.Resolve<ITransactionGateway, HttpTransactionGateway>();
-    }
 
     protected override void Configure(IServiceCollection services) =>
         services.AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
@@ -21,7 +15,7 @@ public sealed class HttpTransactionGatewayTests : HostFixture
     [Theory, RandomData]
     public async Task Assigns_category(Guid transactionId, Guid categoryId)
     {
-        await this.sut.AssignCategory(transactionId, categoryId);
+        await this.Sut.AssignCategory(transactionId, categoryId);
         this.Verify_Put($"{ApiUrl}/transactions/{transactionId}/category", new { CategoryId = categoryId });
     }
 

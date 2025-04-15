@@ -2,14 +2,14 @@
 
 namespace Read.Infra.Tests.DataSources;
 
-public sealed class InMemoryCategorySummariesDataSourceTests : HostFixture
+public sealed class
+    InMemoryCategorySummariesDataSourceTests : InfraFixture<ICategorySummariesDataSource,
+    InMemoryCategorySummariesDataSource>
 {
-    private readonly InMemoryCategorySummariesDataSource sut;
     private readonly InMemoryCategoryRepository categoryRepository;
 
     public InMemoryCategorySummariesDataSourceTests()
     {
-        this.sut = this.Resolve<ICategorySummariesDataSource, InMemoryCategorySummariesDataSource>();
         this.categoryRepository = this.Resolve<ICategoryRepository, InMemoryCategoryRepository>();
     }
 
@@ -22,7 +22,7 @@ public sealed class InMemoryCategorySummariesDataSourceTests : HostFixture
 
     private async Task Verify(CategoryBuilder[] expected)
     {
-        CategorySummaryPresentation[] actual = await this.sut.All();
+        CategorySummaryPresentation[] actual = await this.Sut.All();
         actual.Should().Equal(expected.Select(c => c.ToSummary()));
     }
 

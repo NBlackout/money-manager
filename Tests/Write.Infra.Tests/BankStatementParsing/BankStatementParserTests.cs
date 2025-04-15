@@ -3,15 +3,8 @@ using Write.Infra.BankStatementParsing;
 
 namespace Write.Infra.Tests.BankStatementParsing;
 
-public class BankStatementParserTests : HostFixture
+public class BankStatementParserTests : InfraFixture<IBankStatementParser, BankStatementParser>
 {
-    private readonly BankStatementParser sut;
-
-    public BankStatementParserTests()
-    {
-        this.sut = this.Resolve<IBankStatementParser, BankStatementParser>();
-    }
-
     [Fact]
     public async Task Extracts_ofx_account_statement()
     {
@@ -62,7 +55,7 @@ public class BankStatementParserTests : HostFixture
 
     private async Task Verify(string fileName, byte[] content, AccountStatement expected)
     {
-        AccountStatement actual = await this.sut.Extract(fileName, new MemoryStream(content));
+        AccountStatement actual = await this.Sut.Extract(fileName, new MemoryStream(content));
         actual.Should().BeEquivalentTo(expected);
     }
 }

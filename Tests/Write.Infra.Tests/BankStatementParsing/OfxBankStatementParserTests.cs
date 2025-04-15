@@ -4,15 +4,8 @@ using Write.Infra.Exceptions;
 
 namespace Write.Infra.Tests.BankStatementParsing;
 
-public sealed class OfxBankStatementParserTests : HostFixture
+public sealed class OfxBankStatementParserTests : InfraFixture<OfxBankStatementParser>
 {
-    private readonly OfxBankStatementParser sut;
-
-    public OfxBankStatementParserTests()
-    {
-        this.sut = this.Resolve<OfxBankStatementParser>();
-    }
-
     [Fact]
     public async Task Extracts_account_statement()
     {
@@ -40,36 +33,27 @@ public sealed class OfxBankStatementParserTests : HostFixture
     [Fact]
     public async Task Tells_when_bank_identifier_is_missing()
     {
-        await this
-            .Invoking(s => s.Verify_Failure(new MemoryStream(MissingBankIdentifierOfxSample)))
-            .Should()
-            .ThrowAsync<CannotProcessOfxContent>();
+        await this.Verify<CannotProcessOfxContent>(new MemoryStream(MissingBankIdentifierOfxSample));
     }
 
     [Fact]
     public async Task Tells_when_account_number_is_missing()
     {
-        await this
-            .Invoking(s => s.Verify_Failure(new MemoryStream(MissingAccountNumberOfxSample)))
-            .Should()
-            .ThrowAsync<CannotProcessOfxContent>();
+        await this.Verify<CannotProcessOfxContent>(new MemoryStream(MissingAccountNumberOfxSample));
     }
 
     [Fact]
     public async Task Tells_when_balance_is_missing()
     {
-        await this
-            .Invoking(s => s.Verify_Failure(new MemoryStream(MissingBalanceOfxSample)))
-            .Should()
-            .ThrowAsync<CannotProcessOfxContent>();
+        await this.Verify<CannotProcessOfxContent>(new MemoryStream(MissingBalanceOfxSample));
     }
 
-    private async Task Verify_Failure(Stream stream) =>
-        await this.Verify(stream, Randomizer.Any<AccountStatement>());
+    private async Task Verify<TException>(Stream stream) where TException : Exception =>
+        await this.Invoking(s => s.Verify(stream, Any<AccountStatement>())).Should().ThrowAsync<TException>();
 
     private async Task Verify(Stream stream, AccountStatement expected)
     {
-        AccountStatement actual = await this.sut.ExtractAccountStatement(stream);
+        AccountStatement actual = await this.Sut.ExtractAccountStatement(stream);
         actual.Should().BeEquivalentTo(expected);
     }
 }

@@ -8,12 +8,23 @@ using Write.Infra;
 
 namespace Shared.Infra.TestTooling;
 
-public abstract class HostFixture : IDisposable
+public abstract class InfraFixture<TContract> : InfraFixture<TContract, TContract> where TContract : notnull;
+
+public abstract class InfraFixture<TContract, TImplementation> : InfraFixture
+    where TContract : notnull where TImplementation : TContract
+{
+    protected readonly TImplementation Sut;
+
+    protected InfraFixture() =>
+        this.Sut = this.Resolve<TContract, TImplementation>();
+}
+
+public abstract class InfraFixture : IDisposable
 {
     private readonly IHost host;
     private readonly IServiceScope scope;
 
-    protected HostFixture()
+    protected InfraFixture()
     {
         this.host = Host
             .CreateDefaultBuilder()

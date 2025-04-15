@@ -1,16 +1,10 @@
 ﻿namespace Client.Read.Infra.Tests.Gateways;
 
-public sealed class HttpCategorizationGatewayTests : HostFixture
+public sealed class HttpCategorizationGatewayTests : InfraFixture<ICategorizationGateway, HttpCategorizationGateway>
 {
     private const string ApiUrl = "http://localhost";
 
     private readonly StubbedHttpMessageHandler httpMessageHandler = new();
-    private readonly HttpCategorizationGateway sut;
-
-    public HttpCategorizationGatewayTests()
-    {
-        this.sut = this.Resolve<ICategorizationGateway, HttpCategorizationGateway>();
-    }
 
     protected override void Configure(IServiceCollection services) =>
         services.AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
@@ -19,7 +13,7 @@ public sealed class HttpCategorizationGatewayTests : HostFixture
     public async Task Gives_categorization_suggestions(CategorizationSuggestionPresentation[] expected)
     {
         this.Feed("categorization", expected);
-        CategorizationSuggestionPresentation[] actual = await this.sut.Suggestions();
+        CategorizationSuggestionPresentation[] actual = await this.Sut.Suggestions();
         actual.Should().Equal(expected);
     }
 

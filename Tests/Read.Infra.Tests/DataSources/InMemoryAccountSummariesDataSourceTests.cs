@@ -2,14 +2,14 @@
 
 namespace Read.Infra.Tests.DataSources;
 
-public sealed class InMemoryAccountSummariesDataSourceTests : HostFixture
+public sealed class
+    InMemoryAccountSummariesDataSourceTests : InfraFixture<IAccountSummariesDataSource,
+    InMemoryAccountSummariesDataSource>
 {
-    private readonly InMemoryAccountSummariesDataSource sut;
     private readonly InMemoryAccountRepository accountRepository;
 
     public InMemoryAccountSummariesDataSourceTests()
     {
-        this.sut = this.Resolve<IAccountSummariesDataSource, InMemoryAccountSummariesDataSource>();
         this.accountRepository = this.Resolve<IAccountRepository, InMemoryAccountRepository>();
     }
 
@@ -22,7 +22,7 @@ public sealed class InMemoryAccountSummariesDataSourceTests : HostFixture
 
     private async Task Verify(AccountBuilder[] accounts)
     {
-        AccountSummaryPresentation[] actual = await this.sut.All();
+        AccountSummaryPresentation[] actual = await this.Sut.All();
         actual.Should().Equal(accounts.Select(a => a.ToSummary()));
     }
 

@@ -1,16 +1,10 @@
 ﻿namespace Client.Read.Infra.Tests.Gateways;
 
-public sealed class HttpBudgetGatewayTests : HostFixture
+public sealed class HttpBudgetGatewayTests : InfraFixture<IBudgetGateway, HttpBudgetGateway>
 {
     private const string ApiUrl = "http://localhost";
 
     private readonly StubbedHttpMessageHandler httpMessageHandler = new();
-    private readonly HttpBudgetGateway sut;
-
-    public HttpBudgetGatewayTests()
-    {
-        this.sut = this.Resolve<IBudgetGateway, HttpBudgetGateway>();
-    }
 
     protected override void Configure(IServiceCollection services) =>
         services.AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
@@ -19,7 +13,7 @@ public sealed class HttpBudgetGatewayTests : HostFixture
     public async Task Gives_budget_summaries(BudgetSummaryPresentation[] expected)
     {
         this.Feed("budgets", expected);
-        BudgetSummaryPresentation[] actual = await this.sut.Summaries();
+        BudgetSummaryPresentation[] actual = await this.Sut.Summaries();
         actual.Should().Equal(expected);
     }
 

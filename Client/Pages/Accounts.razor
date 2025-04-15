@@ -11,7 +11,8 @@
                 {
                     @foreach (AccountSummaryPresentation account in accounts)
                     {
-                        <li class="list-group-item @(account.Id == SelectedId ? "selected" : "")" @onclick="@(() => ShowDetails(account.Id))">
+                        <li class="list-group-item @(account.Id == SelectedId ? "selected" : "")"
+                            @onclick="@(() => ShowDetails(account.Id))">
                             <p class="account-label fw-bold d-flex justify-content-between">
                                 @account.Label
                                 <span class="oi oi-chevron-right"></span>
@@ -43,7 +44,7 @@
             <div class="col-9">
                 @if (SelectedId.HasValue)
                 {
-                    <AccountActivity Id="SelectedId.Value"></AccountActivity>
+                    <AccountActivity Id="SelectedId.Value" OnCategoryAssigned="OnCategoryAssigned"></AccountActivity>
                 }
             </div>
         }

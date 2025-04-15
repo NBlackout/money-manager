@@ -2,15 +2,15 @@
 
 namespace Read.Infra.Tests.DataSources;
 
-public sealed class InMemoryTransactionsOfMonthDataSourceTests : HostFixture
+public sealed class
+    InMemoryTransactionsOfMonthDataSourceTests : InfraFixture<ITransactionsOfMonthDataSource,
+    InMemoryTransactionsOfMonthDataSource>
 {
-    private readonly InMemoryTransactionsOfMonthDataSource sut;
     private readonly InMemoryTransactionRepository transactionRepository;
     private readonly InMemoryCategoryRepository categoryRepository;
 
     public InMemoryTransactionsOfMonthDataSourceTests()
     {
-        this.sut = this.Resolve<ITransactionsOfMonthDataSource, InMemoryTransactionsOfMonthDataSource>();
         this.transactionRepository = this.Resolve<ITransactionRepository, InMemoryTransactionRepository>();
         this.categoryRepository = this.Resolve<ICategoryRepository, InMemoryCategoryRepository>();
     }
@@ -42,7 +42,7 @@ public sealed class InMemoryTransactionsOfMonthDataSourceTests : HostFixture
 
     private async Task Verify(Guid accountId, int year, int month, params TransactionSummaryPresentation[] expected)
     {
-        TransactionSummaryPresentation[] actual = await this.sut.By(accountId, year, month);
+        TransactionSummaryPresentation[] actual = await this.Sut.By(accountId, year, month);
         actual.Should().Equal(expected);
     }
 

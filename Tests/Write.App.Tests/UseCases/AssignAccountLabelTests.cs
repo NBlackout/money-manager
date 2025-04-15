@@ -4,25 +4,26 @@ public class AssignAccountLabelTests
 {
     private readonly InMemoryAccountRepository repository = new();
     private readonly AssignAccountLabel sut;
+    private readonly AccountSnapshot existingAccount = Any<AccountSnapshot>();
 
     public AssignAccountLabelTests()
     {
         this.sut = new AssignAccountLabel(this.repository);
+        this.Feed(this.existingAccount);
     }
 
     [Theory, RandomData]
-    public async Task Assigns_account_label(AccountSnapshot account, Label newLabel)
+    public async Task Assigns_account_label(Label label)
     {
-        this.Feed(account);
-        await this.Verify(account, newLabel);
+        await this.Verify(label);
     }
 
-    private async Task Verify(AccountSnapshot account, Label label)
+    private async Task Verify(Label label)
     {
-        await this.sut.Execute(account.Id, label);
+        await this.sut.Execute(this.existingAccount.Id, label);
 
-        Account actual = await this.repository.By(account.Id);
-        actual.Snapshot.Should().Be(account with { Label = label.Value });
+        Account actual = await this.repository.By(this.existingAccount.Id);
+        actual.Snapshot.Should().Be(this.existingAccount with { Label = label.Value });
     }
 
     private void Feed(AccountSnapshot account) =>

@@ -2,14 +2,13 @@
 
 namespace Read.Infra.Tests.DataSources;
 
-public sealed class InMemoryTransactionsToCategorizeDataSourceTests : HostFixture
+public sealed class InMemoryTransactionsToCategorizeDataSourceTests : InfraFixture<ITransactionsToCategorizeDataSource,
+    InMemoryTransactionsToCategorizeDataSource>
 {
-    private readonly InMemoryTransactionsToCategorizeDataSource sut;
     private readonly InMemoryTransactionRepository categoryRepository;
 
     public InMemoryTransactionsToCategorizeDataSourceTests()
     {
-        this.sut = this.Resolve<ITransactionsToCategorizeDataSource, InMemoryTransactionsToCategorizeDataSource>();
         this.categoryRepository = this.Resolve<ITransactionRepository, InMemoryTransactionRepository>();
     }
 
@@ -30,7 +29,7 @@ public sealed class InMemoryTransactionsToCategorizeDataSourceTests : HostFixtur
 
     private async Task Verify(params TransactionBuilder[] expected)
     {
-        TransactionToCategorize[] actual = await this.sut.All();
+        TransactionToCategorize[] actual = await this.Sut.All();
         actual.Should().Equal(expected.Select(t => new TransactionToCategorize(t.Id, t.Label, t.Amount)));
     }
 

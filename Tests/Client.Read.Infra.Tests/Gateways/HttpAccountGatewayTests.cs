@@ -1,16 +1,10 @@
 namespace Client.Read.Infra.Tests.Gateways;
 
-public sealed class HttpAccountGatewayTests : HostFixture
+public sealed class HttpAccountGatewayTests : InfraFixture<IAccountGateway, HttpAccountGateway>
 {
     private const string ApiUrl = "http://localhost";
 
     private readonly StubbedHttpMessageHandler httpMessageHandler = new();
-    private readonly HttpAccountGateway sut;
-
-    public HttpAccountGatewayTests()
-    {
-        this.sut = this.Resolve<IAccountGateway, HttpAccountGateway>();
-    }
 
     protected override void Configure(IServiceCollection services) =>
         services.AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
@@ -19,7 +13,7 @@ public sealed class HttpAccountGatewayTests : HostFixture
     public async Task Gives_account_summaries(AccountSummaryPresentation[] expected)
     {
         this.Feed("accounts", expected);
-        AccountSummaryPresentation[] actual = await this.sut.Summaries();
+        AccountSummaryPresentation[] actual = await this.Sut.Summaries();
         actual.Should().Equal(expected);
     }
 
@@ -27,7 +21,7 @@ public sealed class HttpAccountGatewayTests : HostFixture
     public async Task Gives_account_details(AccountDetailsPresentation expected)
     {
         this.Feed($"accounts/{expected.Id}", expected);
-        AccountDetailsPresentation actual = await this.sut.Details(expected.Id);
+        AccountDetailsPresentation actual = await this.Sut.Details(expected.Id);
         actual.Should().Be(expected);
     }
 
@@ -39,7 +33,7 @@ public sealed class HttpAccountGatewayTests : HostFixture
         TransactionSummaryPresentation[] expected)
     {
         this.Feed($"accounts/{accountId}/transactions?year={year}&month={month}", expected);
-        TransactionSummaryPresentation[] actual = await this.sut.TransactionsOfMonth(accountId, year, month);
+        TransactionSummaryPresentation[] actual = await this.Sut.TransactionsOfMonth(accountId, year, month);
         actual.Should().Equal(expected);
     }
 

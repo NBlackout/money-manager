@@ -3,17 +3,11 @@ using Client.Write.Infra.Gateways;
 
 namespace Client.Write.Infra.Tests.Gateways;
 
-public sealed class HttpCategoryGatewayTests : HostFixture
+public sealed class HttpCategoryGatewayTests : InfraFixture<ICategoryGateway, HttpCategoryGateway>
 {
     private const string ApiUrl = "http://localhost";
 
     private readonly SpyHttpMessageHandler httpMessageHandler = new();
-    private readonly HttpCategoryGateway sut;
-
-    public HttpCategoryGatewayTests()
-    {
-        this.sut = this.Resolve<ICategoryGateway, HttpCategoryGateway>();
-    }
 
     protected override void Configure(IServiceCollection services) =>
         services.AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
@@ -21,14 +15,14 @@ public sealed class HttpCategoryGatewayTests : HostFixture
     [Theory, RandomData]
     public async Task Creates(Guid id, string label, string keywords)
     {
-        await this.sut.Create(id, label, keywords);
+        await this.Sut.Create(id, label, keywords);
         this.Verify_Post($"{ApiUrl}/categories", new { Id = id, Label = label, Keywords = keywords });
     }
 
     [Theory, RandomData]
     public async Task Deletes(Guid id)
     {
-        await this.sut.Delete(id);
+        await this.Sut.Delete(id);
         this.Verify_Delete($"{ApiUrl}/categories/{id}");
     }
 

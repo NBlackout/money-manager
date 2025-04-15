@@ -5,15 +5,14 @@ using Write.Infra.Repositories;
 
 namespace Read.Infra.Tests.DataSources;
 
-public sealed class InMemoryBudgetSummariesDataSourceTests : HostFixture
+public sealed class
+    InMemoryBudgetSummariesDataSourceTests : InfraFixture<IBudgetSummariesDataSource, InMemoryBudgetSummariesDataSource>
 {
-    private readonly InMemoryBudgetSummariesDataSource sut;
     private readonly InMemoryBudgetRepository budgetRepository;
     private readonly StubbedDateOnlyProvider dateOnlyProvider = new();
 
     public InMemoryBudgetSummariesDataSourceTests()
     {
-        this.sut = this.Resolve<IBudgetSummariesDataSource, InMemoryBudgetSummariesDataSource>();
         this.budgetRepository = this.Resolve<IBudgetRepository, InMemoryBudgetRepository>();
     }
 
@@ -62,7 +61,7 @@ public sealed class InMemoryBudgetSummariesDataSourceTests : HostFixture
 
     private async Task Verify(BudgetBuilder expected)
     {
-        BudgetSummaryPresentation[] actual = await this.sut.All();
+        BudgetSummaryPresentation[] actual = await this.Sut.All();
         actual.Should().Equal(expected.ToSummary());
     }
 

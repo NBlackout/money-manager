@@ -2,14 +2,13 @@
 
 namespace Read.Infra.Tests.DataSources;
 
-public sealed class InMemoryCategoriesWithKeywordsDataSourceTests : HostFixture
+public sealed class InMemoryCategoriesWithKeywordsDataSourceTests : InfraFixture<ICategoriesWithKeywordsDataSource,
+    InMemoryCategoriesWithKeywordsDataSource>
 {
-    private readonly InMemoryCategoriesWithKeywordsDataSource sut;
     private readonly InMemoryCategoryRepository categoryRepository;
 
     public InMemoryCategoriesWithKeywordsDataSourceTests()
     {
-        this.sut = this.Resolve<ICategoriesWithKeywordsDataSource, InMemoryCategoriesWithKeywordsDataSource>();
         this.categoryRepository = this.Resolve<ICategoryRepository, InMemoryCategoryRepository>();
     }
 
@@ -29,7 +28,7 @@ public sealed class InMemoryCategoriesWithKeywordsDataSourceTests : HostFixture
 
     private async Task Verify(params CategoryBuilder[] expected)
     {
-        CategoryWithKeywords[] actual = await this.sut.All();
+        CategoryWithKeywords[] actual = await this.Sut.All();
         actual.Should().Equal(expected.Select(c => new CategoryWithKeywords(c.Id, c.Label, c.Keywords)));
     }
 

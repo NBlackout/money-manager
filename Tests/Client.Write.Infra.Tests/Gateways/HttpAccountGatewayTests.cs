@@ -3,17 +3,11 @@ using Client.Write.Infra.Gateways;
 
 namespace Client.Write.Infra.Tests.Gateways;
 
-public sealed class HttpAccountGatewayTests : HostFixture
+public sealed class HttpAccountGatewayTests : InfraFixture<IAccountGateway, HttpAccountGateway>
 {
     private const string ApiUrl = "http://localhost";
 
     private readonly SpyHttpMessageHandler httpMessageHandler = new();
-    private readonly HttpAccountGateway sut;
-
-    public HttpAccountGatewayTests()
-    {
-        this.sut = this.Resolve<IAccountGateway, HttpAccountGateway>();
-    }
 
     protected override void Configure(IServiceCollection services) =>
         services.AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
@@ -21,21 +15,21 @@ public sealed class HttpAccountGatewayTests : HostFixture
     [Theory, RandomData]
     public async Task Stops_tracking(Guid id)
     {
-        await this.sut.StopTracking(id);
+        await this.Sut.StopTracking(id);
         this.Verify_Put($"{ApiUrl}/accounts/{id}/tracking", new { Enabled = false });
     }
 
     [Theory, RandomData]
     public async Task Resumes_tracking(Guid id)
     {
-        await this.sut.ResumeTracking(id);
+        await this.Sut.ResumeTracking(id);
         this.Verify_Put($"{ApiUrl}/accounts/{id}/tracking", new { Enabled = true });
     }
 
     [Theory, RandomData]
     public async Task Assigns_label(Guid id, string label)
     {
-        await this.sut.AssignLabel(id, label);
+        await this.Sut.AssignLabel(id, label);
         this.Verify_Put($"{ApiUrl}/accounts/{id}/label", new { Label = label });
     }
 

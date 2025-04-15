@@ -1,16 +1,10 @@
 ﻿namespace Client.Read.Infra.Tests.Gateways;
 
-public sealed class HttpCategoryGatewayTests : HostFixture
+public sealed class HttpCategoryGatewayTests : InfraFixture<ICategoryGateway, HttpCategoryGateway>
 {
     private const string ApiUrl = "http://localhost";
 
     private readonly StubbedHttpMessageHandler httpMessageHandler = new();
-    private readonly HttpCategoryGateway sut;
-
-    public HttpCategoryGatewayTests()
-    {
-        this.sut = this.Resolve<ICategoryGateway, HttpCategoryGateway>();
-    }
 
     protected override void Configure(IServiceCollection services) =>
         services.AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
@@ -19,7 +13,7 @@ public sealed class HttpCategoryGatewayTests : HostFixture
     public async Task Gives_category_summaries(CategorySummaryPresentation[] expected)
     {
         this.Feed("categories", expected);
-        CategorySummaryPresentation[] actual = await this.sut.Summaries();
+        CategorySummaryPresentation[] actual = await this.Sut.Summaries();
         actual.Should().Equal(expected);
     }
 

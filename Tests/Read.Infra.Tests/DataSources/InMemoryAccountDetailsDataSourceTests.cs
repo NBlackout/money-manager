@@ -2,14 +2,13 @@
 
 namespace Read.Infra.Tests.DataSources;
 
-public sealed class InMemoryAccountDetailsDataSourceTests : HostFixture
+public sealed class
+    InMemoryAccountDetailsDataSourceTests : InfraFixture<IAccountDetailsDataSource, InMemoryAccountDetailsDataSource>
 {
-    private readonly InMemoryAccountDetailsDataSource sut;
     private readonly InMemoryAccountRepository accountRepository;
 
     public InMemoryAccountDetailsDataSourceTests()
     {
-        this.sut = this.Resolve<IAccountDetailsDataSource, InMemoryAccountDetailsDataSource>();
         this.accountRepository = this.Resolve<IAccountRepository, InMemoryAccountRepository>();
     }
 
@@ -22,7 +21,7 @@ public sealed class InMemoryAccountDetailsDataSourceTests : HostFixture
 
     private async Task Verify(AccountBuilder account)
     {
-        AccountDetailsPresentation actual = await this.sut.By(account.Id);
+        AccountDetailsPresentation actual = await this.Sut.By(account.Id);
         actual.Should().Be(account.ToDetails());
     }
 
