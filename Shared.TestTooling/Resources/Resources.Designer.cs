@@ -92,6 +92,16 @@ namespace Shared.TestTooling.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] MissingAvailableBalanceOfxSample {
+            get {
+                object obj = ResourceManager.GetObject("MissingAvailableBalanceOfxSample", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] MissingBalanceOfxSample {
             get {
                 object obj = ResourceManager.GetObject("MissingBalanceOfxSample", resourceCulture);
@@ -105,6 +115,16 @@ namespace Shared.TestTooling.Resources {
         public static byte[] MissingBankIdentifierOfxSample {
             get {
                 object obj = ResourceManager.GetObject("MissingBankIdentifierOfxSample", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] NonXmlHeadersOfxSample {
+            get {
+                object obj = ResourceManager.GetObject("NonXmlHeadersOfxSample", resourceCulture);
                 return ((byte[])(obj));
             }
         }

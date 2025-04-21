@@ -27,33 +27,45 @@ public sealed class OfxBankStatementParserTests : InfraFixture<OfxBankStatementP
                 null
             )
         );
-        await this.Verify(new MemoryStream(OfxSample), expected);
+        await this.Verify(OfxSample, expected);
     }
 
     [Fact]
     public async Task Tells_when_bank_identifier_is_missing()
     {
-        await this.Verify<CannotProcessOfxContent>(new MemoryStream(MissingBankIdentifierOfxSample));
+        await this.Verify<CannotProcessOfxContent>(MissingBankIdentifierOfxSample);
     }
 
     [Fact]
     public async Task Tells_when_account_number_is_missing()
     {
-        await this.Verify<CannotProcessOfxContent>(new MemoryStream(MissingAccountNumberOfxSample));
+        await this.Verify<CannotProcessOfxContent>(MissingAccountNumberOfxSample);
     }
 
     [Fact]
-    public async Task Tells_when_balance_is_missing()
+    public async Task Gives_ledger_balance_when_available_is_missing()
     {
-        await this.Verify<CannotProcessOfxContent>(new MemoryStream(MissingBalanceOfxSample));
+        await this.Verify(
+            MissingAvailableBalanceOfxSample,
+            new AccountStatement(new ExternalId("00012345000"), new Balance(12345.67m, DateOnly.Parse("2023-04-13")))
+        );
     }
 
-    private async Task Verify<TException>(Stream stream) where TException : Exception =>
-        await this.Invoking(s => s.Verify(stream, Any<AccountStatement>())).Should().ThrowAsync<TException>();
-
-    private async Task Verify(Stream stream, AccountStatement expected)
+    [Fact]
+    public async Task Sanitizes_non_xml_headers()
     {
-        AccountStatement actual = await this.Sut.ExtractAccountStatement(stream);
+        await this.Verify(
+            NonXmlHeadersOfxSample,
+            new AccountStatement(new ExternalId("00012345000"), new Balance(12345.67m, DateOnly.Parse("2023-04-13")))
+        );
+    }
+
+    private async Task Verify<TException>(byte[] content) where TException : Exception =>
+        await this.Invoking(s => s.Verify(content, Any<AccountStatement>())).Should().ThrowAsync<TException>();
+
+    private async Task Verify(byte[] content, AccountStatement expected)
+    {
+        AccountStatement actual = await this.Sut.ExtractAccountStatement(new MemoryStream(content));
         actual.Should().BeEquivalentTo(expected);
     }
 }

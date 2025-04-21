@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Text;
 using System.Xml.Serialization;
 using Write.App.Model.ValueObjects;
 using Write.Infra.Exceptions;
@@ -11,25 +12,25 @@ namespace Write.Infra.BankStatementParsing;
 [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global")]
 public class OfxBankStatementParser
 {
-    public Task<AccountStatement> ExtractAccountStatement(Stream stream)
+    public async Task<AccountStatement> ExtractAccountStatement(Stream stream)
     {
-        XmlSerializer serializer = new(typeof(Ofx));
-        Ofx root = (Ofx) serializer.Deserialize(stream)!;
-
+        Ofx root = await Deserialize(stream);
         StatementResponse statementResponse = root.BankMessageSetResponse!.StatementResponses.First();
-        AvailableBalance? availableBalance = statementResponse.AvailableBalance;
+        BankAccount? bankAccount = statementResponse.BankAccount;
+        BankAccountBalance? availableBalance = statementResponse.AvailableBalance;
+        BankAccountBalance? ledgerBalance = statementResponse.LedgerBalance;
 
-        if (statementResponse.BankAccount?.BankIdentifier is null)
+        if (bankAccount?.BankIdentifier is null)
             throw CannotProcessOfxContent.DueToMissingBankIdentifierNode();
-        if (statementResponse.BankAccount?.AccountNumber is null)
+        if (bankAccount.AccountNumber is null)
             throw CannotProcessOfxContent.DueToMissingAccountNumberNode();
-        if (availableBalance is null)
+        if (availableBalance is null && ledgerBalance is null)
             throw CannotProcessOfxContent.DueToMissingBalanceNode();
 
+        BankAccountBalance balance = (availableBalance ?? ledgerBalance)!;
         TransactionStatement[] transactions =
         [
-            ..statementResponse.StatementTransactions.Select(
-                t => new TransactionStatement(
+            ..statementResponse.StatementTransactions.Select(t => new TransactionStatement(
                     new ExternalId(t.Identifier),
                     new Amount(t.Amount),
                     new Label(t.Label),
@@ -39,13 +40,28 @@ public class OfxBankStatementParser
             )
         ];
 
-        return Task.FromResult(
-            new AccountStatement(
-                new ExternalId(statementResponse.BankAccount.AccountNumber),
-                new Balance(availableBalance.Amount, availableBalance.Date),
-                transactions
-            )
+        return new AccountStatement(
+            new ExternalId(bankAccount.AccountNumber),
+            new Balance(balance.Amount, balance.Date),
+            transactions
         );
+    }
+
+    private static async Task<Ofx> Deserialize(Stream stream)
+    {
+        Stream sanitized = await Sanitize(stream);
+        XmlSerializer serializer = new(typeof(Ofx));
+
+        return (Ofx) serializer.Deserialize(sanitized)!;
+    }
+
+    private static async Task<Stream> Sanitize(Stream stream)
+    {
+        using StreamReader reader = new(stream);
+        string text = await reader.ReadToEndAsync();
+        int ofxTagPosition = text.IndexOf("<OFX>", StringComparison.InvariantCulture);
+
+        return new MemoryStream(Encoding.UTF8.GetBytes(text[ofxTagPosition..]));
     }
 
     [XmlRoot("OFX")]
@@ -64,7 +80,8 @@ public class OfxBankStatementParser
     public class StatementResponse
     {
         [XmlElement("BANKACCTFROM")] public BankAccount? BankAccount { get; init; }
-        [XmlElement("AVAILBAL")] public AvailableBalance? AvailableBalance { get; init; }
+        [XmlElement("AVAILBAL")] public BankAccountBalance? AvailableBalance { get; init; }
+        [XmlElement("LEDGERBAL")] public BankAccountBalance? LedgerBalance { get; init; }
 
         [XmlArray("BANKTRANLIST")]
         [XmlArrayItem("STMTTRN")]
@@ -77,7 +94,7 @@ public class OfxBankStatementParser
         [XmlElement("ACCTID")] public string? AccountNumber { get; init; }
     }
 
-    public class AvailableBalance
+    public class BankAccountBalance
     {
         [XmlElement("DTASOF")] public string RawDate { get; init; } = null!;
         [XmlElement("BALAMT")] public decimal Amount { get; init; }
@@ -88,11 +105,10 @@ public class OfxBankStatementParser
     public class StatementTransaction
     {
         [XmlElement("DTPOSTED")] public string RawDate { get; init; } = null!;
-        [XmlElement("TRNAMT")] public string RawAmount { get; init; } = null!;
+        [XmlElement("TRNAMT")] public decimal Amount { get; init; }
         [XmlElement("FITID")] public string Identifier { get; init; } = null!;
         [XmlElement("NAME")] public string Label { get; init; } = null!;
 
-        public decimal Amount => decimal.Parse(this.RawAmount, CultureInfo.CreateSpecificCulture("fr-FR"));
         public DateOnly Date => DateOnly.ParseExact(this.RawDate, "yyyyMMdd", null);
     }
 }

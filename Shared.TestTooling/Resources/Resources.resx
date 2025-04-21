@@ -30,6 +30,12 @@
     <data name="MissingBalanceOfxSample" type="System.Resources.ResXFileRef, System.Windows.Forms">
         <value>MissingBalanceOfxSample.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </data>
+    <data name="MissingAvailableBalanceOfxSample" type="System.Resources.ResXFileRef, System.Windows.Forms">
+        <value>MissingAvailableBalanceOfxSample.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </data>
+    <data name="NonXmlHeadersOfxSample" type="System.Resources.ResXFileRef, System.Windows.Forms">
+        <value>NonXmlHeadersOfxSample.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </data>
     <data name="CsvSample" type="System.Resources.ResXFileRef, System.Windows.Forms">
         <value>CsvSample.csv;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </data>

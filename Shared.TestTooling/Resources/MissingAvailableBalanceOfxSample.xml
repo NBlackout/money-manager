@@ -4,11 +4,12 @@
             <STMTRS>
                 <BANKACCTFROM>
                     <BANKID>1234567890</BANKID>
+                    <ACCTID>00012345000</ACCTID>
                 </BANKACCTFROM>
-                <AVAILBAL>
+                <LEDGERBAL>
                     <DTASOF>20230413000000</DTASOF>
                     <BALAMT>12345.67</BALAMT>
-                </AVAILBAL>
+                </LEDGERBAL>
             </STMTRS>
         </STMTTRNRS>
     </BANKMSGSRSV1>
