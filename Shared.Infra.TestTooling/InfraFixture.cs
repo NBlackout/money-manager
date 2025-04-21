@@ -56,12 +56,6 @@ public abstract class InfraFixture : IDisposable
         where TContract : notnull where TImplementation : TContract =>
         this.scope.Resolve<TContract, TImplementation>();
 
-    protected TContract Resolve<TContract>() where TContract : notnull =>
-        this.scope.Resolve<TContract>();
-
-    protected TOptions ResolveOptions<TOptions>() where TOptions : class =>
-        this.host.ResolveOptions<TOptions>();
-
     public void Dispose()
     {
         this.Dispose(true);

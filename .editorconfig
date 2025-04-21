@@ -126,3 +126,4 @@ dotnet_style_qualification_for_method = true:suggestion
 dotnet_style_qualification_for_property = true:suggestion
 dotnet_style_require_accessibility_modifiers = for_non_interface_members:suggestion
 
+dotnet_diagnostic.xUnit1003.severity = none
