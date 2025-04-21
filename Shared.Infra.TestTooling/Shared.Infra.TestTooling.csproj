@@ -1,18 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
-      <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Hosting"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Client.Read.Infra\Client.Read.Infra.csproj" />
-      <ProjectReference Include="..\Client.Write.Infra\Client.Write.Infra.csproj" />
-      <ProjectReference Include="..\Read.Infra\Read.Infra.csproj" />
-      <ProjectReference Include="..\Shared.Infra\Shared.Infra.csproj" />
-      <ProjectReference Include="..\Shared.TestTooling\Shared.TestTooling.csproj" />
-      <ProjectReference Include="..\Shared\Shared.csproj" />
-      <ProjectReference Include="..\Write.Infra\Write.Infra.csproj" />
+        <ProjectReference Include="..\Client.Read.Infra\Client.Read.Infra.csproj"/>
+        <ProjectReference Include="..\Client.Write.Infra\Client.Write.Infra.csproj"/>
+        <ProjectReference Include="..\Read.Infra\Read.Infra.csproj"/>
+        <ProjectReference Include="..\Shared.Infra\Shared.Infra.csproj"/>
+        <ProjectReference Include="..\Shared.TestTooling\Shared.TestTooling.csproj"/>
+        <ProjectReference Include="..\Shared\Shared.csproj"/>
+        <ProjectReference Include="..\Write.Infra\Write.Infra.csproj"/>
     </ItemGroup>
 
 </Project>

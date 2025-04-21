@@ -25,8 +25,6 @@ public sealed class
         actual.Should().Be(account.ToDetails());
     }
 
-    private void Feed(AccountBuilder account)
-    {
+    private void Feed(AccountBuilder account) =>
         this.accountRepository.Feed(account.ToSnapshot());
-    }
 }
