@@ -5,7 +5,6 @@
       <ProjectReference Include="..\..\Read.Infra\Read.Infra.csproj" />
       <ProjectReference Include="..\..\Read.TestTooling\Read.TestTooling.csproj" />
       <ProjectReference Include="..\..\Shared.Infra.TestTooling\Shared.Infra.TestTooling.csproj" />
-      <ProjectReference Include="..\..\Shared.Infra\Shared.Infra.csproj" />
       <ProjectReference Include="..\..\Shared\Shared.csproj" />
       <ProjectReference Include="..\..\Write.App\Write.App.csproj" />
       <ProjectReference Include="..\..\Write.Infra\Write.Infra.csproj" />

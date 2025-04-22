@@ -51,6 +51,9 @@ public class Transaction : DomainEntity<TransactionId>
     public void AssignCategory(CategoryId newCategoryId) =>
         this.categoryId = newCategoryId;
 
+    public void UnassignCategory() =>
+        this.categoryId = null;
+
     public static Transaction From(TransactionSnapshot snapshot)
     {
         return new Transaction(

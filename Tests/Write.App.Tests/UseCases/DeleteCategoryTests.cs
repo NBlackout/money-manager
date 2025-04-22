@@ -4,12 +4,13 @@ namespace Write.App.Tests.UseCases;
 
 public class DeleteCategoryTests
 {
-    private readonly InMemoryCategoryRepository repository = new();
+    private readonly InMemoryCategoryRepository categoryRepository = new();
+    private readonly InMemoryTransactionRepository transactionRepository = new();
     private readonly DeleteCategory sut;
 
     public DeleteCategoryTests()
     {
-        this.sut = new DeleteCategory(this.repository);
+        this.sut = new DeleteCategory(this.categoryRepository, this.transactionRepository);
     }
 
     [Theory, RandomData]
@@ -19,13 +20,37 @@ public class DeleteCategoryTests
         await this.Verify(category);
     }
 
-    private async Task Verify(CategorySnapshot category)
+    [Theory, RandomData]
+    public async Task Clears_transactions_category(CategorySnapshot category)
     {
-        await this.sut.Execute(category.Id);
-        bool exists = this.repository.Exists(category.Id);
-        exists.Should().BeFalse();
+        TransactionSnapshot aTransaction = ATransaction() with { CategoryId = category.Id };
+        TransactionSnapshot anotherTransaction = ATransaction() with { CategoryId = category.Id };
+        this.Feed(category, aTransaction, anotherTransaction);
+
+        await this.Verify(
+            category,
+            aTransaction with { CategoryId = null },
+            anotherTransaction with { CategoryId = null }
+        );
     }
 
-    private void Feed(CategorySnapshot category) =>
-        this.repository.Feed(category);
+    private async Task Verify(CategorySnapshot category, params TransactionSnapshot[] expectedTransactions)
+    {
+        await this.sut.Execute(category.Id);
+
+        bool exists = this.categoryRepository.Exists(category.Id);
+        exists.Should().BeFalse();
+
+        TransactionSnapshot[] transactions = this.transactionRepository.Data.ToArray();
+        transactions.Should().Equal(expectedTransactions);
+    }
+
+    private void Feed(CategorySnapshot category, params TransactionSnapshot[] transactions)
+    {
+        this.categoryRepository.Feed(category);
+        this.transactionRepository.Feed(transactions);
+    }
+
+    private static TransactionSnapshot ATransaction() =>
+        Any<TransactionSnapshot>();
 }

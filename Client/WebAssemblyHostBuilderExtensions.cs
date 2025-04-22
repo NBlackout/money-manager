@@ -6,13 +6,15 @@ namespace Client;
 
 public static class WebAssemblyHostBuilderExtensions
 {
-    public static void AddServices(this WebAssemblyHostBuilder builder)
+    public static WebAssemblyHostBuilder AddServices(this WebAssemblyHostBuilder builder)
     {
         builder
             .Services
             .AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress + "api/") })
             .AddWrite()
             .AddRead();
+
+        return builder;
     }
 
     private static IServiceCollection AddWrite(this IServiceCollection services)

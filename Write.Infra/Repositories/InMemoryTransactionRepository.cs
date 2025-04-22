@@ -15,13 +15,16 @@ public class InMemoryTransactionRepository : ITransactionRepository
     public Task<Transaction> By(TransactionId id) =>
         Task.FromResult(Transaction.From(this.data[id]));
 
+    public Task<Transaction[]> By(CategoryId categoryId) =>
+        Task.FromResult(this.data.Values.Where(t => t.CategoryId == categoryId).Select(Transaction.From).ToArray());
+
     public Task<ExternalId[]> UnknownExternalIds(IEnumerable<ExternalId> externalIds) =>
         Task.FromResult(externalIds.Except(this.data.Values.Select(v => new ExternalId(v.ExternalId))).ToArray());
 
-    public Task Save(Transaction transaction)
+    public Task Save(params Transaction[] transactions)
     {
-        TransactionSnapshot snapshot = transaction.Snapshot;
-        this.data[transaction.Id] = snapshot;
+        foreach (Transaction transaction in transactions)
+            this.data[transaction.Id] = transaction.Snapshot;
 
         return Task.CompletedTask;
     }

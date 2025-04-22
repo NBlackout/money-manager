@@ -3,9 +3,17 @@
 <button class="btn btn-primary" @onclick="@ShowCategoryForm">Add new category</button>
 <ul class="list-group list-group-flush">
     <li class="list-group-item @(isCreating ? "" : "d-none")">
-        <EditForm Model="Category" OnSubmit="Submit">
-            <InputText @bind-Value="Category!.Label"></InputText>
-            <InputText @bind-Value="Category!.Keywords"></InputText>
+        <EditForm Model="Category" OnSubmit="Submit" FormName="CreateCategory">
+            <div>
+                <label>Label:
+                    <InputText @bind-Value="Category!.Label"></InputText>
+                </label>
+            </div>
+            <div>
+                <label>Keywords:
+                    <InputText @bind-Value="Category!.Keywords"></InputText>
+                </label>
+            </div>
             <button type="submit">Submit</button>
         </EditForm>
     </li>
