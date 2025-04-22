@@ -1,11 +1,20 @@
 ﻿@if (categories != null)
 {
     <ul class="dropdown-menu">
-        @foreach (CategorySummaryPresentation category in categories)
+
+        @if (categories.Any())
         {
-            <li>
-                <button type="button" class="dropdown-item" @onclick="@(() => AssignLabel(category.Id))">@category.Label</button>
-            </li>
+            @foreach (CategorySummaryPresentation category in categories)
+            {
+                <li>
+                    <button type="button" class="dropdown-item"
+                            @onclick="@(() => AssignLabel(category.Id))">@category.Label</button>
+                </li>
+            }
+        }
+        else
+        {
+            <li><a href="/categories/create" class="dropdown-item">Create a new category</a></li>
         }
     </ul>
 }
