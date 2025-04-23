@@ -18,11 +18,8 @@ public partial class Transactions : ComponentBase
 
     private void OnCategoryAssigned((Guid TransactionId, string CategoryLabel) args)
     {
-        TransactionSummaryPresentation transaction = this.transactions!.Single(t => t.Id == args.TransactionId);
-
-        TransactionSummaryPresentation[] updatedTransactions = [..this.transactions!];
-        int transactionIndex = updatedTransactions.ToList().IndexOf(transaction);
-        updatedTransactions[transactionIndex] = transaction with { Category = args.CategoryLabel };
-        this.transactions = updatedTransactions;
+        this.transactions = this.transactions!
+            .Select(a => a with { Category = a.Id == args.TransactionId ? args.CategoryLabel : a.Category })
+            .ToArray();
     }
 }

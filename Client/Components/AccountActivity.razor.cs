@@ -13,6 +13,7 @@ public partial class AccountActivity : ComponentBase
     [Inject] private AssignAccountLabel AssignAccountLabel { get; set; } = null!;
 
     [Parameter] public Guid Id { get; set; }
+    [Parameter] public EventCallback<(Guid, string)> OnLabelAssigned { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -36,7 +37,8 @@ public partial class AccountActivity : ComponentBase
     private async Task LabelChanged(ChangeEventArgs args)
     {
         string newLabel = (string) args.Value!;
-        await this.AssignAccountLabel.Execute(this.account!.Id, newLabel);
+        await this.AssignAccountLabel.Execute(this.Id, newLabel);
+        await this.OnLabelAssigned.InvokeAsync((this.Id, newLabel));
 
         this.account = this.account! with { Label = newLabel };
         this.ExitEditMode();
