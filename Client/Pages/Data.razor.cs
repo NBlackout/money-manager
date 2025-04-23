@@ -6,6 +6,7 @@ public partial class Data : ComponentBase
 {
     private const int FiveMegaBytes = 5 * 1024 * 1024;
 
+    private bool? isSuccessful;
     private string? uploadResult;
 
     [Inject] private UploadBankStatement UploadBankStatement { get; set; } = null!;
@@ -16,10 +17,12 @@ public partial class Data : ComponentBase
         {
             await this.Upload(args.GetMultipleFiles());
 
+            this.isSuccessful = true;
             this.uploadResult = "Bank statement successfully imported";
         }
         catch (Exception e)
         {
+            this.isSuccessful = false;
             this.uploadResult = e.Message;
         }
     }
