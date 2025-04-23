@@ -7,6 +7,10 @@ public class StubbedTransactionsOfMonthDataSource : ITransactionsOfMonthDataSour
     public Task<TransactionSummaryPresentation[]> By(Guid accountId, int year, int month) =>
         Task.FromResult(this.data[(accountId, year, month)]);
 
-    public void Feed(Guid accountId, int year, int month, params TransactionSummaryPresentation[] expected) =>
-        this.data[(accountId, year, month)] = expected;
+    public void Feed(
+        Guid accountId,
+        int year,
+        int month,
+        params TransactionSummaryPresentation[] transactionsSummaries) =>
+        this.data[(accountId, year, month)] = transactionsSummaries;
 }

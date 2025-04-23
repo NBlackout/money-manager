@@ -48,6 +48,7 @@ public static class WebAssemblyHostBuilderExtensions
             .AddScoped<TransactionsOfMonth>()
             .AddScoped<CategorySummaries>()
             .AddScoped<CategorizationSuggestions>()
-            .AddScoped<BudgetSummaries>();
+            .AddScoped<BudgetSummaries>()
+            .AddScoped<SlidingAccountBalances>();
     }
 }

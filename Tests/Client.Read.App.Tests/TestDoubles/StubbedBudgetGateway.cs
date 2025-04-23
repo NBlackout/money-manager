@@ -7,6 +7,6 @@ public class StubbedBudgetGateway : IBudgetGateway
     public Task<BudgetSummaryPresentation[]> Summaries() =>
         Task.FromResult(this.summaries);
 
-    public void Feed(params BudgetSummaryPresentation[] expected) =>
-        this.summaries = expected;
+    public void Feed(params BudgetSummaryPresentation[] summaries) =>
+        this.summaries = summaries;
 }

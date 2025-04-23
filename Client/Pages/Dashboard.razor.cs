@@ -6,32 +6,18 @@ namespace Client.Pages;
 
 public partial class Dashboard
 {
+    [Inject] public SlidingAccountBalances SlidingAccountBalances { get; set; } = null!;
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        List<double?> johnValues = [5, 3, 4, 7, 2];
-        List<double?> janeValues = [2, -2, -3, 2, 1];
-        List<double?> joeValues = [3, 4, 4, -2, 5];
-
-        List<AreaSeriesData> johnData = [];
-        List<AreaSeriesData> janeData = [];
-        List<AreaSeriesData> joeData = [];
-
-        johnValues.ForEach(p => johnData.Add(new AreaSeriesData { Y = p }));
-        janeValues.ForEach(p => janeData.Add(new AreaSeriesData { Y = p }));
-        joeValues.ForEach(p => joeData.Add(new AreaSeriesData { Y = p }));
-
+        SlidingAccountBalancesPresentation presentation = await this.SlidingAccountBalances.Execute();
         HighchartsRenderer renderer = new(
             new Highcharts
             {
                 Title = new Title { Text = "Area chart with negative values" },
-                XAxis = [new XAxis { Categories = ["Apples", "Oranges", "Pears", "Grapes", "Bananas"] }],
+                XAxis = [new XAxis { Categories = CategoriesBy(presentation) }],
                 Credits = new Credits { Enabled = false },
-                Series =
-                [
-                    new AreaSeries { Name = "John", Data = johnData },
-                    new AreaSeries { Name = "Jane", Data = janeData },
-                    new AreaSeries { Name = "Joe", Data = joeData }
-                ]
+                Series = SeriesBy(presentation)
             }
         );
 
@@ -41,4 +27,27 @@ public partial class Dashboard
             renderer.GetJsonOptionsForBlazor()
         );
     }
+
+    private static List<string> CategoriesBy(SlidingAccountBalancesPresentation presentation) =>
+        presentation.AccountBalancesByDate.Select(b => b.BalanceDate.ToShortDateString()).ToList();
+
+    private static List<Series> SeriesBy(SlidingAccountBalancesPresentation presentation) =>
+        presentation
+            .AccountBalancesByDate
+            .SelectMany(d => d.AccountBalances.Select(b => b.AccountLabel))
+            .Distinct()
+            .Select(a => SeriesBy(presentation, a))
+            .ToList();
+
+    private static Series SeriesBy(SlidingAccountBalancesPresentation presentation, string accountLabel)
+    {
+        return new AreaSeries
+        {
+            Name = accountLabel,
+            Data = presentation.AccountBalancesByDate.Select(b => AreaSeriesDataBy(accountLabel, b)).ToList()
+        };
+    }
+
+    private static AreaSeriesData AreaSeriesDataBy(string accountLabel, AccountBalancesByDatePresentation date) =>
+        new() { Y = decimal.ToDouble(date.AccountBalances.Single(b => b.AccountLabel == accountLabel).Balance) };
 }

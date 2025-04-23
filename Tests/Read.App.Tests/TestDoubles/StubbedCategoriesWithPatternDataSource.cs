@@ -7,6 +7,6 @@ public class StubbedCategoriesWithKeywordsDataSource : ICategoriesWithKeywordsDa
     public Task<CategoryWithKeywords[]> All() =>
         Task.FromResult(this.categoriesWithKeywords.ToArray());
 
-    public void Feed(params CategoryWithKeywords[] expected) =>
-        this.categoriesWithKeywords.AddRange(expected);
+    public void Feed(params CategoryWithKeywords[] categoriesWithKeywords) =>
+        this.categoriesWithKeywords.AddRange(categoriesWithKeywords);
 }

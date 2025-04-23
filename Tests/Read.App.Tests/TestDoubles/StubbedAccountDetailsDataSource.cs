@@ -7,6 +7,6 @@ public class StubbedAccountDetailsDataSource : IAccountDetailsDataSource
     public Task<AccountDetailsPresentation> By(Guid id) =>
         Task.FromResult(this.dataSource[id]);
 
-    public void Feed(Guid id, AccountDetailsPresentation expected) =>
-        this.dataSource[id] = expected;
+    public void Feed(Guid id, AccountDetailsPresentation details) =>
+        this.dataSource[id] = details;
 }
