@@ -1,6 +1,6 @@
 namespace Client.Read.Infra.Tests.Gateways;
 
-public sealed class HttpAccountGatewayTests : InfraFixture<IAccountGateway, HttpAccountGateway>
+public class HttpAccountGatewayTests : InfraTest<IAccountGateway, HttpAccountGateway>
 {
     private const string ApiUrl = "http://localhost";
 

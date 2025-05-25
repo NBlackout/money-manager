@@ -3,7 +3,7 @@ using Write.Infra.BankStatementParsing;
 
 namespace Write.Infra.Tests.BankStatementParsing;
 
-public class BankStatementParserTests : InfraFixture<IBankStatementParser, BankStatementParser>
+public class BankStatementParserTests : InfraTest<IBankStatementParser, BankStatementParser>
 {
     [Fact]
     public async Task Extracts_ofx_account_statement()

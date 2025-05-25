@@ -1,6 +1,6 @@
 ﻿namespace Client.Read.Infra.Tests.Gateways;
 
-public sealed class HttpBudgetGatewayTests : InfraFixture<IBudgetGateway, HttpBudgetGateway>
+public class HttpBudgetGatewayTests : InfraTest<IBudgetGateway, HttpBudgetGateway>
 {
     private const string ApiUrl = "http://localhost";
 

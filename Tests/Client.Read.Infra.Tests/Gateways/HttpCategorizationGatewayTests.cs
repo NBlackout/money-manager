@@ -1,6 +1,6 @@
 ﻿namespace Client.Read.Infra.Tests.Gateways;
 
-public sealed class HttpCategorizationGatewayTests : InfraFixture<ICategorizationGateway, HttpCategorizationGateway>
+public class HttpCategorizationGatewayTests : InfraTest<ICategorizationGateway, HttpCategorizationGateway>
 {
     private const string ApiUrl = "http://localhost";
 

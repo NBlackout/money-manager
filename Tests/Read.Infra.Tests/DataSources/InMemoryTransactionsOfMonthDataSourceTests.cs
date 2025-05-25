@@ -2,8 +2,8 @@
 
 namespace Read.Infra.Tests.DataSources;
 
-public sealed class
-    InMemoryTransactionsOfMonthDataSourceTests : InfraFixture<ITransactionsOfMonthDataSource,
+public class
+    InMemoryTransactionsOfMonthDataSourceTests : InfraTest<ITransactionsOfMonthDataSource,
     InMemoryTransactionsOfMonthDataSource>
 {
     private readonly InMemoryTransactionRepository transactionRepository;

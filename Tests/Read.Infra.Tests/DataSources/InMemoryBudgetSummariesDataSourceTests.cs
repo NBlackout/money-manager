@@ -5,8 +5,8 @@ using Write.Infra.Repositories;
 
 namespace Read.Infra.Tests.DataSources;
 
-public sealed class
-    InMemoryBudgetSummariesDataSourceTests : InfraFixture<IBudgetSummariesDataSource, InMemoryBudgetSummariesDataSource>
+public class
+    InMemoryBudgetSummariesDataSourceTests : InfraTest<IBudgetSummariesDataSource, InMemoryBudgetSummariesDataSource>
 {
     private readonly InMemoryBudgetRepository budgetRepository;
     private readonly StubbedDateOnlyProvider dateOnlyProvider = new();

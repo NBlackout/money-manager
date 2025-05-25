@@ -4,7 +4,7 @@ using Write.Infra.Exceptions;
 
 namespace Write.Infra.Tests.BankStatementParsing;
 
-public sealed class OfxBankStatementParserTests : InfraFixture<OfxBankStatementParser>
+public class OfxBankStatementParserTests : InfraTest<OfxBankStatementParser>
 {
     [Fact]
     public async Task Extracts_account_statement()

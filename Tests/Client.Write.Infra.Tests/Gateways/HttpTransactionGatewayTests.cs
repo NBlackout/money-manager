@@ -3,7 +3,7 @@ using Client.Write.Infra.Gateways;
 
 namespace Client.Write.Infra.Tests.Gateways;
 
-public sealed class HttpTransactionGatewayTests : InfraFixture<ITransactionGateway, HttpTransactionGateway>
+public class HttpTransactionGatewayTests : InfraTest<ITransactionGateway, HttpTransactionGateway>
 {
     private const string ApiUrl = "http://localhost";
 

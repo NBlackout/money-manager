@@ -2,7 +2,7 @@
 
 namespace Read.Infra.Tests.DataSources;
 
-public sealed class InMemoryCategoriesWithKeywordsDataSourceTests : InfraFixture<ICategoriesWithKeywordsDataSource,
+public class InMemoryCategoriesWithKeywordsDataSourceTests : InfraTest<ICategoriesWithKeywordsDataSource,
     InMemoryCategoriesWithKeywordsDataSource>
 {
     private readonly InMemoryCategoryRepository categoryRepository;

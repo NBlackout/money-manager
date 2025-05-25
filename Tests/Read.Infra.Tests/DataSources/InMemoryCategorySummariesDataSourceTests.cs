@@ -2,8 +2,8 @@
 
 namespace Read.Infra.Tests.DataSources;
 
-public sealed class
-    InMemoryCategorySummariesDataSourceTests : InfraFixture<ICategorySummariesDataSource,
+public class
+    InMemoryCategorySummariesDataSourceTests : InfraTest<ICategorySummariesDataSource,
     InMemoryCategorySummariesDataSource>
 {
     private readonly InMemoryCategoryRepository categoryRepository;
