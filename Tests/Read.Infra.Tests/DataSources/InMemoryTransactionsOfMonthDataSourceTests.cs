@@ -2,9 +2,8 @@
 
 namespace Read.Infra.Tests.DataSources;
 
-public class
-    InMemoryTransactionsOfMonthDataSourceTests : InfraTest<ITransactionsOfMonthDataSource,
-    InMemoryTransactionsOfMonthDataSource>
+public class InMemoryTransactionsOfMonthDataSourceTests :
+    InfraTest<ITransactionsOfMonthDataSource, InMemoryTransactionsOfMonthDataSource>
 {
     private readonly InMemoryTransactionRepository transactionRepository;
     private readonly InMemoryCategoryRepository categoryRepository;
@@ -29,15 +28,15 @@ public class
     public async Task Does_not_give_transactions_of_another_account(TransactionBuilder transaction)
     {
         this.Feed(transaction);
-        await this.Verify(Another(transaction.AccountId), transaction.Date.Year, transaction.Date.Month, []);
+        await this.Verify(AnythingBut(transaction.AccountId), transaction.Date.Year, transaction.Date.Month);
     }
 
     [Theory, RandomData]
     public async Task Excludes_transactions_of_another_period(TransactionBuilder transaction)
     {
         this.Feed(transaction);
-        await this.Verify(transaction.AccountId, Another(transaction.Date.Year), transaction.Date.Month, []);
-        await this.Verify(transaction.AccountId, transaction.Date.Year, Another(transaction.Date.Month), []);
+        await this.Verify(transaction.AccountId, AnythingBut(transaction.Date.Year), transaction.Date.Month);
+        await this.Verify(transaction.AccountId, transaction.Date.Year, AnythingBut(transaction.Date.Month));
     }
 
     private async Task Verify(Guid accountId, int year, int month, params TransactionSummaryPresentation[] expected)

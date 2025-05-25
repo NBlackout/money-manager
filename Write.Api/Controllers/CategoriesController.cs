@@ -4,7 +4,7 @@ using Write.App.Model.ValueObjects;
 namespace Write.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/categories")]
 public class CategoriesController(CreateCategory createCategory, DeleteCategory deleteCategory) : ControllerBase
 {
     [HttpPost]

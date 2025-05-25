@@ -2,9 +2,8 @@
 
 namespace Read.Infra.Tests.DataSources;
 
-public class
-    InMemoryCategorySummariesDataSourceTests : InfraTest<ICategorySummariesDataSource,
-    InMemoryCategorySummariesDataSource>
+public class InMemoryCategorySummariesDataSourceTests :
+    InfraTest<ICategorySummariesDataSource, InMemoryCategorySummariesDataSource>
 {
     private readonly InMemoryCategoryRepository categoryRepository;
 

@@ -4,7 +4,7 @@ using Write.App.Model.Transactions;
 namespace Write.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/transactions")]
 public class TransactionsController(AssignTransactionCategory assignTransactionCategory) : ControllerBase
 {
     [HttpPut("{id:guid}/category")]

@@ -2,8 +2,8 @@
 
 namespace Read.Infra.Tests.DataSources;
 
-public class InMemoryTransactionsToCategorizeDataSourceTests : InfraTest<ITransactionsToCategorizeDataSource,
-    InMemoryTransactionsToCategorizeDataSource>
+public class InMemoryTransactionsToCategorizeDataSourceTests :
+    InfraTest<ITransactionsToCategorizeDataSource, InMemoryTransactionsToCategorizeDataSource>
 {
     private readonly InMemoryTransactionRepository categoryRepository;
 
@@ -24,7 +24,7 @@ public class InMemoryTransactionsToCategorizeDataSourceTests : InfraTest<ITransa
     public async Task Excludes_ones_already_categorized()
     {
         this.Feed(ATransactionWithCategory());
-        await this.Verify([]);
+        await this.Verify();
     }
 
     private async Task Verify(params TransactionBuilder[] expected)

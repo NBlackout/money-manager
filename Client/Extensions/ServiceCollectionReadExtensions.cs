@@ -1,13 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Read.Infra;
+using Client.Read.Infra;
 
-namespace Read.Api;
+namespace Client.Extensions;
 
-public static class ServiceCollectionExtensions
+public static class ServiceCollectionReadExtensions
 {
     public static IServiceCollection AddRead(this IServiceCollection services)
     {
-        return services.AddUseCases().AddServerReadInfra();
+        return services.AddUseCases().AddClientReadInfra();
     }
 
     private static IServiceCollection AddUseCases(this IServiceCollection services)

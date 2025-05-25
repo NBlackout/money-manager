@@ -5,7 +5,7 @@ using Write.App.Model.ValueObjects;
 namespace Write.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/accounts")]
 public class AccountsController(ImportBankStatement importBankStatement, AssignAccountLabel assignAccountLabel)
     : ControllerBase
 {

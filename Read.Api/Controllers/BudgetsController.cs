@@ -1,7 +1,7 @@
 ﻿namespace Read.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/budgets")]
 public class BudgetsController(BudgetSummaries budgetSummaries) : ControllerBase
 {
     [HttpGet]

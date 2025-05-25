@@ -6,6 +6,6 @@ public class HttpTransactionGateway(HttpClient httpClient) : ITransactionGateway
     {
         TransactionCategoryDto dto = new(categoryId);
 
-        (await httpClient.PutAsJsonAsync($"transactions/{transactionId}/category", dto)).EnsureSuccessStatusCode();
+        (await httpClient.PutAsJsonAsync($"api/transactions/{transactionId}/category", dto)).EnsureSuccessStatusCode();
     }
 }

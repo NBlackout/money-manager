@@ -3,5 +3,5 @@
 public class HttpCategorizationGateway(HttpClient httpClient) : ICategorizationGateway
 {
     public async Task<CategorizationSuggestionPresentation[]> Suggestions() =>
-        (await httpClient.GetFromJsonAsync<CategorizationSuggestionPresentation[]>("categorization"))!;
+        (await httpClient.GetFromJsonAsync<CategorizationSuggestionPresentation[]>("api/categorization"))!;
 }

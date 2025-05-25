@@ -10,12 +10,13 @@ public class HttpAccountGateway(HttpClient httpClient) : IAccountGateway
 
     public async Task AssignLabel(Guid id, string label)
     {
-        (await httpClient.PutAsJsonAsync($"accounts/{id}/label", new AccountLabelDto(label))).EnsureSuccessStatusCode();
+        (await httpClient.PutAsJsonAsync($"api/accounts/{id}/label", new AccountLabelDto(label)))
+            .EnsureSuccessStatusCode();
     }
 
     private async Task ChangeTrackingStatus(Guid id, bool enabled)
     {
-        (await httpClient.PutAsJsonAsync($"accounts/{id}/tracking", new TrackingStatusDto(enabled)))
+        (await httpClient.PutAsJsonAsync($"api/accounts/{id}/tracking", new TrackingStatusDto(enabled)))
             .EnsureSuccessStatusCode();
     }
 }

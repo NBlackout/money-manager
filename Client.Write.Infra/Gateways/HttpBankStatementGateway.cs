@@ -12,7 +12,7 @@ public class HttpBankStatementGateway(HttpClient httpClient) : IBankStatementGat
         using MultipartFormDataContent content = new();
         content.Add(fileContent, "file", fileName);
 
-        HttpResponseMessage response = await httpClient.PostAsync("accounts", content);
+        HttpResponseMessage response = await httpClient.PostAsync("api/accounts", content);
         response.EnsureSuccessStatusCode();
     }
 }

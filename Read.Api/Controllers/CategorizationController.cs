@@ -1,7 +1,7 @@
 ﻿namespace Read.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/categorization")]
 public class CategorizationController(CategorizationSuggestions categorizationSuggestions) : ControllerBase
 {
     [HttpGet]

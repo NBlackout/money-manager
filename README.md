@@ -29,3 +29,6 @@
 - Introduce `CurrentMonth` of something like that to replace `new DateOnly(DateTime.Now.Year, DateTime.Now.Month, 1)`
 - Set `ApiUrl` in `StubbedHttpMessageHandler` privately to replace `new(httpMessageHandler) { BaseAddress = new Uri(ApiUrl) };` with `new(httpMessageHandler)`
 - Transaction `Debit` or `Credit` instead of positive and negative amounts
+- Move UseCase DI registration in infra
+- Simplify read by removing infra layer ? Merging it in use cases ?
+- An*() which only indirects to Any<*> could all move to static test tooling class 

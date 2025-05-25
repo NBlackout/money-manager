@@ -7,7 +7,7 @@ public static class Randomizer
     public static T Any<T>() =>
         RandomData.Fixture.Create<T>();
 
-    public static T Another<T>(T value)
+    public static T AnythingBut<T>(T value)
     {
         T newValue = Any<T>();
         while (newValue?.Equals(value) ?? false)

@@ -2,8 +2,8 @@
 
 namespace Read.Infra.Tests.DataSources;
 
-public class InMemoryCategoriesWithKeywordsDataSourceTests : InfraTest<ICategoriesWithKeywordsDataSource,
-    InMemoryCategoriesWithKeywordsDataSource>
+public class InMemoryCategoriesWithKeywordsDataSourceTests :
+    InfraTest<ICategoriesWithKeywordsDataSource, InMemoryCategoriesWithKeywordsDataSource>
 {
     private readonly InMemoryCategoryRepository categoryRepository;
 
@@ -23,7 +23,7 @@ public class InMemoryCategoriesWithKeywordsDataSourceTests : InfraTest<ICategori
     public async Task Excludes_ones_without_keywords()
     {
         this.Feed(Any<CategoryBuilder>() with { Keywords = "" }, Any<CategoryBuilder>() with { Keywords = "   " });
-        await this.Verify([]);
+        await this.Verify();
     }
 
     private async Task Verify(params CategoryBuilder[] expected)
