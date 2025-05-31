@@ -14,7 +14,8 @@ public class InMemoryTransactionsOfMonthDataSourceTests :
         this.categoryRepository = this.Resolve<ICategoryRepository, InMemoryCategoryRepository>();
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Gives_transactions_of_month(Guid accountId)
     {
         TransactionBuilder aTransaction = ATransactionOn(accountId, DateOnly.Parse("2023-04-03"));
@@ -24,14 +25,16 @@ public class InMemoryTransactionsOfMonthDataSourceTests :
         await this.Verify(accountId, 2023, 04, aTransaction.ToSummary(), anotherTransaction.ToSummary());
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Does_not_give_transactions_of_another_account(TransactionBuilder transaction)
     {
         this.Feed(transaction);
         await this.Verify(AnythingBut(transaction.AccountId), transaction.Date.Year, transaction.Date.Month);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Excludes_transactions_of_another_period(TransactionBuilder transaction)
     {
         this.Feed(transaction);

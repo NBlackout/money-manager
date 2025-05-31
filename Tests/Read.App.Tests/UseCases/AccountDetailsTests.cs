@@ -10,7 +10,8 @@ public class AccountDetailsTests
         this.sut = new AccountDetails(this.dataSource);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Gives_account_details(AccountDetailsPresentation expected)
     {
         this.dataSource.Feed(expected.Id, expected);

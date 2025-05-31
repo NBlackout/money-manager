@@ -9,7 +9,8 @@ public class HttpBudgetGatewayTests : InfraTest<IBudgetGateway, HttpBudgetGatewa
     protected override void Configure(IServiceCollection services) =>
         services.AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Gives_budget_summaries(BudgetSummaryPresentation[] expected)
     {
         this.Feed("budgets", expected);

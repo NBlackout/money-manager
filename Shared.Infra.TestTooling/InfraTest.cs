@@ -15,8 +15,10 @@ public abstract class InfraTest<TContract, TImplementation> : InfraTest
 {
     protected readonly TImplementation Sut;
 
-    protected InfraTest() =>
+    protected InfraTest()
+    {
         this.Sut = this.Resolve<TContract, TImplementation>();
+    }
 }
 
 public abstract class InfraTest : IDisposable
@@ -28,8 +30,7 @@ public abstract class InfraTest : IDisposable
     {
         this.host = Host
             .CreateDefaultBuilder()
-            .ConfigureServices(
-                s =>
+            .ConfigureServices(s =>
                 {
                     s
                         .AddSharedInfra()

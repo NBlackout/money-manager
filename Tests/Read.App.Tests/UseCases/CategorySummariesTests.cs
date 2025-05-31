@@ -10,7 +10,8 @@ public class CategorySummariesTests
         this.sut = new CategorySummaries(this.dataSource);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Gives_category_summaries(CategorySummaryPresentation[] expected)
     {
         this.dataSource.Feed(expected);

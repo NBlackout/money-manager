@@ -4,8 +4,10 @@ public record Label
 {
     public string Value { get; init; }
 
-    public Label(string value) =>
+    public Label(string value)
+    {
         this.Value = value.Trim();
+    }
 
     public static Label? From(string? value)
     {

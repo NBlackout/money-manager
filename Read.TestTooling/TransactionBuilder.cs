@@ -16,9 +16,8 @@ public record TransactionBuilder(
     CategoryBuilder? Category
 )
 {
-    public TransactionSnapshot ToSnapshot()
-    {
-        return new TransactionSnapshot(
+    public TransactionSnapshot ToSnapshot() =>
+        new(
             new TransactionId(this.Id),
             new AccountId(this.AccountId),
             "External id",
@@ -27,7 +26,6 @@ public record TransactionBuilder(
             this.Date,
             this.Category is not null ? new CategoryId(this.Category.Id) : null
         );
-    }
 
     public TransactionSummaryPresentation ToSummary() =>
         new(this.Id, this.Amount, this.Label, this.Date, this.Category?.Label);

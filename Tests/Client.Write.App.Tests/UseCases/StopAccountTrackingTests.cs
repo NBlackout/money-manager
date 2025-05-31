@@ -12,7 +12,8 @@ public class StopAccountTrackingTests
         this.sut = new StopAccountTracking(this.accountGateway);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Stops_account_tracking(Guid id)
     {
         await this.sut.Execute(id);

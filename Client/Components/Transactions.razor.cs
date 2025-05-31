@@ -11,15 +11,11 @@ public partial class Transactions : ComponentBase
     [Parameter] public Guid AccountId { get; set; }
     [Parameter] public DateOnly Month { get; set; }
 
-    protected override async Task OnParametersSetAsync()
-    {
+    protected override async Task OnParametersSetAsync() =>
         this.transactions = await this.TransactionsOfMonth.Execute(this.AccountId, this.Month.Year, this.Month.Month);
-    }
 
-    private void OnCategoryAssigned((Guid TransactionId, string CategoryLabel) args)
-    {
+    private void OnCategoryAssigned((Guid TransactionId, string CategoryLabel) args) =>
         this.transactions = this.transactions!
             .Select(a => a with { Category = a.Id == args.TransactionId ? args.CategoryLabel : a.Category })
             .ToArray();
-    }
 }

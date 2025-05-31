@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Write.App\Write.App.csproj" />
-      <ProjectReference Include="..\..\Write.Infra\Write.Infra.csproj" />
+        <ProjectReference Include="..\..\Write.App\Write.App.csproj"/>
+        <ProjectReference Include="..\..\Write.Infra\Write.Infra.csproj"/>
     </ItemGroup>
 
 </Project>

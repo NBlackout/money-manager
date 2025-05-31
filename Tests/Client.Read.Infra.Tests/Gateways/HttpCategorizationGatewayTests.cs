@@ -9,7 +9,8 @@ public class HttpCategorizationGatewayTests : InfraTest<ICategorizationGateway, 
     protected override void Configure(IServiceCollection services) =>
         services.AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Gives_categorization_suggestions(CategorizationSuggestionPresentation[] expected)
     {
         this.Feed("categorization", expected);

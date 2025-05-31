@@ -10,7 +10,8 @@ public class CategorizationSuggestionsTests
         this.sut = new CategorizationSuggestions(this.gateway);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Gives_account_summaries(CategorizationSuggestionPresentation[] expected)
     {
         this.Feed(expected);

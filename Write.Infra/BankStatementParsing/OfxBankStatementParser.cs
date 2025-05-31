@@ -51,7 +51,7 @@ public class OfxBankStatementParser
         Stream sanitized = await Sanitize(stream);
         XmlSerializer serializer = new(typeof(Ofx));
 
-        return (Ofx) serializer.Deserialize(sanitized)!;
+        return (Ofx)serializer.Deserialize(sanitized)!;
     }
 
     private static async Task<Stream> Sanitize(Stream stream)

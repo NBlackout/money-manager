@@ -20,10 +20,8 @@ public partial class Accounts : ComponentBase
     private void ShowDetails(Guid accountId) =>
         this.NavigationManager.NavigateTo($"accounts/{accountId}");
 
-    private void OnLabelAssigned((Guid AccountId, string AccountLabel) args)
-    {
+    private void OnLabelAssigned((Guid AccountId, string AccountLabel) args) =>
         this.accounts = this.accounts!
             .Select(a => a with { Label = a.Id == args.AccountId ? args.AccountLabel : a.Label })
             .ToArray();
-    }
 }

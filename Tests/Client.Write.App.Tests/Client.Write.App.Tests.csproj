@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Client.Write.App\Client.Write.App.csproj" />
+        <ProjectReference Include="..\..\Client.Write.App\Client.Write.App.csproj"/>
     </ItemGroup>
 
 </Project>

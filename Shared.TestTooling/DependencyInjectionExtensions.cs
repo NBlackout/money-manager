@@ -8,7 +8,7 @@ public static class DependencyInjectionExtensions
 {
     public static TImplementation Resolve<TService, TImplementation>(this IHost host)
         where TService : class where TImplementation : class, TService =>
-        (TImplementation) host.Services.Resolve<TService>();
+        (TImplementation)host.Services.Resolve<TService>();
 
     public static TOptions ResolveOptions<TOptions>(this IHost host) where TOptions : class =>
         host.Services.Resolve<IOptions<TOptions>>().Value;
@@ -25,5 +25,5 @@ public static class DependencyInjectionExtensions
 
     private static TImplementation Resolve<TContract, TImplementation>(this IServiceProvider serviceProvider)
         where TContract : notnull where TImplementation : TContract =>
-        (TImplementation) serviceProvider.GetRequiredService<TContract>();
+        (TImplementation)serviceProvider.GetRequiredService<TContract>();
 }

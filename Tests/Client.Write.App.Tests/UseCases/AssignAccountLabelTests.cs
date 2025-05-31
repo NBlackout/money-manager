@@ -12,7 +12,8 @@ public class AssignAccountLabelTests
         this.sut = new AssignAccountLabel(this.gateway);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Assigns_account_label(Guid id, string label)
     {
         await this.sut.Execute(id, label);

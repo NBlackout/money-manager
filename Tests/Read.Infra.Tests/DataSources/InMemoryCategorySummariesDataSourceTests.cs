@@ -12,7 +12,8 @@ public class InMemoryCategorySummariesDataSourceTests :
         this.categoryRepository = this.Resolve<ICategoryRepository, InMemoryCategoryRepository>();
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Gives_categories(CategoryBuilder[] expected)
     {
         this.Feed(expected);

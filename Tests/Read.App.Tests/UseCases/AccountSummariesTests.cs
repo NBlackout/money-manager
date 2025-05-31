@@ -10,7 +10,8 @@ public class AccountSummariesTests
         this.sut = new AccountSummaries(this.dataSource);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Gives_account_summaries(AccountSummaryPresentation[] expected)
     {
         this.dataSource.Feed(expected);

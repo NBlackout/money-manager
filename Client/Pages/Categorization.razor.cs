@@ -7,10 +7,8 @@ public partial class Categorization : ComponentBase
     [Inject] private CategorizationSuggestions CategorizationSuggestions { get; set; } = null!;
     [Inject] private AssignTransactionCategory AssignTransactionCategory { get; set; } = null!;
 
-    protected override async Task OnParametersSetAsync()
-    {
+    protected override async Task OnParametersSetAsync() =>
         this.suggestions = await this.CategorizationSuggestions.Execute();
-    }
 
     private async Task ApproveAll()
     {

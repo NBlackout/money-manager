@@ -10,7 +10,8 @@ public class TransactionsOfMonthTests
         this.sut = new TransactionsOfMonth(this.gateway);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Gives_transactions_of_month(
         Guid accountId,
         int year,

@@ -10,7 +10,8 @@ public class SlidingAccountBalancesTests
         this.sut = new SlidingAccountBalances(this.gateway);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Gives_sliding_account_balances(SlidingAccountBalancesPresentation expected)
     {
         this.Feed(expected);

@@ -8,15 +8,11 @@ public class HttpAccountGateway(HttpClient httpClient) : IAccountGateway
     public async Task ResumeTracking(Guid id) =>
         await this.ChangeTrackingStatus(id, true);
 
-    public async Task AssignLabel(Guid id, string label)
-    {
+    public async Task AssignLabel(Guid id, string label) =>
         (await httpClient.PutAsJsonAsync($"api/accounts/{id}/label", new AccountLabelDto(label)))
-            .EnsureSuccessStatusCode();
-    }
+        .EnsureSuccessStatusCode();
 
-    private async Task ChangeTrackingStatus(Guid id, bool enabled)
-    {
+    private async Task ChangeTrackingStatus(Guid id, bool enabled) =>
         (await httpClient.PutAsJsonAsync($"api/accounts/{id}/tracking", new TrackingStatusDto(enabled)))
-            .EnsureSuccessStatusCode();
-    }
+        .EnsureSuccessStatusCode();
 }

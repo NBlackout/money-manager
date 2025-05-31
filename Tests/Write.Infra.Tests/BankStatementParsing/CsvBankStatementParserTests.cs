@@ -6,8 +6,7 @@ namespace Write.Infra.Tests.BankStatementParsing;
 public class CsvBankStatementParserTests : InfraTest<CsvBankStatementParser>
 {
     [Fact]
-    public async Task Extracts_account_statement()
-    {
+    public async Task Extracts_account_statement() =>
         await this.Verify(
             CsvSample,
             new AccountStatement(
@@ -29,11 +28,9 @@ public class CsvBankStatementParserTests : InfraTest<CsvBankStatementParser>
                 )
             )
         );
-    }
 
     [Fact]
-    public async Task Uses_last_recorded_account_balance_when_missing()
-    {
+    public async Task Uses_last_recorded_account_balance_when_missing() =>
         await this.Verify(
             MissingAccountBalanceOnNewestTransactions,
             new AccountStatement(
@@ -55,7 +52,6 @@ public class CsvBankStatementParserTests : InfraTest<CsvBankStatementParser>
                 )
             )
         );
-    }
 
     private async Task Verify(byte[] content, AccountStatement expected)
     {

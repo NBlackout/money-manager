@@ -9,7 +9,8 @@ public class HttpDashboardGatewayTests : InfraTest<IDashboardGateway, HttpDashbo
     protected override void Configure(IServiceCollection services) =>
         services.AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Gives_sliding_account_balances(SlidingAccountBalancesPresentation expected)
     {
         this.Feed("dashboard/sliding-account-balances", expected);

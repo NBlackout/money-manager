@@ -12,7 +12,8 @@ public class InMemoryAccountSummariesDataSourceTests :
         this.accountRepository = this.Resolve<IAccountRepository, InMemoryAccountRepository>();
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Retrieves_summaries(AccountBuilder[] accounts)
     {
         this.Feed(accounts);

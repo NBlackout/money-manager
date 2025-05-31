@@ -9,7 +9,8 @@ public class HttpCategoryGatewayTests : InfraTest<ICategoryGateway, HttpCategory
     protected override void Configure(IServiceCollection services) =>
         services.AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Gives_category_summaries(CategorySummaryPresentation[] expected)
     {
         this.Feed("categories", expected);

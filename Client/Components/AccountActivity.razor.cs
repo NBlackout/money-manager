@@ -36,7 +36,7 @@ public partial class AccountActivity : ComponentBase
 
     private async Task LabelChanged(ChangeEventArgs args)
     {
-        string newLabel = (string) args.Value!;
+        string newLabel = (string)args.Value!;
         await this.AssignAccountLabel.Execute(this.Id, newLabel);
         await this.OnLabelAssigned.InvokeAsync((this.Id, newLabel));
 

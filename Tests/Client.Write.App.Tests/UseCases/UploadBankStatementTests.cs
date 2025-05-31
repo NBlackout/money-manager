@@ -12,7 +12,8 @@ public class UploadBankStatementTests
         this.sut = new UploadBankStatement(this.gateway);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Uploads_provided_ofx_file(string fileName, string contentType, byte[] content)
     {
         MemoryStream stream = new(content);

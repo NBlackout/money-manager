@@ -10,7 +10,8 @@ public class BudgetSummariesTests
         this.sut = new BudgetSummaries(this.gateway);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Gives_budget_summaries(BudgetSummaryPresentation[] expected)
     {
         this.Feed(expected);

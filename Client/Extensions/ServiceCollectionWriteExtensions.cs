@@ -4,14 +4,11 @@ namespace Client.Extensions;
 
 public static class ServiceCollectionWriteExtensions
 {
-    public static IServiceCollection AddWrite(this IServiceCollection services)
-    {
-        return services.AddUseCases().AddClientWriteInfra();
-    }
+    public static IServiceCollection AddWrite(this IServiceCollection services) =>
+        services.AddUseCases().AddClientWriteInfra();
 
-    private static IServiceCollection AddUseCases(this IServiceCollection services)
-    {
-        return services
+    private static IServiceCollection AddUseCases(this IServiceCollection services) =>
+        services
             .AddScoped<UploadBankStatement>()
             .AddScoped<StopAccountTracking>()
             .AddScoped<ResumeAccountTracking>()
@@ -20,5 +17,4 @@ public static class ServiceCollectionWriteExtensions
             .AddScoped<DeleteCategory>()
             .AddScoped<AssignTransactionCategory>()
             .AddScoped<DefineBudget>();
-    }
 }

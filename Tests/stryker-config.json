@@ -9,7 +9,10 @@
     "mutate": [
       "!**/*Exception.cs"
     ],
-    "reporters": ["html", "progress"],
+    "reporters": [
+      "html",
+      "progress"
+    ],
     "thresholds": {
       "break": 100
     }

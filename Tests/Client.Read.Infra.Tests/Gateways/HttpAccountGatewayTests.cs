@@ -9,7 +9,8 @@ public class HttpAccountGatewayTests : InfraTest<IAccountGateway, HttpAccountGat
     protected override void Configure(IServiceCollection services) =>
         services.AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Gives_account_summaries(AccountSummaryPresentation[] expected)
     {
         this.Feed("accounts", expected);
@@ -17,7 +18,8 @@ public class HttpAccountGatewayTests : InfraTest<IAccountGateway, HttpAccountGat
         actual.Should().Equal(expected);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Gives_account_details(AccountDetailsPresentation expected)
     {
         this.Feed($"accounts/{expected.Id}", expected);
@@ -25,7 +27,8 @@ public class HttpAccountGatewayTests : InfraTest<IAccountGateway, HttpAccountGat
         actual.Should().Be(expected);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Gives_transactions_of_month(
         Guid accountId,
         int year,

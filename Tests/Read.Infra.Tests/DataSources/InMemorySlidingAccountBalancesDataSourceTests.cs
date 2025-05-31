@@ -17,10 +17,8 @@ public class InMemorySlidingAccountBalancesDataSourceTests :
     }
 
     [Fact]
-    public async Task Gives_no_balances_by_default()
-    {
-        await this.Verify(new SlidingAccountBalancesPresentation([]));
-    }
+    public async Task Gives_no_balances_by_default() =>
+        await this.Verify(new SlidingAccountBalancesPresentation());
 
     [Fact]
     public async Task Gives_account_balance()

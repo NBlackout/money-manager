@@ -39,14 +39,12 @@ public partial class Dashboard
             .Select(a => SeriesBy(presentation, a))
             .ToList();
 
-    private static Series SeriesBy(SlidingAccountBalancesPresentation presentation, string accountLabel)
-    {
-        return new AreaSeries
+    private static Series SeriesBy(SlidingAccountBalancesPresentation presentation, string accountLabel) =>
+        new AreaSeries
         {
             Name = accountLabel,
             Data = presentation.AccountBalancesByDate.Select(b => AreaSeriesDataBy(accountLabel, b)).ToList()
         };
-    }
 
     private static AreaSeriesData AreaSeriesDataBy(string accountLabel, AccountBalancesByDatePresentation date) =>
         new() { Y = decimal.ToDouble(date.AccountBalances.Single(b => b.AccountLabel == accountLabel).Balance) };

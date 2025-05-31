@@ -22,7 +22,8 @@ public class ImportBankStatementTests
         );
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Tracks_unknown_bank_and_account(AccountSnapshot account)
     {
         this.FeedNextIdOf(account);
@@ -31,7 +32,8 @@ public class ImportBankStatementTests
         await this.Verify(account with { Label = account.Number }, []);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Tracks_unknown_account(AccountSnapshot account)
     {
         this.FeedNextIdOf(account);
@@ -40,7 +42,8 @@ public class ImportBankStatementTests
         await this.Verify(account with { Label = account.Number }, []);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Synchronizes_known_account(AccountSnapshot account)
     {
         TransactionSnapshot aTransaction = ATransactionFrom(account);
@@ -53,7 +56,8 @@ public class ImportBankStatementTests
         await this.Verify(account, [], aTransaction, anotherTransaction);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Assigns_existing_category_to_transactions(AccountSnapshot account, CategorySnapshot category)
     {
         TransactionSnapshot aTransaction = ATransactionFrom(account, category);
@@ -67,7 +71,8 @@ public class ImportBankStatementTests
         await this.Verify(account, [category], aTransaction, anotherTransaction);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Assigns_new_category_to_transactions(AccountSnapshot account, CategorySnapshot category)
     {
         TransactionSnapshot aTransaction = ATransactionFrom(account, category);
@@ -140,14 +145,12 @@ public class ImportBankStatementTests
 
         public static AccountStatement AccountStatementFrom(
             AccountSnapshot account,
-            params (TransactionSnapshot Transaction, string? CategoryLabel)[] transactions)
-        {
-            return new AccountStatement(
+            params (TransactionSnapshot Transaction, string? CategoryLabel)[] transactions) =>
+            new(
                 new ExternalId(account.Number),
                 new Balance(account.BalanceAmount, account.BalanceDate),
                 [
-                    ..transactions.Select(
-                        t => new TransactionStatement(
+                    ..transactions.Select(t => new TransactionStatement(
                             new ExternalId(t.Transaction.ExternalId),
                             new Amount(t.Transaction.Amount),
                             new Label(t.Transaction.Label),
@@ -157,6 +160,5 @@ public class ImportBankStatementTests
                     )
                 ]
             );
-        }
     }
 }

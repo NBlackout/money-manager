@@ -12,7 +12,8 @@ public class CreateCategoryTests
         this.sut = new CreateCategory(this.gateway);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Creates_category(Guid id, string label, string keywords)
     {
         await this.sut.Execute(id, label, keywords);

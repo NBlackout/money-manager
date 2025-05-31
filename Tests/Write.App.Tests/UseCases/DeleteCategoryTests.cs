@@ -13,14 +13,16 @@ public class DeleteCategoryTests
         this.sut = new DeleteCategory(this.categoryRepository, this.transactionRepository);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Deletes_category(CategorySnapshot category)
     {
         this.Feed(category);
         await this.Verify(category);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Clears_transactions_category(CategorySnapshot category)
     {
         TransactionSnapshot aTransaction = ATransaction() with { CategoryId = category.Id };

@@ -34,13 +34,11 @@ public class Account : DomainEntity<AccountId>
         Category? category) =>
         new(transactionId, this.Id, externalId, amount, transactionLabel, date, category);
 
-    public static Account From(AccountSnapshot snapshot)
-    {
-        return new Account(
+    public static Account From(AccountSnapshot snapshot) =>
+        new(
             snapshot.Id,
             new ExternalId(snapshot.Number),
             new Label(snapshot.Label),
             new Balance(snapshot.BalanceAmount, snapshot.BalanceDate)
         );
-    }
 }

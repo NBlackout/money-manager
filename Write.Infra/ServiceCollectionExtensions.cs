@@ -6,10 +6,8 @@ namespace Write.Infra;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddServerWriteInfra(this IServiceCollection services)
-    {
-        return services.AddRepositories().AddParsers();
-    }
+    public static IServiceCollection AddServerWriteInfra(this IServiceCollection services) =>
+        services.AddRepositories().AddParsers();
 
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
@@ -30,11 +28,9 @@ public static class ServiceCollectionExtensions
             .AddSingleton(budgetRepository);
     }
 
-    private static IServiceCollection AddParsers(this IServiceCollection services)
-    {
-        return services
+    private static IServiceCollection AddParsers(this IServiceCollection services) =>
+        services
             .AddScoped<IBankStatementParser, BankStatementParser>()
             .AddScoped<OfxBankStatementParser>()
             .AddScoped<CsvBankStatementParser>();
-    }
 }

@@ -12,7 +12,8 @@ public class ResumeAccountTrackingTests
         this.sut = new ResumeAccountTracking(this.gateway);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Resumes_account_tracking(Guid id)
     {
         await this.sut.Execute(id);

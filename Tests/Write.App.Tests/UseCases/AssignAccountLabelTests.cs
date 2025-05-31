@@ -12,11 +12,10 @@ public class AssignAccountLabelTests
         this.Feed(this.existingAccount);
     }
 
-    [Theory, RandomData]
-    public async Task Assigns_account_label(Label label)
-    {
+    [Theory]
+    [RandomData]
+    public async Task Assigns_account_label(Label label) =>
         await this.Verify(label);
-    }
 
     private async Task Verify(Label label)
     {

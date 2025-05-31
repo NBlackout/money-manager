@@ -12,7 +12,8 @@ public class DeleteCategoryTests
         this.sut = new DeleteCategory(this.gateway);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Deletes_category(Guid id)
     {
         await this.sut.Execute(id);

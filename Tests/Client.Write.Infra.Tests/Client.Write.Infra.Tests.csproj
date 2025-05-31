@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Client.Write.App\Client.Write.App.csproj" />
-      <ProjectReference Include="..\..\Client.Write.Infra\Client.Write.Infra.csproj" />
-      <ProjectReference Include="..\..\Shared.Infra.TestTooling\Shared.Infra.TestTooling.csproj" />
+        <ProjectReference Include="..\..\Client.Write.App\Client.Write.App.csproj"/>
+        <ProjectReference Include="..\..\Client.Write.Infra\Client.Write.Infra.csproj"/>
+        <ProjectReference Include="..\..\Shared.Infra.TestTooling\Shared.Infra.TestTooling.csproj"/>
     </ItemGroup>
 
 </Project>

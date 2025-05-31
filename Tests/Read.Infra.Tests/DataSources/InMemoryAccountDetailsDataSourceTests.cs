@@ -2,7 +2,8 @@
 
 namespace Read.Infra.Tests.DataSources;
 
-public class InMemoryAccountDetailsDataSourceTests : InfraTest<IAccountDetailsDataSource, InMemoryAccountDetailsDataSource>
+public class
+    InMemoryAccountDetailsDataSourceTests : InfraTest<IAccountDetailsDataSource, InMemoryAccountDetailsDataSource>
 {
     private readonly InMemoryAccountRepository accountRepository;
 
@@ -11,7 +12,8 @@ public class InMemoryAccountDetailsDataSourceTests : InfraTest<IAccountDetailsDa
         this.accountRepository = this.Resolve<IAccountRepository, InMemoryAccountRepository>();
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Gives_account_details(AccountBuilder account)
     {
         this.Feed(account);

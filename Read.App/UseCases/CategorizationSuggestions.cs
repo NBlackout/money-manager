@@ -15,10 +15,10 @@ public class CategorizationSuggestions(
 
     private static CategorizationSuggestionPresentation[] Match(
         TransactionToCategorize[] transactions,
-        CategoryWithKeywords[] categories)
-    {
-        return [..transactions.Select(t => Match(t, categories)).Where(suggestion => suggestion is not null)!];
-    }
+        CategoryWithKeywords[] categories) =>
+    [
+        ..transactions.Select(t => Match(t, categories)).Where(suggestion => suggestion is not null)!
+    ];
 
     private static CategorizationSuggestionPresentation? Match(
         TransactionToCategorize transaction,
@@ -26,8 +26,10 @@ public class CategorizationSuggestions(
     {
         CategoryWithKeywords[] matchingCategories =
         [
-            ..categories.Where(
-                c => transaction.Label.Contains(c.Keywords, StringComparison.InvariantCultureIgnoreCase)
+            ..categories.Where(c => transaction.Label.Contains(
+                    c.Keywords,
+                    StringComparison.InvariantCultureIgnoreCase
+                )
             )
         ];
 

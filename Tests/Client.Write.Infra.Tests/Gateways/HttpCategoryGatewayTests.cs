@@ -12,28 +12,28 @@ public class HttpCategoryGatewayTests : InfraTest<ICategoryGateway, HttpCategory
     protected override void Configure(IServiceCollection services) =>
         services.AddScoped(_ => CreateHttpClient(this.httpMessageHandler));
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Creates(Guid id, string label, string keywords)
     {
         await this.Sut.Create(id, label, keywords);
         this.Verify_Post($"{ApiUrl}/categories", new { Id = id, Label = label, Keywords = keywords });
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Deletes(Guid id)
     {
         await this.Sut.Delete(id);
         this.Verify_Delete($"{ApiUrl}/categories/{id}");
     }
 
-    private void Verify_Post(string url, object payload)
-    {
+    private void Verify_Post(string url, object payload) =>
         this
             .httpMessageHandler
             .Calls
             .Should()
             .Equal((HttpMethod.Post, url, JsonSerializer.Serialize(payload, Defaults.JsonSerializerOptions)));
-    }
 
     private void Verify_Delete(string url) =>
         this.httpMessageHandler.Calls.Should().Equal((HttpMethod.Delete, url, string.Empty));

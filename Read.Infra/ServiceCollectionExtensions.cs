@@ -8,9 +8,8 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddServerReadInfra(this IServiceCollection services) =>
         services.AddDataSources();
 
-    private static IServiceCollection AddDataSources(this IServiceCollection services)
-    {
-        return services
+    private static IServiceCollection AddDataSources(this IServiceCollection services) =>
+        services
             .AddScoped<IAccountSummariesDataSource, InMemoryAccountSummariesDataSource>()
             .AddScoped<IAccountDetailsDataSource, InMemoryAccountDetailsDataSource>()
             .AddScoped<ITransactionsOfMonthDataSource, InMemoryTransactionsOfMonthDataSource>()
@@ -19,5 +18,4 @@ public static class ServiceCollectionExtensions
             .AddScoped<ITransactionsToCategorizeDataSource, InMemoryTransactionsToCategorizeDataSource>()
             .AddScoped<IBudgetSummariesDataSource, InMemoryBudgetSummariesDataSource>()
             .AddScoped<ISlidingAccountBalancesDataSource, InMemorySlidingAccountBalancesDataSource>();
-    }
 }

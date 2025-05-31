@@ -12,7 +12,8 @@ public class AssignTransactionCategoryTests
         this.sut = new AssignTransactionCategory(this.gateway);
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Assigns_transaction_category(Guid transactionId, Guid categoryId)
     {
         await this.sut.Execute(transactionId, categoryId);

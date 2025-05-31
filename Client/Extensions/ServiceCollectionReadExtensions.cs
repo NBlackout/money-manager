@@ -4,14 +4,11 @@ namespace Client.Extensions;
 
 public static class ServiceCollectionReadExtensions
 {
-    public static IServiceCollection AddRead(this IServiceCollection services)
-    {
-        return services.AddUseCases().AddClientReadInfra();
-    }
+    public static IServiceCollection AddRead(this IServiceCollection services) =>
+        services.AddUseCases().AddClientReadInfra();
 
-    private static IServiceCollection AddUseCases(this IServiceCollection services)
-    {
-        return services
+    private static IServiceCollection AddUseCases(this IServiceCollection services) =>
+        services
             .AddScoped<AccountSummaries>()
             .AddScoped<AccountDetails>()
             .AddScoped<TransactionsOfMonth>()
@@ -19,5 +16,4 @@ public static class ServiceCollectionReadExtensions
             .AddScoped<CategorizationSuggestions>()
             .AddScoped<BudgetSummaries>()
             .AddScoped<SlidingAccountBalances>();
-    }
 }

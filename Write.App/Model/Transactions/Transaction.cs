@@ -54,9 +54,8 @@ public class Transaction : DomainEntity<TransactionId>
     public void UnassignCategory() =>
         this.categoryId = null;
 
-    public static Transaction From(TransactionSnapshot snapshot)
-    {
-        return new Transaction(
+    public static Transaction From(TransactionSnapshot snapshot) =>
+        new(
             snapshot.Id,
             snapshot.AccountId,
             new ExternalId(snapshot.ExternalId),
@@ -65,5 +64,4 @@ public class Transaction : DomainEntity<TransactionId>
             snapshot.Date,
             snapshot.CategoryId
         );
-    }
 }

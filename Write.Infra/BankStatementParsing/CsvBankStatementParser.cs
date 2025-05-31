@@ -13,7 +13,7 @@ public class CsvBankStatementParser
         string accountNumber = rows.First().AccountNumber;
         BankStatementRow firstRowWithBalance = rows.First(r => r.AccountBalance.HasValue);
         decimal accountBalance = firstRowWithBalance.AccountBalance!.Value;
-        TransactionStatement[] transactions = [..rows.Select((r) => r.ToTransactionStatement())];
+        TransactionStatement[] transactions = [..rows.Select(r => r.ToTransactionStatement())];
 
         return new AccountStatement(
             new ExternalId(accountNumber),
@@ -52,16 +52,14 @@ public class CsvBankStatementParser
         private const int AccountNumberIndex = 7;
         private const int AccountBalanceIndex = 9;
 
-        public TransactionStatement ToTransactionStatement()
-        {
-            return new TransactionStatement(
+        public TransactionStatement ToTransactionStatement() =>
+            new(
                 new ExternalId(this.AccountNumber + "_" + this.RowNumber),
                 new Amount(this.TransactionAmount),
                 new Label(this.TransactionLabel),
                 this.TransactionDate,
                 new Label(this.TransactionCategory)
             );
-        }
 
         public static BankStatementRow From(string line, int lineNumber)
         {

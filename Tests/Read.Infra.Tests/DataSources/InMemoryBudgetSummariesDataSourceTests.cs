@@ -19,7 +19,8 @@ public class InMemoryBudgetSummariesDataSourceTests :
     protected override void Configure(IServiceCollection services) =>
         services.AddSingleton<IDateOnlyProvider>(this.dateOnlyProvider);
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Gives_budget_beginning_today(decimal amount, DateOnly today)
     {
         BudgetBuilder budget = ABudget(today, amount);
@@ -29,7 +30,8 @@ public class InMemoryBudgetSummariesDataSourceTests :
         await this.Verify(budget with { TotalAmount = amount });
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Gives_budget_beginning_this_month(decimal amount)
     {
         BudgetBuilder expected = ABudget(DateOnly.Parse("2024-01-12"), amount);
@@ -49,7 +51,8 @@ public class InMemoryBudgetSummariesDataSourceTests :
         await this.Verify(budget with { TotalAmount = 24 });
     }
 
-    [Theory, RandomData]
+    [Theory]
+    [RandomData]
     public async Task Gives_budgets_beginning_next_month(decimal amount)
     {
         BudgetBuilder budget = ABudget(DateOnly.Parse("2024-02-01"), amount);
