@@ -14,9 +14,10 @@ public class InMemorySlidingAccountBalancesDataSource(
         if (account == null)
             return Task.FromResult(new SlidingAccountBalancesPresentation());
 
-        TransactionSnapshot[] transactions = transactionRepository.Data.Where(t => t.Date > account.BalanceDate.AddYears(-1)).ToArray();
-        if (transactions.Length == 0)
-            return JustBalanceOf(account);
+        TransactionSnapshot[] transactions =
+            transactionRepository.Data.Where(t => t.Date > account.BalanceDate.AddYears(-1)).ToArray();
+        // if (transactions.Length == 0)
+        //     return JustBalanceOf(account);
 
         return Task.FromResult(BalanceAtTheBeginningOfMonthOf(account, transactions));
     }
@@ -32,44 +33,101 @@ public class InMemorySlidingAccountBalancesDataSource(
             transactions
                 .Where(t => t.Date.Month == beginningOfThisMonth.Month && t.Date.Year == beginningOfThisMonth.Year)
                 .Sum(t => t.Amount);
-        yoy.Add(
-            new AccountBalancesByDatePresentation(
-                beginningOfThisMonth,
-                new AccountBalancePresentation(account.Label, balanceOfMonth)
-            )
-        );
-
-        beginningOfThisMonth = beginningOfThisMonth.AddMonths(-1);
-        if (transactions.Any(t => t.Date.Month == 7))
+        if (true)
         {
-            balanceOfMonth -= transactions
-                .Where(t => t.Date.Month == beginningOfThisMonth.Month && t.Date.Year == beginningOfThisMonth.Year)
-                .Sum(t => t.Amount);
-
             yoy.Add(
                 new AccountBalancesByDatePresentation(
                     beginningOfThisMonth,
                     new AccountBalancePresentation(account.Label, balanceOfMonth)
                 )
             );
+            beginningOfThisMonth = beginningOfThisMonth.AddMonths(-1);
         }
 
-        beginningOfThisMonth = beginningOfThisMonth.AddMonths(-1);
-        if (transactions.Any(t => t.Date.Month == 6))
+        if (true)
         {
-            balanceOfMonth -= transactions
-                .Where(t => t.Date.Month == beginningOfThisMonth.Month && t.Date.Year == beginningOfThisMonth.Year)
-                .Sum(t => t.Amount);
+            yoy.Add(Tutu2(account, transactions, beginningOfThisMonth, ref balanceOfMonth));
+            beginningOfThisMonth = beginningOfThisMonth.AddMonths(-1);
+        }
 
-            yoy.Add(
-                new AccountBalancesByDatePresentation(
-                    beginningOfThisMonth,
-                    new AccountBalancePresentation(account.Label, balanceOfMonth)
-                )
-            );
+        if (true)
+        {
+            yoy.Add(Tutu2(account, transactions, beginningOfThisMonth, ref balanceOfMonth));
+            beginningOfThisMonth = beginningOfThisMonth.AddMonths(-1);
+        }
+
+        if (true)
+        {
+            yoy.Add(Tutu2(account, transactions, beginningOfThisMonth, ref balanceOfMonth));
+            beginningOfThisMonth = beginningOfThisMonth.AddMonths(-1);
+        }
+
+        if (true)
+        {
+            yoy.Add(Tutu2(account, transactions, beginningOfThisMonth, ref balanceOfMonth));
+            beginningOfThisMonth = beginningOfThisMonth.AddMonths(-1);
+        }
+
+        if (true)
+        {
+            yoy.Add(Tutu2(account, transactions, beginningOfThisMonth, ref balanceOfMonth));
+            beginningOfThisMonth = beginningOfThisMonth.AddMonths(-1);
+        }
+
+        if (true)
+        {
+            yoy.Add(Tutu2(account, transactions, beginningOfThisMonth, ref balanceOfMonth));
+            beginningOfThisMonth = beginningOfThisMonth.AddMonths(-1);
+        }
+
+        if (true)
+        {
+            yoy.Add(Tutu2(account, transactions, beginningOfThisMonth, ref balanceOfMonth));
+            beginningOfThisMonth = beginningOfThisMonth.AddMonths(-1);
+        }
+
+        if (true)
+        {
+            yoy.Add(Tutu2(account, transactions, beginningOfThisMonth, ref balanceOfMonth));
+            beginningOfThisMonth = beginningOfThisMonth.AddMonths(-1);
+        }
+
+        if (true)
+        {
+            yoy.Add(Tutu2(account, transactions, beginningOfThisMonth, ref balanceOfMonth));
+            beginningOfThisMonth = beginningOfThisMonth.AddMonths(-1);
+        }
+
+        if (true)
+        {
+            yoy.Add(Tutu2(account, transactions, beginningOfThisMonth, ref balanceOfMonth));
+            beginningOfThisMonth = beginningOfThisMonth.AddMonths(-1);
+        }
+
+        if (true)
+        {
+            yoy.Add(Tutu2(account, transactions, beginningOfThisMonth, ref balanceOfMonth));
+            beginningOfThisMonth = beginningOfThisMonth.AddMonths(-1);
         }
 
         return new SlidingAccountBalancesPresentation(yoy.ToArray());
+    }
+
+    private static AccountBalancesByDatePresentation Tutu2(
+        AccountSnapshot account,
+        TransactionSnapshot[] transactions,
+        DateOnly beginningOfThisMonth,
+        ref decimal balanceOfMonth)
+    {
+        balanceOfMonth -= transactions
+            .Where(t => t.Date.Month == beginningOfThisMonth.Month && t.Date.Year == beginningOfThisMonth.Year)
+            .Sum(t => t.Amount);
+
+        AccountBalancesByDatePresentation tutu = new AccountBalancesByDatePresentation(
+            beginningOfThisMonth,
+            new AccountBalancePresentation(account.Label, balanceOfMonth)
+        );
+        return tutu;
     }
 
     private static Task<SlidingAccountBalancesPresentation> JustBalanceOf(AccountSnapshot account) =>

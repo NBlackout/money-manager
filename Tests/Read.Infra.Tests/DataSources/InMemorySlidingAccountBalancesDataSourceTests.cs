@@ -35,6 +35,50 @@ public class InMemorySlidingAccountBalancesDataSourceTests
                 new AccountBalancesByDatePresentation(
                     DateOnly.Parse("2024-08-01"),
                     new AccountBalancePresentation(account.Label, account.BalanceAmount)
+                ),
+                new AccountBalancesByDatePresentation(
+                    DateOnly.Parse("2024-07-01"),
+                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
+                ),
+                new AccountBalancesByDatePresentation(
+                    DateOnly.Parse("2024-06-01"),
+                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
+                ),
+                new AccountBalancesByDatePresentation(
+                    DateOnly.Parse("2024-05-01"),
+                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
+                ),
+                new AccountBalancesByDatePresentation(
+                    DateOnly.Parse("2024-04-01"),
+                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
+                ),
+                new AccountBalancesByDatePresentation(
+                    DateOnly.Parse("2024-03-01"),
+                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
+                ),
+                new AccountBalancesByDatePresentation(
+                    DateOnly.Parse("2024-02-01"),
+                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
+                ),
+                new AccountBalancesByDatePresentation(
+                    DateOnly.Parse("2024-01-01"),
+                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
+                ),
+                new AccountBalancesByDatePresentation(
+                    DateOnly.Parse("2023-12-01"),
+                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
+                ),
+                new AccountBalancesByDatePresentation(
+                    DateOnly.Parse("2023-11-01"),
+                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
+                ),
+                new AccountBalancesByDatePresentation(
+                    DateOnly.Parse("2023-10-01"),
+                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
+                ),
+                new AccountBalancesByDatePresentation(
+                    DateOnly.Parse("2023-09-01"),
+                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
                 )
             )
         );
