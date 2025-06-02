@@ -2,6 +2,7 @@
 
 ## Feat
 
+- Sliging balance displays balance at the beginning of each month + estimated balance for next 3 months
 - Redirect to /accounts after successful synchronization
 - Change transaction category -> dropdown list with search?
 - Prevent deletion of used category

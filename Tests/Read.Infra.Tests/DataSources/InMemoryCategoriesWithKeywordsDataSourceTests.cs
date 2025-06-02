@@ -2,8 +2,8 @@
 
 namespace Read.Infra.Tests.DataSources;
 
-public class InMemoryCategoriesWithKeywordsDataSourceTests :
-    InfraTest<ICategoriesWithKeywordsDataSource, InMemoryCategoriesWithKeywordsDataSource>
+public class InMemoryCategoriesWithKeywordsDataSourceTests
+    : InfraTest<ICategoriesWithKeywordsDataSource, InMemoryCategoriesWithKeywordsDataSource>
 {
     private readonly InMemoryCategoryRepository categoryRepository;
 
