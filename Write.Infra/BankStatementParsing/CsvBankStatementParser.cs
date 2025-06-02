@@ -48,9 +48,9 @@ public class CsvBankStatementParser
         private const int TransactionDateIndex = 0;
         private const int TransactionLabelIndex = 2;
         private const int TransactionCategoryIndex = 4;
-        private const int TransactionAmountIndex = 5;
-        private const int AccountNumberIndex = 7;
-        private const int AccountBalanceIndex = 9;
+        private const int TransactionAmountIndex = 6;
+        private const int AccountNumberIndex = 8;
+        private const int AccountBalanceIndex = 10;
 
         public TransactionStatement ToTransactionStatement() =>
             new(
@@ -80,6 +80,9 @@ public class CsvBankStatementParser
             string.IsNullOrEmpty(value) is false ? ParseDecimal(value) : null;
 
         private static decimal ParseDecimal(string value) =>
-            decimal.Parse(value.Replace(",", ".").Replace(" ", string.Empty), CultureInfo.InvariantCulture);
+            decimal.Parse(
+                value.Replace(",", ".").Replace(" ", string.Empty).Replace("\"", string.Empty),
+                CultureInfo.InvariantCulture
+            );
     }
 }
