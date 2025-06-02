@@ -4,6 +4,10 @@ using Write.Infra.Repositories;
 
 namespace Read.Infra.Tests.DataSources;
 
+// Many account
+// Many transaction of a multiple months
+// Balance date august, only transaction in june. What happens for july?
+// Minimum date
 public class InMemorySlidingAccountBalancesDataSourceTests
     : InfraTest<ISlidingAccountBalancesDataSource, InMemorySlidingAccountBalancesDataSource>
 {
@@ -74,16 +78,13 @@ public class InMemorySlidingAccountBalancesDataSourceTests
         );
     }
 
-    // Many account
-    // Many transaction of a single month (beginning of month)
-    // Many transaction of a multiple months
-
     [Fact]
-    public async Task Gives_account_balance_3()
+    public async Task Gives_account_balance_4()
     {
         AccountSnapshot account = AnAccount() with { BalanceAmount = 1500, BalanceDate = DateOnly.Parse("2024-08-17") };
-        TransactionSnapshot transactionJuly = ATransaction() with { Amount = 300, Date = DateOnly.Parse("2024-07-03") };
-        this.Feed(account, transactionJuly);
+        TransactionSnapshot transactionLastYear =
+            ATransaction() with { Amount = 300, Date = DateOnly.Parse("2023-08-03") };
+        this.Feed(account, transactionLastYear);
 
         await this.Verify(
             new SlidingAccountBalancesPresentation(
@@ -96,17 +97,93 @@ public class InMemorySlidingAccountBalancesDataSourceTests
     }
 
     [Fact]
-    public async Task Gives_account_balance_4()
+    public async Task Gives_account_balance_5()
     {
         AccountSnapshot account = AnAccount() with { BalanceAmount = 1500, BalanceDate = DateOnly.Parse("2024-08-17") };
-        TransactionSnapshot transactionLastYear = ATransaction() with { Amount = 300, Date = DateOnly.Parse("2023-08-03") };
-        this.Feed(account, transactionLastYear);
+        TransactionSnapshot transactionJuly = ATransaction() with { Amount = 300, Date = DateOnly.Parse("2024-07-03") };
+        this.Feed(account, transactionJuly);
 
         await this.Verify(
             new SlidingAccountBalancesPresentation(
                 new AccountBalancesByDatePresentation(
                     DateOnly.Parse("2024-08-01"),
                     new AccountBalancePresentation(account.Label, 1500)
+                ),
+                new AccountBalancesByDatePresentation(
+                    DateOnly.Parse("2024-07-01"),
+                    new AccountBalancePresentation(account.Label, 1200)
+                )
+            )
+        );
+    }
+
+    [Fact]
+    public async Task Gives_account_balance_6()
+    {
+        AccountSnapshot account = AnAccount() with { BalanceAmount = 1500, BalanceDate = DateOnly.Parse("2024-08-17") };
+        TransactionSnapshot transactionAugust =
+            ATransaction() with { Amount = 100, Date = DateOnly.Parse("2024-08-13") };
+        TransactionSnapshot transactionJuly1 =
+            ATransaction() with { Amount = 130, Date = DateOnly.Parse("2024-07-03") };
+        TransactionSnapshot transactionJuly2 = ATransaction() with { Amount = 70, Date = DateOnly.Parse("2024-07-02") };
+        this.Feed(account, transactionJuly1, transactionJuly2, transactionAugust);
+
+        await this.Verify(
+            new SlidingAccountBalancesPresentation(
+                new AccountBalancesByDatePresentation(
+                    DateOnly.Parse("2024-08-01"),
+                    new AccountBalancePresentation(account.Label, 1400)
+                ),
+                new AccountBalancesByDatePresentation(
+                    DateOnly.Parse("2024-07-01"),
+                    new AccountBalancePresentation(account.Label, 1200)
+                )
+            )
+        );
+    }
+
+    [Fact]
+    public async Task Gives_account_balance_7()
+    {
+        AccountSnapshot account = AnAccount() with { BalanceAmount = 1500, BalanceDate = DateOnly.Parse("2024-08-17") };
+        TransactionSnapshot transactionAugust =
+            ATransaction() with { Amount = 100, Date = DateOnly.Parse("2024-08-13") };
+        TransactionSnapshot transactionJuly1 =
+            ATransaction() with { Amount = 130, Date = DateOnly.Parse("2024-07-03") };
+        TransactionSnapshot transactionJuly2 = ATransaction() with { Amount = 70, Date = DateOnly.Parse("2024-07-02") };
+        TransactionSnapshot transactionJune = ATransaction() with { Amount = 50, Date = DateOnly.Parse("2024-06-29") };
+        this.Feed(account, transactionJuly1, transactionJuly2, transactionAugust, transactionJune);
+
+        await this.Verify(
+            new SlidingAccountBalancesPresentation(
+                new AccountBalancesByDatePresentation(
+                    DateOnly.Parse("2024-08-01"),
+                    new AccountBalancePresentation(account.Label, 1400)
+                ),
+                new AccountBalancesByDatePresentation(
+                    DateOnly.Parse("2024-07-01"),
+                    new AccountBalancePresentation(account.Label, 1200)
+                ),
+                new AccountBalancesByDatePresentation(
+                    DateOnly.Parse("2024-06-01"),
+                    new AccountBalancePresentation(account.Label, 1150)
+                )
+            )
+        );
+    }
+
+    [Fact]
+    public async Task Gives_account_balance_9()
+    {
+        AccountSnapshot account = AnAccount() with { BalanceDate = DateOnly.Parse("2024-08-08") };
+        TransactionSnapshot transaction = ATransaction() with { Date = DateOnly.Parse("2023-08-10") };
+        this.Feed(account, transaction);
+
+        await this.Verify(
+            new SlidingAccountBalancesPresentation(
+                new AccountBalancesByDatePresentation(
+                    DateOnly.Parse("2024-08-01"),
+                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
                 )
             )
         );
