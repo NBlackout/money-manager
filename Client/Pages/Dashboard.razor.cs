@@ -6,11 +6,11 @@ namespace Client.Pages;
 
 public partial class Dashboard
 {
-    [Inject] public SlidingAccountBalances SlidingAccountBalances { get; set; } = null!;
+    [Inject] public SlidingBalances SlidingBalances { get; set; } = null!;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        SlidingAccountBalancesPresentation presentation = await this.SlidingAccountBalances.Execute();
+        SlidingBalancesPresentation presentation = await this.SlidingBalances.Execute();
         HighchartsRenderer renderer = new(
             new Highcharts
             {
@@ -28,10 +28,10 @@ public partial class Dashboard
         );
     }
 
-    private static List<string> CategoriesBy(SlidingAccountBalancesPresentation presentation) =>
+    private static List<string> CategoriesBy(SlidingBalancesPresentation presentation) =>
         presentation.AccountBalancesByDate.Select(b => b.BalanceDate.ToShortDateString()).ToList();
 
-    private static List<Series> SeriesBy(SlidingAccountBalancesPresentation presentation) =>
+    private static List<Series> SeriesBy(SlidingBalancesPresentation presentation) =>
         presentation
             .AccountBalancesByDate
             .SelectMany(d => d.AccountBalances.Select(b => b.AccountLabel))
@@ -39,13 +39,13 @@ public partial class Dashboard
             .Select(a => SeriesBy(presentation, a))
             .ToList();
 
-    private static Series SeriesBy(SlidingAccountBalancesPresentation presentation, string accountLabel) =>
+    private static Series SeriesBy(SlidingBalancesPresentation presentation, string accountLabel) =>
         new AreaSeries
         {
             Name = accountLabel,
             Data = presentation.AccountBalancesByDate.Select(b => AreaSeriesDataBy(accountLabel, b)).ToList()
         };
 
-    private static AreaSeriesData AreaSeriesDataBy(string accountLabel, AccountBalancesByDatePresentation date) =>
+    private static AreaSeriesData AreaSeriesDataBy(string accountLabel, SlidingBalancePresentation date) =>
         new() { Y = decimal.ToDouble(date.AccountBalances.Single(b => b.AccountLabel == accountLabel).Balance) };
 }

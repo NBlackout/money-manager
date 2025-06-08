@@ -17,5 +17,5 @@ public static class ServiceCollectionExtensions
             .AddScoped<ICategoriesWithKeywordsDataSource, InMemoryCategoriesWithKeywordsDataSource>()
             .AddScoped<ITransactionsToCategorizeDataSource, InMemoryTransactionsToCategorizeDataSource>()
             .AddScoped<IBudgetSummariesDataSource, InMemoryBudgetSummariesDataSource>()
-            .AddScoped<ISlidingAccountBalancesDataSource, InMemorySlidingAccountBalancesDataSource>();
+            .AddScoped<ISlidingBalancesDataSource, InMemorySlidingBalancesDataSource>();
 }

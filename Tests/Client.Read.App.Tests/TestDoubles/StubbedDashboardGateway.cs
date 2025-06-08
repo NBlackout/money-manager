@@ -2,11 +2,11 @@ namespace Client.Read.App.Tests.TestDoubles;
 
 public class StubbedDashboardGateway : IDashboardGateway
 {
-    private SlidingAccountBalancesPresentation balances = null!;
+    private SlidingBalancesPresentation balances = null!;
 
-    public Task<SlidingAccountBalancesPresentation> SlidingAccountBalances() =>
+    public Task<SlidingBalancesPresentation> SlidingBalances() =>
         Task.FromResult(this.balances);
 
-    public void Feed(SlidingAccountBalancesPresentation expected) =>
+    public void Feed(SlidingBalancesPresentation expected) =>
         this.balances = expected;
 }

@@ -15,5 +15,5 @@ public static class ServiceCollectionReadExtensions
             .AddScoped<CategorySummaries>()
             .AddScoped<CategorizationSuggestions>()
             .AddScoped<BudgetSummaries>()
-            .AddScoped<SlidingAccountBalances>();
+            .AddScoped<SlidingBalances>();
 }

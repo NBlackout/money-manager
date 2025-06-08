@@ -11,10 +11,10 @@ public class HttpDashboardGatewayTests : InfraTest<IDashboardGateway, HttpDashbo
 
     [Theory]
     [RandomData]
-    public async Task Gives_sliding_account_balances(SlidingAccountBalancesPresentation expected)
+    public async Task Gives_sliding_account_balances(SlidingBalancesPresentation expected)
     {
-        this.Feed("dashboard/sliding-account-balances", expected);
-        SlidingAccountBalancesPresentation actual = await this.Sut.SlidingAccountBalances();
+        this.Feed("dashboard/sliding-balances", expected);
+        SlidingBalancesPresentation actual = await this.Sut.SlidingBalances();
         actual.Should().BeEquivalentTo(expected);
     }
 

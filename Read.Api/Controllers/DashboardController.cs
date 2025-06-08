@@ -2,9 +2,9 @@ namespace Read.Api.Controllers;
 
 [ApiController]
 [Route("api/dashboard")]
-public class DashboardController(SlidingAccountBalances slidingAccountBalances) : ControllerBase
+public class DashboardController(SlidingBalances slidingBalances) : ControllerBase
 {
-    [HttpGet("sliding-account-balances")]
-    public async Task<SlidingAccountBalancesPresentation> SlidingAccountBalances() =>
-        await slidingAccountBalances.Execute();
+    [HttpGet("sliding-balances")]
+    public async Task<SlidingBalancesPresentation> SlidingBalances() =>
+        await slidingBalances.Execute();
 }
