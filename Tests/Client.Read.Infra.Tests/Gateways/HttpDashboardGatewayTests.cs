@@ -2,7 +2,7 @@ namespace Client.Read.Infra.Tests.Gateways;
 
 public class HttpDashboardGatewayTests : InfraTest<IDashboardGateway, HttpDashboardGateway>
 {
-    private const string ApiUrl = "http://localhost";
+    private const string ApiUrl = "http://localhost/api";
 
     private readonly StubbedHttpMessageHandler httpMessageHandler = new();
 

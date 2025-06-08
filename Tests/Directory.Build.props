@@ -31,7 +31,6 @@
         <Using Include="FluentAssertions"/>
         <Using Include="Shared.TestTooling"/>
         <Using Include="Shared.TestTooling.AutoFixture"/>
-        <Using Include="Shared.TestTooling.Resources"/>
         <Using Include="Xunit"/>
     </ItemGroup>
 

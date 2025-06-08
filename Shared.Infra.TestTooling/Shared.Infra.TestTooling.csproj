@@ -15,4 +15,11 @@
         <ProjectReference Include="..\Write.Infra\Write.Infra.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <EmbeddedResource Update="Resources\Resources.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
 </Project>

@@ -2,7 +2,7 @@
 
 public class HttpBudgetGatewayTests : InfraTest<IBudgetGateway, HttpBudgetGateway>
 {
-    private const string ApiUrl = "http://localhost";
+    private const string ApiUrl = "http://localhost/api";
 
     private readonly StubbedHttpMessageHandler httpMessageHandler = new();
 

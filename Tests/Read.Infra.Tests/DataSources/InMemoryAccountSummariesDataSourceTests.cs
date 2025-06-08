@@ -2,8 +2,8 @@
 
 namespace Read.Infra.Tests.DataSources;
 
-public class InMemoryAccountSummariesDataSourceTests :
-    InfraTest<IAccountSummariesDataSource, InMemoryAccountSummariesDataSource>
+public class InMemoryAccountSummariesDataSourceTests
+    : InfraTest<IAccountSummariesDataSource, InMemoryAccountSummariesDataSource>
 {
     private readonly InMemoryAccountRepository accountRepository;
 

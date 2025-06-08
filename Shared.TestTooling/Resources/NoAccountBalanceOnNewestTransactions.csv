@@ -1,3 +1,0 @@
-dateOp;dateVal;label;category;categoryParent;amount;comment;accountNum;accountLabel;accountbalance
-2020-01-02;;"Debit 2";"Debit";"Debit parent";-56.78;;1234;"Account";
-2020-01-01;;"Debit 1";"Debit";"Debit parent";-12.34;;1234;"Account";12 345.67

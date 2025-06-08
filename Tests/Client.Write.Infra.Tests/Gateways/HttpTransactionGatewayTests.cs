@@ -5,7 +5,7 @@ namespace Client.Write.Infra.Tests.Gateways;
 
 public class HttpTransactionGatewayTests : InfraTest<ITransactionGateway, HttpTransactionGateway>
 {
-    private const string ApiUrl = "http://localhost";
+    private const string ApiUrl = "http://localhost/api";
 
     private readonly SpyHttpMessageHandler httpMessageHandler = new();
 

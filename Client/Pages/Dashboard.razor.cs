@@ -14,7 +14,7 @@ public partial class Dashboard
         HighchartsRenderer renderer = new(
             new Highcharts
             {
-                Title = new Title { Text = "Area chart with negative values" },
+                Title = new Title { Text = "Sliding balances" },
                 XAxis = [new XAxis { Categories = CategoriesBy(presentation) }],
                 Credits = new Credits { Enabled = false },
                 Series = SeriesBy(presentation)
