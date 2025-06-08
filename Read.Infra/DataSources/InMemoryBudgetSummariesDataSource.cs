@@ -2,12 +2,12 @@
 
 namespace Read.Infra.DataSources;
 
-public class InMemoryBudgetSummariesDataSource(InMemoryBudgetRepository repository, IDateOnlyProvider dateOnlyProvider)
+public class InMemoryBudgetSummariesDataSource(InMemoryBudgetRepository repository, IClock clock)
     : IBudgetSummariesDataSource
 {
     public Task<BudgetSummaryPresentation[]> All()
     {
-        DateOnly today = dateOnlyProvider.Today;
+        DateOnly today = clock.Today;
         BudgetSummaryPresentation[] presentations =
         [
             ..repository.Data.Select(c => new BudgetSummaryPresentation(

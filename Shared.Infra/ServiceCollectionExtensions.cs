@@ -5,5 +5,5 @@ namespace Shared.Infra;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddSharedInfra(this IServiceCollection services) =>
-        services.AddSingleton<IDateOnlyProvider, ReadDateOnlyProvider>();
+        services.AddSingleton<IClock, SystemClock>();
 }

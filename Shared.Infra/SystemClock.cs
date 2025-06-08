@@ -1,6 +1,6 @@
 namespace Shared.Infra;
 
-public class ReadDateOnlyProvider : IDateOnlyProvider
+public class SystemClock : IClock
 {
     public DateOnly Today => DateOnly.FromDateTime(DateTime.Now);
 }

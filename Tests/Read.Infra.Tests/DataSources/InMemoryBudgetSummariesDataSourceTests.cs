@@ -9,7 +9,7 @@ public class InMemoryBudgetSummariesDataSourceTests
     : InfraTest<IBudgetSummariesDataSource, InMemoryBudgetSummariesDataSource>
 {
     private readonly InMemoryBudgetRepository budgetRepository;
-    private readonly StubbedDateOnlyProvider dateOnlyProvider = new();
+    private readonly StubbedClock clock = new();
 
     public InMemoryBudgetSummariesDataSourceTests()
     {
@@ -17,7 +17,7 @@ public class InMemoryBudgetSummariesDataSourceTests
     }
 
     protected override void Configure(IServiceCollection services) =>
-        services.AddSingleton<IDateOnlyProvider>(this.dateOnlyProvider);
+        services.AddSingleton<IClock>(this.clock);
 
     [Theory]
     [RandomData]
@@ -72,7 +72,7 @@ public class InMemoryBudgetSummariesDataSourceTests
         this.budgetRepository.Feed(expected.ToSnapshot());
 
     private void TodayIs(DateOnly today) =>
-        this.dateOnlyProvider.Today = today;
+        this.clock.Today = today;
 
     private static BudgetBuilder ABudget(DateOnly beginDate, decimal amount) =>
         Any<BudgetBuilder>() with { BeginDate = beginDate, Amount = amount };

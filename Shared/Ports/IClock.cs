@@ -1,6 +1,6 @@
 namespace Shared.Ports;
 
-public interface IDateOnlyProvider
+public interface IClock
 {
     DateOnly Today { get; }
 }
