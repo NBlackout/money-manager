@@ -39,6 +39,6 @@ public class Account : DomainEntity<AccountId>
             snapshot.Id,
             new ExternalId(snapshot.Number),
             new Label(snapshot.Label),
-            new Balance(snapshot.BalanceAmount, snapshot.BalanceDate)
+            new Balance(snapshot.Balance, snapshot.BalanceDate)
         );
 }

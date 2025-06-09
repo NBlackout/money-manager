@@ -1,6 +1,6 @@
 namespace Shared.Presentation;
 
-public record SlidingBalancesPresentation(params SlidingBalancePresentation[] AccountBalancesByDate);
+public record SlidingBalancesPresentation(params SlidingBalancePresentation[] SlidingBalances);
 
 public record SlidingBalancePresentation(DateOnly BalanceDate, params AccountBalancePresentation[] AccountBalances);
 

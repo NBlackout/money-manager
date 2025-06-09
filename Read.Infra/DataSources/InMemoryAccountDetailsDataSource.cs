@@ -10,7 +10,7 @@ public class InMemoryAccountDetailsDataSource(InMemoryAccountRepository accountR
             id,
             account.Snapshot.Label,
             account.Snapshot.Number,
-            account.Snapshot.BalanceAmount,
+            account.Snapshot.Balance,
             account.Snapshot.BalanceDate
         );
     }

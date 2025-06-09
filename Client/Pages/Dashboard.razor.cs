@@ -29,23 +29,23 @@ public partial class Dashboard
     }
 
     private static List<string> CategoriesBy(SlidingBalancesPresentation presentation) =>
-        presentation.AccountBalancesByDate.Select(b => b.BalanceDate.ToShortDateString()).ToList();
+        presentation.SlidingBalances.Select(b => b.BalanceDate.ToShortDateString()).ToList();
 
     private static List<Series> SeriesBy(SlidingBalancesPresentation presentation) =>
         presentation
-            .AccountBalancesByDate
+            .SlidingBalances
             .SelectMany(d => d.AccountBalances.Select(b => b.AccountLabel))
             .Distinct()
             .Select(a => SeriesBy(presentation, a))
-            .ToList();
+            .ToList<Series>();
 
-    private static Series SeriesBy(SlidingBalancesPresentation presentation, string accountLabel) =>
-        new AreaSeries
+    private static LineSeries SeriesBy(SlidingBalancesPresentation presentation, string accountLabel) =>
+        new()
         {
             Name = accountLabel,
-            Data = presentation.AccountBalancesByDate.Select(b => AreaSeriesDataBy(accountLabel, b)).ToList()
+            Data = presentation.SlidingBalances.Select(b => AreaSeriesDataBy(accountLabel, b)).ToList()
         };
 
-    private static AreaSeriesData AreaSeriesDataBy(string accountLabel, SlidingBalancePresentation date) =>
+    private static LineSeriesData AreaSeriesDataBy(string accountLabel, SlidingBalancePresentation date) =>
         new() { Y = decimal.ToDouble(date.AccountBalances.Single(b => b.AccountLabel == accountLabel).Balance) };
 }

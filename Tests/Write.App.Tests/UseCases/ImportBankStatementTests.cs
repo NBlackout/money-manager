@@ -148,7 +148,7 @@ public class ImportBankStatementTests
             params (TransactionSnapshot Transaction, string? CategoryLabel)[] transactions) =>
             new(
                 new ExternalId(account.Number),
-                new Balance(account.BalanceAmount, account.BalanceDate),
+                new Balance(account.Balance, account.BalanceDate),
                 [
                     ..transactions.Select(t => new TransactionStatement(
                             new ExternalId(t.Transaction.ExternalId),

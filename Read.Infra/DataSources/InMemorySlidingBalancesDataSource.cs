@@ -9,37 +9,42 @@ public class InMemorySlidingBalancesDataSource(
 {
     public Task<SlidingBalancesPresentation> All(DateOnly baseline, DateOnly startingFrom)
     {
-        AccountSnapshot? account = accountRepository.Data.SingleOrDefault();
-        if (account == null)
+        AccountSnapshot[] accounts = accountRepository.Data.ToArray();
+        if (accounts.Length == 0)
             return Task.FromResult(new SlidingBalancesPresentation());
 
-        return Task.FromResult(this.SlidingBalancesOf(account, baseline, startingFrom));
+        return Task.FromResult(this.SlidingBalancesOf(accounts, baseline, startingFrom));
     }
 
-    private SlidingBalancesPresentation SlidingBalancesOf(AccountSnapshot account, DateOnly baseline, DateOnly startingFrom)
+    private SlidingBalancesPresentation SlidingBalancesOf(
+        AccountSnapshot[] accounts,
+        DateOnly baseline,
+        DateOnly startingFrom)
     {
         TransactionSnapshot[] transactions = transactionRepository.Data.ToArray();
         List<SlidingBalancePresentation> slidingBalances = [];
 
         DateOnly beginningOfThisMonth = baseline;
-        decimal balanceOfMonth = account.BalanceAmount;
+        Dictionary<string, decimal> balancesOfMonth = accounts.ToDictionary(a => a.Label, a => a.Balance);
         for (DateOnly startOfMonth = baseline; startOfMonth >= startingFrom; startOfMonth = startOfMonth.AddMonths(-1))
         {
-            balanceOfMonth -= TotalAmountOf(transactions, beginningOfThisMonth);
+            foreach (AccountSnapshot account in accounts)
+                balancesOfMonth[account.Label] -= TotalAmountOf(account, transactions, beginningOfThisMonth);
 
-            slidingBalances.Add(PresentationFrom(account, beginningOfThisMonth, balanceOfMonth));
+            slidingBalances.Add(PresentationsFrom(beginningOfThisMonth, balancesOfMonth));
             beginningOfThisMonth = beginningOfThisMonth.AddMonths(-1);
         }
 
         return new SlidingBalancesPresentation(slidingBalances.OrderBy(d => d.BalanceDate).ToArray());
     }
 
-    private static decimal TotalAmountOf(TransactionSnapshot[] transactions, DateOnly month) =>
-        transactions.Where(t => t.Date.Month == month.Month && t.Date.Year == month.Year).Sum(t => t.Amount);
+    private static decimal TotalAmountOf(AccountSnapshot account, TransactionSnapshot[] transactions, DateOnly month) =>
+        transactions
+            .Where(t => t.AccountId == account.Id && t.Date.Month == month.Month && t.Date.Year == month.Year)
+            .Sum(t => t.Amount);
 
-    private static SlidingBalancePresentation PresentationFrom(
-        AccountSnapshot account,
-        DateOnly month,
-        decimal balance) =>
-        new(month, new AccountBalancePresentation(account.Label, balance));
+    private static SlidingBalancePresentation PresentationsFrom(
+        DateOnly balanceDate,
+        Dictionary<string, decimal> balances) =>
+        new(balanceDate, balances.Select(bom => new AccountBalancePresentation(bom.Key, bom.Value)).ToArray());
 }

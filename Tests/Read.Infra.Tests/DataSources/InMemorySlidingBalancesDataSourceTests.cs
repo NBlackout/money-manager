@@ -22,389 +22,146 @@ public class InMemorySlidingBalancesDataSourceTests
     }
 
     [Fact]
-    public async Task Gives_no_balances_by_default() =>
-        await this.Verify(Any<DateOnly>(), Any<DateOnly>(), new SlidingBalancesPresentation());
-
-    [Fact]
-    public async Task Gives_account_balance_0()
+    public async Task Gives_balance_having_no_transaction()
     {
-        AccountSnapshot account = AnAccount() with { BalanceDate = DateOnly.Parse("2024-08-17") };
+        AccountSnapshot account = AnAccount() with { Balance = 1200, BalanceDate = DateOnly.Parse("2025-09-28") };
         this.Feed(account);
 
         await this.Verify(
-            DateOnly.Parse("2024-08-01"),
-            DateOnly.Parse("2024-08-01"),
-            new SlidingBalancesPresentation(
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-08-01"),
-                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
-                )
-            )
+            DateOnly.Parse("2024-09-01"),
+            DateOnly.Parse("2024-09-01"),
+            PresentationFrom(DateOnly.Parse("2024-09-01"), account)
         );
     }
 
     [Fact]
-    public async Task Gives_account_balance_01()
+    public async Task Gives_balance_at_the_start_of_month()
     {
-        AccountSnapshot account = AnAccount() with { BalanceDate = DateOnly.Parse("2024-08-17") };
-        this.Feed(account);
+        AccountSnapshot account = AnAccount() with { Balance = 1200, BalanceDate = DateOnly.Parse("2025-04-12") };
+        this.Feed(
+            account,
+            ATransactionOf(account) with { Amount = 200, Date = DateOnly.Parse("2024-04-10") },
+            ATransactionOf(account) with { Amount = 300, Date = DateOnly.Parse("2024-04-03") }
+        );
 
         await this.Verify(
-            DateOnly.Parse("2024-08-01"),
-            DateOnly.Parse("2024-07-01"),
-            new SlidingBalancesPresentation(
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-07-01"),
-                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-08-01"),
-                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
-                )
-            )
+            DateOnly.Parse("2024-04-01"),
+            DateOnly.Parse("2024-04-01"),
+            PresentationFrom(DateOnly.Parse("2024-04-01"), account with { Balance = 700 })
         );
     }
 
     [Fact]
-    public async Task Gives_account_balance()
+    public async Task Gives_balance_starting_from_last_month()
     {
-        AccountSnapshot account = AnAccount() with { BalanceDate = DateOnly.Parse("2024-08-17") };
-        this.Feed(account);
+        AccountSnapshot account = AnAccount() with { Balance = 500, BalanceDate = DateOnly.Parse("2022-01-14") };
+        this.Feed(
+            account,
+            ATransactionOf(account) with { Amount = 80, Date = DateOnly.Parse("2022-01-19") },
+            ATransactionOf(account) with { Amount = 15, Date = DateOnly.Parse("2021-12-18") }
+        );
 
         await this.Verify(
-            DateOnly.Parse("2024-08-01"),
-            DateOnly.Parse("2024-03-01"),
-            new SlidingBalancesPresentation(
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-03-01"),
-                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-04-01"),
-                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-05-01"),
-                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-06-01"),
-                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-07-01"),
-                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-08-01"),
-                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
-                )
-            )
+            DateOnly.Parse("2022-01-01"),
+            DateOnly.Parse("2021-12-01"),
+            PresentationFrom(DateOnly.Parse("2021-12-01"), account with { Balance = 405 }),
+            PresentationFrom(DateOnly.Parse("2022-01-01"), account with { Balance = 420 })
         );
     }
 
     [Fact]
-    public async Task Gives_account_balance_1()
+    public async Task Gives_balance_without_transaction_on_period()
     {
-        AccountSnapshot account = AnAccount() with
-        {
-            BalanceAmount = 12000, BalanceDate = DateOnly.Parse("2024-08-17")
-        };
-        TransactionSnapshot transaction = ATransaction() with { Amount = 2000, Date = DateOnly.Parse("2024-08-10") };
-        this.Feed(account, transaction);
+        AccountSnapshot account = AnAccount() with { Balance = 130, BalanceDate = DateOnly.Parse("2024-08-17") };
+        this.Feed(account, ATransactionOf(account) with { Amount = 80, Date = DateOnly.Parse("2024-06-30") });
 
         await this.Verify(
             DateOnly.Parse("2024-08-01"),
-            DateOnly.Parse("2024-03-01"),
-            new SlidingBalancesPresentation(
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-03-01"),
-                    new AccountBalancePresentation(account.Label, 10000)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-04-01"),
-                    new AccountBalancePresentation(account.Label, 10000)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-05-01"),
-                    new AccountBalancePresentation(account.Label, 10000)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-06-01"),
-                    new AccountBalancePresentation(account.Label, 10000)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-07-01"),
-                    new AccountBalancePresentation(account.Label, 10000)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-08-01"),
-                    new AccountBalancePresentation(account.Label, 10000)
-                )
-            )
+            DateOnly.Parse("2024-06-01"),
+            PresentationFrom(DateOnly.Parse("2024-06-01"), account with { Balance = 50 }),
+            PresentationFrom(DateOnly.Parse("2024-07-01"), account with { Balance = 130 }),
+            PresentationFrom(DateOnly.Parse("2024-08-01"), account with { Balance = 130 })
         );
     }
 
     [Fact]
-    public async Task Gives_account_balance_2()
+    public async Task Gives_multiple_balances()
     {
-        AccountSnapshot account = AnAccount() with { BalanceAmount = 1500, BalanceDate = DateOnly.Parse("2024-08-17") };
-        TransactionSnapshot transaction = ATransaction() with { Amount = 200, Date = DateOnly.Parse("2024-08-12") };
-        TransactionSnapshot transaction2 = ATransaction() with { Amount = 300, Date = DateOnly.Parse("2024-08-03") };
-        this.Feed(account, transaction, transaction2);
+        AccountSnapshot anAccount = AnAccount() with { BalanceDate = DateOnly.Parse("2025-09-28") };
+        AccountSnapshot anotherAccount = AnAccount() with { BalanceDate = DateOnly.Parse("2025-09-28") };
+        this.Feed([anAccount, anotherAccount]);
 
         await this.Verify(
-            DateOnly.Parse("2024-08-01"),
-            DateOnly.Parse("2024-03-01"),
-            new SlidingBalancesPresentation(
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-03-01"),
-                    new AccountBalancePresentation(account.Label, 1000)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-04-01"),
-                    new AccountBalancePresentation(account.Label, 1000)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-05-01"),
-                    new AccountBalancePresentation(account.Label, 1000)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-06-01"),
-                    new AccountBalancePresentation(account.Label, 1000)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-07-01"),
-                    new AccountBalancePresentation(account.Label, 1000)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-08-01"),
-                    new AccountBalancePresentation(account.Label, 1000)
-                )
-            )
+            DateOnly.Parse("2024-09-01"),
+            DateOnly.Parse("2024-09-01"),
+            PresentationFrom(DateOnly.Parse("2024-09-01"), anAccount, anotherAccount)
         );
     }
 
     [Fact]
-    public async Task Gives_account_balance_4()
+    public async Task Gives_multiple_balances_across_many_months()
     {
-        AccountSnapshot account = AnAccount() with { BalanceAmount = 1500, BalanceDate = DateOnly.Parse("2024-08-17") };
-        TransactionSnapshot transactionLastYear =
-            ATransaction() with { Amount = 300, Date = DateOnly.Parse("2023-08-03") };
-        this.Feed(account, transactionLastYear);
+        AccountSnapshot anAccount = AnAccount() with { Balance = 3000, BalanceDate = DateOnly.Parse("2017-03-13") };
+        AccountSnapshot anotherAccount =
+            AnAccount() with { Balance = 1500, BalanceDate = DateOnly.Parse("2017-02-04") };
+        this.Feed(
+            [anAccount, anotherAccount],
+            ATransactionOf(anAccount) with { Amount = 500, Date = DateOnly.Parse("2017-03-11") },
+            ATransactionOf(anAccount) with { Amount = 200, Date = DateOnly.Parse("2017-02-19") },
+            ATransactionOf(anotherAccount) with { Amount = 800, Date = DateOnly.Parse("2017-02-09") },
+            ATransactionOf(anotherAccount) with { Amount = 1000, Date = DateOnly.Parse("2017-01-02") }
+        );
 
         await this.Verify(
-            DateOnly.Parse("2024-08-01"),
-            DateOnly.Parse("2024-03-01"),
-            new SlidingBalancesPresentation(
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-03-01"),
-                    new AccountBalancePresentation(account.Label, 1500)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-04-01"),
-                    new AccountBalancePresentation(account.Label, 1500)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-05-01"),
-                    new AccountBalancePresentation(account.Label, 1500)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-06-01"),
-                    new AccountBalancePresentation(account.Label, 1500)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-07-01"),
-                    new AccountBalancePresentation(account.Label, 1500)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-08-01"),
-                    new AccountBalancePresentation(account.Label, 1500)
-                )
+            DateOnly.Parse("2017-03-01"),
+            DateOnly.Parse("2017-01-01"),
+            PresentationFrom(
+                DateOnly.Parse("2017-01-01"),
+                anAccount with { Balance = 2300 },
+                anotherAccount with { Balance = -300 }
+            ),
+            PresentationFrom(
+                DateOnly.Parse("2017-02-01"),
+                anAccount with { Balance = 2300 },
+                anotherAccount with { Balance = 700 }
+            ),
+            PresentationFrom(
+                DateOnly.Parse("2017-03-01"),
+                anAccount with { Balance = 2500 },
+                anotherAccount with { Balance = 1500 }
             )
         );
     }
 
-    [Fact]
-    public async Task Gives_account_balance_5()
-    {
-        AccountSnapshot account = AnAccount() with { BalanceAmount = 1500, BalanceDate = DateOnly.Parse("2024-08-17") };
-        TransactionSnapshot transactionJuly = ATransaction() with { Amount = 300, Date = DateOnly.Parse("2024-07-03") };
-        this.Feed(account, transactionJuly);
-
-        await this.Verify(
-            DateOnly.Parse("2024-08-01"),
-            DateOnly.Parse("2024-03-01"),
-            new SlidingBalancesPresentation(
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-03-01"),
-                    new AccountBalancePresentation(account.Label, 1200)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-04-01"),
-                    new AccountBalancePresentation(account.Label, 1200)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-05-01"),
-                    new AccountBalancePresentation(account.Label, 1200)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-06-01"),
-                    new AccountBalancePresentation(account.Label, 1200)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-07-01"),
-                    new AccountBalancePresentation(account.Label, 1200)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-08-01"),
-                    new AccountBalancePresentation(account.Label, 1500)
-                )
-            )
-        );
-    }
-
-    [Fact]
-    public async Task Gives_account_balance_6()
-    {
-        AccountSnapshot account = AnAccount() with { BalanceAmount = 1500, BalanceDate = DateOnly.Parse("2024-08-17") };
-        TransactionSnapshot transactionAugust =
-            ATransaction() with { Amount = 100, Date = DateOnly.Parse("2024-08-13") };
-        TransactionSnapshot transactionJuly1 =
-            ATransaction() with { Amount = 130, Date = DateOnly.Parse("2024-07-03") };
-        TransactionSnapshot transactionJuly2 = ATransaction() with { Amount = 70, Date = DateOnly.Parse("2024-07-02") };
-        this.Feed(account, transactionJuly1, transactionJuly2, transactionAugust);
-
-        await this.Verify(
-            DateOnly.Parse("2024-08-01"),
-            DateOnly.Parse("2024-03-01"),
-            new SlidingBalancesPresentation(
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-03-01"),
-                    new AccountBalancePresentation(account.Label, 1200)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-04-01"),
-                    new AccountBalancePresentation(account.Label, 1200)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-05-01"),
-                    new AccountBalancePresentation(account.Label, 1200)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-06-01"),
-                    new AccountBalancePresentation(account.Label, 1200)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-07-01"),
-                    new AccountBalancePresentation(account.Label, 1200)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-08-01"),
-                    new AccountBalancePresentation(account.Label, 1400)
-                )
-            )
-        );
-    }
-
-    [Fact]
-    public async Task Gives_account_balance_7()
-    {
-        AccountSnapshot account = AnAccount() with { BalanceAmount = 1500, BalanceDate = DateOnly.Parse("2024-08-17") };
-        TransactionSnapshot transactionAugust =
-            ATransaction() with { Amount = 100, Date = DateOnly.Parse("2024-08-13") };
-        TransactionSnapshot transactionJuly1 =
-            ATransaction() with { Amount = 130, Date = DateOnly.Parse("2024-07-03") };
-        TransactionSnapshot transactionJuly2 = ATransaction() with { Amount = 70, Date = DateOnly.Parse("2024-07-02") };
-        TransactionSnapshot transactionJune = ATransaction() with { Amount = 50, Date = DateOnly.Parse("2024-06-29") };
-        this.Feed(account, transactionJuly1, transactionJuly2, transactionAugust, transactionJune);
-
-        await this.Verify(
-            DateOnly.Parse("2024-08-01"),
-            DateOnly.Parse("2024-03-01"),
-            new SlidingBalancesPresentation(
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-03-01"),
-                    new AccountBalancePresentation(account.Label, 1150)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-04-01"),
-                    new AccountBalancePresentation(account.Label, 1150)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-05-01"),
-                    new AccountBalancePresentation(account.Label, 1150)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-06-01"),
-                    new AccountBalancePresentation(account.Label, 1150)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-07-01"),
-                    new AccountBalancePresentation(account.Label, 1200)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-08-01"),
-                    new AccountBalancePresentation(account.Label, 1400)
-                )
-            )
-        );
-    }
-
-    [Fact]
-    public async Task Gives_account_balance_9()
-    {
-        AccountSnapshot account = AnAccount() with { BalanceDate = DateOnly.Parse("2024-08-08") };
-        TransactionSnapshot transaction = ATransaction() with { Date = DateOnly.Parse("2023-08-10") };
-        this.Feed(account, transaction);
-
-        await this.Verify(
-            DateOnly.Parse("2024-08-01"),
-            DateOnly.Parse("2024-03-01"),
-            new SlidingBalancesPresentation(
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-03-01"),
-                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-04-01"),
-                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-05-01"),
-                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-06-01"),
-                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-07-01"),
-                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
-                ),
-                new SlidingBalancePresentation(
-                    DateOnly.Parse("2024-08-01"),
-                    new AccountBalancePresentation(account.Label, account.BalanceAmount)
-                )
-            )
-        );
-    }
-
-    private void Feed(AccountSnapshot account, params TransactionSnapshot[] transactions)
-    {
-        this.accountRepository.Feed(account);
-        this.transactionRepository.Feed(transactions);
-    }
-
-    private async Task Verify(DateOnly baseline, DateOnly startingFrom, SlidingBalancesPresentation expected)
+    private async Task Verify(
+        DateOnly baseline,
+        DateOnly startingFrom,
+        params SlidingBalancePresentation[] slidingBalances)
     {
         SlidingBalancesPresentation actual = await this.Sut.All(baseline, startingFrom);
-        actual.Should().BeEquivalentTo(expected);
+        actual.Should().BeEquivalentTo(new SlidingBalancesPresentation(slidingBalances));
+    }
+
+    private void Feed(AccountSnapshot account, params TransactionSnapshot[] transactions) =>
+        this.Feed([account], transactions);
+
+    private void Feed(AccountSnapshot[] accounts, params TransactionSnapshot[] transactions)
+    {
+        this.accountRepository.Feed(accounts);
+        this.transactionRepository.Feed(transactions);
     }
 
     private static AccountSnapshot AnAccount() =>
         Any<AccountSnapshot>();
 
-    private static TransactionSnapshot ATransaction() =>
-        Any<TransactionSnapshot>();
+    private static TransactionSnapshot ATransactionOf(AccountSnapshot account) =>
+        Any<TransactionSnapshot>() with { AccountId = account.Id };
+
+    private static SlidingBalancePresentation PresentationFrom(
+        DateOnly balanceDate,
+        params AccountSnapshot[] accounts) =>
+        new(balanceDate, accounts.Select(PresentationFrom).ToArray());
+
+    private static AccountBalancePresentation PresentationFrom(AccountSnapshot account) =>
+        new(account.Label, account.Balance);
 }
