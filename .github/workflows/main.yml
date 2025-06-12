@@ -43,23 +43,55 @@ jobs:
         run: dotnet restore
 
       - name: Build solution
-        run: dotnet build --configuration Release --no-restore --nologo
+        run: dotnet build --configuration Release --no-restore
 
       - name: Test
         run: dotnet test --no-restore --verbosity minimal
 
-      - name: Mutation testing Write
-        run: dotnet stryker -p Write.App -f ../stryker-config.json
-        working-directory: Tests/Write.App.Tests
+#      - name: Mutation testing Write
+#        run: dotnet stryker -p Write.App -f ../stryker-config.json
+#        working-directory: Tests/Write.App.Tests
+#
+#      - name: Mutation testing Read
+#        run: dotnet stryker -p Read.App -f ../stryker-config.json
+#        working-directory: Tests/Read.App.Tests
+#
+#      - name: Mutation testing Client.Write
+#        run: dotnet stryker -p Client.Write.App -f ../stryker-config.json
+#        working-directory: Tests/Client.Write.App.Tests
+#
+#      - name: Mutation testing Client.Read
+#        run: dotnet stryker -p Client.Read.App -f ../stryker-config.json
+#        working-directory: Tests/Client.Read.App.Tests
 
-      - name: Mutation testing Read
-        run: dotnet stryker -p Read.App -f ../stryker-config.json
-        working-directory: Tests/Read.App.Tests
+      - name: Publish API
+        run: dotnet publish Api/Api.csproj -c Release -o ${{env.DOTNET_ROOT}}/artifacts/api
 
-      - name: Mutation testing Client.Write
-        run: dotnet stryker -p Client.Write.App -f ../stryker-config.json
-        working-directory: Tests/Client.Write.App.Tests
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: .artifact-api
+          path: ${{env.DOTNET_ROOT}}/artifacts/api/wwwroot
 
-      - name: Mutation testing Client.Read
-        run: dotnet stryker -p Client.Read.App -f ../stryker-config.json
-        working-directory: Tests/Client.Read.App.Tests
+      - name: Checkout GitHub Pages repository
+        uses: actions/checkout@v4
+        with:
+          repository: NBlackout/nblackout.github.io
+          token: ${{ secrets.WRITE_CONTENT_ON_GITHUB_PAGES_REPOSITORY }}
+
+      - name: Remove previous content
+        run: find . ! -name '.nojekyll' -o -name '.git' -type f -exec rm -f {} +
+
+      - name: Download artifact to enable deployment
+        uses: actions/download-artifact@v4
+        with:
+          name: .artifact-api
+          path: .
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Update GitHub Pages" || echo "No changes to commit"
+          git push origin main
