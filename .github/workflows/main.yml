@@ -1,9 +1,8 @@
 name: Build and deploy to App Service
 
 env:
-  AZURE_WEBAPP_NAME: nblackout-money-manager
-  AZURE_WEBAPP_PACKAGE_PATH: '.'
-  DOTNET_VERSION: '9.0.x'
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
 
 concurrency:
   group: money-manager
@@ -12,7 +11,6 @@ concurrency:
 on:
   push:
     branches: [ "main" ]
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -23,15 +21,15 @@ jobs:
 
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up .NET Core
-        uses: actions/setup-dotnet@v2
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+          dotnet-version: '9.0.x'
 
       - name: Set up dependency caching
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
@@ -65,35 +63,3 @@ jobs:
       - name: Mutation testing Client.Read
         run: dotnet stryker -p Client.Read.App -f ../stryker-config.json
         working-directory: Tests/Client.Read.App.Tests
-
-      - name: Publish API
-        run: dotnet publish Api/Api.csproj -c Release -o ${{env.DOTNET_ROOT}}/artifacts/api --nologo
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: .artifact-api
-          path: ${{env.DOTNET_ROOT}}/artifacts/api
-
-  deploy:
-    permissions:
-      contents: none
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: .artifact-api
-
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}

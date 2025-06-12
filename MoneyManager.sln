@@ -14,7 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Read.Infra.Tests", "Tests\R
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__SolutionItems", "__SolutionItems", "{E1C7432F-7C18-4B3D-B449-CCB12FBC368C}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\ci.yml = .github\workflows\ci.yml
+		.github\workflows\main.yml = .github\workflows\main.yml
 		.gitignore = .gitignore
 		.config\dotnet-tools.json = .config\dotnet-tools.json
 		Directory.Build.props = Directory.Build.props
