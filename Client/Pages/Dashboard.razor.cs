@@ -7,25 +7,27 @@ namespace Client.Pages;
 public partial class Dashboard
 {
     [Inject] public SlidingBalances SlidingBalances { get; set; } = null!;
+    private SlidingBalancesPresentation? slidingBalances;
+
+    protected override async Task OnInitializedAsync() =>
+        this.slidingBalances = (await this.SlidingBalances.Execute());
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        SlidingBalancesPresentation presentation = await this.SlidingBalances.Execute();
-        HighchartsRenderer renderer = new(
-            new Highcharts
-            {
-                Title = new Title { Text = "Sliding balances" },
-                XAxis = [new XAxis { Categories = CategoriesBy(presentation) }],
-                Credits = new Credits { Enabled = false },
-                Series = SeriesBy(presentation)
-            }
-        );
+        if (this.slidingBalances != null && this.slidingBalances.SlidingBalances.Length != 0)
+        {
+            HighchartsRenderer renderer = new(
+                new Highcharts
+                {
+                    Title = new Title { Text = "Sliding balances" },
+                    XAxis = [new XAxis { Categories = CategoriesBy(this.slidingBalances!) }],
+                    Credits = new Credits { Enabled = false },
+                    Series = SeriesBy(this.slidingBalances!)
+                }
+            );
 
-        await this.JsRuntime.InvokeVoidAsync(
-            "window.renderChart",
-            "dashboard-chart",
-            renderer.GetJsonOptionsForBlazor()
-        );
+            await this.JsRuntime.InvokeVoidAsync("window.renderChart", "dashboard-chart", renderer.GetJsonOptionsForBlazor());
+        }
     }
 
     private static List<string> CategoriesBy(SlidingBalancesPresentation presentation) =>
@@ -40,11 +42,7 @@ public partial class Dashboard
             .ToList<Series>();
 
     private static LineSeries SeriesBy(SlidingBalancesPresentation presentation, string accountLabel) =>
-        new()
-        {
-            Name = accountLabel,
-            Data = presentation.SlidingBalances.Select(b => AreaSeriesDataBy(accountLabel, b)).ToList()
-        };
+        new() { Name = accountLabel, Data = presentation.SlidingBalances.Select(b => AreaSeriesDataBy(accountLabel, b)).ToList() };
 
     private static LineSeriesData AreaSeriesDataBy(string accountLabel, SlidingBalancePresentation date) =>
         new() { Y = decimal.ToDouble(date.AccountBalances.Single(b => b.AccountLabel == accountLabel).Balance) };

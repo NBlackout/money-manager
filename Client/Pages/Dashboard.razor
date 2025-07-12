@@ -2,4 +2,16 @@
 
 @inject IJSRuntime JsRuntime
 
-<div id="dashboard-chart"></div>
+@if (slidingBalances != null)
+{
+    if (slidingBalances.SlidingBalances.Length != 0)
+    {
+        <div id="dashboard-chart"></div>
+    }
+    else
+    {
+        <div class="alert alert-light" role="alert">
+            Nothing to see here for now. Kickstart things <a href="/data">here</a>
+        </div>
+    }
+}

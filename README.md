@@ -2,7 +2,6 @@
 
 ## Feat
 
-- Sliding balance empty state
 - Display EUR symbol in dashboard sliding balance tooltip (+ currency format)
 - Sliding balance displays balance at the beginning of each month + estimated balance for next 3 months
 - Redirect to /accounts after successful synchronization
