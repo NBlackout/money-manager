@@ -10,7 +10,7 @@ public class AccountsController(ImportBankStatement importBankStatement, AssignA
     : ControllerBase
 {
     [HttpPost]
-    public async Task Upload([FromForm] IFormFile file)
+    public async Task Upload(IFormFile file)
     {
         await using Stream stream = file.OpenReadStream();
         await importBankStatement.Execute(file.FileName, stream);

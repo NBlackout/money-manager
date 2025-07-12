@@ -5,30 +5,25 @@ public static class WebApplicationExtensions
     public static void ConfigureHttpRequestPipeline(this WebApplication app)
     {
         if (app.Environment.IsDevelopment())
-        {
-            app.UseSwaggerComponents();
             app.UseWebAssemblyDebugging();
-        }
 
+        app.UseSwaggerComponents();
         app.UseHttpsRedirection();
         app.MapControllers();
-
         app.UseBlazor();
     }
 
     private static void UseSwaggerComponents(this IApplicationBuilder app)
     {
-        app.UseSwagger(options => options.RouteTemplate = Path.Combine("api", options.RouteTemplate));
-        app.UseSwaggerUI(options => options.RoutePrefix = Path.Combine("api", options.RoutePrefix));
+        app.UseSwagger();
+        app.UseSwaggerUI();
     }
 
     private static void UseBlazor(this WebApplication app)
     {
         app.UseBlazorFrameworkFiles();
         app.UseStaticFiles();
-
         app.UseRouting();
         app.MapRazorPages();
-        app.MapFallbackToFile("index.html");
     }
 }
