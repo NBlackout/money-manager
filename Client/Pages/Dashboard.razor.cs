@@ -21,6 +21,7 @@ public partial class Dashboard
                 {
                     Title = new Title { Text = "Sliding balances" },
                     XAxis = [new XAxis { Categories = CategoriesBy(this.slidingBalances!) }],
+                    YAxis = [new YAxis { Title = new YAxisTitle { Text = "Balance" } }],
                     Credits = new Credits { Enabled = false },
                     Series = SeriesBy(this.slidingBalances!)
                 }
@@ -42,7 +43,12 @@ public partial class Dashboard
             .ToList<Series>();
 
     private static LineSeries SeriesBy(SlidingBalancesPresentation presentation, string accountLabel) =>
-        new() { Name = accountLabel, Data = presentation.SlidingBalances.Select(b => AreaSeriesDataBy(accountLabel, b)).ToList() };
+        new()
+        {
+            Name = accountLabel,
+            Data = presentation.SlidingBalances.Select(b => AreaSeriesDataBy(accountLabel, b)).ToList(),
+            Tooltip = new LineSeriesTooltip { ValueSuffix = " €" }
+        };
 
     private static LineSeriesData AreaSeriesDataBy(string accountLabel, SlidingBalancePresentation date) =>
         new() { Y = decimal.ToDouble(date.AccountBalances.Single(b => b.AccountLabel == accountLabel).Balance) };
