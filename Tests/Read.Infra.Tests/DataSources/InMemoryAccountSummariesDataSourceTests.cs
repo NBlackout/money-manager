@@ -23,7 +23,7 @@ public class InMemoryAccountSummariesDataSourceTests
     private async Task Verify(AccountBuilder[] accounts)
     {
         AccountSummaryPresentation[] actual = await this.Sut.All();
-        actual.Should().Equal(accounts.Select(a => a.ToSummary()));
+        actual.Should().Equal(accounts.Select(a => a.ToSummary()).ToArray());
     }
 
     private void Feed(AccountBuilder[] accounts) =>

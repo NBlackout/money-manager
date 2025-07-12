@@ -1,1 +1,0 @@
-[assembly: TestFramework("Shared.TestTooling.TestFramework.CustomXunitTestFramework", "Shared.TestTooling")]

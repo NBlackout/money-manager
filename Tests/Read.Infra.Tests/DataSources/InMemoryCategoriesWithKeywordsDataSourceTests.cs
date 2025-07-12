@@ -17,7 +17,7 @@ public class InMemoryCategoriesWithKeywordsDataSourceTests
     public async Task Gives_categories(CategoryBuilder[] expected)
     {
         this.Feed(expected);
-        await this.Verify(expected);
+        await this.Verify(expected.Select(c => new CategoryWithKeywords(c.Id, c.Label, c.Keywords)).ToArray());
     }
 
     [Fact]
@@ -27,10 +27,10 @@ public class InMemoryCategoriesWithKeywordsDataSourceTests
         await this.Verify();
     }
 
-    private async Task Verify(params CategoryBuilder[] expected)
+    private async Task Verify(params CategoryWithKeywords[] expected)
     {
         CategoryWithKeywords[] actual = await this.Sut.All();
-        actual.Should().Equal(expected.Select(c => new CategoryWithKeywords(c.Id, c.Label, c.Keywords)));
+        actual.Should().Equal(expected);
     }
 
     private void Feed(params CategoryBuilder[] categories) =>

@@ -3,11 +3,11 @@
     <ItemGroup>
         <PackageReference Include="AutoFixture.Community.ImmutableCollections"/>
         <PackageReference Include="AutoFixture.Xunit2"/>
-        <PackageReference Include="FluentAssertions"/>
         <PackageReference Include="Microsoft.Extensions.Hosting"/>
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions"/>
         <PackageReference Include="Microsoft.Extensions.Options"/>
         <PackageReference Include="xunit.abstractions"/>
+        <PackageReference Include="xunit.assert" />
         <PackageReference Include="xunit.extensibility.execution"/>
     </ItemGroup>
 

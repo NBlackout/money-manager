@@ -17,7 +17,7 @@ public class InMemoryTransactionsToCategorizeDataSourceTests
     {
         TransactionBuilder[] expected = [ATransactionWithoutCategory(), ATransactionWithoutCategory()];
         this.Feed(expected);
-        await this.Verify(expected);
+        await this.Verify(expected.Select(t => new TransactionToCategorize(t.Id, t.Label, t.Amount)).ToArray());
     }
 
     [Fact]
@@ -27,10 +27,10 @@ public class InMemoryTransactionsToCategorizeDataSourceTests
         await this.Verify();
     }
 
-    private async Task Verify(params TransactionBuilder[] expected)
+    private async Task Verify(params TransactionToCategorize[] expected)
     {
         TransactionToCategorize[] actual = await this.Sut.All();
-        actual.Should().Equal(expected.Select(t => new TransactionToCategorize(t.Id, t.Label, t.Amount)));
+        actual.Should().Equal(expected);
     }
 
     private void Feed(params TransactionBuilder[] categories) =>

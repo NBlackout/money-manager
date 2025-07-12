@@ -64,7 +64,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2C16D545-E0F6-446B-8693-DA84D25DE2F0}"
 	ProjectSection(SolutionItems) = preProject
 		Tests\Directory.Build.props = Tests\Directory.Build.props
-		Tests\AssemblyInfo.cs = Tests\AssemblyInfo.cs
 		Tests\AssemblyInfo.App.cs = Tests\AssemblyInfo.App.cs
 		Tests\AssemblyInfo.Infra.cs = Tests\AssemblyInfo.Infra.cs
 		launchSettings.json = launchSettings.json

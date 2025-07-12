@@ -11,6 +11,10 @@
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <DefaultItemExcludesInProjectFolder>$(DefaultItemExcludesInProjectFolder);StrykerOutput\**</DefaultItemExcludesInProjectFolder>
+    </PropertyGroup>
+
     <Target
         Name="CopyMutationLaunchSettings"
         BeforeTargets="Build"

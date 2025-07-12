@@ -18,7 +18,7 @@ public class UploadBankStatementTests
     {
         MemoryStream stream = new(content);
         await this.sut.Execute(fileName, contentType, stream);
-        List<(string, string, Stream)> expectedCalls = [(fileName, contentType, stream)];
+        (string, string, Stream)[] expectedCalls = [(fileName, contentType, stream)];
         this.gateway.Calls.Should().Equal(expectedCalls);
     }
 }

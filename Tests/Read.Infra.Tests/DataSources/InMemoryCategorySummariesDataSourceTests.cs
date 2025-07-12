@@ -17,13 +17,13 @@ public class InMemoryCategorySummariesDataSourceTests
     public async Task Gives_categories(CategoryBuilder[] expected)
     {
         this.Feed(expected);
-        await this.Verify(expected);
+        await this.Verify(expected.Select(c => c.ToSummary()).ToArray());
     }
 
-    private async Task Verify(CategoryBuilder[] expected)
+    private async Task Verify(CategorySummaryPresentation[] expected)
     {
         CategorySummaryPresentation[] actual = await this.Sut.All();
-        actual.Should().Equal(expected.Select(c => c.ToSummary()));
+        actual.Should().Equal(expected);
     }
 
     private void Feed(CategoryBuilder[] expected) =>
