@@ -11,10 +11,11 @@
                             @onclick="@(() => AssignLabel(category.Id))">@category.Label</button>
                 </li>
             }
+
+            <li class="dropdown-divider"></li>
         }
-        else
-        {
-            <li><a href="/categories/create" class="dropdown-item">Create a new category</a></li>
-        }
+        <li>
+            <button type="button" class="dropdown-item" @onclick="@(NavigateToCategoryCreation)">Create a new category</button>
+        </li>
     </ul>
 }

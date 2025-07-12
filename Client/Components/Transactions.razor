@@ -31,7 +31,8 @@
                         <button class="btn btn-link py-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <small class="oi oi-tag"></small>
                         </button>
-                        <TransactionLabelAssignment Id="@transaction.Id" OnCategoryAssigned="OnCategoryAssigned"></TransactionLabelAssignment>
+                        <TransactionLabelAssignment Id="@transaction.Id" Label="@transaction.Label"
+                                                    OnCategoryAssigned="OnCategoryAssigned"></TransactionLabelAssignment>
                     </div>
                 </td>
             </tr>
@@ -81,7 +82,8 @@
                         <button class="btn btn-link py-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <small class="oi oi-tag"></small>
                         </button>
-                        <TransactionLabelAssignment Id="@transaction.Id" OnCategoryAssigned="OnCategoryAssigned"></TransactionLabelAssignment>
+                        <TransactionLabelAssignment Id="@transaction.Id" Label="@transaction.Label"
+                                                    OnCategoryAssigned="OnCategoryAssigned"></TransactionLabelAssignment>
                     </div>
                 </td>
             </tr>

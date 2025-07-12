@@ -6,6 +6,7 @@ end_of_line = crlf
 insert_final_newline = false
 indent_style = space
 indent_size = 4
+max_line_length = 160
 
 [*.yml]
 indent_size = 2
@@ -14,8 +15,6 @@ indent_size = 2
 indent_size = 2
 
 [*.cs]
-max_line_length = 160
-
 csharp_preferred_modifier_order = public, private, protected, internal, file, new, static, abstract, virtual, sealed, readonly, override, extern, unsafe, volatile, async, required:suggestion
 csharp_space_after_cast = false
 csharp_style_expression_bodied_operators = when_on_single_line:suggestion

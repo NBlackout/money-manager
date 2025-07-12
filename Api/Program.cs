@@ -1,8 +1,8 @@
 using Api.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-builder.AddServices();
+builder.Configure();
 
 WebApplication app = builder.Build();
-app.ConfigureHttpRequestPipeline();
+app.Configure();
 app.Run();

@@ -10,11 +10,13 @@ public partial class Categories : ComponentBase
     [Inject] public CreateCategory CreateCategory { get; set; } = null!;
     [Inject] public DeleteCategory DeleteCategory { get; set; } = null!;
 
+    [SupplyParameterFromQuery] public string? Keywords { get; set; }
     [SupplyParameterFromForm] public CategoryForm? Category { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        this.Category ??= new CategoryForm();
+        this.Category ??= new CategoryForm { Keywords = this.Keywords };
+        this.isCreating = this.Keywords != null;
         this.categories = await this.CategorySummaries.Execute();
     }
 

@@ -17,18 +17,17 @@
 - Display account balance of given month (along with transactions)
 - Account empty state
 - Export / import budgets
+- Category export / import
 
 ## Bug
 
 - Nullable category label during import
 - Multiple import sometimes fails
 
-## Testing
+## Task
 
+- Make sure bootstrap is properly used everywhere by following their documentation examples (e.g. `NavMenu`) 
 - Contract testing
-
-## Clean
-
 - Merge Read App & Read Infra?
 - Check naming everywhere
 - Categorization table background is white

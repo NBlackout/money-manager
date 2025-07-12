@@ -2,7 +2,7 @@ namespace Api.Extensions;
 
 public static class WebApplicationExtensions
 {
-    public static void ConfigureHttpRequestPipeline(this WebApplication app)
+    public static void Configure(this WebApplication app)
     {
         if (app.Environment.IsDevelopment())
             app.UseWebAssemblyDebugging();
@@ -25,5 +25,6 @@ public static class WebApplicationExtensions
         app.UseStaticFiles();
         app.UseRouting();
         app.MapRazorPages();
+        app.MapFallbackToFile("index.html");
     }
 }

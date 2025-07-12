@@ -11,7 +11,7 @@ namespace Api.Extensions;
 
 public static class WebApplicationBuilderExtensions
 {
-    public static void AddServices(this WebApplicationBuilder builder) =>
+    public static void Configure(this WebApplicationBuilder builder) =>
         builder.Services.AddSwaggerDependencies().AddBlazorDependencies().AddSharedInfra().AddWrite().AddRead();
 
     private static IServiceCollection AddSwaggerDependencies(this IServiceCollection services) =>
