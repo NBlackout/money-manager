@@ -14,12 +14,7 @@ public class ImportBankStatementTests
 
     public ImportBankStatementTests()
     {
-        this.sut = new ImportBankStatement(
-            this.accountRepository,
-            this.categoryRepository,
-            this.transactionRepository,
-            this.bankStatementParser
-        );
+        this.sut = new ImportBankStatement(this.accountRepository, this.categoryRepository, this.transactionRepository, this.bankStatementParser);
     }
 
     [Theory]
@@ -86,10 +81,7 @@ public class ImportBankStatementTests
         await this.Verify(account, [category with { Keywords = category.Label }], aTransaction, anotherTransaction);
     }
 
-    private async Task Verify(
-        AccountSnapshot expectedAccount,
-        CategorySnapshot[] expectedCategories,
-        params TransactionSnapshot[] expectedTransactions)
+    private async Task Verify(AccountSnapshot expectedAccount, CategorySnapshot[] expectedCategories, params TransactionSnapshot[] expectedTransactions)
     {
         await this.sut.Execute(TheFileName, TheStream);
 
@@ -138,9 +130,7 @@ public class ImportBankStatementTests
         public const string TheFileName = "the filename";
         public static readonly MemoryStream TheStream = new([0xF0, 0x42]);
 
-        public static TransactionSnapshot ATransactionFrom(
-            AccountSnapshot account,
-            CategorySnapshot? category = null) =>
+        public static TransactionSnapshot ATransactionFrom(AccountSnapshot account, CategorySnapshot? category = null) =>
             Any<TransactionSnapshot>() with { AccountId = account.Id, CategoryId = category?.Id };
 
         public static AccountStatement AccountStatementFrom(

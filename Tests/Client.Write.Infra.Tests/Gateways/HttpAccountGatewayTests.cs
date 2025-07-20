@@ -37,11 +37,7 @@ public class HttpAccountGatewayTests : InfraTest<IAccountGateway, HttpAccountGat
     }
 
     private void Verify_Put(string url, object payload) =>
-        this
-            .httpMessageHandler
-            .Calls
-            .Should()
-            .Equal((HttpMethod.Put, url, JsonSerializer.Serialize(payload, Defaults.JsonSerializerOptions)));
+        this.httpMessageHandler.Calls.Should().Equal((HttpMethod.Put, url, JsonSerializer.Serialize(payload, Defaults.JsonSerializerOptions)));
 
     private static HttpClient CreateHttpClient(HttpMessageHandler httpResponseMessage) =>
         new(httpResponseMessage) { BaseAddress = new Uri(ApiUrl) };

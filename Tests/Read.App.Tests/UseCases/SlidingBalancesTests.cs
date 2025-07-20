@@ -16,11 +16,7 @@ public class SlidingBalancesTests
     [Theory]
     [InlineRandomData("2025-08-13", "2025-08-01", "2025-02-01")]
     [InlineRandomData("2028-11-02", "2028-11-01", "2028-05-01")]
-    public async Task Gives_sliding_balances_from_start_of_month(
-        string today,
-        string startOfMonth,
-        string startingFrom,
-        SlidingBalancesPresentation expected)
+    public async Task Gives_sliding_balances_from_start_of_month(string today, string startOfMonth, string startingFrom, SlidingBalancesPresentation expected)
     {
         this.TodayIs(DateOnly.Parse(today));
         this.SetSlidingBalancesTo(DateOnly.Parse(startOfMonth), DateOnly.Parse(startingFrom), expected);

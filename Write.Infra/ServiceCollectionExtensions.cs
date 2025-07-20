@@ -13,8 +13,7 @@ public static class ServiceCollectionExtensions
     {
         InMemoryAccountRepository accountRepository = new() { NextId = () => new AccountId(Guid.NewGuid()) };
         InMemoryCategoryRepository categoryRepository = new() { NextId = () => new CategoryId(Guid.NewGuid()) };
-        InMemoryTransactionRepository transactionRepository =
-            new() { NextId = () => new TransactionId(Guid.NewGuid()) };
+        InMemoryTransactionRepository transactionRepository = new() { NextId = () => new TransactionId(Guid.NewGuid()) };
         InMemoryBudgetRepository budgetRepository = new();
 
         return services
@@ -29,8 +28,5 @@ public static class ServiceCollectionExtensions
     }
 
     private static IServiceCollection AddParsers(this IServiceCollection services) =>
-        services
-            .AddScoped<IBankStatementParser, BankStatementParser>()
-            .AddScoped<OfxBankStatementParser>()
-            .AddScoped<CsvBankStatementParser>();
+        services.AddScoped<IBankStatementParser, BankStatementParser>().AddScoped<OfxBankStatementParser>().AddScoped<CsvBankStatementParser>();
 }

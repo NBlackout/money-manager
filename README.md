@@ -25,7 +25,7 @@
 
 ## Task
 
-- Make sure bootstrap is properly used everywhere by following their documentation examples (e.g. `NavMenu`) 
+- Make sure bootstrap is properly used everywhere by following their documentation examples (e.g. `NavMenu`)
 - Contract testing
 - Merge Read App & Read Infra?
 - Check naming everywhere
@@ -37,4 +37,5 @@
 - Transaction `Debit` or `Credit` instead of positive and negative amounts
 - Move UseCase DI registration in infra
 - Simplify read by removing infra layer ? Merging it in use cases ?
-- An*() which only indirects to Any<*> could all move to static test tooling class 
+- Allow to run without HTTP server (replace HTTP gateways with direct controller injection)
+- Fix mutation in CI

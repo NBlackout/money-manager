@@ -29,11 +29,7 @@ public class HttpCategoryGatewayTests : InfraTest<ICategoryGateway, HttpCategory
     }
 
     private void Verify_Post(string url, object payload) =>
-        this
-            .httpMessageHandler
-            .Calls
-            .Should()
-            .Equal((HttpMethod.Post, url, JsonSerializer.Serialize(payload, Defaults.JsonSerializerOptions)));
+        this.httpMessageHandler.Calls.Should().Equal((HttpMethod.Post, url, JsonSerializer.Serialize(payload, Defaults.JsonSerializerOptions)));
 
     private void Verify_Delete(string url) =>
         this.httpMessageHandler.Calls.Should().Equal((HttpMethod.Delete, url, string.Empty));

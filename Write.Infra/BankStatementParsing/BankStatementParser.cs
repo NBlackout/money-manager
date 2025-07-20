@@ -1,9 +1,6 @@
 ﻿namespace Write.Infra.BankStatementParsing;
 
-public class BankStatementParser(
-    OfxBankStatementParser ofxBankStatementParser,
-    CsvBankStatementParser csvBankStatementParser
-) : IBankStatementParser
+public class BankStatementParser(OfxBankStatementParser ofxBankStatementParser, CsvBankStatementParser csvBankStatementParser) : IBankStatementParser
 {
     public Task<AccountStatement> Extract(string fileName, Stream stream) =>
         Path.GetExtension(fileName) switch

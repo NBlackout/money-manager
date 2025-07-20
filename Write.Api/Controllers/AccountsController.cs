@@ -6,8 +6,7 @@ namespace Write.Api.Controllers;
 
 [ApiController]
 [Route("api/accounts")]
-public class AccountsController(ImportBankStatement importBankStatement, AssignAccountLabel assignAccountLabel)
-    : ControllerBase
+public class AccountsController(ImportBankStatement importBankStatement, AssignAccountLabel assignAccountLabel) : ControllerBase
 {
     [HttpPost]
     public async Task Upload(IFormFile file)

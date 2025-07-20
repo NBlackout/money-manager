@@ -6,12 +6,6 @@ public class InMemoryAccountDetailsDataSource(InMemoryAccountRepository accountR
     {
         Account account = await accountRepository.By(new AccountId(id));
 
-        return new AccountDetailsPresentation(
-            id,
-            account.Snapshot.Label,
-            account.Snapshot.Number,
-            account.Snapshot.Balance,
-            account.Snapshot.BalanceDate
-        );
+        return new AccountDetailsPresentation(id, account.Snapshot.Label, account.Snapshot.Number, account.Snapshot.Balance, account.Snapshot.BalanceDate);
     }
 }

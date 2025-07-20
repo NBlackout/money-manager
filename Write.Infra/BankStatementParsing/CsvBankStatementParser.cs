@@ -15,11 +15,7 @@ public class CsvBankStatementParser
         decimal accountBalance = firstRowWithBalance.AccountBalance!.Value;
         TransactionStatement[] transactions = [..rows.Select(r => r.ToTransactionStatement())];
 
-        return new AccountStatement(
-            new ExternalId(accountNumber),
-            new Balance(accountBalance, firstRowWithBalance.TransactionDate),
-            transactions
-        );
+        return new AccountStatement(new ExternalId(accountNumber), new Balance(accountBalance, firstRowWithBalance.TransactionDate), transactions);
     }
 
     private static async Task<List<string>> ReadLinesFrom(Stream stream)
@@ -80,9 +76,6 @@ public class CsvBankStatementParser
             string.IsNullOrEmpty(value) is false ? ParseDecimal(value) : null;
 
         private static decimal ParseDecimal(string value) =>
-            decimal.Parse(
-                value.Replace(",", ".").Replace(" ", string.Empty).Replace("\"", string.Empty),
-                CultureInfo.InvariantCulture
-            );
+            decimal.Parse(value.Replace(",", ".").Replace(" ", string.Empty).Replace("\"", string.Empty), CultureInfo.InvariantCulture);
     }
 }

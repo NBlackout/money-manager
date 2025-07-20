@@ -5,8 +5,7 @@ using Write.Infra.Repositories;
 
 namespace Read.Infra.Tests.DataSources;
 
-public class InMemoryBudgetSummariesDataSourceTests
-    : InfraTest<IBudgetSummariesDataSource, InMemoryBudgetSummariesDataSource>
+public class InMemoryBudgetSummariesDataSourceTests : InfraTest<IBudgetSummariesDataSource, InMemoryBudgetSummariesDataSource>
 {
     private readonly InMemoryBudgetRepository budgetRepository;
     private readonly StubbedClock clock = new();

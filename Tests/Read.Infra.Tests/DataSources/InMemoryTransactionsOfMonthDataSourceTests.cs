@@ -2,8 +2,7 @@
 
 namespace Read.Infra.Tests.DataSources;
 
-public class InMemoryTransactionsOfMonthDataSourceTests
-    : InfraTest<ITransactionsOfMonthDataSource, InMemoryTransactionsOfMonthDataSource>
+public class InMemoryTransactionsOfMonthDataSourceTests : InfraTest<ITransactionsOfMonthDataSource, InMemoryTransactionsOfMonthDataSource>
 {
     private readonly InMemoryTransactionRepository transactionRepository;
     private readonly InMemoryCategoryRepository categoryRepository;

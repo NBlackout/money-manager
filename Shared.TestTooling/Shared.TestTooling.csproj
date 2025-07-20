@@ -7,12 +7,12 @@
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions"/>
         <PackageReference Include="Microsoft.Extensions.Options"/>
         <PackageReference Include="xunit.abstractions"/>
-        <PackageReference Include="xunit.assert" />
+        <PackageReference Include="xunit.assert"/>
         <PackageReference Include="xunit.extensibility.execution"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Shared\Shared.csproj" />
+        <ProjectReference Include="..\Shared\Shared.csproj"/>
     </ItemGroup>
 
 </Project>

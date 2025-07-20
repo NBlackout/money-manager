@@ -2,11 +2,7 @@
 
 [ApiController]
 [Route("api/accounts")]
-public class AccountsController(
-    AccountSummaries accountSummaries,
-    AccountDetails accountDetails,
-    TransactionsOfMonth transactionsOfMonth
-) : ControllerBase
+public class AccountsController(AccountSummaries accountSummaries, AccountDetails accountDetails, TransactionsOfMonth transactionsOfMonth) : ControllerBase
 {
     [HttpGet]
     public async Task<AccountSummaryPresentation[]> Summaries() =>

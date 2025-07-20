@@ -10,7 +10,7 @@ public partial class Dashboard
     private SlidingBalancesPresentation? slidingBalances;
 
     protected override async Task OnInitializedAsync() =>
-        this.slidingBalances = (await this.SlidingBalances.Execute());
+        this.slidingBalances = await this.SlidingBalances.Execute();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

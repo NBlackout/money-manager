@@ -22,10 +22,7 @@ public class CategorizationSuggestionsTests
         TransactionToCategorize travelTransaction = ATransactionLabeled("Travel");
         this.transactionsToCategorizeDataSource.Feed(insuranceTransaction, travelTransaction);
 
-        await this.Verify(
-            HasSuggestion(insuranceTransaction, insuranceCategory),
-            HasSuggestion(travelTransaction, travelCategory)
-        );
+        await this.Verify(HasSuggestion(insuranceTransaction, insuranceCategory), HasSuggestion(travelTransaction, travelCategory));
     }
 
     [Fact]
@@ -77,8 +74,6 @@ public class CategorizationSuggestionsTests
     private static TransactionToCategorize ATransactionLabeled(string label) =>
         Any<TransactionToCategorize>() with { Label = label };
 
-    private static CategorizationSuggestionPresentation HasSuggestion(
-        TransactionToCategorize transaction,
-        CategoryWithKeywords category) =>
+    private static CategorizationSuggestionPresentation HasSuggestion(TransactionToCategorize transaction, CategoryWithKeywords category) =>
         new(transaction.Id, transaction.Label, transaction.Amount, category.Id, category.Label);
 }

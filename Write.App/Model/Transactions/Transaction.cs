@@ -9,25 +9,17 @@ public class Transaction : DomainEntity<TransactionId>
     private readonly DateOnly date;
     private CategoryId? categoryId;
 
-    public TransactionSnapshot Snapshot =>
-        new(
-            this.Id,
-            this.accountId,
-            this.externalId.Value,
-            this.amount.Value,
-            this.label.Value,
-            this.date,
-            this.categoryId
-        );
+    public TransactionSnapshot Snapshot => new(this.Id, this.accountId, this.externalId.Value, this.amount.Value, this.label.Value, this.date, this.categoryId);
 
-    internal Transaction(
-        TransactionId id,
-        AccountId accountId,
-        ExternalId externalId,
-        Amount amount,
-        Label label,
-        DateOnly date,
-        Category? category) : this(id, accountId, externalId, amount, label, date, category?.Id)
+    internal Transaction(TransactionId id, AccountId accountId, ExternalId externalId, Amount amount, Label label, DateOnly date, Category? category) : this(
+        id,
+        accountId,
+        externalId,
+        amount,
+        label,
+        date,
+        category?.Id
+    )
     {
     }
 

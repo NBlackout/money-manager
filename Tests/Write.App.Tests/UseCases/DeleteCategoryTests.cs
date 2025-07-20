@@ -29,11 +29,7 @@ public class DeleteCategoryTests
         TransactionSnapshot anotherTransaction = ATransaction() with { CategoryId = category.Id };
         this.Feed(category, aTransaction, anotherTransaction);
 
-        await this.Verify(
-            category,
-            aTransaction with { CategoryId = null },
-            anotherTransaction with { CategoryId = null }
-        );
+        await this.Verify(category, aTransaction with { CategoryId = null }, anotherTransaction with { CategoryId = null });
     }
 
     private async Task Verify(CategorySnapshot category, params TransactionSnapshot[] expectedTransactions)

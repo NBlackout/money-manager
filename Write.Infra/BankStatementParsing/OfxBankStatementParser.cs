@@ -39,11 +39,7 @@ public class OfxBankStatementParser
             )
         ];
 
-        return new AccountStatement(
-            new ExternalId(bankAccount.AccountNumber),
-            new Balance(balance.Amount, balance.Date),
-            transactions
-        );
+        return new AccountStatement(new ExternalId(bankAccount.AccountNumber), new Balance(balance.Amount, balance.Date), transactions);
     }
 
     private static async Task<Ofx> Deserialize(Stream stream)
@@ -71,9 +67,7 @@ public class OfxBankStatementParser
 
     public class BankMessageSetResponse
     {
-        [XmlArray("STMTTRNRS")]
-        [XmlArrayItem("STMTRS")]
-        public StatementResponse[] StatementResponses { get; init; } = [];
+        [XmlArray("STMTTRNRS")] [XmlArrayItem("STMTRS")] public StatementResponse[] StatementResponses { get; init; } = [];
     }
 
     public class StatementResponse
@@ -82,9 +76,7 @@ public class OfxBankStatementParser
         [XmlElement("AVAILBAL")] public BankAccountBalance? AvailableBalance { get; init; }
         [XmlElement("LEDGERBAL")] public BankAccountBalance? LedgerBalance { get; init; }
 
-        [XmlArray("BANKTRANLIST")]
-        [XmlArrayItem("STMTTRN")]
-        public StatementTransaction[] StatementTransactions { get; init; } = [];
+        [XmlArray("BANKTRANLIST")] [XmlArrayItem("STMTTRN")] public StatementTransaction[] StatementTransactions { get; init; } = [];
     }
 
     public class BankAccount

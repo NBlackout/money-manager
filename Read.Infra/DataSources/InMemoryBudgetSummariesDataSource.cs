@@ -2,8 +2,7 @@
 
 namespace Read.Infra.DataSources;
 
-public class InMemoryBudgetSummariesDataSource(InMemoryBudgetRepository repository, IClock clock)
-    : IBudgetSummariesDataSource
+public class InMemoryBudgetSummariesDataSource(InMemoryBudgetRepository repository, IClock clock) : IBudgetSummariesDataSource
 {
     public Task<BudgetSummaryPresentation[]> All()
     {

@@ -95,9 +95,7 @@ public class ImportBankStatement(
 
     private async Task<TransactionStatement[]> NewTransactionStatements(AccountStatement statement)
     {
-        ExternalId[] unknownExternalIds = await transactionRepository.UnknownExternalIds(
-            [..statement.Transactions.Select(t => t.Identifier)]
-        );
+        ExternalId[] unknownExternalIds = await transactionRepository.UnknownExternalIds([..statement.Transactions.Select(t => t.Identifier)]);
 
         return [..statement.Transactions.Where(t => unknownExternalIds.Contains(t.Identifier))];
     }

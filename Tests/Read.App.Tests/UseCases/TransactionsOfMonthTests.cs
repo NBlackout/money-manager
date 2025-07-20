@@ -12,11 +12,7 @@ public class TransactionsOfMonthTests
 
     [Theory]
     [RandomData]
-    public async Task Gives_transactions_of_month(
-        Guid accountId,
-        int year,
-        int month,
-        TransactionSummaryPresentation[] expected)
+    public async Task Gives_transactions_of_month(Guid accountId, int year, int month, TransactionSummaryPresentation[] expected)
     {
         this.dataSource.Feed(accountId, year, month, expected);
         TransactionSummaryPresentation[] actual = await this.sut.Execute(accountId, year, month);

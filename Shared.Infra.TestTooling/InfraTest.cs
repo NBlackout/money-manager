@@ -10,8 +10,7 @@ namespace Shared.Infra.TestTooling;
 
 public abstract class InfraTest<TContract> : InfraTest<TContract, TContract> where TContract : notnull;
 
-public abstract class InfraTest<TContract, TImplementation> : InfraTest
-    where TContract : notnull where TImplementation : TContract
+public abstract class InfraTest<TContract, TImplementation> : InfraTest where TContract : notnull where TImplementation : TContract
 {
     protected readonly TImplementation Sut;
 
@@ -32,13 +31,7 @@ public abstract class InfraTest : IDisposable
             .CreateDefaultBuilder()
             .ConfigureServices(s =>
                 {
-                    s
-                        .AddSharedInfra()
-                        .AddScoped(_ => new HttpClient())
-                        .AddServerWriteInfra()
-                        .AddServerReadInfra()
-                        .AddClientWriteInfra()
-                        .AddClientReadInfra();
+                    s.AddSharedInfra().AddScoped(_ => new HttpClient()).AddServerWriteInfra().AddServerReadInfra().AddClientWriteInfra().AddClientReadInfra();
 
                     this.Configure(s);
                 }
@@ -53,8 +46,7 @@ public abstract class InfraTest : IDisposable
     {
     }
 
-    protected TImplementation Resolve<TContract, TImplementation>()
-        where TContract : notnull where TImplementation : TContract =>
+    protected TImplementation Resolve<TContract, TImplementation>() where TContract : notnull where TImplementation : TContract =>
         this.scope.Resolve<TContract, TImplementation>();
 
     public void Dispose()

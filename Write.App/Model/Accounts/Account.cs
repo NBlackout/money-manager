@@ -6,8 +6,7 @@ public class Account : DomainEntity<AccountId>
     private Label label;
     private Balance balance;
 
-    public AccountSnapshot Snapshot =>
-        new(this.Id, this.externalId.Value, this.label.Value, this.balance.Amount, this.balance.BalanceDate);
+    public AccountSnapshot Snapshot => new(this.Id, this.externalId.Value, this.label.Value, this.balance.Amount, this.balance.BalanceDate);
 
     private Account(AccountId id, ExternalId externalId, Label label, Balance balance) : base(id)
     {
@@ -35,10 +34,5 @@ public class Account : DomainEntity<AccountId>
         new(transactionId, this.Id, externalId, amount, transactionLabel, date, category);
 
     public static Account From(AccountSnapshot snapshot) =>
-        new(
-            snapshot.Id,
-            new ExternalId(snapshot.Number),
-            new Label(snapshot.Label),
-            new Balance(snapshot.Balance, snapshot.BalanceDate)
-        );
+        new(snapshot.Id, new ExternalId(snapshot.Number), new Label(snapshot.Label), new Balance(snapshot.Balance, snapshot.BalanceDate));
 }

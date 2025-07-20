@@ -9,8 +9,7 @@ namespace Read.Infra.Tests.DataSources;
 // Balance date august, only transaction in june. What happens for july?
 // Minimum date
 // No coherence between baseline and startingFrom (we can have for example baseLine middle of month and startingFrom end of month) -> we might want a VO
-public class InMemorySlidingBalancesDataSourceTests
-    : InfraTest<ISlidingBalancesDataSource, InMemorySlidingBalancesDataSource>
+public class InMemorySlidingBalancesDataSourceTests : InfraTest<ISlidingBalancesDataSource, InMemorySlidingBalancesDataSource>
 {
     private readonly InMemoryAccountRepository accountRepository;
     private readonly InMemoryTransactionRepository transactionRepository;
@@ -27,11 +26,7 @@ public class InMemorySlidingBalancesDataSourceTests
         AccountSnapshot account = AnAccount() with { Balance = 1200, BalanceDate = DateOnly.Parse("2025-09-28") };
         this.Feed(account);
 
-        await this.Verify(
-            DateOnly.Parse("2024-09-01"),
-            DateOnly.Parse("2024-09-01"),
-            PresentationFrom(DateOnly.Parse("2024-09-01"), account)
-        );
+        await this.Verify(DateOnly.Parse("2024-09-01"), DateOnly.Parse("2024-09-01"), PresentationFrom(DateOnly.Parse("2024-09-01"), account));
     }
 
     [Fact]
@@ -102,8 +97,7 @@ public class InMemorySlidingBalancesDataSourceTests
     public async Task Gives_multiple_balances_across_many_months()
     {
         AccountSnapshot anAccount = AnAccount() with { Balance = 3000, BalanceDate = DateOnly.Parse("2017-03-13") };
-        AccountSnapshot anotherAccount =
-            AnAccount() with { Balance = 1500, BalanceDate = DateOnly.Parse("2017-02-04") };
+        AccountSnapshot anotherAccount = AnAccount() with { Balance = 1500, BalanceDate = DateOnly.Parse("2017-02-04") };
         this.Feed(
             [anAccount, anotherAccount],
             ATransactionOf(anAccount) with { Amount = 500, Date = DateOnly.Parse("2017-03-11") },
@@ -115,28 +109,13 @@ public class InMemorySlidingBalancesDataSourceTests
         await this.Verify(
             DateOnly.Parse("2017-03-01"),
             DateOnly.Parse("2017-01-01"),
-            PresentationFrom(
-                DateOnly.Parse("2017-01-01"),
-                anAccount with { Balance = 2300 },
-                anotherAccount with { Balance = -300 }
-            ),
-            PresentationFrom(
-                DateOnly.Parse("2017-02-01"),
-                anAccount with { Balance = 2300 },
-                anotherAccount with { Balance = 700 }
-            ),
-            PresentationFrom(
-                DateOnly.Parse("2017-03-01"),
-                anAccount with { Balance = 2500 },
-                anotherAccount with { Balance = 1500 }
-            )
+            PresentationFrom(DateOnly.Parse("2017-01-01"), anAccount with { Balance = 2300 }, anotherAccount with { Balance = -300 }),
+            PresentationFrom(DateOnly.Parse("2017-02-01"), anAccount with { Balance = 2300 }, anotherAccount with { Balance = 700 }),
+            PresentationFrom(DateOnly.Parse("2017-03-01"), anAccount with { Balance = 2500 }, anotherAccount with { Balance = 1500 })
         );
     }
 
-    private async Task Verify(
-        DateOnly baseline,
-        DateOnly startingFrom,
-        params SlidingBalancePresentation[] slidingBalances)
+    private async Task Verify(DateOnly baseline, DateOnly startingFrom, params SlidingBalancePresentation[] slidingBalances)
     {
         SlidingBalancesPresentation actual = await this.Sut.All(baseline, startingFrom);
         actual.Should().BeEquivalentTo(new SlidingBalancesPresentation(slidingBalances));
@@ -157,9 +136,7 @@ public class InMemorySlidingBalancesDataSourceTests
     private static TransactionSnapshot ATransactionOf(AccountSnapshot account) =>
         Any<TransactionSnapshot>() with { AccountId = account.Id };
 
-    private static SlidingBalancePresentation PresentationFrom(
-        DateOnly balanceDate,
-        params AccountSnapshot[] accounts) =>
+    private static SlidingBalancePresentation PresentationFrom(DateOnly balanceDate, params AccountSnapshot[] accounts) =>
         new(balanceDate, accounts.Select(PresentationFrom).ToArray());
 
     private static AccountBalancePresentation PresentationFrom(AccountSnapshot account) =>

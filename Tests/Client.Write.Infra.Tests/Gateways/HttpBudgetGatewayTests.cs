@@ -21,11 +21,7 @@ public class HttpBudgetGatewayTests : InfraTest<IBudgetGateway, HttpBudgetGatewa
     }
 
     private void Verify_Post(string url, object payload) =>
-        this
-            .httpMessageHandler
-            .Calls
-            .Should()
-            .Equal((HttpMethod.Post, url, JsonSerializer.Serialize(payload, Defaults.JsonSerializerOptions)));
+        this.httpMessageHandler.Calls.Should().Equal((HttpMethod.Post, url, JsonSerializer.Serialize(payload, Defaults.JsonSerializerOptions)));
 
     private static HttpClient CreateHttpClient(HttpMessageHandler httpResponseMessage) =>
         new(httpResponseMessage) { BaseAddress = new Uri(ApiUrl) };

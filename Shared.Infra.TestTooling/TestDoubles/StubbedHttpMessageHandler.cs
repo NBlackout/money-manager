@@ -6,9 +6,7 @@ public class StubbedHttpMessageHandler : HttpMessageHandler
 {
     private readonly Dictionary<string, string> payloadByUrls = new();
 
-    protected override Task<HttpResponseMessage> SendAsync(
-        HttpRequestMessage request,
-        CancellationToken cancellationToken)
+    protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         string requestUrl = request.RequestUri!.AbsoluteUri;
 

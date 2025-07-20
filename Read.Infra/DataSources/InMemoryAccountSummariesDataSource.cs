@@ -1,7 +1,6 @@
 ﻿namespace Read.Infra.DataSources;
 
-public class InMemoryAccountSummariesDataSource(InMemoryAccountRepository accountRepository)
-    : IAccountSummariesDataSource
+public class InMemoryAccountSummariesDataSource(InMemoryAccountRepository accountRepository) : IAccountSummariesDataSource
 {
     public Task<AccountSummaryPresentation[]> All()
     {

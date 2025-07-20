@@ -29,11 +29,7 @@ public class HttpAccountGatewayTests : InfraTest<IAccountGateway, HttpAccountGat
 
     [Theory]
     [RandomData]
-    public async Task Gives_transactions_of_month(
-        Guid accountId,
-        int year,
-        int month,
-        TransactionSummaryPresentation[] expected)
+    public async Task Gives_transactions_of_month(Guid accountId, int year, int month, TransactionSummaryPresentation[] expected)
     {
         this.Feed($"accounts/{accountId}/transactions?year={year}&month={month}", expected);
         TransactionSummaryPresentation[] actual = await this.Sut.TransactionsOfMonth(accountId, year, month);
