@@ -6,12 +6,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Client.Read.Infra\Client.Read.Infra.csproj"/>
-        <ProjectReference Include="..\Client.Write.Infra\Client.Write.Infra.csproj"/>
         <ProjectReference Include="..\Read.Infra\Read.Infra.csproj"/>
         <ProjectReference Include="..\Shared.Infra\Shared.Infra.csproj"/>
         <ProjectReference Include="..\Shared.TestTooling\Shared.TestTooling.csproj"/>
-        <ProjectReference Include="..\Shared\Shared.csproj"/>
         <ProjectReference Include="..\Write.Infra\Write.Infra.csproj"/>
     </ItemGroup>
 

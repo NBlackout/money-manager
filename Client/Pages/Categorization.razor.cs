@@ -1,4 +1,9 @@
-﻿namespace Client.Pages;
+﻿using Read.App.UseCases;
+using Write.App.Model.Categories;
+using Write.App.Model.Transactions;
+using Write.App.UseCases;
+
+namespace Client.Pages;
 
 public partial class Categorization : ComponentBase
 {
@@ -18,7 +23,7 @@ public partial class Categorization : ComponentBase
 
     private async Task Approve(CategorizationSuggestionPresentation suggestion)
     {
-        await this.AssignTransactionCategory.Execute(suggestion.TransactionId, suggestion.CategoryId);
+        await this.AssignTransactionCategory.Execute(new TransactionId(suggestion.TransactionId), new CategoryId(suggestion.CategoryId));
         this.suggestions = [..this.suggestions!.Where(s => s != suggestion)];
     }
 }

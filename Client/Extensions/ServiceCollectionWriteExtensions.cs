@@ -1,17 +1,16 @@
-using Client.Write.Infra;
+using Write.App.UseCases;
+using Write.Infra;
 
 namespace Client.Extensions;
 
 public static class ServiceCollectionWriteExtensions
 {
     public static IServiceCollection AddWrite(this IServiceCollection services) =>
-        services.AddUseCases().AddClientWriteInfra();
+        services.AddUseCases().AddWriteInfra();
 
     private static IServiceCollection AddUseCases(this IServiceCollection services) =>
         services
-            .AddScoped<UploadBankStatement>()
-            .AddScoped<StopAccountTracking>()
-            .AddScoped<ResumeAccountTracking>()
+            .AddScoped<ImportBankStatement>()
             .AddScoped<AssignAccountLabel>()
             .AddScoped<CreateCategory>()
             .AddScoped<DeleteCategory>()

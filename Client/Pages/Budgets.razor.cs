@@ -1,3 +1,9 @@
+using Read.App.Ports;
+using Read.App.UseCases;
+using Write.App.Model.Budgets;
+using Write.App.Model.ValueObjects;
+using Write.App.UseCases;
+
 namespace Client.Pages;
 
 public partial class Budgets : ComponentBase
@@ -32,7 +38,7 @@ public partial class Budgets : ComponentBase
         string name = this.Budget!.Label!;
         decimal amount = this.Budget!.Amount!.Value;
         DateOnly beginDate = this.Budget!.BeginDate!.Value;
-        await this.DefineBudget.Execute(id, name, amount, beginDate);
+        await this.DefineBudget.Execute(new BudgetId(id), new Label(name), new Amount(amount), beginDate);
 
         this.budgets = [..this.budgets!.Prepend(new BudgetSummaryPresentation(id, name, amount, beginDate, amount))];
         this.Budget = new BudgetForm { BeginDate = new DateOnly(DateTime.Now.Year, DateTime.Now.Month, 1) };

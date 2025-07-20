@@ -1,4 +1,10 @@
-﻿namespace Client.Pages;
+﻿using Read.App.Ports;
+using Read.App.UseCases;
+using Write.App.Model.Categories;
+using Write.App.Model.ValueObjects;
+using Write.App.UseCases;
+
+namespace Client.Pages;
 
 public partial class Categories : ComponentBase
 {
@@ -31,7 +37,7 @@ public partial class Categories : ComponentBase
         Guid id = Guid.NewGuid();
         string label = this.Category!.Label!;
         string keywords = this.Category!.Keywords!;
-        await this.CreateCategory.Execute(id, label, keywords);
+        await this.CreateCategory.Execute(new CategoryId(id), new Label(label), keywords);
 
         this.categories = [..this.categories!.Prepend(new CategorySummaryPresentation(id, label, keywords))];
         this.Category = new CategoryForm();
@@ -40,7 +46,7 @@ public partial class Categories : ComponentBase
 
     private async Task Delete(CategorySummaryPresentation category)
     {
-        await this.DeleteCategory.Execute(category.Id);
+        await this.DeleteCategory.Execute(new CategoryId(category.Id));
         this.categories = [..this.categories!.Where(c => c != category)];
     }
 

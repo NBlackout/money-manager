@@ -4,12 +4,10 @@
 
 - Add current balance in sliding balances (new data in xSeries)
 - Sliding balance displays estimated balance for next 3 months
-- Redirect to /accounts after successful synchronization
 - Change transaction category -> dropdown list with search?
 - Prevent deletion of used category
 - Allow to rename budget (in its own use case though)
 - Change budget amount implies providing begin date
-- Refresh account list on account rename
 - Indent budget fake accounts below reference account
     - Use year browsing instead of month
     - Show all fake transaction of given year

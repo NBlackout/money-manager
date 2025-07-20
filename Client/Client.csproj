@@ -7,11 +7,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Client.Read.App\Client.Read.App.csproj"/>
-        <ProjectReference Include="..\Client.Write.App\Client.Write.App.csproj"/>
-        <ProjectReference Include="..\Client.Read.Infra\Client.Read.Infra.csproj"/>
-        <ProjectReference Include="..\Client.Write.Infra\Client.Write.Infra.csproj"/>
+        <ProjectReference Include="..\Read.App\Read.App.csproj" />
+        <ProjectReference Include="..\Read.Infra\Read.Infra.csproj" />
+        <ProjectReference Include="..\Shared.Infra\Shared.Infra.csproj" />
         <ProjectReference Include="..\Shared\Shared.csproj"/>
+        <ProjectReference Include="..\Write.App\Write.App.csproj" />
+        <ProjectReference Include="..\Write.Infra\Write.Infra.csproj" />
     </ItemGroup>
 
 </Project>

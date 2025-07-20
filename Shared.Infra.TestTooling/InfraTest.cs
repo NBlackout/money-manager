@@ -1,6 +1,4 @@
-﻿using Client.Read.Infra;
-using Client.Write.Infra;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Read.Infra;
 using Shared.TestTooling;
@@ -31,7 +29,7 @@ public abstract class InfraTest : IDisposable
             .CreateDefaultBuilder()
             .ConfigureServices(s =>
                 {
-                    s.AddSharedInfra().AddScoped(_ => new HttpClient()).AddServerWriteInfra().AddServerReadInfra().AddClientWriteInfra().AddClientReadInfra();
+                    s.AddSharedInfra().AddScoped(_ => new HttpClient()).AddWriteInfra().AddReadInfra();
 
                     this.Configure(s);
                 }

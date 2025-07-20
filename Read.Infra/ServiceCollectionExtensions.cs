@@ -5,7 +5,7 @@ namespace Read.Infra;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddServerReadInfra(this IServiceCollection services) =>
+    public static IServiceCollection AddReadInfra(this IServiceCollection services) =>
         services.AddDataSources();
 
     private static IServiceCollection AddDataSources(this IServiceCollection services) =>

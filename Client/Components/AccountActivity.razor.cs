@@ -1,4 +1,10 @@
-﻿namespace Client.Components;
+﻿using Read.App.Ports;
+using Read.App.UseCases;
+using Write.App.Model.Accounts;
+using Write.App.Model.ValueObjects;
+using Write.App.UseCases;
+
+namespace Client.Components;
 
 public partial class AccountActivity : ComponentBase
 {
@@ -37,7 +43,7 @@ public partial class AccountActivity : ComponentBase
     private async Task LabelChanged(ChangeEventArgs args)
     {
         string newLabel = (string)args.Value!;
-        await this.AssignAccountLabel.Execute(this.Id, newLabel);
+        await this.AssignAccountLabel.Execute(new AccountId(this.Id), new Label(newLabel));
         await this.OnLabelAssigned.InvokeAsync((this.Id, newLabel));
 
         this.account = this.account! with { Label = newLabel };

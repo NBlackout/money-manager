@@ -6,7 +6,7 @@ namespace Write.Infra;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddServerWriteInfra(this IServiceCollection services) =>
+    public static IServiceCollection AddWriteInfra(this IServiceCollection services) =>
         services.AddRepositories().AddParsers();
 
     private static IServiceCollection AddRepositories(this IServiceCollection services)

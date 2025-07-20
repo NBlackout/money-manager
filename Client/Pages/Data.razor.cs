@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
+using Write.App.UseCases;
 
 namespace Client.Pages;
 
@@ -9,9 +10,9 @@ public partial class Data : ComponentBase
     private bool? isSuccessful;
     private string? uploadResult;
 
-    [Inject] private UploadBankStatement UploadBankStatement { get; set; } = null!;
+    [Inject] private ImportBankStatement ImportBankStatement { get; set; } = null!;
 
-    private async Task UploadBankStatementFile(InputFileChangeEventArgs args)
+    private async Task ImportBankStatementFile(InputFileChangeEventArgs args)
     {
         try
         {
@@ -36,12 +37,8 @@ public partial class Data : ComponentBase
     private async Task Upload(IBrowserFile file)
     {
         string fileName = file.Name;
-        string contentType = ContentTypeOf(file);
         Stream stream = file.OpenReadStream(FiveMegaBytes);
 
-        await this.UploadBankStatement.Execute(fileName, contentType, stream);
+        await this.ImportBankStatement.Execute(fileName, stream);
     }
-
-    private static string ContentTypeOf(IBrowserFile file) =>
-        string.IsNullOrWhiteSpace(file.ContentType) is false ? file.ContentType : "application/octet-stream";
 }

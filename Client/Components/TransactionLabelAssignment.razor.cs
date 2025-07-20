@@ -1,4 +1,10 @@
-﻿namespace Client.Components;
+﻿using Read.App.Ports;
+using Read.App.UseCases;
+using Write.App.Model.Categories;
+using Write.App.Model.Transactions;
+using Write.App.UseCases;
+
+namespace Client.Components;
 
 public partial class TransactionLabelAssignment : ComponentBase
 {
@@ -17,7 +23,7 @@ public partial class TransactionLabelAssignment : ComponentBase
 
     private async Task AssignLabel(Guid categoryId)
     {
-        await this.AssignTransactionCategory.Execute(this.Id, categoryId);
+        await this.AssignTransactionCategory.Execute(new TransactionId(this.Id), new CategoryId(categoryId));
         await this.OnCategoryAssigned.InvokeAsync((this.Id, this.categories!.Single(c => c.Id == categoryId).Label));
     }
 

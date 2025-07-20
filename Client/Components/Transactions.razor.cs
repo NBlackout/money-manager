@@ -1,4 +1,7 @@
-﻿namespace Client.Components;
+﻿using Read.App.Ports;
+using Read.App.UseCases;
+
+namespace Client.Components;
 
 public partial class Transactions : ComponentBase
 {

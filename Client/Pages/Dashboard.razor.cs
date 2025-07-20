@@ -1,6 +1,8 @@
 using Highsoft.Web.Mvc.Charts;
 using Highsoft.Web.Mvc.Charts.Rendering;
 using Microsoft.JSInterop;
+using Read.App.Ports;
+using Read.App.UseCases;
 
 namespace Client.Pages;
 

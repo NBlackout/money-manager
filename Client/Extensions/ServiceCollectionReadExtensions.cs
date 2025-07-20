@@ -1,11 +1,12 @@
-using Client.Read.Infra;
+using Read.App.UseCases;
+using Read.Infra;
 
 namespace Client.Extensions;
 
 public static class ServiceCollectionReadExtensions
 {
     public static IServiceCollection AddRead(this IServiceCollection services) =>
-        services.AddUseCases().AddClientReadInfra();
+        services.AddUseCases().AddReadInfra();
 
     private static IServiceCollection AddUseCases(this IServiceCollection services) =>
         services

@@ -31,3 +31,11 @@ public class CategorizationSuggestions(
     private static CategorizationSuggestionPresentation Match(TransactionToCategorize transaction, CategoryWithKeywords category) =>
         new(transaction.Id, transaction.Label, transaction.Amount, category.Id, category.Label);
 }
+
+public record CategorizationSuggestionPresentation(
+    Guid TransactionId,
+    string TransactionLabel,
+    decimal TransactionAmount,
+    Guid CategoryId,
+    string CategoryLabel
+);
