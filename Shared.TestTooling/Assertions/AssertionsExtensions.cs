@@ -5,13 +5,16 @@ public static class AssertionsExtensions
     public static BooleanAssertions Should(this bool actual) =>
         new(actual);
 
+    public static StringAssertions Should(this string actual) =>
+        new(actual);
+
     public static ObjectAssertions Should(this object? actual) =>
         new(actual);
 
     public static CollectionAssertions<T> Should<T>(this T[] actual) =>
         new(actual);
 
-    public static CollectionAssertions<T> Should<T>(this IEnumerable<T> actual) =>
+    public static StreamAssertions Should(this Stream actual) =>
         new(actual);
 
     public static FunctionAssertions Should(this Func<Task> action) =>

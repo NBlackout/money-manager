@@ -7,16 +7,16 @@ namespace Infra.Read;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddReadInfra(this IServiceCollection services) =>
-        services.AddDataSources();
+        services.AddDataSources().AddSingleton<ICategoryExporter, CsvCategoryExporter>();
 
     private static IServiceCollection AddDataSources(this IServiceCollection services) =>
         services
-            .AddScoped<IAccountSummariesDataSource, InMemoryAccountSummariesDataSource>()
-            .AddScoped<IAccountDetailsDataSource, InMemoryAccountDetailsDataSource>()
-            .AddScoped<ITransactionsOfMonthDataSource, InMemoryTransactionsOfMonthDataSource>()
-            .AddScoped<ICategorySummariesDataSource, InMemoryCategorySummariesDataSource>()
-            .AddScoped<ICategoriesWithKeywordsDataSource, InMemoryCategoriesWithKeywordsDataSource>()
-            .AddScoped<ITransactionsToCategorizeDataSource, InMemoryTransactionsToCategorizeDataSource>()
-            .AddScoped<IBudgetSummariesDataSource, InMemoryBudgetSummariesDataSource>()
-            .AddScoped<ISlidingBalancesDataSource, InMemorySlidingBalancesDataSource>();
+            .AddSingleton<IAccountSummariesDataSource, InMemoryAccountSummariesDataSource>()
+            .AddSingleton<IAccountDetailsDataSource, InMemoryAccountDetailsDataSource>()
+            .AddSingleton<ITransactionsOfMonthDataSource, InMemoryTransactionsOfMonthDataSource>()
+            .AddSingleton<ICategorySummariesDataSource, InMemoryCategorySummariesDataSource>()
+            .AddSingleton<ICategoriesWithKeywordsDataSource, InMemoryCategoriesWithKeywordsDataSource>()
+            .AddSingleton<ITransactionsToCategorizeDataSource, InMemoryTransactionsToCategorizeDataSource>()
+            .AddSingleton<IBudgetSummariesDataSource, InMemoryBudgetSummariesDataSource>()
+            .AddSingleton<ISlidingBalancesDataSource, InMemorySlidingBalancesDataSource>();
 }
