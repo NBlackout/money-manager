@@ -1,7 +1,7 @@
-﻿using Read.App.UseCases;
-using Write.App.Model.Categories;
-using Write.App.Model.Transactions;
-using Write.App.UseCases;
+﻿using App.Read.UseCases;
+using App.Write.Model.Categories;
+using App.Write.Model.Transactions;
+using App.Write.UseCases;
 
 namespace Client.Pages;
 

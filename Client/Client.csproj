@@ -7,12 +7,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Read.App\Read.App.csproj" />
-        <ProjectReference Include="..\Read.Infra\Read.Infra.csproj" />
-        <ProjectReference Include="..\Shared.Infra\Shared.Infra.csproj" />
-        <ProjectReference Include="..\Shared\Shared.csproj"/>
-        <ProjectReference Include="..\Write.App\Write.App.csproj" />
-        <ProjectReference Include="..\Write.Infra\Write.Infra.csproj" />
+      <ProjectReference Include="..\App\App.csproj" />
+      <ProjectReference Include="..\Infra\Infra.csproj" />
     </ItemGroup>
 
 </Project>

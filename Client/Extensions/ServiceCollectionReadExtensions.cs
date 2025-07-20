@@ -1,5 +1,5 @@
-using Read.App.UseCases;
-using Read.Infra;
+using App.Read.UseCases;
+using Infra.Read;
 
 namespace Client.Extensions;
 

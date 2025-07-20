@@ -1,6 +1,7 @@
 <Project>
 
     <PropertyGroup>
+        <AssemblyName>MoneyManager.$(MSBuildProjectName)</AssemblyName>
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
@@ -10,19 +11,5 @@
     <PropertyGroup Condition="'$(Configuration)'=='Debug'">
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
-
-    <PropertyGroup>
-        <DefaultItemExcludesInProjectFolder>$(DefaultItemExcludesInProjectFolder);StrykerOutput\**</DefaultItemExcludesInProjectFolder>
-    </PropertyGroup>
-
-    <Target
-        Name="CopyMutationLaunchSettings"
-        BeforeTargets="Build"
-        Condition="'$(ProjectName.EndsWith(`.App`))' == true And '$(ProjectName.StartsWith(`Shared.`))' == false">
-        <Copy
-            SourceFiles="../launchSettings.json"
-            DestinationFiles="$(MSBuildProjectDirectory)/Properties/launchSettings.json"
-            SkipUnchangedFiles="true"/>
-    </Target>
 
 </Project>

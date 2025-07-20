@@ -4,7 +4,6 @@
 
     <PropertyGroup>
         <IsPackable>false</IsPackable>
-        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     </PropertyGroup>
 
     <ItemGroup>
@@ -31,13 +30,6 @@
         <Using Include="Shared.TestTooling.Assertions"/>
         <Using Include="Shared.TestTooling.AutoFixture"/>
         <Using Include="Xunit"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Compile Include="..\AssemblyInfo.App.cs" Link="Properties\AssemblyInfo.App.cs"
-                 Condition="'$(ProjectName.EndsWith(`App.Tests`))' == true"/>
-        <Compile Include="..\AssemblyInfo.Infra.cs" Link="Properties\AssemblyInfo.Infra.cs"
-                 Condition="'$(ProjectName.EndsWith(`Infra.Tests`))' == true"/>
     </ItemGroup>
 
 </Project>

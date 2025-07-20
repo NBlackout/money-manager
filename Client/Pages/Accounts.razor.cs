@@ -1,5 +1,5 @@
-﻿using Read.App.Ports;
-using Read.App.UseCases;
+﻿using App.Read.Ports;
+using App.Read.UseCases;
 
 namespace Client.Pages;
 

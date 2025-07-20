@@ -1,1 +1,0 @@
-[assembly: AssemblyTrait("Category", "App")]

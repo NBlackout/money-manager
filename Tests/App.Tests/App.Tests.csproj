@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <AssemblyAttribute Include="Xunit.AssemblyTrait">
+            <_Parameter1>Category</_Parameter1>
+            <_Parameter2>App</_Parameter2>
+        </AssemblyAttribute>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\App\App.csproj"/>
+        <ProjectReference Include="..\..\Infra\Infra.csproj"/>
+    </ItemGroup>
+
+</Project>

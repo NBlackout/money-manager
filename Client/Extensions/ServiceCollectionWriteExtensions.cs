@@ -1,5 +1,5 @@
-using Write.App.UseCases;
-using Write.Infra;
+using App.Write.UseCases;
+using Infra.Write;
 
 namespace Client.Extensions;
 

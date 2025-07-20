@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <AssemblyAttribute Include="Xunit.AssemblyTrait">
+            <_Parameter1>Category</_Parameter1>
+            <_Parameter2>Infra</_Parameter2>
+        </AssemblyAttribute>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Tooling\Resources\Resources.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\App\App.csproj" />
+      <ProjectReference Include="..\..\Infra\Infra.csproj" />
+      <ProjectReference Include="..\App.Tests\App.Tests.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -1,8 +1,8 @@
-using Read.App.Ports;
-using Read.App.UseCases;
-using Write.App.Model.Budgets;
-using Write.App.Model.ValueObjects;
-using Write.App.UseCases;
+using App.Read.Ports;
+using App.Read.UseCases;
+using App.Write.Model.Budgets;
+using App.Write.Model.ValueObjects;
+using App.Write.UseCases;
 
 namespace Client.Pages;
 
