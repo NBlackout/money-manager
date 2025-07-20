@@ -9,6 +9,8 @@ namespace Client.Pages;
 public partial class Dashboard
 {
     [Inject] public SlidingBalances SlidingBalances { get; set; } = null!;
+    [Inject] public IJSRuntime JsRuntime { get; set; } = null!;
+
     private SlidingBalancesPresentation? slidingBalances;
 
     protected override async Task OnInitializedAsync() =>

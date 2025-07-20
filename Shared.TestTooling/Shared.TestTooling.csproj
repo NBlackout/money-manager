@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-        <PackageReference Include="AutoFixture.Community.ImmutableCollections"/>
         <PackageReference Include="AutoFixture.Xunit2"/>
         <PackageReference Include="Microsoft.Extensions.Hosting"/>
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions"/>

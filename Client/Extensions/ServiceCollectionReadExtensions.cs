@@ -10,11 +10,12 @@ public static class ServiceCollectionReadExtensions
 
     private static IServiceCollection AddUseCases(this IServiceCollection services) =>
         services
-            .AddScoped<AccountSummaries>()
-            .AddScoped<AccountDetails>()
-            .AddScoped<TransactionsOfMonth>()
-            .AddScoped<CategorySummaries>()
-            .AddScoped<CategorizationSuggestions>()
-            .AddScoped<BudgetSummaries>()
-            .AddScoped<SlidingBalances>();
+            .AddSingleton<AccountSummaries>()
+            .AddSingleton<AccountDetails>()
+            .AddSingleton<TransactionsOfMonth>()
+            .AddSingleton<CategorySummaries>()
+            .AddSingleton<CategorizationSuggestions>()
+            .AddSingleton<CategoriesExport>()
+            .AddSingleton<BudgetSummaries>()
+            .AddSingleton<SlidingBalances>();
 }

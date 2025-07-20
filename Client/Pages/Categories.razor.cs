@@ -3,6 +3,7 @@ using App.Read.UseCases;
 using App.Write.Model.Categories;
 using App.Write.UseCases;
 using App.Write.Model.ValueObjects;
+using Microsoft.JSInterop;
 
 namespace Client.Pages;
 
@@ -15,6 +16,8 @@ public partial class Categories : ComponentBase
     [Inject] public CategorySummaries CategorySummaries { get; set; } = null!;
     [Inject] public CreateCategory CreateCategory { get; set; } = null!;
     [Inject] public DeleteCategory DeleteCategory { get; set; } = null!;
+    [Inject] public CategoriesExport CategoriesExport { get; set; } = null!;
+    [Inject] public IJSRuntime JsRuntime { get; set; } = null!;
 
     [SupplyParameterFromQuery] public string? Keywords { get; set; }
     [SupplyParameterFromForm] public CategoryForm? Category { get; set; }
@@ -48,6 +51,14 @@ public partial class Categories : ComponentBase
     {
         await this.DeleteCategory.Execute(new CategoryId(category.Id));
         this.categories = [..this.categories!.Where(c => c != category)];
+    }
+
+    private async Task ExportCategories()
+    {
+        await using Stream content = await this.CategoriesExport.Execute();
+        using DotNetStreamReference reference = new(content);
+
+        await this.JsRuntime.InvokeVoidAsync("downloadFileFromStream", "categories.csv", reference);
     }
 
     public class CategoryForm

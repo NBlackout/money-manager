@@ -10,10 +10,10 @@ public static class ServiceCollectionWriteExtensions
 
     private static IServiceCollection AddUseCases(this IServiceCollection services) =>
         services
-            .AddScoped<ImportBankStatement>()
-            .AddScoped<AssignAccountLabel>()
-            .AddScoped<CreateCategory>()
-            .AddScoped<DeleteCategory>()
-            .AddScoped<AssignTransactionCategory>()
-            .AddScoped<DefineBudget>();
+            .AddSingleton<ImportBankStatement>()
+            .AddSingleton<AssignAccountLabel>()
+            .AddSingleton<CreateCategory>()
+            .AddSingleton<DeleteCategory>()
+            .AddSingleton<AssignTransactionCategory>()
+            .AddSingleton<DefineBudget>();
 }

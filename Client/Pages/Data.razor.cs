@@ -37,8 +37,10 @@ public partial class Data : ComponentBase
     private async Task Upload(IBrowserFile file)
     {
         string fileName = file.Name;
-        Stream stream = file.OpenReadStream(FiveMegaBytes);
+        MemoryStream buffer = new();
+        await file.OpenReadStream(FiveMegaBytes).CopyToAsync(buffer);
+        buffer.Position = 0;
 
-        await this.ImportBankStatement.Execute(fileName, stream);
+        await this.ImportBankStatement.Execute(fileName, buffer);
     }
 }

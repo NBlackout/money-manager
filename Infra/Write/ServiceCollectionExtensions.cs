@@ -32,5 +32,5 @@ public static class ServiceCollectionExtensions
     }
 
     private static IServiceCollection AddParsers(this IServiceCollection services) =>
-        services.AddScoped<IBankStatementParser, BankStatementParser>().AddScoped<OfxBankStatementParser>().AddScoped<CsvBankStatementParser>();
+        services.AddSingleton<IBankStatementParser, BankStatementParser>().AddSingleton<OfxBankStatementParser>().AddSingleton<CsvBankStatementParser>();
 }
