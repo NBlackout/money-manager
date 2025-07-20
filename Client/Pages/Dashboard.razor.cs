@@ -21,7 +21,7 @@ public partial class Dashboard
                 {
                     Title = new Title { Text = "Sliding balances" },
                     XAxis = [new XAxis { Categories = CategoriesBy(this.slidingBalances!) }],
-                    YAxis = [new YAxis { Title = new YAxisTitle { Text = "Balance" } }],
+                    YAxis = [new YAxis { Title = new YAxisTitle { Text = "Balance (€)" } }],
                     Credits = new Credits { Enabled = false },
                     Series = SeriesBy(this.slidingBalances!)
                 }
