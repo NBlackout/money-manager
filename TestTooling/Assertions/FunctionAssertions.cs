@@ -1,4 +1,4 @@
-namespace Shared.TestTooling.Assertions;
+namespace TestTooling.Assertions;
 
 public record FunctionAssertions(Func<Task> Actual)
 {

@@ -19,27 +19,27 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="OfxSample" type="System.Resources.ResXFileRef, System.Windows.Forms">
-        <value>OfxSample.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>Resources/OfxSample.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </data>
     <data name="MissingBankIdentifierOfxSample" type="System.Resources.ResXFileRef, System.Windows.Forms">
-        <value>MissingBankIdentifierOfxSample.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>Resources/MissingBankIdentifierOfxSample.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </data>
     <data name="MissingAccountNumberOfxSample" type="System.Resources.ResXFileRef, System.Windows.Forms">
-        <value>MissingAccountNumberOfxSample.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>Resources/MissingAccountNumberOfxSample.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </data>
     <data name="MissingBalanceOfxSample" type="System.Resources.ResXFileRef, System.Windows.Forms">
-        <value>MissingBalanceOfxSample.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>Resources/MissingBalanceOfxSample.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </data>
     <data name="MissingAvailableBalanceOfxSample" type="System.Resources.ResXFileRef, System.Windows.Forms">
-        <value>MissingAvailableBalanceOfxSample.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>Resources/MissingAvailableBalanceOfxSample.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </data>
     <data name="NonXmlHeadersOfxSample" type="System.Resources.ResXFileRef, System.Windows.Forms">
-        <value>NonXmlHeadersOfxSample.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>Resources/NonXmlHeadersOfxSample.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </data>
     <data name="CsvSample" type="System.Resources.ResXFileRef, System.Windows.Forms">
-        <value>CsvSample.csv;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>Resources/CsvSample.csv;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </data>
     <data name="MissingAccountBalanceOnNewestTransactions" type="System.Resources.ResXFileRef, System.Windows.Forms">
-        <value>NoAccountBalanceOnNewestTransactions.csv;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>Resources/NoAccountBalanceOnNewestTransactions.csv;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </data>
 </root>

@@ -14,7 +14,7 @@
 - Display account balance of given month (along with transactions)
 - Account empty state
 - Export / import budgets
-- Category export / import
+- Category import
 
 ## Bug
 
@@ -23,6 +23,7 @@
 
 ## Task
 
+- A single CSV adapter to read/write
 - Make sure bootstrap is properly used everywhere by following their documentation examples (e.g. `NavMenu`)
 - Contract testing
 - Merge Read App & Read Infra?

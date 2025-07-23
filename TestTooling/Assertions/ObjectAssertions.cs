@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Xunit.Sdk;
 
-namespace Shared.TestTooling.Assertions;
+namespace TestTooling.Assertions;
 
 public record ObjectAssertions(object? Actual)
 {

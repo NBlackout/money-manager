@@ -24,7 +24,7 @@ public class InMemoryAccountSummariesDataSourceTests : InfraTest<IAccountSummari
         await this.Verify(accounts);
     }
 
-    private async Task Verify(AccountBuilder[] accounts)
+    private async Task Verify(params AccountBuilder[] accounts)
     {
         AccountSummaryPresentation[] actual = await this.Sut.All();
         actual.Should().Equal(accounts.Select(a => a.ToSummary()).ToArray());

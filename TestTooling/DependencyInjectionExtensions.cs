@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 
-namespace Shared.TestTooling;
+namespace TestTooling;
 
 public static class DependencyInjectionExtensions
 {

@@ -14,6 +14,7 @@ public static class ServiceCollectionWriteExtensions
             .AddSingleton<AssignAccountLabel>()
             .AddSingleton<CreateCategory>()
             .AddSingleton<DeleteCategory>()
+            .AddSingleton<ImportCategories>()
             .AddSingleton<AssignTransactionCategory>()
             .AddSingleton<DefineBudget>();
 }

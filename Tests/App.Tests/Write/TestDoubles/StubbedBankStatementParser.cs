@@ -1,6 +1,6 @@
-﻿using App.Write.Ports;
+using App.Write.Ports;
 
-namespace Infra.Write.BankStatementParsing;
+namespace App.Tests.Write.TestDoubles;
 
 public class StubbedBankStatementParser : IBankStatementParser
 {

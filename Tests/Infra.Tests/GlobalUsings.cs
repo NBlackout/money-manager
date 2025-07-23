@@ -1,2 +1,2 @@
-global using static Infra.Tests.Tooling.Resources.Resources;
-global using static Shared.TestTooling.Randomizer;
+global using static Infra.Tests.Tooling.Resources;
+global using static TestTooling.Randomizer;

@@ -1,10 +1,10 @@
-﻿using App.Write.Model.Accounts;
+﻿using App.Tests.Write.TestDoubles;
+using App.Write.Model.Accounts;
 using App.Write.Model.Categories;
 using App.Write.Model.Transactions;
 using App.Write.Model.ValueObjects;
 using App.Write.Ports;
 using App.Write.UseCases;
-using Infra.Write.BankStatementParsing;
 using Infra.Write.Repositories;
 using static App.Tests.Write.UseCases.ImportBankStatementTests.Data;
 using TransactionSnapshot = App.Write.Model.Transactions.TransactionSnapshot;

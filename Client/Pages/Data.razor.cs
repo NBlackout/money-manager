@@ -37,7 +37,7 @@ public partial class Data : ComponentBase
     private async Task Upload(IBrowserFile file)
     {
         string fileName = file.Name;
-        MemoryStream buffer = new();
+        await using MemoryStream buffer = new();
         await file.OpenReadStream(FiveMegaBytes).CopyToAsync(buffer);
         buffer.Position = 0;
 

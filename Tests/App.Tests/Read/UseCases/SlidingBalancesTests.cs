@@ -1,7 +1,7 @@
 using App.Read.Ports;
 using App.Read.UseCases;
 using App.Tests.Read.TestDoubles;
-using Shared.TestTooling.TestDoubles;
+using TestTooling.TestDoubles;
 
 namespace App.Tests.Read.UseCases;
 

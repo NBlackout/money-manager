@@ -2,6 +2,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\App\App.csproj" />
+      <ProjectReference Include="..\Tooling\Tooling.csproj" />
     </ItemGroup>
 
     <ItemGroup>

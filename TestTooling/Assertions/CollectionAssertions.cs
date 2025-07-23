@@ -1,6 +1,6 @@
 using Xunit.Sdk;
 
-namespace Shared.TestTooling.Assertions;
+namespace TestTooling.Assertions;
 
 public record CollectionAssertions<T>(IEnumerable<T> Actual)
 {
@@ -15,7 +15,7 @@ public record CollectionAssertions<T>(IEnumerable<T> Actual)
             if (!e.Message.Contains("[]"))
                 throw;
 
-            ((object?)this.Actual).Should().BeEquivalentTo(expected);
+            this.Actual.Should().BeEquivalentTo(expected);
         }
     }
 }
