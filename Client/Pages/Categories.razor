@@ -2,6 +2,12 @@
 @page "/categories/create"
 @using global::App.Read.Ports
 
+<InputFile OnChange="ImportCategoriesFile" accept=".csv"></InputFile>
+@if (uploadResult != null)
+{
+    <div>@uploadResult</div>
+}
+
 @if (isCreating)
 {
     <EditForm Model="Category" OnSubmit="Submit" FormName="CreateCategory">

@@ -1,1 +1,1 @@
-global using static Shared.TestTooling.Randomizer;
+global using static TestTooling.Randomizer;

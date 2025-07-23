@@ -6,7 +6,7 @@ using Infra.Read.DataSources;
 using Infra.Tests.Tooling;
 using Infra.Write.Repositories;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.TestTooling.TestDoubles;
+using TestTooling.TestDoubles;
 
 namespace Infra.Tests.Read.DataSources;
 

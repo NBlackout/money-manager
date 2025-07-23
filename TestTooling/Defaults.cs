@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace Shared.TestTooling;
+namespace TestTooling;
 
 public static class Defaults
 {

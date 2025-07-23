@@ -1,6 +1,7 @@
-﻿using static Shared.TestTooling.Randomizer;
+﻿using Tooling;
+using static TestTooling.Randomizer;
 
-namespace Shared.TestTooling.AutoFixture;
+namespace TestTooling.AutoFixture;
 
 public static class RandomData
 {
@@ -13,7 +14,7 @@ public static class RandomData
         Fixture fixture = new();
         fixture.Customize<DateOnly>(composer => composer.FromFactory<DateTime>(DateOnly.FromDateTime));
         fixture.Customize<bool>(composer => composer.FromFactory(() => Random.Next(0, 2) == 0));
-        fixture.Register<Stream>(() => new MemoryStream(Any<Guid>().ToByteArray()));
+        fixture.Register(() => Any<Guid>().ToString().ToUtf8Stream());
 
         return fixture;
     }

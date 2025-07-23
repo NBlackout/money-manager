@@ -22,13 +22,13 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Shared.TestTooling\Shared.TestTooling.csproj"/>
+        <ProjectReference Include="..\..\TestTooling\TestTooling.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Using Include="Shared.TestTooling"/>
-        <Using Include="Shared.TestTooling.Assertions"/>
-        <Using Include="Shared.TestTooling.AutoFixture"/>
+        <Using Include="TestTooling"/>
+        <Using Include="TestTooling.Assertions"/>
+        <Using Include="TestTooling.AutoFixture"/>
         <Using Include="Xunit"/>
     </ItemGroup>
 

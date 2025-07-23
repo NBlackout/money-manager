@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using System.Xml.Serialization;
 using App.Write.Model.Accounts;
 using App.Write.Model.ValueObjects;
 using App.Write.Ports;
 using Infra.Write.Exceptions;
+using Tooling;
 
 namespace Infra.Write.BankStatementParsing;
 
@@ -58,7 +58,7 @@ public class OfxBankStatementParser
         string text = await reader.ReadToEndAsync();
         int ofxTagPosition = text.IndexOf("<OFX>", StringComparison.InvariantCulture);
 
-        return new MemoryStream(Encoding.UTF8.GetBytes(text[ofxTagPosition..]));
+        return text[ofxTagPosition..].ToUtf8Stream();
     }
 
     [XmlRoot("OFX")]

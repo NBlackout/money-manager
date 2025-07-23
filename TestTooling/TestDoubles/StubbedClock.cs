@@ -1,6 +1,6 @@
 using App.Shared.Ports;
 
-namespace Shared.TestTooling.TestDoubles;
+namespace TestTooling.TestDoubles;
 
 public class StubbedClock : IClock
 {

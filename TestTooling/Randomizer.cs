@@ -1,6 +1,6 @@
-﻿using Shared.TestTooling.AutoFixture;
+﻿using TestTooling.AutoFixture;
 
-namespace Shared.TestTooling;
+namespace TestTooling;
 
 public static class Randomizer
 {

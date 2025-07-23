@@ -1,3 +1,3 @@
-namespace Shared.TestTooling.AutoFixture;
+namespace TestTooling.AutoFixture;
 
 public class RandomDataAttribute() : AutoDataAttribute(RandomData.GetFixture);

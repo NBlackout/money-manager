@@ -1,5 +1,5 @@
-using System.Text;
 using App.Read.Ports;
+using Tooling;
 
 namespace Infra.Read;
 
@@ -13,7 +13,7 @@ public class CsvCategoryExporter : ICategoryExporter
         string[] rows = [Headers(), ..categories.Select(Row)];
         string content = string.Join(LineSeparator, rows);
 
-        return Task.FromResult(Encode(content));
+        return Task.FromResult(content.ToUtf8Stream());
     }
 
     private static string Headers() =>
@@ -21,7 +21,4 @@ public class CsvCategoryExporter : ICategoryExporter
 
     private static string Row(CategorySummaryPresentation category) =>
         string.Join(CellSeparator, category.Label, category.Keywords);
-
-    private static Stream Encode(string content) =>
-        new MemoryStream(Encoding.UTF8.GetBytes(content));
 }
