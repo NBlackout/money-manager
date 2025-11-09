@@ -33,8 +33,18 @@ public partial class Dashboard
                     ],
                     Credits = new Credits { Enabled = false },
                     Series = SeriesBy(this.monthlyPerformance!),
-                    Tooltip = new Tooltip { Shared = true, Distance = 75 },
-                    PlotOptions = new PlotOptions { Column = new PlotOptionsColumn { PointPadding = 0, GroupPadding = 0 } }
+                    Tooltip = new Tooltip { Shared = true, Distance = 75, ValueSuffix = " €" },
+                    PlotOptions = new PlotOptions
+                    {
+                        Column = new PlotOptionsColumn { PointPadding = 0, GroupPadding = 0 },
+                        Area = new PlotOptionsArea
+                        {
+                            Marker = new PlotOptionsAreaMarker { Enabled = false },
+                            States = new PlotOptionsAreaStates { Hover = new PlotOptionsAreaStatesHover { LineWidthPlus = 0 } },
+                            LineWidth = 0,
+                            FillOpacity = 0.1
+                        }
+                    }
                 }
             );
 
@@ -42,10 +52,10 @@ public partial class Dashboard
         }
     }
 
-    private static List<string> CategoriesBy(PeriodPerformancePresentation[] presentation) =>
-        presentation.Select(b => b.DateRange.From.ToString("MMMM")).ToList();
+    private static List<string> CategoriesBy(PeriodPerformancePresentation[] periods) =>
+        periods.Select(b => b.DateRange.From.ToString("MMMM")).ToList();
 
-    private static List<Series> SeriesBy(PeriodPerformancePresentation[] presentation)
+    private static List<Series> SeriesBy(PeriodPerformancePresentation[] periods)
     {
         return
         [
@@ -53,41 +63,33 @@ public partial class Dashboard
             {
                 Name = "Net",
                 YAxis = "Performance",
-                Data = presentation.Select(sb => new ColumnSeriesData { Y = decimal.ToDouble(sb.Performance.Net) }).ToList(),
-                Zones = [new ColumnSeriesZone { Color = "red", Value = 0 }, new ColumnSeriesZone { Color = "green" }],
-                Tooltip = new ColumnSeriesTooltip { ValueSuffix = " €" },
+                Data = periods.Select(p => new ColumnSeriesData { Y = decimal.ToDouble(p.Performance.Net) }).ToList(),
+                Color = "green",
+                NegativeColor = "red",
                 Opacity = 0.5,
-                States = new ColumnSeriesStates { Hover = new ColumnSeriesStatesHover { CustomFields = new Hashtable { { "opacity", "1" } } } }
+                States = new ColumnSeriesStates { Hover = new ColumnSeriesStatesHover { CustomFields = new Hashtable { { "opacity", "1" } } } },
+                ZIndex = 1
             },
             new AreaSeries
             {
                 Name = "Revenue",
                 YAxis = "Performance",
-                Data = presentation.Select(sb => new AreaSeriesData { Y = decimal.ToDouble(sb.Performance.Revenue) }).ToList(),
+                Data = periods.Select(p => new AreaSeriesData { Y = decimal.ToDouble(p.Performance.Revenue) }).ToList(),
                 Color = "green",
-                Tooltip = new AreaSeriesTooltip { ValueSuffix = " €" },
-                FillOpacity = 0.1,
-                LineWidth = 0,
-                Marker = new AreaSeriesMarker { Enabled = false }
             },
             new AreaSeries
             {
                 Name = "Expenses",
                 YAxis = "Performance",
-                Data = presentation.Select(sb => new AreaSeriesData { Y = decimal.ToDouble(sb.Performance.Expenses) }).ToList(),
+                Data = periods.Select(p => new AreaSeriesData { Y = decimal.ToDouble(p.Performance.Expenses) }).ToList(),
                 Color = "red",
-                Tooltip = new AreaSeriesTooltip { ValueSuffix = " €" },
-                FillOpacity = 0.1,
-                LineWidth = 0,
-                Marker = new AreaSeriesMarker { Enabled = false }
             },
             new LineSeries
             {
                 Name = "Balance",
                 YAxis = "Balance",
-                Data = presentation.Select(sb => new LineSeriesData { Y = decimal.ToDouble(sb.Balance) }).ToList(),
+                Data = periods.Select(p => new LineSeriesData { Y = decimal.ToDouble(p.Balance) }).ToList(),
                 ColorIndex = 0,
-                Tooltip = new LineSeriesTooltip { ValueSuffix = " €" },
                 PointPlacementNumber = -0.5,
                 ZIndex = 1
             }
