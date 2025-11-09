@@ -8,26 +8,35 @@ namespace Client.Pages;
 
 public partial class Dashboard
 {
-    [Inject] public SlidingBalances SlidingBalances { get; set; } = null!;
+    [Inject] public MonthlyPerformance MonthlyPerformance { get; set; } = null!;
     [Inject] public IJSRuntime JsRuntime { get; set; } = null!;
 
-    private SlidingBalancesPresentation? slidingBalances;
+    private PeriodPerformancePresentation[]? monthlyPerformance;
 
     protected override async Task OnInitializedAsync() =>
-        this.slidingBalances = await this.SlidingBalances.Execute();
+        this.monthlyPerformance = await this.MonthlyPerformance.Execute();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (this.slidingBalances != null && this.slidingBalances.SlidingBalances.Length != 0)
+        if (this.monthlyPerformance?.Length != 0)
         {
             HighchartsRenderer renderer = new(
                 new Highcharts
                 {
-                    Title = new Title { Text = "Sliding balances" },
-                    XAxis = [new XAxis { Categories = CategoriesBy(this.slidingBalances!) }],
-                    YAxis = [new YAxis { Title = new YAxisTitle { Text = "Balance (€)" } }],
+                    Title = new Title { Text = "Monthly performance" },
+                    XAxis = [new XAxis { Categories = CategoriesBy(this.monthlyPerformance!), TickWidth = 1 }],
+                    YAxis =
+                    [
+                        new YAxis { Title = new YAxisTitle { Text = "Balance (€)" }, Id = "Balance" },
+                        new YAxis { Title = new YAxisTitle { Text = "Performance (€)" }, Id = "Performance", Opposite = true }
+                    ],
                     Credits = new Credits { Enabled = false },
-                    Series = SeriesBy(this.slidingBalances!)
+                    Series = SeriesBy(this.monthlyPerformance!),
+                    Tooltip = new Tooltip { Shared = true },
+                    PlotOptions = new PlotOptions
+                    {
+                        Column = new PlotOptionsColumn { Stacking = PlotOptionsColumnStacking.Normal, PointPadding = 0, GroupPadding = 0 }
+                    }
                 }
             );
 
@@ -35,25 +44,52 @@ public partial class Dashboard
         }
     }
 
-    private static List<string> CategoriesBy(SlidingBalancesPresentation presentation) =>
-        presentation.SlidingBalances.Select(b => b.BalanceDate.ToShortDateString()).ToList();
+    private static List<string> CategoriesBy(PeriodPerformancePresentation[] presentation) =>
+        presentation.Select(b => b.DateRange.From.ToString("MMMM")).ToList();
 
-    private static List<Series> SeriesBy(SlidingBalancesPresentation presentation) =>
-        presentation
-            .SlidingBalances
-            .SelectMany(d => d.AccountBalances.Select(b => b.AccountLabel))
-            .Distinct()
-            .Select(a => SeriesBy(presentation, a))
-            .ToList<Series>();
-
-    private static LineSeries SeriesBy(SlidingBalancesPresentation presentation, string accountLabel) =>
-        new()
-        {
-            Name = accountLabel,
-            Data = presentation.SlidingBalances.Select(b => AreaSeriesDataBy(accountLabel, b)).ToList(),
-            Tooltip = new LineSeriesTooltip { ValueSuffix = " €" }
-        };
-
-    private static LineSeriesData AreaSeriesDataBy(string accountLabel, SlidingBalancePresentation date) =>
-        new() { Y = decimal.ToDouble(date.AccountBalances.Single(b => b.AccountLabel == accountLabel).Balance) };
+    private static List<Series> SeriesBy(PeriodPerformancePresentation[] presentation)
+    {
+        return
+        [
+            new LineSeries
+            {
+                Name = "Balance",
+                YAxis = "Balance",
+                Data = presentation.Select(sb => new LineSeriesData { Y = decimal.ToDouble(sb.Balance) }).ToList(),
+                Tooltip = new LineSeriesTooltip { ValueSuffix = " €" },
+                PointPlacementNumber = -0.5,
+                ZIndex = 1
+            },
+            new AreaSeries
+            {
+                Name = "Revenue",
+                YAxis = "Performance",
+                Data = presentation.Select(sb => new AreaSeriesData { Y = decimal.ToDouble(sb.Performance.Revenue) }).ToList(),
+                Color = "green",
+                Tooltip = new AreaSeriesTooltip { ValueSuffix = " €" },
+                Opacity = 0.25,
+                LineWidth = 0,
+                Marker = new AreaSeriesMarker { Enabled = false },
+            },
+            new AreaSeries
+            {
+                Name = "Expenses",
+                YAxis = "Performance",
+                Data = presentation.Select(sb => new AreaSeriesData { Y = decimal.ToDouble(sb.Performance.Expenses) }).ToList(),
+                Color = "red",
+                Tooltip = new AreaSeriesTooltip { ValueSuffix = " €" },
+                Opacity = 0.25,
+                Marker = new AreaSeriesMarker { Enabled = false },
+                LineWidth = 0,
+            },
+            new ColumnSeries
+            {
+                Name = "Net",
+                YAxis = "Performance",
+                Data = presentation.Select(sb => new ColumnSeriesData { Y = decimal.ToDouble(sb.Performance.Net) }).ToList(),
+                Zones = [new ColumnSeriesZone { Color = "red", Value = 0 }, new ColumnSeriesZone { Color = "green" }],
+                Tooltip = new ColumnSeriesTooltip { ValueSuffix = " €" },
+            }
+        ];
+    }
 }

@@ -29,6 +29,7 @@ resharper_blank_lines_before_single_line_comment = 1
 resharper_braces_for_for = required_for_multiline
 resharper_braces_for_foreach = required_for_multiline
 resharper_braces_for_while = required_for_multiline
+resharper_class_never_instantiated_global_highlighting = none
 resharper_csharp_keep_blank_lines_in_code = 1
 resharper_csharp_keep_blank_lines_in_declarations = 1
 resharper_csharp_keep_existing_arrangement = false

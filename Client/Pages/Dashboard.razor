@@ -1,8 +1,8 @@
 ﻿@page "/"
 
-@if (slidingBalances != null)
+@if (monthlyPerformance != null)
 {
-    if (slidingBalances.SlidingBalances.Length != 0)
+    if (monthlyPerformance!.Length != 0)
     {
         <div id="dashboard-chart"></div>
     }
