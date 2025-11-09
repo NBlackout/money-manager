@@ -1,3 +1,4 @@
+using System.Collections;
 using App.Read.Ports;
 using App.Read.UseCases;
 using Highsoft.Web.Mvc.Charts;
@@ -27,16 +28,13 @@ public partial class Dashboard
                     XAxis = [new XAxis { Categories = CategoriesBy(this.monthlyPerformance!), TickWidth = 1 }],
                     YAxis =
                     [
-                        new YAxis { Title = new YAxisTitle { Text = "Balance (€)" }, Id = "Balance" },
-                        new YAxis { Title = new YAxisTitle { Text = "Performance (€)" }, Id = "Performance", Opposite = true }
+                        new YAxis { Title = new YAxisTitle { Text = "Performance (€)" }, Id = "Performance" },
+                        new YAxis { Title = new YAxisTitle { Text = "Balance (€)" }, Id = "Balance", Opposite = true }
                     ],
                     Credits = new Credits { Enabled = false },
                     Series = SeriesBy(this.monthlyPerformance!),
-                    Tooltip = new Tooltip { Shared = true },
-                    PlotOptions = new PlotOptions
-                    {
-                        Column = new PlotOptionsColumn { Stacking = PlotOptionsColumnStacking.Normal, PointPadding = 0, GroupPadding = 0 }
-                    }
+                    Tooltip = new Tooltip { Shared = true, Distance = 75 },
+                    PlotOptions = new PlotOptions { Column = new PlotOptionsColumn { PointPadding = 0, GroupPadding = 0 } }
                 }
             );
 
@@ -51,14 +49,15 @@ public partial class Dashboard
     {
         return
         [
-            new LineSeries
+            new ColumnSeries
             {
-                Name = "Balance",
-                YAxis = "Balance",
-                Data = presentation.Select(sb => new LineSeriesData { Y = decimal.ToDouble(sb.Balance) }).ToList(),
-                Tooltip = new LineSeriesTooltip { ValueSuffix = " €" },
-                PointPlacementNumber = -0.5,
-                ZIndex = 1
+                Name = "Net",
+                YAxis = "Performance",
+                Data = presentation.Select(sb => new ColumnSeriesData { Y = decimal.ToDouble(sb.Performance.Net) }).ToList(),
+                Zones = [new ColumnSeriesZone { Color = "red", Value = 0 }, new ColumnSeriesZone { Color = "green" }],
+                Tooltip = new ColumnSeriesTooltip { ValueSuffix = " €" },
+                Opacity = 0.5,
+                States = new ColumnSeriesStates { Hover = new ColumnSeriesStatesHover { CustomFields = new Hashtable { { "opacity", "1" } } } }
             },
             new AreaSeries
             {
@@ -67,9 +66,9 @@ public partial class Dashboard
                 Data = presentation.Select(sb => new AreaSeriesData { Y = decimal.ToDouble(sb.Performance.Revenue) }).ToList(),
                 Color = "green",
                 Tooltip = new AreaSeriesTooltip { ValueSuffix = " €" },
-                Opacity = 0.25,
+                FillOpacity = 0.1,
                 LineWidth = 0,
-                Marker = new AreaSeriesMarker { Enabled = false },
+                Marker = new AreaSeriesMarker { Enabled = false }
             },
             new AreaSeries
             {
@@ -78,17 +77,19 @@ public partial class Dashboard
                 Data = presentation.Select(sb => new AreaSeriesData { Y = decimal.ToDouble(sb.Performance.Expenses) }).ToList(),
                 Color = "red",
                 Tooltip = new AreaSeriesTooltip { ValueSuffix = " €" },
-                Opacity = 0.25,
-                Marker = new AreaSeriesMarker { Enabled = false },
+                FillOpacity = 0.1,
                 LineWidth = 0,
+                Marker = new AreaSeriesMarker { Enabled = false }
             },
-            new ColumnSeries
+            new LineSeries
             {
-                Name = "Net",
-                YAxis = "Performance",
-                Data = presentation.Select(sb => new ColumnSeriesData { Y = decimal.ToDouble(sb.Performance.Net) }).ToList(),
-                Zones = [new ColumnSeriesZone { Color = "red", Value = 0 }, new ColumnSeriesZone { Color = "green" }],
-                Tooltip = new ColumnSeriesTooltip { ValueSuffix = " €" },
+                Name = "Balance",
+                YAxis = "Balance",
+                Data = presentation.Select(sb => new LineSeriesData { Y = decimal.ToDouble(sb.Balance) }).ToList(),
+                ColorIndex = 0,
+                Tooltip = new LineSeriesTooltip { ValueSuffix = " €" },
+                PointPlacementNumber = -0.5,
+                ZIndex = 1
             }
         ];
     }
