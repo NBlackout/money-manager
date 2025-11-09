@@ -16,11 +16,11 @@
                             @onclick="@(() => ShowDetails(account.Id))">
                             <p class="account-label fw-bold d-flex justify-content-between">
                                 @account.Label
-                                <span class="oi oi-chevron-right"></span>
+                                <span class="bi bi-chevron-right"></span>
                             </p>
                             <p class="d-flex justify-content-between">
                                 @account.Number
-                                <span class="text-success">@account.Balance €</span>
+                                <span class="text-success">@account.Balance.ToString("N2") €</span>
                             </p>
                         </li>
                     }
@@ -32,11 +32,11 @@
                         <li class="list-group-item">
                             <p class="account-label fw-bold d-flex justify-content-between">
                                 @budget.Name
-                                <span class="oi oi-chevron-right"></span>
+                                <span class="bi bi-chevron-right"></span>
                             </p>
                             <p class="d-flex justify-content-between">
                                 @budget.BeginDate.ToString("Y")
-                                <span class="text-success">@budget.TotalAmount €</span>
+                                <span class="text-success">@budget.TotalAmount.ToString("N2") €</span>
                             </p>
                         </li>
                     }

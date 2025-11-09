@@ -7,12 +7,7 @@
                 {
                     <div class="row g-3 align-items-end">
                         <div class="col-auto">
-                            <input type="text" value="@account.Label" @ref="labelElement" @onchange="@LabelChanged" class="form-control" placeholder="Label"/>
-                        </div>
-                        <div class="col-auto">
-                            <small class="form-text fs-5">
-                                @account.Number
-                            </small>
+                            <input type="text" value="@account.Label" @ref="labelElement" @onchange="@LabelChanged" @onfocusout="@ExitEditMode" class="form-control" placeholder="Label"/>
                         </div>
                     </div>
                 }
@@ -20,7 +15,7 @@
                 {
                     <h2>
                         <button type="button" class="btn btn-link btn-sm" @onclick="@ToggleEditMode" hidden="@isEditing">
-                            <small class="oi oi-pencil"></small>
+                            <small class="bi bi-pencil"></small>
                         </button>
                         @account.Label
                     </h2>
@@ -29,7 +24,7 @@
             <div class="col"></div>
             <div class="col-auto">
                 <h2 class="account-balance fw-bold">
-                    @account.Balance €
+                    @account.Balance.ToString("N2") €
                     <span class="fs-5 fw-normal text-muted">au @account.BalanceDate.ToShortDateString()</span>
                 </h2>
             </div>
@@ -40,10 +35,10 @@
             <div class="col-auto">
                 <div class="input-group">
                     <button type="button" class="btn btn-outline-dark" @onclick="@ShowFirstMonthTransactions">
-                        <span class="oi oi-media-skip-backward"></span>
+                        <span class="bi bi-skip-backward-fill"></span>
                     </button>
                     <button type="button" class="btn btn-outline-dark" @onclick="@ShowPreviousMonthTransactions">
-                        <span class="oi oi-media-step-backward"></span>
+                        <span class="bi bi-caret-left-fill"></span>
                     </button>
                     <select @onchange="@ShowTransactionsOfMonth" class="form-select border-dark">
                         @foreach (DateOnly month in months)
@@ -52,10 +47,10 @@
                         }
                     </select>
                     <button type="button" class="btn btn-outline-dark" @onclick="@ShowNextMonthTransactions">
-                        <span class="oi oi-media-step-forward"></span>
+                        <span class="bi bi-caret-right-fill"></span>
                     </button>
                     <button type="button" class="btn btn-outline-dark" @onclick="@ShowLastMonthTransactions">
-                        <span class="oi oi-media-skip-forward"></span>
+                        <span class="bi bi-skip-forward-fill"></span>
                     </button>
                 </div>
             </div>
