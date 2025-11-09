@@ -2,7 +2,6 @@
 
 ## Feat
 
-- Add current balance in sliding balances (new data in xSeries)
 - Sliding balance displays estimated balance for next 3 months
 - Change transaction category -> dropdown list with search?
 - Prevent deletion of used category
@@ -29,10 +28,9 @@
 - Merge Read App & Read Infra?
 - Check naming everywhere
 - Categorization table background is white
-- Two transactions of month requests on account switch
-- Introduce `CurrentMonth` of something like that to replace `new DateOnly(DateTime.Now.Year, DateTime.Now.Month, 1)`
-- Set `ApiUrl` in `StubbedHttpMessageHandler` privately to replace
-  `new(httpMessageHandler) { BaseAddress = new Uri(ApiUrl) };` with `new(httpMessageHandler)`
+- Two transactions of month HTTP requests made when switching account
+- Introduce `CurrentMonth` or something like that to replace `new DateOnly(DateTime.Now.Year, DateTime.Now.Month, 1)`
+- Set `ApiUrl` in `StubbedHttpMessageHandler` privately to replace `new(httpMessageHandler) { BaseAddress = new Uri(ApiUrl) };` with `new(httpMessageHandler)`
 - Transaction `Debit` or `Credit` instead of positive and negative amounts
 - Move UseCase DI registration in infra
 - Simplify read by removing infra layer ? Merging it in use cases ?
