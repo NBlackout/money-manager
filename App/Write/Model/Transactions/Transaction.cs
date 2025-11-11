@@ -12,20 +12,10 @@ public class Transaction : DomainEntity<TransactionId>
     private readonly Label label;
     private readonly DateOnly date;
     private CategoryId? categoryId;
+    private bool isRecurring;
 
-    public TransactionSnapshot Snapshot => new(this.Id, this.accountId, this.externalId.Value, this.amount.Value, this.label.Value, this.date, this.categoryId);
-
-    internal Transaction(TransactionId id, AccountId accountId, ExternalId externalId, Amount amount, Label label, DateOnly date, Category? category) : this(
-        id,
-        accountId,
-        externalId,
-        amount,
-        label,
-        date,
-        category?.Id
-    )
-    {
-    }
+    public TransactionSnapshot Snapshot =>
+        new(this.Id, this.accountId, this.externalId.Value, this.amount.Value, this.label.Value, this.date, this.categoryId, this.isRecurring);
 
     private Transaction(
         TransactionId id,
@@ -34,7 +24,8 @@ public class Transaction : DomainEntity<TransactionId>
         Amount amount,
         Label label,
         DateOnly date,
-        CategoryId? categoryId) : base(id)
+        CategoryId? categoryId,
+        bool isRecurring) : base(id)
     {
         this.accountId = accountId;
         this.externalId = externalId;
@@ -42,13 +33,21 @@ public class Transaction : DomainEntity<TransactionId>
         this.label = label;
         this.date = date;
         this.categoryId = categoryId;
+        this.isRecurring = isRecurring;
     }
 
-    public void AssignCategory(CategoryId newCategoryId) =>
-        this.categoryId = newCategoryId;
-
-    public void UnassignCategory() =>
-        this.categoryId = null;
+    internal Transaction(TransactionId id, AccountId accountId, ExternalId externalId, Amount amount, Label label, DateOnly date, Category? category) : this(
+        id,
+        accountId,
+        externalId,
+        amount,
+        label,
+        date,
+        category?.Id,
+        false
+    )
+    {
+    }
 
     public static Transaction From(TransactionSnapshot snapshot) =>
         new(
@@ -58,6 +57,16 @@ public class Transaction : DomainEntity<TransactionId>
             new Amount(snapshot.Amount),
             new Label(snapshot.Label),
             snapshot.Date,
-            snapshot.CategoryId
+            snapshot.CategoryId,
+            snapshot.IsRecurring
         );
+
+    public void AssignCategory(CategoryId newCategoryId) =>
+        this.categoryId = newCategoryId;
+
+    public void UnassignCategory() =>
+        this.categoryId = null;
+
+    public void ToggleRecurrence() =>
+        this.isRecurring = !this.isRecurring;
 }

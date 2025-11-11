@@ -16,5 +16,6 @@ public static class ServiceCollectionWriteExtensions
             .AddSingleton<DeleteCategory>()
             .AddSingleton<ImportCategories>()
             .AddSingleton<AssignTransactionCategory>()
-            .AddSingleton<DefineBudget>();
+            .AddSingleton<DefineBudget>()
+            .AddSingleton<ToggleTransactionRecurrence>();
 }

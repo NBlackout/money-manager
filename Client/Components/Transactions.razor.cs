@@ -16,7 +16,4 @@ public partial class Transactions : ComponentBase
 
     protected override async Task OnParametersSetAsync() =>
         this.transactions = await this.TransactionsOfMonth.Execute(this.AccountId, this.Month.Year, this.Month.Month);
-
-    private void OnCategoryAssigned((Guid TransactionId, string CategoryLabel) args) =>
-        this.transactions = this.transactions!.Select(a => a with { Category = a.Id == args.TransactionId ? args.CategoryLabel : a.Category }).ToArray();
 }

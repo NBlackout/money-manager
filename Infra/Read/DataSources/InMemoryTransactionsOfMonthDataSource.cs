@@ -25,6 +25,13 @@ public class InMemoryTransactionsOfMonthDataSource(InMemoryTransactionRepository
     {
         string? categoryLabel = transaction.CategoryId is not null ? categoryRepository.Data.Single(c => c.Id == transaction.CategoryId).Label : null;
 
-        return new TransactionSummaryPresentation(transaction.Id.Value, transaction.Amount, transaction.Label, transaction.Date, categoryLabel);
+        return new TransactionSummaryPresentation(
+            transaction.Id.Value,
+            transaction.Amount,
+            transaction.Label,
+            transaction.Date,
+            categoryLabel,
+            transaction.IsRecurring
+        );
     }
 }

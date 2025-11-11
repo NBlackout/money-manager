@@ -13,12 +13,14 @@
 - Display account balance of given month (along with transactions)
 - Account empty state
 - Export / import budgets
-- Category import
+- Light/Dark/System themes support
+- Transaction display name vs original label
 
 ## Bug
 
 - Nullable category label during import
 - Multiple import sometimes fails
+- Account activity: next month when already on last
 
 ## Task
 
@@ -36,3 +38,4 @@
 - Simplify read by removing infra layer ? Merging it in use cases ?
 - Allow to run without HTTP server (replace HTTP gateways with direct controller injection)
 - Fix mutation in CI
+- Remove coverlet.collector after checking coverage works and CI is ok

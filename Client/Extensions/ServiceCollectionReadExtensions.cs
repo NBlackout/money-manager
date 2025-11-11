@@ -13,6 +13,7 @@ public static class ServiceCollectionReadExtensions
             .AddSingleton<AccountSummaries>()
             .AddSingleton<AccountDetails>()
             .AddSingleton<TransactionsOfMonth>()
+            .AddSingleton<ExpectedTransactionSummaries>()
             .AddSingleton<CategorySummaries>()
             .AddSingleton<CategorizationSuggestions>()
             .AddSingleton<CategoriesExport>()

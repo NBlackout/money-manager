@@ -11,12 +11,12 @@ public class InMemoryBudgetSummariesDataSource(InMemoryBudgetRepository reposito
         DateOnly today = clock.Today;
         BudgetSummaryPresentation[] presentations =
         [
-            ..repository.Data.Select(c => new BudgetSummaryPresentation(
-                    c.Id.Value,
-                    c.Name,
-                    c.Amount,
-                    c.BeginDate,
-                    c.Amount * MonthDifferenceBetween(today, c.BeginDate)
+            ..repository.Data.Select(b => new BudgetSummaryPresentation(
+                    b.Id.Value,
+                    b.Name,
+                    b.Amount,
+                    b.BeginDate,
+                    b.Amount * MonthDifferenceBetween(today, b.BeginDate)
                 )
             )
         ];

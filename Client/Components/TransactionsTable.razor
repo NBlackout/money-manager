@@ -1,0 +1,53 @@
+@using global::App.Read.Ports
+
+<table class="align-middle table table-hover table-sm">
+    <thead class="table-light">
+    <tr>
+        <th></th>
+        <th>Category</th>
+        <th class="transaction-label">Label</th>
+        <th>Amount</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (TransactionSummaryPresentation transaction in Transactions)
+    {
+        <tr>
+            <td>@transaction.Date.ToString("dd/MM")</td>
+            <td>
+                @if (transaction.Category != null)
+                {
+                    <span>@transaction.Category</span>
+                }
+            </td>
+            <td>@transaction.Label</td>
+            <td class="text-end">
+                <span class="text-@(transaction.Amount > 0 ? "success" : "danger")">@transaction.Amount.ToString("N2") €</span>
+            </td>
+            <td>
+                <div class="btn-group" role="group">
+                    <button class="btn btn-@(transaction.Category != null ? "primary" : "outline-primary") py-0 px-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <small class="bi bi-tag"></small>
+                    </button>
+                    <TransactionLabelAssignment Id="@transaction.Id" Label="@transaction.Label"
+                                                OnCategoryAssigned="OnCategoryAssigned"></TransactionLabelAssignment>
+                    <button class="btn btn-@(transaction.IsRecurring ? "secondary" : "outline-secondary") py-0 px-2" type="button"
+                            @onclick="@(() => ToggleRecurrence(transaction.Id))">
+                        <small class="bi bi-calendar-@(transaction.IsRecurring ? "check" : "plus")"></small>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    }
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="3" class="text-end fw-bold">Total</td>
+        <td class="text-end">
+            <span class="text-@(Total > 0 ? "success" : "danger")">@Total.ToString("N2") €</span>
+        </td>
+        <td></td>
+    </tr>
+    </tfoot>
+</table>

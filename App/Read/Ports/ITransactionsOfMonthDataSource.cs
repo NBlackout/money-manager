@@ -5,4 +5,4 @@ public interface ITransactionsOfMonthDataSource
     Task<TransactionSummaryPresentation[]> By(Guid accountId, int year, int month);
 }
 
-public record TransactionSummaryPresentation(Guid Id, decimal Amount, string Label, DateOnly Date, string? Category);
+public record TransactionSummaryPresentation(Guid Id, decimal Amount, string Label, DateOnly Date, string? Category, bool IsRecurring);

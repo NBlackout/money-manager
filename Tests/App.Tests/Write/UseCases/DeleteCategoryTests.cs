@@ -35,11 +35,11 @@ public class DeleteCategoryTests
         await this.Verify(category, aTransaction with { CategoryId = null }, anotherTransaction with { CategoryId = null });
     }
 
-    private async Task Verify(CategorySnapshot category, params TransactionSnapshot[] expectedTransactions)
+    private async Task Verify(CategorySnapshot expectedCategory, params TransactionSnapshot[] expectedTransactions)
     {
-        await this.sut.Execute(category.Id);
+        await this.sut.Execute(expectedCategory.Id);
 
-        bool exists = this.categoryRepository.Exists(category.Id);
+        bool exists = this.categoryRepository.Exists(expectedCategory.Id);
         exists.Should().BeFalse();
 
         TransactionSnapshot[] transactions = this.transactionRepository.Data.ToArray();

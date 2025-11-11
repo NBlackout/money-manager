@@ -10,10 +10,8 @@ public class CategoriesExportTests
     private readonly StubbedCategoryExporter exporter = new();
     private readonly CategoriesExport sut;
 
-    public CategoriesExportTests()
-    {
+    public CategoriesExportTests() =>
         this.sut = new CategoriesExport(this.dataSource, this.exporter);
-    }
 
     [Theory, RandomData]
     public async Task Gives_categories_export(CategorySummaryPresentation[] categories, Stream content)

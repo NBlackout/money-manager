@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 using App.Write.Model.Accounts;
 using App.Write.Model.ValueObjects;
 using App.Write.Ports;
@@ -8,9 +7,6 @@ using Tooling;
 
 namespace Infra.Write.BankStatementParsing;
 
-[SuppressMessage("ReSharper", "StringLiteralTypo")]
-[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-[SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global")]
 public class OfxBankStatementParser
 {
     public async Task<AccountStatement> ExtractAccountStatement(Stream stream)
