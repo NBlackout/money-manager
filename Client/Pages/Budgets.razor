@@ -5,7 +5,7 @@
 {
     <div>Total budget : @(budgets.Sum(b => b.TotalAmount))</div>
 }
-<button class="btn btn-primary" @onclick="@ShowBudgetForm">Add new budget</button>
+<button class="btn btn-primary" @onclick="ShowBudgetForm">Add new budget</button>
 <ul class="list-group list-group-flush">
     <li class="list-group-item @(isCreating ? "" : "d-none")">
         <EditForm Model="Budget" OnSubmit="Submit">

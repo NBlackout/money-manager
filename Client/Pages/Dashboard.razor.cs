@@ -53,7 +53,7 @@ public partial class Dashboard
     }
 
     private static List<string> CategoriesBy(PeriodPerformancePresentation[] periods) =>
-        periods.Select(b => b.DateRange.From.ToString("MMMM")).ToList();
+        periods.Select(p => p.DateRange.From.ToString("MMMM")).ToList();
 
     private static List<Series> SeriesBy(PeriodPerformancePresentation[] periods)
     {

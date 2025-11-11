@@ -6,13 +6,14 @@ using App.Write.Model.ValueObjects;
 using App.Write.Ports;
 using App.Write.UseCases;
 using Infra.Write.Repositories;
-using static App.Tests.Write.UseCases.ImportBankStatementTests.Data;
-using TransactionSnapshot = App.Write.Model.Transactions.TransactionSnapshot;
 
 namespace App.Tests.Write.UseCases;
 
 public class ImportBankStatementTests
 {
+    private const string TheFileName = "the filename";
+    private static readonly MemoryStream TheStream = new([0xF0, 0x42]);
+
     private readonly InMemoryAccountRepository accountRepository = new();
     private readonly InMemoryCategoryRepository categoryRepository = new();
     private readonly InMemoryTransactionRepository transactionRepository = new();
@@ -132,30 +133,24 @@ public class ImportBankStatementTests
     private void Feed(AccountStatement accountStatement) =>
         this.bankStatementParser.Feed(TheFileName, TheStream, accountStatement);
 
-    internal static class Data
-    {
-        public const string TheFileName = "the filename";
-        public static readonly MemoryStream TheStream = new([0xF0, 0x42]);
+    private static TransactionSnapshot ATransactionFrom(AccountSnapshot account, CategorySnapshot? category = null) =>
+        Any<TransactionSnapshot>() with { AccountId = account.Id, CategoryId = category?.Id, IsRecurring = false };
 
-        public static TransactionSnapshot ATransactionFrom(AccountSnapshot account, CategorySnapshot? category = null) =>
-            Any<TransactionSnapshot>() with { AccountId = account.Id, CategoryId = category?.Id };
-
-        public static AccountStatement AccountStatementFrom(
-            AccountSnapshot account,
-            params (TransactionSnapshot Transaction, string? CategoryLabel)[] transactions) =>
-            new(
-                new ExternalId(account.Number),
-                new Balance(account.Balance, account.BalanceDate),
-                [
-                    ..transactions.Select(t => new TransactionStatement(
-                            new ExternalId(t.Transaction.ExternalId),
-                            new Amount(t.Transaction.Amount),
-                            new Label(t.Transaction.Label),
-                            t.Transaction.Date,
-                            Label.From(t.CategoryLabel)
-                        )
+    private static AccountStatement AccountStatementFrom(
+        AccountSnapshot account,
+        params (TransactionSnapshot Transaction, string? CategoryLabel)[] transactions) =>
+        new(
+            new ExternalId(account.Number),
+            new Balance(account.Balance, account.BalanceDate),
+            [
+                ..transactions.Select(t => new TransactionStatement(
+                        new ExternalId(t.Transaction.ExternalId),
+                        new Amount(t.Transaction.Amount),
+                        new Label(t.Transaction.Label),
+                        t.Transaction.Date,
+                        Label.From(t.CategoryLabel)
                     )
-                ]
-            );
-    }
+                )
+            ]
+        );
 }

@@ -1,10 +1,8 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using App.Read.Ports;
+﻿using App.Read.Ports;
 using App.Write.Model.Categories;
 
 namespace App.Tests.Read.Tooling;
 
-[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 public record CategoryBuilder(Guid Id, string Label, string Keywords)
 {
     public CategorySnapshot ToSnapshot() =>

@@ -18,5 +18,6 @@ public static class ServiceCollectionExtensions
             .AddSingleton<ICategoriesWithKeywordsDataSource, InMemoryCategoriesWithKeywordsDataSource>()
             .AddSingleton<ITransactionsToCategorizeDataSource, InMemoryTransactionsToCategorizeDataSource>()
             .AddSingleton<IBudgetSummariesDataSource, InMemoryBudgetSummariesDataSource>()
-            .AddSingleton<IPeriodPerformanceDataSource, InMemoryPeriodPerformanceDataSource>();
+            .AddSingleton<IPeriodPerformanceDataSource, InMemoryPeriodPerformanceDataSource>()
+            .AddSingleton<IExpectedTransactionSummariesDataSource, InMemoryExpectedTransactionSummariesDataSource>();
 }

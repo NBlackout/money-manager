@@ -20,15 +20,15 @@ public class AssignTransactionCategoryTests
     public async Task Assigns_transaction_category(TransactionSnapshot transaction, CategoryId categoryId)
     {
         this.Feed(transaction);
-        await this.Verify(transaction, categoryId);
+        await this.Verify(categoryId, transaction with { CategoryId = categoryId });
     }
 
-    private async Task Verify(TransactionSnapshot transaction, CategoryId categoryId)
+    private async Task Verify(CategoryId categoryId, TransactionSnapshot expected)
     {
-        await this.sut.Execute(transaction.Id, categoryId);
+        await this.sut.Execute(expected.Id, categoryId);
 
-        Transaction actual = await this.repository.By(transaction.Id);
-        actual.Snapshot.Should().Be(transaction with { CategoryId = categoryId });
+        Transaction actual = await this.repository.By(expected.Id);
+        actual.Snapshot.Should().Be(expected);
     }
 
     private void Feed(TransactionSnapshot transaction) =>

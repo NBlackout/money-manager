@@ -13,6 +13,7 @@ public partial class AccountActivity : ComponentBase
 
     private List<DateOnly> months = [];
     private DateOnly currentMonth;
+    private DateOnly selectedMonth;
     private AccountDetailsPresentation? account;
 
     [Inject] private AccountDetails AccountDetails { get; set; } = null!;
@@ -25,6 +26,7 @@ public partial class AccountActivity : ComponentBase
     {
         this.months = LoadMonthsRange();
         this.currentMonth = new DateOnly(DateTime.Today.Year, DateTime.Today.Month, 1);
+        this.selectedMonth = this.currentMonth;
         this.account = await this.AccountDetails.Execute(this.Id);
     }
 
@@ -51,19 +53,19 @@ public partial class AccountActivity : ComponentBase
     }
 
     private void ShowTransactionsOfMonth(ChangeEventArgs args) =>
-        this.currentMonth = DateOnly.ParseExact(args.Value!.ToString()!, "yyyy-MM-dd", null);
+        this.selectedMonth = DateOnly.ParseExact(args.Value!.ToString()!, "yyyy-MM-dd", null);
 
     private void ShowFirstMonthTransactions() =>
-        this.currentMonth = this.months.First();
+        this.selectedMonth = this.months.First();
 
     private void ShowPreviousMonthTransactions() =>
-        this.currentMonth = this.currentMonth.AddMonths(-1);
+        this.selectedMonth = this.selectedMonth.AddMonths(-1);
 
     private void ShowNextMonthTransactions() =>
-        this.currentMonth = this.currentMonth.AddMonths(+1);
+        this.selectedMonth = this.selectedMonth.AddMonths(+1);
 
     private void ShowLastMonthTransactions() =>
-        this.currentMonth = this.months.Last();
+        this.selectedMonth = this.months.Last();
 
     private static List<DateOnly> LoadMonthsRange()
     {

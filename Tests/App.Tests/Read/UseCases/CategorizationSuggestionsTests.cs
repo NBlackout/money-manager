@@ -20,11 +20,11 @@ public class CategorizationSuggestionsTests
     {
         CategoryWithKeywords insuranceCategory = ACategoryMatching("Insurance");
         CategoryWithKeywords travelCategory = ACategoryMatching("Travel");
-        this.categoriesDataSource.Feed(insuranceCategory, travelCategory);
+        this.Feed(insuranceCategory, travelCategory);
 
         TransactionToCategorize insuranceTransaction = ATransactionLabeled("Insurance");
         TransactionToCategorize travelTransaction = ATransactionLabeled("Travel");
-        this.transactionsToCategorizeDataSource.Feed(insuranceTransaction, travelTransaction);
+        this.Feed(insuranceTransaction, travelTransaction);
 
         await this.Verify(HasSuggestion(insuranceTransaction, insuranceCategory), HasSuggestion(travelTransaction, travelCategory));
     }
@@ -33,22 +33,23 @@ public class CategorizationSuggestionsTests
     public async Task Gives_suggestion_on_partial_match()
     {
         CategoryWithKeywords category = ACategoryMatching("taxi");
-        this.categoriesDataSource.Feed(category);
+        this.Feed(category);
 
         TransactionToCategorize transaction = ATransactionLabeled("A TAXI fare");
-        this.transactionsToCategorizeDataSource.Feed(transaction);
+        this.Feed(transaction);
 
         await this.Verify(HasSuggestion(transaction, category));
     }
+
 
     [Fact]
     public async Task Excludes_transaction_not_matching_any_keywords()
     {
         CategoryWithKeywords category = ACategoryMatching("Food");
-        this.categoriesDataSource.Feed(category);
+        this.Feed(category);
 
         TransactionToCategorize transaction = ATransactionLabeled("Electricity bill");
-        this.transactionsToCategorizeDataSource.Feed(transaction);
+        this.Feed(transaction);
 
         await this.Verify();
     }
@@ -58,10 +59,10 @@ public class CategorizationSuggestionsTests
     {
         CategoryWithKeywords fuelCategory = ACategoryMatching("Fuel");
         CategoryWithKeywords cardCategory = ACategoryMatching("Card");
-        this.categoriesDataSource.Feed(fuelCategory, cardCategory);
+        this.Feed(fuelCategory, cardCategory);
 
         TransactionToCategorize transaction = ATransactionLabeled("Fuel payment by card");
-        this.transactionsToCategorizeDataSource.Feed(transaction);
+        this.Feed(transaction);
 
         await this.Verify();
     }
@@ -71,6 +72,12 @@ public class CategorizationSuggestionsTests
         CategorizationSuggestionPresentation[] actual = await this.sut.Execute();
         actual.Should().Equal(expected);
     }
+
+    private void Feed(params CategoryWithKeywords[] categories) =>
+        this.categoriesDataSource.Feed(categories);
+
+    private void Feed(params TransactionToCategorize[] transactions) =>
+        this.transactionsToCategorizeDataSource.Feed(transactions);
 
     private static CategoryWithKeywords ACategoryMatching(string keywords) =>
         Any<CategoryWithKeywords>() with { Keywords = keywords };

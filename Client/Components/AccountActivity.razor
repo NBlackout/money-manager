@@ -14,7 +14,7 @@
                 else
                 {
                     <h2>
-                        <button type="button" class="btn btn-link btn-sm" @onclick="@ToggleEditMode" hidden="@isEditing">
+                        <button type="button" class="btn btn-link btn-sm" @onclick="ToggleEditMode" hidden="@isEditing">
                             <small class="bi bi-pencil"></small>
                         </button>
                         @account.Label
@@ -34,22 +34,22 @@
             <div class="col"></div>
             <div class="col-auto">
                 <div class="input-group">
-                    <button type="button" class="btn btn-outline-dark" @onclick="@ShowFirstMonthTransactions">
+                    <button type="button" class="btn btn-outline-dark" @onclick="ShowFirstMonthTransactions">
                         <span class="bi bi-skip-backward-fill"></span>
                     </button>
-                    <button type="button" class="btn btn-outline-dark" @onclick="@ShowPreviousMonthTransactions">
+                    <button type="button" class="btn btn-outline-dark" @onclick="ShowPreviousMonthTransactions">
                         <span class="bi bi-caret-left-fill"></span>
                     </button>
                     <select @onchange="@ShowTransactionsOfMonth" class="form-select border-dark">
                         @foreach (DateOnly month in months)
                         {
-                            <option selected="@(month == currentMonth)" value="@month.ToString("yyyy-MM-dd")">@month.ToString("MMMM yyyy")</option>
+                            <option selected="@(month == selectedMonth)" value="@month.ToString("yyyy-MM-dd")">@month.ToString("MMMM yyyy")</option>
                         }
                     </select>
-                    <button type="button" class="btn btn-outline-dark" @onclick="@ShowNextMonthTransactions">
+                    <button type="button" class="btn btn-outline-dark" @onclick="ShowNextMonthTransactions">
                         <span class="bi bi-caret-right-fill"></span>
                     </button>
-                    <button type="button" class="btn btn-outline-dark" @onclick="@ShowLastMonthTransactions">
+                    <button type="button" class="btn btn-outline-dark" @onclick="ShowLastMonthTransactions">
                         <span class="bi bi-skip-forward-fill"></span>
                     </button>
                 </div>
@@ -57,6 +57,12 @@
             <div class="col"></div>
         </div>
 
-        <Transactions AccountId="@Id" Month="@currentMonth"></Transactions>
+        @if (selectedMonth == currentMonth)
+        {
+            <h3>Attendues</h3>
+            <ExpectedTransactions AccountId="@Id"></ExpectedTransactions>
+        }
+
+        <Transactions AccountId="@Id" Month="@selectedMonth"></Transactions>
     }
 </div>

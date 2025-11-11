@@ -10,5 +10,6 @@ public record TransactionSnapshot(
     decimal Amount,
     string Label,
     DateOnly Date,
-    CategoryId? CategoryId
+    CategoryId? CategoryId,
+    bool IsRecurring
 );
