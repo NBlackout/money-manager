@@ -8,7 +8,7 @@ public static class AssertionsExtensions
     public static StringAssertions Should(this string actual) =>
         new(actual);
 
-    public static ObjectAssertions Should(this object? actual) =>
+    public static ObjectAssertions<T> Should<T>(this T? actual) =>
         new(actual);
 
     public static CollectionAssertions<T> Should<T>(this T[] actual) =>

@@ -18,5 +18,6 @@ public static class ServiceCollectionReadExtensions
             .AddSingleton<CategorizationSuggestions>()
             .AddSingleton<CategoriesExport>()
             .AddSingleton<BudgetSummaries>()
-            .AddSingleton<MonthlyPerformance>();
+            .AddSingleton<MonthlyPerformance>()
+            .AddSingleton<PerformanceForecast>();
 }
