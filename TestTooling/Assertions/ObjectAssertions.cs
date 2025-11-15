@@ -5,17 +5,17 @@ using Xunit.Sdk;
 
 namespace TestTooling.Assertions;
 
-public record ObjectAssertions(object? Actual)
+public record ObjectAssertions<T>(T? Actual)
 {
     private readonly JsonSerializerOptions jsonSerializerOptions = new()
     {
         WriteIndented = true, Converters = { new JsonStringEnumConverter(), new JsonDecimalConverter() }
     };
 
-    public void Be(object? expected) =>
+    public void Be(T? expected) =>
         Assert.Equal(expected, this.Actual);
 
-    public void BeEquivalentTo(object? expected)
+    public void BeEquivalentTo(T? expected)
     {
         try
         {
