@@ -7,7 +7,11 @@ namespace Infra.Read;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddReadInfra(this IServiceCollection services) =>
-        services.AddDataSources().AddSingleton<ICategoryExporter, CsvCategoryExporter>().AddSingleton<IDateRangeProvider, DateRangeProvider>();
+        services
+            .AddDataSources()
+            .AddSingleton<ICategoryExporter, CsvCategoryExporter>()
+            .AddSingleton<ICategorizationRuleExporter, CsvCategorizationRuleExporter>()
+            .AddSingleton<IDateRangeProvider, DateRangeProvider>();
 
     private static IServiceCollection AddDataSources(this IServiceCollection services) =>
         services
@@ -15,6 +19,7 @@ public static class ServiceCollectionExtensions
             .AddSingleton<IAccountDetailsDataSource, InMemoryAccountDetailsDataSource>()
             .AddSingleton<ITransactionsOfMonthDataSource, InMemoryTransactionsOfMonthDataSource>()
             .AddSingleton<ICategorySummariesDataSource, InMemoryCategorySummariesDataSource>()
+            .AddSingleton<ICategorizationRuleSummariesDataSource, InMemoryCategorizationRuleSummariesDataSource>()
             .AddSingleton<ICategoriesWithKeywordsDataSource, InMemoryCategoriesWithKeywordsDataSource>()
             .AddSingleton<ITransactionsToCategorizeDataSource, InMemoryTransactionsToCategorizeDataSource>()
             .AddSingleton<IBudgetSummariesDataSource, InMemoryBudgetSummariesDataSource>()

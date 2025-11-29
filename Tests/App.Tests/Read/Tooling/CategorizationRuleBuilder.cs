@@ -1,0 +1,17 @@
+﻿using App.Read.Ports;
+using App.Write.Model.Categories;
+using App.Write.Model.CategorizationRules;
+
+namespace App.Tests.Read.Tooling;
+
+public record CategorizationRuleBuilder(Guid Id, Guid CategoryId, string CategoryLabel, string Keywords)
+{
+    public CategorizationRuleSnapshot ToSnapshot() =>
+        new(new CategorizationRuleId(this.Id), new CategoryId(this.CategoryId), this.Keywords);
+
+    public CategorySnapshot ToCategorySnapshot() =>
+        new(new CategoryId(this.CategoryId), this.CategoryLabel);
+
+    public CategorizationRuleSummaryPresentation ToSummary() =>
+        new(this.Id, this.CategoryId, this.CategoryLabel, this.Keywords);
+}

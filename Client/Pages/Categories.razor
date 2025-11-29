@@ -16,11 +16,6 @@
                 <InputText @bind-Value="Category!.Label"></InputText>
             </label>
         </div>
-        <div>
-            <label>Keywords:
-                <InputText @bind-Value="Category!.Keywords"></InputText>
-            </label>
-        </div>
         <button type="submit">Submit</button>
     </EditForm>
 }
@@ -37,7 +32,7 @@ else
         @foreach (CategorySummaryPresentation category in categories)
         {
             <li class="list-group-item">
-                @category.Label (@category.Keywords)
+                @category.Label
                 <button class="btn btn-link" @onclick="() => Delete(category)">Delete</button>
             </li>
         }

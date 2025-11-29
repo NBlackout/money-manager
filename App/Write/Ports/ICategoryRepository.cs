@@ -7,6 +7,7 @@ public interface ICategoryRepository
 {
     Task<CategoryId> NextIdentity();
     Task<Category?> ByOrDefault(Label label);
+    Task<Dictionary<Label, Category?>> By(Label[] labels);
     Task EnsureUnique(Label label);
     Task Save(Category category);
     Task Delete(CategoryId id);

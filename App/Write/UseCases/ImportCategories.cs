@@ -10,6 +10,6 @@ public class ImportCategories(ICategoryRepository categoryRepository, ICategoryI
         CategoryToImport[] categories = await categoryImporter.Parse(content);
 
         foreach (CategoryToImport category in categories)
-            await categoryRepository.Save(new Category(await categoryRepository.NextIdentity(), category.Label, category.Keywords));
+            await categoryRepository.Save(new Category(await categoryRepository.NextIdentity(), category.Label));
     }
 }

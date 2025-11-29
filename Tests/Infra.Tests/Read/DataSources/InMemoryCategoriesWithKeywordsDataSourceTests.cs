@@ -10,25 +10,20 @@ namespace Infra.Tests.Read.DataSources;
 public class InMemoryCategoriesWithKeywordsDataSourceTests : InfraTest<ICategoriesWithKeywordsDataSource, InMemoryCategoriesWithKeywordsDataSource>
 {
     private readonly InMemoryCategoryRepository categoryRepository;
+    private readonly InMemoryCategorizationRuleRepository categorizationRuleRepository;
 
     public InMemoryCategoriesWithKeywordsDataSourceTests()
     {
         this.categoryRepository = this.Resolve<ICategoryRepository, InMemoryCategoryRepository>();
+        this.categorizationRuleRepository = this.Resolve<ICategorizationRuleRepository, InMemoryCategorizationRuleRepository>();
     }
 
     [Theory]
     [RandomData]
-    public async Task Gives_categories(CategoryBuilder[] expected)
+    public async Task Gives_categories(CategorizationRuleBuilder[] expected)
     {
         this.Feed(expected);
-        await this.Verify(expected.Select(c => new CategoryWithKeywords(c.Id, c.Label, c.Keywords)).ToArray());
-    }
-
-    [Fact]
-    public async Task Excludes_ones_without_keywords()
-    {
-        this.Feed(Any<CategoryBuilder>() with { Keywords = "" }, Any<CategoryBuilder>() with { Keywords = "   " });
-        await this.Verify();
+        await this.Verify(expected.Select(c => new CategoryWithKeywords(c.CategoryId, c.CategoryLabel, c.Keywords)).ToArray());
     }
 
     private async Task Verify(params CategoryWithKeywords[] expected)
@@ -37,6 +32,9 @@ public class InMemoryCategoriesWithKeywordsDataSourceTests : InfraTest<ICategori
         actual.Should().Equal(expected);
     }
 
-    private void Feed(params CategoryBuilder[] categories) =>
-        this.categoryRepository.Feed([..categories.Select(c => c.ToSnapshot())]);
+    private void Feed(params CategorizationRuleBuilder[] categorizationRules)
+    {
+        this.categorizationRuleRepository.Feed([..categorizationRules.Select(c => c.ToSnapshot())]);
+        this.categoryRepository.Feed([..categorizationRules.Select(c => c.ToCategorySnapshot())]);
+    }
 }

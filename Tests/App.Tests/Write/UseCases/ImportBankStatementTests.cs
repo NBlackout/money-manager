@@ -86,7 +86,7 @@ public class ImportBankStatementTests
         this.FeedNextIdsOf(aTransaction, anotherTransaction);
         this.Feed(AccountStatementFrom(account, (aTransaction, category.Label), (anotherTransaction, category.Label)));
 
-        await this.Verify(account, [category with { Keywords = category.Label }], aTransaction, anotherTransaction);
+        await this.Verify(account, [category], aTransaction, anotherTransaction);
     }
 
     private async Task Verify(AccountSnapshot expectedAccount, CategorySnapshot[] expectedCategories, params TransactionSnapshot[] expectedTransactions)

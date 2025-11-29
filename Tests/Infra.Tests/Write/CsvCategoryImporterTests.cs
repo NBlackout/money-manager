@@ -12,14 +12,14 @@ public class CsvCategoryImporterTests : InfraTest<ICategoryImporter, CsvCategory
     public async Task Parses_many_categories() =>
         await this.Verify(
             """
-            Label,Keywords
-            A label,Few keywords
-            Another label,Few other keywords
-            Yet another label,Yet few other keywords
+            Label
+            A label
+            Another label
+            Yet another label
             """,
-            new CategoryToImport(new Label("A label"), "Few keywords"),
-            new CategoryToImport(new Label("Another label"), "Few other keywords"),
-            new CategoryToImport(new Label("Yet another label"), "Yet few other keywords")
+            new CategoryToImport(new Label("A label")),
+            new CategoryToImport(new Label("Another label")),
+            new CategoryToImport(new Label("Yet another label"))
         );
 
     [Fact]

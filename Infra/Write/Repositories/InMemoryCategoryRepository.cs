@@ -1,3 +1,4 @@
+using System.Text.Json;
 using App.Write.Model.Categories;
 using App.Write.Model.Exceptions;
 using App.Write.Model.ValueObjects;
@@ -22,6 +23,16 @@ public class InMemoryCategoryRepository : ICategoryRepository
     {
         CategorySnapshot? snapshot = this.data.Values.SingleOrDefault(c => new Label(c.Label) == label);
         return Task.FromResult(snapshot != null ? Category.From(snapshot) : null);
+    }
+
+    public Task<Dictionary<Label, Category?>> By(Label[] labels)
+    {
+        return Task.FromResult(
+            labels.ToDictionary(
+                l => l,
+                l => this.data.Values.SingleOrDefault(c => c.Label == l.Value) != null ? Category.From(this.data.Values.Single(c => c.Label == l.Value)) : null
+            )
+        );
     }
 
     public Task EnsureUnique(Label label)
@@ -51,4 +62,7 @@ public class InMemoryCategoryRepository : ICategoryRepository
 
     public bool Exists(CategoryId id) =>
         this.data.ContainsKey(id);
+
+    private static string Serialize(Label[] labels) =>
+        JsonSerializer.Serialize(labels);
 }

@@ -11,15 +11,15 @@ public class CsvCategoryExporterTests : InfraTest<ICategoryExporter, CsvCategory
         await this.Verify(
             [aCategory, anotherCategory],
             $"""
-             Label,Keywords
-             {aCategory.Label},{aCategory.Keywords}
-             {anotherCategory.Label},{anotherCategory.Keywords}
+             Label
+             {aCategory.Label}
+             {anotherCategory.Label}
              """
         );
 
     [Fact]
     public async Task Exports_when_no_category() =>
-        await this.Verify([], "Label,Keywords");
+        await this.Verify([], "Label");
 
     private async Task Verify(CategorySummaryPresentation[] categories, string expected)
     {

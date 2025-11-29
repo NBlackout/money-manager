@@ -1,0 +1,53 @@
+﻿@page "/categorization-rules"
+@page "/categorization-rules/create"
+@using global::App.Read.Ports
+
+<InputFile OnChange="ImportCategorizationRulesFile" accept=".csv"></InputFile>
+@if (uploadResult != null)
+{
+    <div>@uploadResult</div>
+}
+
+@if (isCreating)
+{
+    <EditForm Model="CategorizationRule" OnSubmit="Submit" FormName="CreateCategorizationRule">
+        <div>
+            <label>Label:
+                <InputSelect @bind-Value="CategorizationRule!.CategoryId">
+                    @if (categories != null && categories.Any())
+                    {
+                        @foreach (CategorySummaryPresentation category in categories)
+                        {
+                            <option value="@category.Id">@category.Label</option>
+                        }
+                    }
+                </InputSelect>
+            </label>
+        </div>
+        <div>
+            <label>Keywords:
+                <InputText @bind-Value="CategorizationRule!.Keywords"></InputText>
+            </label>
+        </div>
+        <button type="submit">Submit</button>
+    </EditForm>
+}
+else
+{
+    <button class="btn btn-primary" @onclick="ShowCategorizationRuleForm">Add new categorization rule</button>
+}
+
+@if (categorizationRules is { Length: > 0 })
+{
+    <button class="btn btn-primary" @onclick="ExportCategorizationRules">Export</button>
+
+    <ul class="list-group list-group-flush">
+        @foreach (CategorizationRuleSummaryPresentation categorizationRule in categorizationRules)
+        {
+            <li class="list-group-item">
+                @categorizationRule.CategoryLabel (@categorizationRule.Keywords)
+                <button class="btn btn-link" @onclick="() => Delete(categorizationRule)">Delete</button>
+            </li>
+        }
+    </ul>
+}

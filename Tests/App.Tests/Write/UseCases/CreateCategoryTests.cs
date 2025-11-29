@@ -31,7 +31,7 @@ public class CreateCategoryTests
 
     private async Task Verify(CategorySnapshot expected)
     {
-        await this.sut.Execute(expected.Id, new Label(expected.Label), expected.Keywords);
+        await this.sut.Execute(expected.Id, new Label(expected.Label));
         Category actual = await this.repository.By(expected.Id);
         actual.Snapshot.Should().Be(expected);
     }
