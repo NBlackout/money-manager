@@ -1,5 +1,6 @@
 ﻿using App.Write.Model.Accounts;
 using App.Write.Model.Categories;
+using App.Write.Model.CategorizationRules;
 using App.Write.Model.Transactions;
 using App.Write.Ports;
 using Infra.Write.BankStatementParsing;
@@ -17,6 +18,7 @@ public static class ServiceCollectionExtensions
     {
         InMemoryAccountRepository accountRepository = new() { NextId = () => new AccountId(Guid.NewGuid()) };
         InMemoryCategoryRepository categoryRepository = new() { NextId = () => new CategoryId(Guid.NewGuid()) };
+        InMemoryCategorizationRuleRepository categorizationRuleRepository = new() { NextId = () => new CategorizationRuleId(Guid.NewGuid()) };
         InMemoryTransactionRepository transactionRepository = new() { NextId = () => new TransactionId(Guid.NewGuid()) };
         InMemoryBudgetRepository budgetRepository = new();
 
@@ -27,6 +29,8 @@ public static class ServiceCollectionExtensions
             .AddSingleton(transactionRepository)
             .AddSingleton<ICategoryRepository>(categoryRepository)
             .AddSingleton(categoryRepository)
+            .AddSingleton<ICategorizationRuleRepository>(categorizationRuleRepository)
+            .AddSingleton(categorizationRuleRepository)
             .AddSingleton<IBudgetRepository>(budgetRepository)
             .AddSingleton(budgetRepository);
     }
@@ -36,5 +40,6 @@ public static class ServiceCollectionExtensions
             .AddSingleton<IBankStatementParser, BankStatementParser>()
             .AddSingleton<OfxBankStatementParser>()
             .AddSingleton<CsvBankStatementParser>()
-            .AddSingleton<ICategoryImporter, CsvCategoryImporter>();
+            .AddSingleton<ICategoryImporter, CsvCategoryImporter>()
+            .AddSingleton<ICategorizationRuleImporter, CsvCategorizationRuleImporter>();
 }

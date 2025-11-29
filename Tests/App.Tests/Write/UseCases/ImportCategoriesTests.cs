@@ -22,7 +22,7 @@ public class ImportCategoriesTests
     [Theory, RandomData]
     public async Task Imports_many_categories(CategoryToImport aCategory, CategoryToImport anotherCategory, CategoryId anId, CategoryId anotherId)
     {
-        this.Feed(aCategory, anotherCategory);
+        this.SetImportResultTo(aCategory, anotherCategory);
         this.FeedNextIdsTo(anId, anotherId);
         await this.Verify(ExpectedFrom(aCategory) with { Id = anId }, ExpectedFrom(anotherCategory) with { Id = anotherId });
     }
@@ -33,7 +33,7 @@ public class ImportCategoriesTests
         this.categoryRepository.Data.ToArray().Should().Equal(expected);
     }
 
-    private void Feed(params CategoryToImport[] categories) =>
+    private void SetImportResultTo(params CategoryToImport[] categories) =>
         this.categoryImporter.Feed(new MemoryStream(Content), categories);
 
     private void FeedNextIdsTo(params CategoryId[] ids)
@@ -44,5 +44,5 @@ public class ImportCategoriesTests
     }
 
     private static CategorySnapshot ExpectedFrom(CategoryToImport category) =>
-        new(Any<CategoryId>(), category.Label.Value, category.Keywords);
+        new(Any<CategoryId>(), category.Label.Value);
 }

@@ -6,7 +6,6 @@ namespace Infra.Read;
 public class CsvCategoryExporter : ICategoryExporter
 {
     private static readonly string LineSeparator = Environment.NewLine;
-    private const string CellSeparator = ",";
 
     public Task<Stream> Export(CategorySummaryPresentation[] categories)
     {
@@ -17,8 +16,8 @@ public class CsvCategoryExporter : ICategoryExporter
     }
 
     private static string Headers() =>
-        string.Join(CellSeparator, "Label", "Keywords");
+        "Label";
 
     private static string Row(CategorySummaryPresentation category) =>
-        string.Join(CellSeparator, category.Label, category.Keywords);
+        category.Label;
 }

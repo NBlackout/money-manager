@@ -2,6 +2,7 @@
 
 ## Feat
 
+- Categories as cards and not table
 - Sliding balance displays estimated balance for next 3 months
 - Change transaction category -> dropdown list with search?
 - Prevent deletion of used category
@@ -39,3 +40,4 @@
 - Allow to run without HTTP server (replace HTTP gateways with direct controller injection)
 - Fix mutation in CI
 - Remove coverlet.collector after checking coverage works and CI is ok
+- Rename `TransactionLabelAssignment` to `TransactionCategoryAssigment` & same for `AssignLabel`

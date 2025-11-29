@@ -13,8 +13,11 @@ public static class ServiceCollectionWriteExtensions
             .AddSingleton<ImportBankStatement>()
             .AddSingleton<AssignAccountLabel>()
             .AddSingleton<CreateCategory>()
-            .AddSingleton<DeleteCategory>()
             .AddSingleton<ImportCategories>()
+            .AddSingleton<DeleteCategory>()
+            .AddSingleton<CreateCategorizationRule>()
+            .AddSingleton<DeleteCategorizationRule>()
+            .AddSingleton<ImportCategorizationRules>()
             .AddSingleton<AssignTransactionCategory>()
             .AddSingleton<DefineBudget>()
             .AddSingleton<ToggleTransactionRecurrence>();

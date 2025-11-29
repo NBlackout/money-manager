@@ -29,7 +29,7 @@ public partial class Categories : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
-        this.Category ??= new CategoryForm { Keywords = this.Keywords };
+        this.Category ??= new CategoryForm();
         this.isCreating = this.Keywords != null;
         this.categories = await this.CategorySummaries.Execute();
     }
@@ -44,10 +44,9 @@ public partial class Categories : ComponentBase
     {
         Guid id = Guid.NewGuid();
         string label = this.Category!.Label!;
-        string keywords = this.Category!.Keywords!;
-        await this.CreateCategory.Execute(new CategoryId(id), new Label(label), keywords);
+        await this.CreateCategory.Execute(new CategoryId(id), new Label(label));
 
-        this.categories = [..this.categories!.Prepend(new CategorySummaryPresentation(id, label, keywords))];
+        this.categories = [..this.categories!.Prepend(new CategorySummaryPresentation(id, label))];
         this.Category = new CategoryForm();
         this.HideCategoryForm();
     }
@@ -92,6 +91,5 @@ public partial class Categories : ComponentBase
     public class CategoryForm
     {
         public string? Label { get; set; }
-        public string? Keywords { get; set; }
     }
 }

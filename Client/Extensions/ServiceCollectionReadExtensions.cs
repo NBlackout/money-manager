@@ -15,8 +15,10 @@ public static class ServiceCollectionReadExtensions
             .AddSingleton<TransactionsOfMonth>()
             .AddSingleton<ExpectedTransactionSummaries>()
             .AddSingleton<CategorySummaries>()
-            .AddSingleton<CategorizationSuggestions>()
             .AddSingleton<CategoriesExport>()
+            .AddSingleton<CategorizationRuleSummaries>()
+            .AddSingleton<CategorizationRulesExport>()
+            .AddSingleton<CategorizationSuggestions>()
             .AddSingleton<BudgetSummaries>()
             .AddSingleton<MonthlyPerformance>()
             .AddSingleton<PerformanceForecast>();
