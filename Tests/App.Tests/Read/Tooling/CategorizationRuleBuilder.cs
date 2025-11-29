@@ -10,7 +10,7 @@ public record CategorizationRuleBuilder(Guid Id, Guid CategoryId, string Categor
         new(new CategorizationRuleId(this.Id), new CategoryId(this.CategoryId), this.Keywords);
 
     public CategorySnapshot ToCategorySnapshot() =>
-        new(new CategoryId(this.CategoryId), this.CategoryLabel);
+        new(new CategoryId(this.CategoryId), this.CategoryLabel, null);
 
     public CategorizationRuleSummaryPresentation ToSummary() =>
         new(this.Id, this.CategoryId, this.CategoryLabel, this.Keywords);

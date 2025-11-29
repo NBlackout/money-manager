@@ -15,7 +15,7 @@ public static class ServiceCollectionWriteExtensions
             .AddSingleton<CreateCategory>()
             .AddSingleton<ImportCategories>()
             .AddSingleton<DeleteCategory>()
-            .AddSingleton<CreateCategorizationRule>()
+            .AddSingleton<ApplyCategorizationRule>()
             .AddSingleton<DeleteCategorizationRule>()
             .AddSingleton<ImportCategorizationRules>()
             .AddSingleton<AssignTransactionCategory>()

@@ -21,7 +21,7 @@ public partial class CategorizationRules : ComponentBase
     [Inject] public CategorizationRuleSummaries CategorizationRuleSummaries { get; set; } = null!;
     [Inject] public CategorySummaries CategorySummaries { get; set; } = null!;
     [Inject] public ImportCategorizationRules ImportCategorizationRules { get; set; } = null!;
-    [Inject] public CreateCategorizationRule CreateCategorizationRule { get; set; } = null!;
+    [Inject] public ApplyCategorizationRule ApplyCategorizationRule { get; set; } = null!;
     [Inject] public DeleteCategorizationRule DeleteCategorizationRule { get; set; } = null!;
     [Inject] public CategorizationRulesExport CategorizationRulesExport { get; set; } = null!;
     [Inject] public IJSRuntime JsRuntime { get; set; } = null!;
@@ -48,7 +48,7 @@ public partial class CategorizationRules : ComponentBase
         Guid id = Guid.NewGuid();
         Guid categoryId = this.CategorizationRule!.CategoryId!.Value;
         string keywords = this.CategorizationRule!.Keywords!;
-        await this.CreateCategorizationRule.Execute(new CategorizationRuleId(id), new CategoryId(categoryId), keywords);
+        await this.ApplyCategorizationRule.Execute(new CategorizationRuleId(id), new CategoryId(categoryId), keywords);
 
         this.categorizationRules =
         [

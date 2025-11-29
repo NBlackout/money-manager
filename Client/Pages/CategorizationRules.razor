@@ -12,7 +12,7 @@
 {
     <EditForm Model="CategorizationRule" OnSubmit="Submit" FormName="CreateCategorizationRule">
         <div>
-            <label>Label:
+            <label>Category:
                 <InputSelect @bind-Value="CategorizationRule!.CategoryId">
                     @if (categories != null && categories.Any())
                     {

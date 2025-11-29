@@ -22,6 +22,7 @@
 - Nullable category label during import
 - Multiple import sometimes fails
 - Account activity: next month when already on last
+- Categorization rule: error when creating using default (first) category
 
 ## Task
 
