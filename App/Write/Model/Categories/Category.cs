@@ -6,16 +6,18 @@ namespace App.Write.Model.Categories;
 public class Category : DomainEntity<CategoryId>
 {
     private readonly Label label;
+    private readonly CategoryId? parentId;
 
-    public CategorySnapshot Snapshot => new(this.Id, this.label.Value);
+    public CategorySnapshot Snapshot => new(this.Id, this.label.Value, this.parentId);
 
-    internal Category(CategoryId id, Label label) : base(id)
+    internal Category(CategoryId id, Label label, CategoryId? parentId) : base(id)
     {
         this.label = label;
+        this.parentId = parentId;
     }
 
     public static Category From(CategorySnapshot snapshot) =>
-        new(snapshot.Id, new Label(snapshot.Label));
+        new(snapshot.Id, new Label(snapshot.Label), snapshot.ParentId);
 
     public CategorizationRule ApplyWhenMatches(CategorizationRuleId id, string keywords) =>
         new(id, this.Id, keywords);

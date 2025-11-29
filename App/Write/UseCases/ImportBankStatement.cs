@@ -38,6 +38,7 @@ public class ImportBankStatement(
     private async Task<(Category[], Transaction[])> NewTransactions(Account account, AccountStatement statement)
     {
         TransactionStatement[] newTransactionStatements = await this.NewTransactionStatements(statement);
+        Dictionary<Label, Category?> categories = await this.CategoriesOf(newTransactionStatements);
 
         Dictionary<Label, Category> newCategories = [];
         List<Transaction> newTransactions = [];
@@ -76,10 +77,10 @@ public class ImportBankStatement(
                 continue;
             }
 
-            Category? category = await categoryRepository.ByOrDefault(newTransactionStatement.Category);
+            Category? category = categories[newTransactionStatement.Category];
             if (category == null)
             {
-                category = new Category(await categoryRepository.NextIdentity(), newTransactionStatement.Category!);
+                category = new Category(await categoryRepository.NextIdentity(), newTransactionStatement.Category!, null);
 
                 newCategories.Add(newTransactionStatement.Category, category);
             }
@@ -99,6 +100,9 @@ public class ImportBankStatement(
         return ([..newCategories.Values], [..newTransactions]);
     }
 
+    private async Task<Dictionary<Label, Category?>> CategoriesOf(TransactionStatement[] newTransactionStatements) =>
+        await categoryRepository.By(newTransactionStatements.Where(t => t.Category != null).Select(t => t.Category!).Distinct().ToArray());
+
     private async Task<TransactionStatement[]> NewTransactionStatements(AccountStatement statement)
     {
         ExternalId[] unknownExternalIds = await transactionRepository.UnknownExternalIds([..statement.Transactions.Select(t => t.Identifier)]);
@@ -109,8 +113,10 @@ public class ImportBankStatement(
     private async Task Save(Account account, Category[] categories, Transaction[] transactions)
     {
         await accountRepository.Save(account);
+
         foreach (Category category in categories)
             await categoryRepository.Save(category);
+
         foreach (Transaction transaction in transactions)
             await transactionRepository.Save(transaction);
     }

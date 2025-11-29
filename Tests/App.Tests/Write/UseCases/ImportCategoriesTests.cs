@@ -44,5 +44,5 @@ public class ImportCategoriesTests
     }
 
     private static CategorySnapshot ExpectedFrom(CategoryToImport category) =>
-        new(Any<CategoryId>(), category.Label.Value);
+        new(Any<CategoryId>(), category.Label.Value, null);
 }

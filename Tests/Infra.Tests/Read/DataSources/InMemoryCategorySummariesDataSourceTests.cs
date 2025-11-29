@@ -16,20 +16,48 @@ public class InMemoryCategorySummariesDataSourceTests : InfraTest<ICategorySumma
         this.categoryRepository = this.Resolve<ICategoryRepository, InMemoryCategoryRepository>();
     }
 
-    [Theory]
-    [RandomData]
-    public async Task Gives_categories(CategoryBuilder[] expected)
+    [Fact]
+    public async Task Gives_categories()
     {
-        this.Feed(expected);
-        await this.Verify(expected.Select(c => c.ToSummary()).ToArray());
+        CategoryBuilder aCategory = ACategory();
+        CategoryBuilder anotherCategory = ACategory();
+        this.Feed(aCategory, anotherCategory);
+
+        await this.Verify(PresentationFrom(aCategory), PresentationFrom(anotherCategory));
     }
 
-    private async Task Verify(CategorySummaryPresentation[] expected)
+    [Fact]
+    public async Task Gives_category_children()
+    {
+        CategoryBuilder parentCategory = ACategory();
+        CategoryBuilder aChildCategory = ACategory() with { ParentId = parentCategory.Id };
+        CategoryBuilder anotherChildCategory = ACategory() with { ParentId = parentCategory.Id };
+        this.Feed(parentCategory, aChildCategory, anotherChildCategory);
+
+        await this.Verify(PresentationFrom(parentCategory) with { Children = PresentationsFrom(aChildCategory, anotherChildCategory) });
+    }
+
+    [Fact]
+    public async Task Tells_when_there_is_no_category()
+    {
+        await this.Verify();
+    }
+
+    private async Task Verify(params CategorySummaryPresentation[] expected)
     {
         CategorySummaryPresentation[] actual = await this.Sut.All();
         actual.Should().Equal(expected);
     }
 
-    private void Feed(CategoryBuilder[] expected) =>
+    private void Feed(params CategoryBuilder[] expected) =>
         this.categoryRepository.Feed([..expected.Select(c => c.ToSnapshot())]);
+
+    private static CategoryBuilder ACategory() =>
+        Any<CategoryBuilder>() with { ParentId = null };
+
+    private static CategorySummaryPresentation PresentationFrom(CategoryBuilder category) =>
+        category.ToSummary();
+
+    private static ChildCategorySummaryPresentation[] PresentationsFrom(params CategoryBuilder[] categories) =>
+        categories.Select(c => c.ToChildSummary()).ToArray();
 }

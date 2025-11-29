@@ -44,9 +44,18 @@ public partial class Categories : ComponentBase
     {
         Guid id = Guid.NewGuid();
         string label = this.Category!.Label!;
-        await this.CreateCategory.Execute(new CategoryId(id), new Label(label));
+        Guid? parentId = this.Category!.ParentId;
+        await this.CreateCategory.Execute(new CategoryId(id), new Label(label), parentId.HasValue ? new CategoryId(parentId.Value) : null);
 
-        this.categories = [..this.categories!.Prepend(new CategorySummaryPresentation(id, label))];
+        if (parentId.HasValue)
+            this.categories =
+            [
+                ..this.categories!.Select(c =>
+                    (c.Id == parentId) ? c with { Children = [..c.Children.Prepend(new ChildCategorySummaryPresentation(id, label))] } : c
+                )
+            ];
+        else
+            this.categories = [..this.categories!.Prepend(new CategorySummaryPresentation(id, label))];
         this.Category = new CategoryForm();
         this.HideCategoryForm();
     }
@@ -71,6 +80,7 @@ public partial class Categories : ComponentBase
         {
             await this.Upload(args.File);
 
+            this.categories = await this.CategorySummaries.Execute();
             this.uploadResult = "Categories successfully imported";
         }
         catch (Exception e)
@@ -90,6 +100,7 @@ public partial class Categories : ComponentBase
 
     public class CategoryForm
     {
+        public Guid? ParentId { get; set; }
         public string? Label { get; set; }
     }
 }

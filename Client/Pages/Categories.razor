@@ -12,6 +12,17 @@
 {
     <EditForm Model="Category" OnSubmit="Submit" FormName="CreateCategory">
         <div>
+            <label>Category:
+                <InputSelect @bind-Value="Category!.ParentId">
+                    @if (categories != null && categories.Any())
+                    {
+                        @foreach (CategorySummaryPresentation category in categories)
+                        {
+                            <option value="@category.Id">@category.Label</option>
+                        }
+                    }
+                </InputSelect>
+            </label>
             <label>Label:
                 <InputText @bind-Value="Category!.Label"></InputText>
             </label>
@@ -28,13 +39,24 @@ else
 {
     <button class="btn btn-primary" @onclick="ExportCategories">Export</button>
 
-    <ul class="list-group list-group-flush">
+    <div class="row row-cols-4 g-4">
         @foreach (CategorySummaryPresentation category in categories)
         {
-            <li class="list-group-item">
-                @category.Label
-                <button class="btn btn-link" @onclick="() => Delete(category)">Delete</button>
-            </li>
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@category.Label
+                            <button class="btn btn-link" @onclick="() => Delete(category)">Delete</button>
+                        </h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        @foreach (ChildCategorySummaryPresentation child in category.Children)
+                        {
+                            <li class="list-group-item">@child.Label</li>
+                        }
+                    </ul>
+                </div>
+            </div>
         }
-    </ul>
+    </div>
 }

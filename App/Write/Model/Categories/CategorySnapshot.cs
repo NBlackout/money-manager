@@ -1,3 +1,3 @@
 ﻿namespace App.Write.Model.Categories;
 
-public record CategorySnapshot(CategoryId Id, string Label);
+public record CategorySnapshot(CategoryId Id, string Label, CategoryId? ParentId);
