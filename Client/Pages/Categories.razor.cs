@@ -14,13 +14,12 @@ public partial class Categories : ComponentBase
 
     private bool isCreating;
     private string? uploadResult;
-
+    private InputText? labelElement;
     private CategorySummaryPresentation[]? categories;
 
     [Inject] public CategorySummaries CategorySummaries { get; set; } = null!;
     [Inject] public ImportCategories ImportCategories { get; set; } = null!;
     [Inject] public CreateCategory CreateCategory { get; set; } = null!;
-    [Inject] public DeleteCategory DeleteCategory { get; set; } = null!;
     [Inject] public CategoriesExport CategoriesExport { get; set; } = null!;
     [Inject] public IJSRuntime JsRuntime { get; set; } = null!;
 
@@ -31,39 +30,33 @@ public partial class Categories : ComponentBase
     {
         this.Category ??= new CategoryForm();
         this.isCreating = this.Keywords != null;
-        this.categories = await this.CategorySummaries.Execute();
+        await this.LoadCategories();
     }
 
-    private void ShowCategoryForm() =>
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (this.isCreating && this.labelElement?.Element != null)
+            await this.labelElement.Element.Value.FocusAsync();
+    }
+
+    private async Task LoadCategories() =>
+        this.SetCategoriesTo(await this.CategorySummaries.Execute());
+
+    private void EnterCreateMode() =>
         this.isCreating = true;
 
-    private void HideCategoryForm() =>
+    private void ExitCreateMode() =>
         this.isCreating = false;
 
     private async Task Submit()
     {
         Guid id = Guid.NewGuid();
         string label = this.Category!.Label!;
-        Guid? parentId = this.Category!.ParentId;
-        await this.CreateCategory.Execute(new CategoryId(id), new Label(label), parentId.HasValue ? new CategoryId(parentId.Value) : null);
+        await this.CreateCategory.Execute(new CategoryId(id), new Label(label), null);
 
-        if (parentId.HasValue)
-            this.categories =
-            [
-                ..this.categories!.Select(c =>
-                    (c.Id == parentId) ? c with { Children = [..c.Children.Prepend(new ChildCategorySummaryPresentation(id, label))] } : c
-                )
-            ];
-        else
-            this.categories = [..this.categories!.Prepend(new CategorySummaryPresentation(id, label))];
+        this.SetCategoriesTo([..this.categories!.Append(new CategorySummaryPresentation(id, label))]);
         this.Category = new CategoryForm();
-        this.HideCategoryForm();
-    }
-
-    private async Task Delete(CategorySummaryPresentation category)
-    {
-        await this.DeleteCategory.Execute(new CategoryId(category.Id));
-        this.categories = [..this.categories!.Where(c => c != category)];
+        this.ExitCreateMode();
     }
 
     private async Task ExportCategories()
@@ -79,8 +72,7 @@ public partial class Categories : ComponentBase
         try
         {
             await this.Upload(args.File);
-
-            this.categories = await this.CategorySummaries.Execute();
+            await this.LoadCategories();
             this.uploadResult = "Categories successfully imported";
         }
         catch (Exception e)
@@ -98,9 +90,14 @@ public partial class Categories : ComponentBase
         await this.ImportCategories.Execute(buffer);
     }
 
+    private void OnCategoryDeleted(Guid categoryId) =>
+        this.SetCategoriesTo([..this.categories!.Where(c => c.Id != categoryId)]);
+
+    private void SetCategoriesTo(CategorySummaryPresentation[] presentations) =>
+        this.categories = presentations.OrderBy(p => p.Label).Select(p => p with { Children = p.Children.OrderBy(c => c.Label).ToArray() }).ToArray();
+
     public class CategoryForm
     {
-        public Guid? ParentId { get; set; }
         public string? Label { get; set; }
     }
 }
