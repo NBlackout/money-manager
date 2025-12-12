@@ -1,4 +1,5 @@
 using App.Write.Model.Categories;
+using App.Write.Model.ValueObjects;
 using App.Write.Ports;
 
 namespace App.Write.UseCases;
@@ -7,9 +8,26 @@ public class ImportCategories(ICategoryRepository categoryRepository, ICategoryI
 {
     public async Task Execute(Stream content)
     {
-        CategoryToImport[] categories = await categoryImporter.Parse(content);
+        CategoryToImport[] categoriesToImport = await categoryImporter.Parse(content);
 
-        foreach (CategoryToImport category in categories)
-            await categoryRepository.Save(new Category(await categoryRepository.NextIdentity(), category.Label, null));
+        List<Category> categories = [];
+        Label[] existingLabels = await this.ExistingLabels(categoriesToImport);
+        foreach (CategoryToImport categoryToImport in categoriesToImport)
+        {
+            if (existingLabels.Contains(categoryToImport.Label))
+                continue;
+
+            categories.Add(new Category(await categoryRepository.NextIdentity(), categoryToImport.Label, null));
+        }
+
+        await categoryRepository.Save(categories.ToArray());
+    }
+
+    private async Task<Label[]> ExistingLabels(CategoryToImport[] categoriesToImport)
+    {
+        Label[] labelsToImport = categoriesToImport.Select(c => c.Label).ToArray();
+        Dictionary<Label, Category?> categories = await categoryRepository.By(labelsToImport);
+
+        return categories.Where(kv => kv.Value is not null).Select(kv => kv.Key).ToArray();
     }
 }

@@ -17,7 +17,6 @@
 - Transaction display name vs original label
 - Categorization rules : sort form & table by label
 - Organization page?
-- Deduplicate during category import
 
 ## Bug
 

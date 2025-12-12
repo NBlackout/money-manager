@@ -10,5 +10,6 @@ public interface ICategoryRepository
     Task<Dictionary<Label, Category?>> By(Label[] labels);
     Task EnsureUnique(Label label);
     Task Save(Category category);
+    Task Save(Category[] categories);
     Task Delete(CategoryId id);
 }
