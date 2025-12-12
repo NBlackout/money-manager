@@ -15,6 +15,9 @@
 - Export / import budgets
 - Light/Dark/System themes support
 - Transaction display name vs original label
+- Categorization rules : sort form & table by label
+- Organization page?
+- Deduplicate during category import
 
 ## Bug
 
@@ -32,7 +35,6 @@
 - Categorization table background is white
 - Two transactions of month HTTP requests made when switching account
 - Introduce `CurrentMonth` or something like that to replace `new DateOnly(DateTime.Now.Year, DateTime.Now.Month, 1)`
-- Set `ApiUrl` in `StubbedHttpMessageHandler` privately to replace `new(httpMessageHandler) { BaseAddress = new Uri(ApiUrl) };` with `new(httpMessageHandler)`
 - Transaction `Debit` or `Credit` instead of positive and negative amounts
 - Move UseCase DI registration in infra
 - Simplify read by removing infra layer ? Merging it in use cases ?

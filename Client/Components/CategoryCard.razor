@@ -10,11 +10,13 @@
             }
             else
             {
-                <span @onclick="EnterEditMode">
-                    <button type="button" class="btn btn-link ps-0 pe-1" @onclick="EnterEditMode">
-                        <small class="bi bi-pencil"></small>
+                <span>
+                    <button type="button" class="btn btn-link ps-0 pe-1" @onclick="EnterCreateMode">
+                        <small class="bi bi-folder-plus"></small>
                     </button>
-                    @Category.Label
+                    <span @onclick="EnterEditMode">
+                        @Category.Label
+                    </span>
                 </span>
                 <button class="btn btn-link ps-1 pe-0" @onclick="Delete"><small class="bi bi-x-lg text-danger"></small></button>
             }
@@ -28,18 +30,13 @@
                 }
             </ul>
         }
-        <h5 class="card-footer d-flex justify-content-between align-items-center mb-0">
-            @if (isCreating)
-            {
+        @if (isCreating)
+        {
+            <h5 class="card-footer d-flex justify-content-between align-items-center mb-0">
                 <EditForm Model="Child" OnSubmit="CreateChild" FormName="CreateChildCategory">
-                    <InputText @bind-Value="Child!.Label" @ref="childLabelElement" @onfocusout="@ExitCreateMode"></InputText>
-                    <button type="submit">Submit</button>
+                    <InputText @bind-Value="Child!.Label" @ref="childLabelElement" @onfocusout="@ExitCreateMode" class="form-control"></InputText>
                 </EditForm>
-            }
-            else
-            {
-                <button class="btn btn-primary" @onclick="EnterCreateMode">Add new category</button>
-            }
-        </h5>
+            </h5>
+        }
     </div>
 </div>
