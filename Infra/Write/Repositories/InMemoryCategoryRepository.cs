@@ -34,9 +34,13 @@ public class InMemoryCategoryRepository : ICategoryRepository
         return Task.CompletedTask;
     }
 
-    public Task Save(Category category)
+    public Task Save(Category category) =>
+        this.Save([category]);
+
+    public Task Save(Category[] categories)
     {
-        this.data[category.Id] = category.Snapshot;
+        foreach (Category category in categories)
+            this.data[category.Id] = category.Snapshot;
 
         return Task.CompletedTask;
     }

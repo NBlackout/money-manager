@@ -1,5 +1,6 @@
 using App.Tests.Write.TestDoubles;
 using App.Write.Model.Categories;
+using App.Write.Model.ValueObjects;
 using App.Write.Ports;
 using App.Write.UseCases;
 using Infra.Write.Repositories;
@@ -27,6 +28,14 @@ public class ImportCategoriesTests
         await this.Verify(ExpectedFrom(aCategory) with { Id = anId }, ExpectedFrom(anotherCategory) with { Id = anotherId });
     }
 
+    [Theory, RandomData]
+    public async Task Skips_existing_categories(CategorySnapshot category)
+    {
+        this.SetImportResultTo(new CategoryToImport(new Label(category.Label)));
+        this.Feed(category);
+        await this.Verify(category);
+    }
+
     private async Task Verify(params CategorySnapshot[] expected)
     {
         await this.sut.Execute(new MemoryStream(Content));
@@ -35,6 +44,9 @@ public class ImportCategoriesTests
 
     private void SetImportResultTo(params CategoryToImport[] categories) =>
         this.categoryImporter.Feed(new MemoryStream(Content), categories);
+
+    private void Feed(CategorySnapshot category) =>
+        this.categoryRepository.Feed(category);
 
     private void FeedNextIdsTo(params CategoryId[] ids)
     {
