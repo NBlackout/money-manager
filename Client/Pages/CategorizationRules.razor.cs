@@ -33,17 +33,20 @@ public partial class CategorizationRules : ComponentBase
     {
         this.CategorizationRule ??= new CategorizationRuleForm { Keywords = this.Keywords };
         this.isCreating = this.Keywords != null;
-        this.categorizationRules = await this.CategorizationRuleSummaries.Execute();
+        await this.LoadCategorizationRules();
         this.categories = await this.CategorySummaries.Execute();
     }
 
-    private void ShowCategorizationRuleForm() =>
+    private async Task LoadCategorizationRules() =>
+        this.categorizationRules = await this.CategorizationRuleSummaries.Execute();
+
+    private void EnterCreateMode() =>
         this.isCreating = true;
 
     private void HideCategorizationRuleForm() =>
         this.isCreating = false;
 
-    private async Task Submit()
+    private async Task Create()
     {
         Guid id = Guid.NewGuid();
         Guid categoryId = this.CategorizationRule!.CategoryId!.Value;
@@ -79,7 +82,7 @@ public partial class CategorizationRules : ComponentBase
         try
         {
             await this.Upload(args.File);
-
+            await this.LoadCategorizationRules();
             this.uploadResult = "Categorization rules successfully imported";
         }
         catch (Exception e)
