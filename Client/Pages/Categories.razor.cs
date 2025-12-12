@@ -48,7 +48,7 @@ public partial class Categories : ComponentBase
     private void ExitCreateMode() =>
         this.isCreating = false;
 
-    private async Task Submit()
+    private async Task Create()
     {
         Guid id = Guid.NewGuid();
         string label = this.Category!.Label!;

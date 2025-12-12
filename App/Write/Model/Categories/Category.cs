@@ -5,7 +5,7 @@ namespace App.Write.Model.Categories;
 
 public class Category : DomainEntity<CategoryId>
 {
-    private readonly Label label;
+    private Label label;
     private readonly CategoryId? parentId;
 
     public CategorySnapshot Snapshot => new(this.Id, this.label.Value, this.parentId);
@@ -21,4 +21,7 @@ public class Category : DomainEntity<CategoryId>
 
     public CategorizationRule ApplyWhenMatches(CategorizationRuleId id, string keywords) =>
         new(id, this.Id, keywords);
+
+    public void Rename(Label newLabel) =>
+        this.label = newLabel;
 }

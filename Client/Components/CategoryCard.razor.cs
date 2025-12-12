@@ -9,9 +9,12 @@ namespace Client.Components;
 public partial class CategoryCard : ComponentBase
 {
     private bool isCreating;
+    private bool isEditing;
+    private ElementReference labelElement;
     private InputText? childLabelElement;
 
     [Inject] public CreateCategory CreateCategory { get; set; } = null!;
+    [Inject] private RenameCategory RenameCategory { get; set; } = null!;
     [Inject] public DeleteCategory DeleteCategory { get; set; } = null!;
 
     [Parameter] public CategorySummaryPresentation Category { get; set; } = null!;
@@ -24,9 +27,17 @@ public partial class CategoryCard : ComponentBase
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        if (this.isEditing)
+            await this.labelElement.FocusAsync();
         if (this.isCreating && this.childLabelElement?.Element != null)
             await this.childLabelElement.Element.Value.FocusAsync();
     }
+
+    private void EnterEditMode() =>
+        this.isEditing = true;
+
+    private void ExitEditMode() =>
+        this.isEditing = false;
 
     private void EnterCreateMode() =>
         this.isCreating = true;
@@ -34,13 +45,22 @@ public partial class CategoryCard : ComponentBase
     private void ExitCreateMode() =>
         this.isCreating = false;
 
+    private async Task LabelChanged(ChangeEventArgs args)
+    {
+        string newLabel = (string)args.Value!;
+        await this.RenameCategory.Execute(new CategoryId(this.Category.Id), new Label(newLabel));
+
+        this.Category = this.Category with { Label = newLabel };
+        this.ExitEditMode();
+    }
+
     private async Task CreateChild()
     {
         Guid id = Guid.NewGuid();
         string label = this.Child!.Label!;
         await this.CreateCategory.Execute(new CategoryId(id), new Label(label), new CategoryId(this.Category.Id));
 
-        this.Category = this.Category with { Children = this.Category.Children.Append(new ChildCategorySummaryPresentation(id, label)).ToArray() };
+        this.SetChildrenTo(this.Category.Children.Append(new ChildCategorySummaryPresentation(id, label)).ToArray());
         this.Child = new ChildForm();
         this.ExitCreateMode();
     }
@@ -51,11 +71,11 @@ public partial class CategoryCard : ComponentBase
         await this.OnCategoryDeleted.InvokeAsync(this.Category.Id);
     }
 
-    private async Task DeleteChild(Guid categoryId)
-    {
-        await this.DeleteCategory.Execute(new CategoryId(categoryId));
-        this.Category = this.Category with { Children = this.Category.Children.Where(c => c.Id != categoryId).ToArray() };
-    }
+    private void OnChildDeleted(Guid categoryId) =>
+        this.SetChildrenTo([..this.Category.Children.Where(c => c.Id != categoryId)]);
+
+    private void SetChildrenTo(ChildCategorySummaryPresentation[] children) =>
+        this.Category = this.Category with { Children = children.OrderBy(c => c.Label).ToArray() };
 
     public class ChildForm
     {
