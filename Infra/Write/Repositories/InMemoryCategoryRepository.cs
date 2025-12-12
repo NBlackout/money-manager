@@ -18,15 +18,13 @@ public class InMemoryCategoryRepository : ICategoryRepository
     public Task<Category> By(CategoryId id) =>
         Task.FromResult(Category.From(this.data[id]));
 
-    public Task<Dictionary<Label, Category?>> By(Label[] labels)
-    {
-        return Task.FromResult(
-            labels.ToDictionary(
+    public Task<Dictionary<Label, Category?>> By(Label[] labels) =>
+        Task.FromResult(
+            labels.Distinct().ToDictionary(
                 l => l,
                 l => this.data.Values.SingleOrDefault(c => c.Label == l.Value) != null ? Category.From(this.data.Values.Single(c => c.Label == l.Value)) : null
             )
         );
-    }
 
     public Task EnsureUnique(Label label)
     {
