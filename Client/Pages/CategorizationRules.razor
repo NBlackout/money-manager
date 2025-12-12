@@ -2,18 +2,12 @@
 @page "/categorization-rules/create"
 @using global::App.Read.Ports
 
-<InputFile OnChange="ImportCategorizationRulesFile" accept=".csv"></InputFile>
-@if (uploadResult != null)
-{
-    <div>@uploadResult</div>
-}
-
-@if (isCreating)
-{
-    <EditForm Model="CategorizationRule" OnSubmit="Submit" FormName="CreateCategorizationRule">
-        <div>
-            <label>Category:
-                <InputSelect @bind-Value="CategorizationRule!.CategoryId">
+<div class="row justify-content-between">
+    <div class="col-4">
+        @if (isCreating)
+        {
+            <EditForm Model="CategorizationRule" OnSubmit="Create" FormName="CreateCategory">
+                <InputSelect @bind-Value="CategorizationRule!.CategoryId" class="form-control">
                     @if (categories != null && categories.Any())
                     {
                         @foreach (CategorySummaryPresentation category in categories)
@@ -22,25 +16,38 @@
                         }
                     }
                 </InputSelect>
+                <InputText @bind-Value="CategorizationRule!.Keywords" class="form-control"></InputText>
+            </EditForm>
+        }
+        else
+        {
+            <button class="btn btn-primary" @onclick="EnterCreateMode">
+                <small class="bi bi-plus-lg"></small>
+                Create
+            </button>
+        }
+    </div>
+    <div class="col-4 text-end">
+        <div class="btn-group">
+            <label class="btn btn-primary">
+                <small class="bi bi-upload"></small>
+                Import
+                <InputFile OnChange="ImportCategorizationRulesFile" accept=".csv" class="btn btn-primary d-none"></InputFile>
             </label>
+            <button class="btn btn-primary" @onclick="ExportCategorizationRules" disabled="@(categorizationRules is { Length: 0 })">
+                <small class="bi bi-download"></small>
+                Export
+            </button>
         </div>
-        <div>
-            <label>Keywords:
-                <InputText @bind-Value="CategorizationRule!.Keywords"></InputText>
-            </label>
-        </div>
-        <button type="submit">Submit</button>
-    </EditForm>
-}
-else
-{
-    <button class="btn btn-primary" @onclick="ShowCategorizationRuleForm">Add new categorization rule</button>
-}
+        @if (uploadResult != null)
+        {
+            <div>@uploadResult</div>
+        }
+    </div>
+</div>
 
 @if (categorizationRules is { Length: > 0 })
 {
-    <button class="btn btn-primary" @onclick="ExportCategorizationRules">Export</button>
-
     <ul class="list-group list-group-flush">
         @foreach (CategorizationRuleSummaryPresentation categorizationRule in categorizationRules)
         {
