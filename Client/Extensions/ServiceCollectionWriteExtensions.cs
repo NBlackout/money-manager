@@ -11,8 +11,9 @@ public static class ServiceCollectionWriteExtensions
     private static IServiceCollection AddUseCases(this IServiceCollection services) =>
         services
             .AddSingleton<ImportBankStatement>()
-            .AddSingleton<AssignAccountLabel>()
+            .AddSingleton<RenameAccount>()
             .AddSingleton<CreateCategory>()
+            .AddSingleton<RenameCategory>()
             .AddSingleton<ImportCategories>()
             .AddSingleton<DeleteCategory>()
             .AddSingleton<ApplyCategorizationRule>()

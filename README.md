@@ -2,7 +2,6 @@
 
 ## Feat
 
-- Categories as cards and not table
 - Sliding balance displays estimated balance for next 3 months
 - Change transaction category -> dropdown list with search?
 - Prevent deletion of used category
@@ -28,7 +27,6 @@
 
 - A single CSV adapter to read/write
 - Make sure bootstrap is properly used everywhere by following their documentation examples (e.g. `NavMenu`)
-- Contract testing
 - Merge Read App & Read Infra?
 - Check naming everywhere
 - Categorization table background is white
@@ -38,7 +36,6 @@
 - Transaction `Debit` or `Credit` instead of positive and negative amounts
 - Move UseCase DI registration in infra
 - Simplify read by removing infra layer ? Merging it in use cases ?
-- Allow to run without HTTP server (replace HTTP gateways with direct controller injection)
 - Fix mutation in CI
 - Remove coverlet.collector after checking coverage works and CI is ok
 - Rename `TransactionLabelAssignment` to `TransactionCategoryAssigment` & same for `AssignLabel`

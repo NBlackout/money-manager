@@ -17,7 +17,7 @@ public partial class AccountActivity : ComponentBase
     private AccountDetailsPresentation? account;
 
     [Inject] private AccountDetails AccountDetails { get; set; } = null!;
-    [Inject] private AssignAccountLabel AssignAccountLabel { get; set; } = null!;
+    [Inject] private RenameAccount RenameAccount { get; set; } = null!;
 
     [Parameter] public Guid Id { get; set; }
     [Parameter] public EventCallback<(Guid, string)> OnLabelAssigned { get; set; }
@@ -36,7 +36,7 @@ public partial class AccountActivity : ComponentBase
             await this.labelElement.FocusAsync();
     }
 
-    private void ToggleEditMode() =>
+    private void EnterEditMode() =>
         this.isEditing = true;
 
     private void ExitEditMode() =>
@@ -45,7 +45,7 @@ public partial class AccountActivity : ComponentBase
     private async Task LabelChanged(ChangeEventArgs args)
     {
         string newLabel = (string)args.Value!;
-        await this.AssignAccountLabel.Execute(new AccountId(this.Id), new Label(newLabel));
+        await this.RenameAccount.Execute(new AccountId(this.Id), new Label(newLabel));
         await this.OnLabelAssigned.InvokeAsync((this.Id, newLabel));
 
         this.account = this.account! with { Label = newLabel };

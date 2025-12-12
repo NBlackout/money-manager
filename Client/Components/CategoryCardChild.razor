@@ -1,0 +1,17 @@
+<li class="list-group-item d-flex justify-content-between align-items-center">
+    @if (isEditing)
+    {
+        <input type="text" value="@Category.Label" @ref="labelElement" @onchange="@LabelChanged" @onfocusout="@ExitEditMode" class="form-control"
+               placeholder="Label"/>
+    }
+    else
+    {
+        <span @onclick="EnterEditMode">
+            <button type="button" class="btn btn-link ps-0 pe-1" @onclick="EnterEditMode">
+                <small class="bi bi-pencil"></small>
+            </button>
+            @Category.Label
+        </span>
+        <button class="btn btn-link ps-1 pe-0" @onclick="Delete"><small class="bi bi-x-lg text-danger"></small></button>
+    }
+</li>

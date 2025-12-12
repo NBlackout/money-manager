@@ -4,12 +4,12 @@ using App.Write.Ports;
 
 namespace App.Write.UseCases;
 
-public class AssignAccountLabel(IAccountRepository repository)
+public class RenameAccount(IAccountRepository repository)
 {
     public async Task Execute(AccountId id, Label label)
     {
         Account account = await repository.By(id);
-        account.AssignLabel(label);
+        account.Rename(label);
         await repository.Save(account);
     }
 }

@@ -11,7 +11,7 @@
 
 @if (isCreating)
 {
-    <EditForm Model="Category" OnSubmit="Submit" FormName="CreateCategory">
+    <EditForm Model="Category" OnSubmit="Create" FormName="CreateCategory">
         <div>
             <label>Label:
                 <InputText @bind-Value="Category!.Label" @ref="labelElement" @onfocusout="@ExitCreateMode"></InputText>

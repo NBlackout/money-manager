@@ -25,7 +25,7 @@ public class Account : DomainEntity<AccountId>
     public void Synchronize(Balance newBalance) =>
         this.balance = newBalance;
 
-    public void AssignLabel(Label newLabel) =>
+    public void Rename(Label newLabel) =>
         this.label = newLabel;
 
     public Transaction AttachTransaction(

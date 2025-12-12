@@ -5,21 +5,21 @@ using Infra.Write.Repositories;
 
 namespace App.Tests.Write.UseCases;
 
-public class AssignAccountLabelTests
+public class RenameAccountTests
 {
     private readonly InMemoryAccountRepository repository = new();
-    private readonly AssignAccountLabel sut;
+    private readonly RenameAccount sut;
     private readonly AccountSnapshot existingAccount = Any<AccountSnapshot>();
 
-    public AssignAccountLabelTests()
+    public RenameAccountTests()
     {
-        this.sut = new AssignAccountLabel(this.repository);
+        this.sut = new RenameAccount(this.repository);
         this.Feed(this.existingAccount);
     }
 
     [Theory]
     [RandomData]
-    public async Task Assigns_account_label(Label label) =>
+    public async Task Renames_account(Label label) =>
         await this.Verify(label);
 
     private async Task Verify(Label label)
