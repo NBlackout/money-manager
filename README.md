@@ -2,21 +2,31 @@
 
 ## Feat
 
-- Sliding balance displays estimated balance for next 3 months
-- Change transaction category -> dropdown list with search?
-- Prevent deletion of used category
-- Allow to rename budget (in its own use case though)
-- Change budget amount implies providing begin date
-- Indent budget fake accounts below reference account
-    - Use year browsing instead of month
-    - Show all fake transaction of given year
-- Display account balance of given month (along with transactions)
-- Account empty state
-- Export / import budgets
-- Light/Dark/System themes support
-- Transaction display name vs original label
-- Categorization rules : sort form & table by label
-- Organization page?
+- Dashboard
+  - Forecast next 3 months
+- Accounts
+    - Empty state
+    - Display balance of given month (along with transactions)
+- Budget
+  - Import/Export
+  - Change budget amount implies providing begin date
+  - Indent budget fake accounts below reference account
+      - Use year browsing instead of month
+      - Show all fake transaction of given year
+  - Allow renaming (in its own use case though)
+- Categories
+  - Prevent deletion of used one
+- Categorization rules
+  - Sort form & table by label
+- Transactions
+  - Display name vs original label
+  - Assign category -> dropdown list with search?
+- UI
+  - Light/Dark/System themes support
+- Organizations
+  - New concept
+  - Assign organization to transaction instead of category?
+  - Assign category to organization
 
 ## Bug
 
@@ -30,13 +40,10 @@
 - A single CSV adapter to read/write
 - Make sure bootstrap is properly used everywhere by following their documentation examples (e.g. `NavMenu`)
 - Merge Read App & Read Infra?
-- Check naming everywhere
 - Categorization table background is white
 - Two transactions of month HTTP requests made when switching account
 - Introduce `CurrentMonth` or something like that to replace `new DateOnly(DateTime.Now.Year, DateTime.Now.Month, 1)`
 - Transaction `Debit` or `Credit` instead of positive and negative amounts
-- Move UseCase DI registration in infra
 - Simplify read by removing infra layer ? Merging it in use cases ?
 - Fix mutation in CI
 - Remove coverlet.collector after checking coverage works and CI is ok
-- Rename `TransactionLabelAssignment` to `TransactionCategoryAssigment` & same for `AssignLabel`

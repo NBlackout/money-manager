@@ -30,8 +30,8 @@
                     <button class="btn btn-@(transaction.Category != null ? "primary" : "outline-primary") py-0 px-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <small class="bi bi-tag"></small>
                     </button>
-                    <TransactionLabelAssignment Id="@transaction.Id" Label="@transaction.Label"
-                                                OnCategoryAssigned="OnCategoryAssigned"></TransactionLabelAssignment>
+                    <TransactionCategoryAssignment Id="@transaction.Id" Label="@transaction.Label"
+                                                OnCategoryAssigned="OnCategoryAssigned"></TransactionCategoryAssignment>
                     <button class="btn btn-@(transaction.IsRecurring ? "secondary" : "outline-secondary") py-0 px-2" type="button"
                             @onclick="@(() => MarkAsRecurring(transaction.Id))">
                         <small class="bi bi-calendar-@(transaction.IsRecurring ? "check" : "plus")"></small>
