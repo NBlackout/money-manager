@@ -1,5 +1,4 @@
 using App.Write.Model.Budgets;
-using App.Write.Model.Exceptions;
 using App.Write.Model.ValueObjects;
 using App.Write.UseCases;
 using Infra.Write.Repositories;

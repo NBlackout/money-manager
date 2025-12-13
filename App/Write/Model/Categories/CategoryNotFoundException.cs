@@ -1,3 +1,3 @@
-namespace App.Write.Model.Exceptions;
+namespace App.Write.Model.Categories;
 
 public class CategoryNotFoundException : Exception;
