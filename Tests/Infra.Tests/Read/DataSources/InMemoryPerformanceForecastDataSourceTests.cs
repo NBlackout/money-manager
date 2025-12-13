@@ -4,6 +4,7 @@ using App.Write.Ports;
 using Infra.Read.DataSources;
 using Infra.Tests.Tooling;
 using Infra.Write.Repositories;
+using static App.Tests.Read.Tooling.BuilderHelpers;
 
 namespace Infra.Tests.Read.DataSources;
 
@@ -31,10 +32,10 @@ public class InMemoryPerformanceForecastDataSourceTests : InfraTest<IPerformance
     [Fact]
     public async Task Gives_forecast_based_on_recurring_transactions()
     {
-        TransactionBuilder aRecurringIncome = ARecurringTransaction() with { Amount = 25 };
-        TransactionBuilder anotherRecurringIncome = ARecurringTransaction() with { Amount = 75 };
-        TransactionBuilder aRecurringExpense = ARecurringTransaction() with { Amount = -300 };
-        TransactionBuilder anotherRecurringExpense = ARecurringTransaction() with { Amount = -100 };
+        TransactionBuilder aRecurringIncome = ATransactionMarkedAsRecurring() with { Amount = 25 };
+        TransactionBuilder anotherRecurringIncome = ATransactionMarkedAsRecurring() with { Amount = 75 };
+        TransactionBuilder aRecurringExpense = ATransactionMarkedAsRecurring() with { Amount = -300 };
+        TransactionBuilder anotherRecurringExpense = ATransactionMarkedAsRecurring() with { Amount = -100 };
         TransactionBuilder notRecurringTransaction = ATransaction() with { IsRecurring = false };
         this.Feed([aRecurringIncome, anotherRecurringIncome, aRecurringExpense, anotherRecurringExpense, notRecurringTransaction]);
 
@@ -53,12 +54,6 @@ public class InMemoryPerformanceForecastDataSourceTests : InfraTest<IPerformance
     private void Feed(TransactionBuilder[] transactions) =>
         this.transactionRepository.Feed([..transactions.Select(t => t.ToSnapshot())]);
 
-    private static AccountBuilder AnAccount() =>
-        Any<AccountBuilder>();
-
-    private static TransactionBuilder ATransaction() =>
-        Any<TransactionBuilder>();
-
-    private static TransactionBuilder ARecurringTransaction() =>
+    private static TransactionBuilder ATransactionMarkedAsRecurring() =>
         ATransaction() with { IsRecurring = true };
 }

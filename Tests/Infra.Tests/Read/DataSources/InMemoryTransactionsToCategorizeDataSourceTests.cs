@@ -4,6 +4,7 @@ using App.Write.Ports;
 using Infra.Read.DataSources;
 using Infra.Tests.Tooling;
 using Infra.Write.Repositories;
+using static App.Tests.Read.Tooling.BuilderHelpers;
 
 namespace Infra.Tests.Read.DataSources;
 
@@ -41,8 +42,8 @@ public class InMemoryTransactionsToCategorizeDataSourceTests : InfraTest<ITransa
         this.categoryRepository.Feed([..categories.Select(c => c.ToSnapshot())]);
 
     private static TransactionBuilder ATransactionWithoutCategory() =>
-        Any<TransactionBuilder>() with { Category = null };
+        ATransaction() with { Category = null };
 
     private static TransactionBuilder ATransactionWithCategory() =>
-        Any<TransactionBuilder>() with { Category = Any<CategoryBuilder>() };
+        ATransaction() with { Category = ACategory() };
 }

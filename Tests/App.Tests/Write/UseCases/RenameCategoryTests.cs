@@ -2,6 +2,7 @@ using App.Write.Model.Categories;
 using App.Write.Model.ValueObjects;
 using App.Write.UseCases;
 using Infra.Write.Repositories;
+using static App.Tests.Write.Tooling.SnapshotHelpers;
 
 namespace App.Tests.Write.UseCases;
 
@@ -9,7 +10,7 @@ public class RenameCategoryTests
 {
     private readonly InMemoryCategoryRepository repository = new();
     private readonly RenameCategory sut;
-    private readonly CategorySnapshot existingCategory = Any<CategorySnapshot>();
+    private readonly CategorySnapshot existingCategory = ACategory();
 
     public RenameCategoryTests()
     {

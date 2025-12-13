@@ -6,6 +6,7 @@ using App.Write.Model.ValueObjects;
 using App.Write.Ports;
 using App.Write.UseCases;
 using Infra.Write.Repositories;
+using static App.Tests.Write.Tooling.SnapshotHelpers;
 
 namespace App.Tests.Write.UseCases;
 
@@ -134,7 +135,7 @@ public class ImportBankStatementTests
         this.bankStatementParser.Feed(TheFileName, TheStream, accountStatement);
 
     private static TransactionSnapshot ATransactionFrom(AccountSnapshot account, CategorySnapshot? category = null) =>
-        Any<TransactionSnapshot>() with { AccountId = account.Id, CategoryId = category?.Id, IsRecurring = false };
+        ATransaction() with { AccountId = account.Id, CategoryId = category?.Id, IsRecurring = false };
 
     private static AccountStatement AccountStatementFrom(
         AccountSnapshot account,

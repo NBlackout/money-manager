@@ -2,6 +2,7 @@ using App.Write.Model.Accounts;
 using App.Write.Model.ValueObjects;
 using App.Write.UseCases;
 using Infra.Write.Repositories;
+using static App.Tests.Write.Tooling.SnapshotHelpers;
 
 namespace App.Tests.Write.UseCases;
 
@@ -9,7 +10,7 @@ public class RenameAccountTests
 {
     private readonly InMemoryAccountRepository repository = new();
     private readonly RenameAccount sut;
-    private readonly AccountSnapshot existingAccount = Any<AccountSnapshot>();
+    private readonly AccountSnapshot existingAccount = AnAccount();
 
     public RenameAccountTests()
     {

@@ -4,6 +4,7 @@ using App.Write.Ports;
 using Infra.Read.DataSources;
 using Infra.Tests.Tooling;
 using Infra.Write.Repositories;
+using static App.Tests.Read.Tooling.BuilderHelpers;
 
 namespace Infra.Tests.Read.DataSources;
 
@@ -64,5 +65,5 @@ public class InMemoryTransactionsOfMonthDataSourceTests : InfraTest<ITransaction
     }
 
     private static TransactionBuilder ATransactionOn(Guid accountId, DateOnly date) =>
-        Any<TransactionBuilder>() with { AccountId = accountId, Date = date };
+        ATransaction() with { AccountId = accountId, Date = date };
 }

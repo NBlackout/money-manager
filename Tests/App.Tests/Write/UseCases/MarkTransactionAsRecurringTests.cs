@@ -1,7 +1,9 @@
+using App.Tests.Write.Tooling;
 using App.Write.Model.RecurringTransactions;
 using App.Write.Model.Transactions;
 using App.Write.UseCases;
 using Infra.Write.Repositories;
+using static App.Tests.Write.Tooling.SnapshotHelpers;
 
 namespace App.Tests.Write.UseCases;
 
@@ -54,7 +56,7 @@ public class MarkTransactionAsRecurringTests
     }
 
     private async Task Verify<TException>(TransactionSnapshot transaction) where TException : Exception =>
-        await this.Invoking(s => s.Verify(transaction, Any<RecurringTransactionSnapshot>())).Should().ThrowAsync<TException>();
+        await this.Invoking(s => s.Verify(transaction, ARecurringTransaction())).Should().ThrowAsync<TException>();
 
     private void Feed(TransactionSnapshot transaction) =>
         this.transactionRepository.Feed(transaction);
@@ -66,5 +68,5 @@ public class MarkTransactionAsRecurringTests
         new(TheRecurringTransactionId, transaction.Amount, transaction.Label, date, transaction.CategoryId);
 
     private static TransactionSnapshot ATransaction() =>
-        Any<TransactionSnapshot>() with { IsRecurring = false };
+        SnapshotHelpers.ATransaction() with { IsRecurring = false };
 }
