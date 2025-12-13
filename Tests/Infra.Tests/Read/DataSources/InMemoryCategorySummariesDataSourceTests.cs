@@ -38,10 +38,8 @@ public class InMemoryCategorySummariesDataSourceTests : InfraTest<ICategorySumma
     }
 
     [Fact]
-    public async Task Tells_when_there_is_no_category()
-    {
+    public async Task Tells_when_there_is_no_category() =>
         await this.Verify();
-    }
 
     private async Task Verify(params CategorySummaryPresentation[] expected)
     {
@@ -53,7 +51,7 @@ public class InMemoryCategorySummariesDataSourceTests : InfraTest<ICategorySumma
         this.categoryRepository.Feed([..expected.Select(c => c.ToSnapshot())]);
 
     private static CategoryBuilder ACategory() =>
-        Any<CategoryBuilder>() with { ParentId = null };
+        BuilderHelpers.ACategory() with { ParentId = null };
 
     private static CategorySummaryPresentation PresentationFrom(CategoryBuilder category) =>
         category.ToSummary();

@@ -79,5 +79,5 @@ public class InMemoryBudgetSummariesDataSourceTests : InfraTest<IBudgetSummaries
         this.clock.Today = today;
 
     private static BudgetBuilder ABudget(DateOnly beginDate, decimal amount) =>
-        Any<BudgetBuilder>() with { BeginDate = beginDate, Amount = amount };
+        BuilderHelpers.ABudget() with { BeginDate = beginDate, Amount = amount };
 }

@@ -2,6 +2,7 @@
 using App.Write.Model.Transactions;
 using App.Write.UseCases;
 using Infra.Write.Repositories;
+using static App.Tests.Write.Tooling.SnapshotHelpers;
 
 namespace App.Tests.Write.UseCases;
 
@@ -51,7 +52,4 @@ public class DeleteCategoryTests
         this.categoryRepository.Feed(category);
         this.transactionRepository.Feed(transactions);
     }
-
-    private static TransactionSnapshot ATransaction() =>
-        Any<TransactionSnapshot>();
 }

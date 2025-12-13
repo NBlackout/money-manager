@@ -6,6 +6,7 @@ using App.Write.Ports;
 using Infra.Read.DataSources;
 using Infra.Tests.Tooling;
 using Infra.Write.Repositories;
+using static App.Tests.Write.Tooling.SnapshotHelpers;
 
 namespace Infra.Tests.Read.DataSources;
 
@@ -183,9 +184,6 @@ public class InMemoryPeriodPerformanceDataSourceTests : InfraTest<IPeriodPerform
         this.transactionRepository.Feed(transactions);
     }
 
-    private static AccountSnapshot AnAccount() =>
-        Any<AccountSnapshot>();
-
     private static TransactionSnapshot ATransactionOf(AccountSnapshot account) =>
-        Any<TransactionSnapshot>() with { AccountId = account.Id };
+        ATransaction() with { AccountId = account.Id };
 }

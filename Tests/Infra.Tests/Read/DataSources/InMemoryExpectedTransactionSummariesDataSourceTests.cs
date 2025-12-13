@@ -60,7 +60,7 @@ public class InMemoryExpectedTransactionSummariesDataSourceTests
     }
 
     private static RecurringTransactionBuilder ARecurringTransaction() =>
-        Any<RecurringTransactionBuilder>() with { Category = null };
+        BuilderHelpers.ARecurringTransaction() with { Category = null };
 
     private static ExpectedTransactionSummaryPresentation[] ExpectedFrom(params RecurringTransactionBuilder[] recurringTransaction) =>
         recurringTransaction.Select(ExpectedFrom).ToArray();
