@@ -1,7 +1,6 @@
 using App.Tests.Write.TestDoubles;
 using App.Write.Model.Categories;
 using App.Write.Model.CategorizationRules;
-using App.Write.Model.Exceptions;
 using App.Write.Ports;
 using App.Write.UseCases;
 using Infra.Write.Repositories;
