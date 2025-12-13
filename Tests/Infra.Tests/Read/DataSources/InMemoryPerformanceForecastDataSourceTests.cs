@@ -51,7 +51,7 @@ public class InMemoryPerformanceForecastDataSourceTests : InfraTest<IPerformance
         this.accountRepository.Feed([..accounts.Select(a => a.ToSnapshot())]);
 
     private void Feed(TransactionBuilder[] transactions) =>
-        this.transactionRepository.Feed([..transactions.Select(a => a.ToSnapshot())]);
+        this.transactionRepository.Feed([..transactions.Select(t => t.ToSnapshot())]);
 
     private static AccountBuilder AnAccount() =>
         Any<AccountBuilder>();

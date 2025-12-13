@@ -1,4 +1,5 @@
 using App.Read.Ports;
+using App.Write.Model.RecurringTransactions;
 using App.Write.Model.Transactions;
 using App.Write.UseCases;
 
@@ -6,7 +7,7 @@ namespace Client.Components;
 
 public partial class TransactionsTable : ComponentBase
 {
-    [Inject] private ToggleTransactionRecurrence ToggleTransactionRecurrence { get; set; } = null!;
+    [Inject] private MarkTransactionAsRecurring MarkTransactionAsRecurring { get; set; } = null!;
 
     [Parameter] public TransactionSummaryPresentation[] Transactions { get; set; } = null!;
 
@@ -15,9 +16,9 @@ public partial class TransactionsTable : ComponentBase
     private void OnCategoryAssigned((Guid TransactionId, string CategoryLabel) args) =>
         this.Transactions = this.Transactions.Select(t => t with { Category = t.Id == args.TransactionId ? args.CategoryLabel : t.Category }).ToArray();
 
-    private async Task ToggleRecurrence(Guid transactionId)
+    private async Task MarkAsRecurring(Guid transactionId)
     {
-        await this.ToggleTransactionRecurrence.Execute(new TransactionId(transactionId));
+        await this.MarkTransactionAsRecurring.Execute(new TransactionId(transactionId), new RecurringTransactionId(Guid.NewGuid()));
 
         this.Transactions = this.Transactions.Select(t => t with { IsRecurring = t.Id == transactionId ? !t.IsRecurring : t.IsRecurring }).ToArray();
     }

@@ -33,7 +33,7 @@
                     <TransactionLabelAssignment Id="@transaction.Id" Label="@transaction.Label"
                                                 OnCategoryAssigned="OnCategoryAssigned"></TransactionLabelAssignment>
                     <button class="btn btn-@(transaction.IsRecurring ? "secondary" : "outline-secondary") py-0 px-2" type="button"
-                            @onclick="@(() => ToggleRecurrence(transaction.Id))">
+                            @onclick="@(() => MarkAsRecurring(transaction.Id))">
                         <small class="bi bi-calendar-@(transaction.IsRecurring ? "check" : "plus")"></small>
                     </button>
                 </div>

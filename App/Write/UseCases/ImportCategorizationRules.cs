@@ -23,7 +23,7 @@ public class ImportCategorizationRules(
         await categorizationRuleImporter.Parse(content);
 
     private async Task<Dictionary<Label, Category?>> CategoriesOf(CategorizationRuleToImport[] categorizationRules) =>
-        await categoryRepository.By(categorizationRules.Select(cr => cr.CategoryLabel).ToArray());
+        await categoryRepository.By(categorizationRules.Select(r => r.CategoryLabel).ToArray());
 
     private async Task<CategorizationRule[]> Match(CategorizationRuleToImport[] categorizationRulesToImport, Dictionary<Label, Category?> categories)
     {

@@ -14,18 +14,18 @@ public class ExpectedTransactionSummariesTests
 
     [Theory]
     [RandomData]
-    public async Task Gives_category_summaries(ExpectedTransactionSummaryPresentation[] expected)
+    public async Task Gives_category_summaries(int year, int month, ExpectedTransactionSummaryPresentation[] expected)
     {
-        this.Feed(expected);
-        await this.Verify(expected);
+        this.Feed(year, month, expected);
+        await this.Verify(year, month, expected);
     }
 
-    private async Task Verify(ExpectedTransactionSummaryPresentation[] expected)
+    private async Task Verify(int year, int month, ExpectedTransactionSummaryPresentation[] expected)
     {
-        ExpectedTransactionSummaryPresentation[] actual = await this.sut.Execute();
+        ExpectedTransactionSummaryPresentation[] actual = await this.sut.Execute(year, month);
         actual.Should().Equal(expected);
     }
 
-    private void Feed(ExpectedTransactionSummaryPresentation[] expected) =>
-        this.dataSource.Feed(expected);
+    private void Feed(int year, int month, ExpectedTransactionSummaryPresentation[] expected) =>
+        this.dataSource.Feed(year, month, expected);
 }

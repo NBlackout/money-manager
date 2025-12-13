@@ -57,10 +57,10 @@
             <div class="col"></div>
         </div>
 
-        @if (selectedMonth == currentMonth)
+        @if (selectedMonth >= currentMonth)
         {
             <h3>Attendues</h3>
-            <ExpectedTransactions AccountId="@Id"></ExpectedTransactions>
+            <ExpectedTransactions Month="@selectedMonth"></ExpectedTransactions>
         }
 
         <Transactions AccountId="@Id" Month="@selectedMonth"></Transactions>

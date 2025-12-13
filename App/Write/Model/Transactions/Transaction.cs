@@ -1,5 +1,6 @@
 ﻿using App.Write.Model.Accounts;
 using App.Write.Model.Categories;
+using App.Write.Model.RecurringTransactions;
 using App.Write.Model.ValueObjects;
 
 namespace App.Write.Model.Transactions;
@@ -67,6 +68,13 @@ public class Transaction : DomainEntity<TransactionId>
     public void UnassignCategory() =>
         this.categoryId = null;
 
-    public void ToggleRecurrence() =>
-        this.isRecurring = !this.isRecurring;
+    public RecurringTransaction MarkAsRecurring(RecurringTransactionId id)
+    {
+        if (this.isRecurring)
+            throw new TransactionAlreadyMarkedAsRecurringException();
+
+        this.isRecurring = true;
+
+        return new RecurringTransaction(id, this.amount, this.label, this.date.AddMonths(1), this.categoryId);
+    }
 }

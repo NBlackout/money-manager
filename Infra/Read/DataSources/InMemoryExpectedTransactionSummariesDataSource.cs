@@ -1,14 +1,31 @@
 using App.Read.Ports;
-using App.Write.Model.Transactions;
+using App.Write.Model.RecurringTransactions;
 using Infra.Write.Repositories;
 
 namespace Infra.Read.DataSources;
 
-public class InMemoryExpectedTransactionSummariesDataSource(InMemoryTransactionRepository repository) : IExpectedTransactionSummariesDataSource
+public class InMemoryExpectedTransactionSummariesDataSource(
+    InMemoryRecurringTransactionRepository recurringTransactionRepository,
+    InMemoryCategoryRepository categoryRepository
+) : IExpectedTransactionSummariesDataSource
 {
-    public Task<ExpectedTransactionSummaryPresentation[]> All() =>
-        Task.FromResult(repository.Data.Where(t => t.IsRecurring).Select(PresentationFrom).ToArray());
+    public Task<ExpectedTransactionSummaryPresentation[]> By(int year, int month)
+    {
+        ExpectedTransactionSummaryPresentation[] recurringTransactions = recurringTransactionRepository
+            .Data
+            .Where(t => t.Date.Year == year && t.Date.Month == month)
+            .Select(this.ToPresentation)
+            .ToArray();
 
-    private static ExpectedTransactionSummaryPresentation PresentationFrom(TransactionSnapshot transaction) =>
-        new(transaction.Amount, transaction.Label);
+        return Task.FromResult(recurringTransactions);
+    }
+
+    private ExpectedTransactionSummaryPresentation ToPresentation(RecurringTransactionSnapshot recurringTransaction)
+    {
+        string? categoryLabel = recurringTransaction.CategoryId is not null
+            ? categoryRepository.Data.Single(c => c.Id == recurringTransaction.CategoryId).Label
+            : null;
+
+        return new ExpectedTransactionSummaryPresentation(recurringTransaction.Date, recurringTransaction.Amount, recurringTransaction.Label, categoryLabel);
+    }
 }
