@@ -5,14 +5,18 @@
     <table class="align-middle table table-hover table-sm">
         <thead class="table-light">
         <tr>
+            <th>Date</th>
+            <th>Category</th>
             <th class="transaction-label">Label</th>
             <th>Amount</th>
         </tr>
         </thead>
         <tbody>
-        @foreach (ExpectedTransactionSummaryPresentation transaction in transactions)
+        @foreach (ExpectedTransactionSummaryPresentation transaction in transactions.OrderByDescending(t => t.Date))
         {
             <tr>
+                <td>@transaction.Date.ToString("dd/MM")</td>
+                <td>@transaction.CategoryLabel</td>
                 <td>@transaction.Label</td>
                 <td class="text-end">
                     <span class="text-@(transaction.Amount > 0 ? "success" : "danger")">@transaction.Amount.ToString("N2") €</span>
@@ -22,7 +26,7 @@
         </tbody>
         <tfoot>
         <tr>
-            <td class="text-end fw-bold">Total</td>
+            <td colspan="3" class="text-end fw-bold">Total</td>
             <td class="text-end">
                 <span class="text-@(Total > 0 ? "success" : "danger")">@Total.ToString("N2") €</span>
             </td>

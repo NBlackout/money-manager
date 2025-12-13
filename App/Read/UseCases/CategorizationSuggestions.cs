@@ -17,7 +17,7 @@ public class CategorizationSuggestions(
 
     private static CategorizationSuggestionPresentation[] Match(TransactionToCategorize[] transactions, CategoryWithKeywords[] categories) =>
     [
-        ..transactions.Select(t => Match(t, categories)).Where(suggestion => suggestion is not null)!
+        ..transactions.Select(t => Match(t, categories)).Where(s => s is not null)!
     ];
 
     private static CategorizationSuggestionPresentation? Match(TransactionToCategorize transaction, CategoryWithKeywords[] categories)

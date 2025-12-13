@@ -20,6 +20,7 @@ public static class ServiceCollectionExtensions
         InMemoryCategoryRepository categoryRepository = new() { NextId = () => new CategoryId(Guid.NewGuid()) };
         InMemoryCategorizationRuleRepository categorizationRuleRepository = new() { NextId = () => new CategorizationRuleId(Guid.NewGuid()) };
         InMemoryTransactionRepository transactionRepository = new() { NextId = () => new TransactionId(Guid.NewGuid()) };
+        InMemoryRecurringTransactionRepository recurringTransactionRepository = new();
         InMemoryBudgetRepository budgetRepository = new();
 
         return services
@@ -27,6 +28,8 @@ public static class ServiceCollectionExtensions
             .AddSingleton(accountRepository)
             .AddSingleton<ITransactionRepository>(transactionRepository)
             .AddSingleton(transactionRepository)
+            .AddSingleton<IRecurringTransactionRepository>(recurringTransactionRepository)
+            .AddSingleton(recurringTransactionRepository)
             .AddSingleton<ICategoryRepository>(categoryRepository)
             .AddSingleton(categoryRepository)
             .AddSingleton<ICategorizationRuleRepository>(categorizationRuleRepository)
