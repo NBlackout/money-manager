@@ -6,7 +6,7 @@ using App.Write.UseCases;
 
 namespace Client.Components;
 
-public partial class TransactionLabelAssignment : ComponentBase
+public partial class TransactionCategoryAssignment : ComponentBase
 {
     private CategorySummaryPresentation[]? categories;
 
@@ -21,7 +21,7 @@ public partial class TransactionLabelAssignment : ComponentBase
     protected override async Task OnInitializedAsync() =>
         this.categories = await this.CategorySummaries.Execute();
 
-    private async Task AssignLabel(Guid categoryId)
+    private async Task AssignCategory(Guid categoryId)
     {
         await this.AssignTransactionCategory.Execute(new TransactionId(this.Id), new CategoryId(categoryId));
         await this.OnCategoryAssigned.InvokeAsync((this.Id, this.categories!.Single(c => c.Id == categoryId).Label));
