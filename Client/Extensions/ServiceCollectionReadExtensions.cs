@@ -21,5 +21,5 @@ public static class ServiceCollectionReadExtensions
             .AddSingleton<CategorizationSuggestions>()
             .AddSingleton<BudgetSummaries>()
             .AddSingleton<MonthlyPerformance>()
-            .AddSingleton<PerformanceForecast>();
+            .AddSingleton<BalanceForecasts>();
 }

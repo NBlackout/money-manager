@@ -8,12 +8,12 @@ using static App.Tests.Read.Tooling.BuilderHelpers;
 
 namespace Infra.Tests.Read.DataSources;
 
-public class InMemoryPerformanceForecastDataSourceTests : InfraTest<IPerformanceForecastDataSource, InMemoryPerformanceForecastDataSource>
+public class InMemoryBalanceForecastsDataSourceTests : InfraTest<IBalanceForecastsDataSource, InMemoryBalanceForecastsDataSource>
 {
     private readonly InMemoryAccountRepository accountRepository;
     private readonly InMemoryRecurringTransactionRepository recurringTransactionRepository;
 
-    public InMemoryPerformanceForecastDataSourceTests()
+    public InMemoryBalanceForecastsDataSourceTests()
     {
         this.accountRepository = this.Resolve<IAccountRepository, InMemoryAccountRepository>();
         this.recurringTransactionRepository = this.Resolve<IRecurringTransactionRepository, InMemoryRecurringTransactionRepository>();
@@ -26,7 +26,12 @@ public class InMemoryPerformanceForecastDataSourceTests : InfraTest<IPerformance
         AccountBuilder anotherAccount = AnAccount() with { Balance = 2000 };
         this.Feed([anAccount, anotherAccount]);
 
-        await this.Verify(new PerformanceForecastPresentation(3000, 0, 0, 0));
+        await this.Verify(
+            new BalanceForecastPresentation(3000),
+            new BalanceForecastPresentation(3000),
+            new BalanceForecastPresentation(3000),
+            new BalanceForecastPresentation(3000)
+        );
     }
 
     [Fact]
@@ -38,13 +43,18 @@ public class InMemoryPerformanceForecastDataSourceTests : InfraTest<IPerformance
         RecurringTransactionBuilder anotherRecurringExpense = ARecurringTransaction() with { Amount = -100 };
         this.Feed([aRecurringIncome, anotherRecurringIncome, aRecurringExpense, anotherRecurringExpense]);
 
-        await this.Verify(new PerformanceForecastPresentation(0, 100, -400, -300));
+        await this.Verify(
+            new BalanceForecastPresentation(-300),
+            new BalanceForecastPresentation(-600),
+            new BalanceForecastPresentation(-900),
+            new BalanceForecastPresentation(-1200)
+        );
     }
 
-    private async Task Verify(PerformanceForecastPresentation expected)
+    private async Task Verify(params BalanceForecastPresentation[] expected)
     {
-        PerformanceForecastPresentation actual = await this.Sut.Fetch();
-        actual.Should().Be(expected);
+        BalanceForecastPresentation[] actual = await this.Sut.Fetch();
+        actual.Should().Equal(expected);
     }
 
     private void Feed(AccountBuilder[] accounts) =>
