@@ -8,12 +8,12 @@ public class StubbedPeriodPerformanceDataSource : IPeriodPerformanceDataSource
 {
     private readonly Dictionary<string, PeriodPerformancePresentation[]> data = [];
 
-    public Task<PeriodPerformancePresentation[]> All(DateRange[] dateRanges) =>
+    public Task<PeriodPerformancePresentation[]> All(Period[] dateRanges) =>
         Task.FromResult(this.data[Serialize(dateRanges)]);
 
-    public void Feed(DateRange[] dateRanges, PeriodPerformancePresentation[] expected) =>
+    public void Feed(Period[] dateRanges, PeriodPerformancePresentation[] expected) =>
         this.data[Serialize(dateRanges)] = expected;
 
-    private static string Serialize(DateRange[] dateRanges) =>
+    private static string Serialize(Period[] dateRanges) =>
         JsonSerializer.Serialize(dateRanges);
 }

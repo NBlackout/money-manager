@@ -28,9 +28,9 @@ public class InMemoryPeriodPerformanceDataSourceTests : InfraTest<IPeriodPerform
         this.Feed(account);
 
         await this.Verify(
-            [new DateRange(DateOnly.Parse("2024-09-01"), DateOnly.Parse("2024-09-01"))],
+            [new Period(DateOnly.Parse("2024-09-01"), DateOnly.Parse("2024-09-01"))],
             new PeriodPerformancePresentation(
-                new DateRange(DateOnly.Parse("2024-09-01"), DateOnly.Parse("2024-09-01")),
+                new Period(DateOnly.Parse("2024-09-01"), DateOnly.Parse("2024-09-01")),
                 account.Balance,
                 new PerformancePresentation(0, 0, 0)
             )
@@ -48,9 +48,9 @@ public class InMemoryPeriodPerformanceDataSourceTests : InfraTest<IPeriodPerform
         );
 
         await this.Verify(
-            [new DateRange(DateOnly.Parse("2024-04-01"), DateOnly.Parse("2024-04-30"))],
+            [new Period(DateOnly.Parse("2024-04-01"), DateOnly.Parse("2024-04-30"))],
             new PeriodPerformancePresentation(
-                new DateRange(DateOnly.Parse("2024-04-01"), DateOnly.Parse("2024-04-30")),
+                new Period(DateOnly.Parse("2024-04-01"), DateOnly.Parse("2024-04-30")),
                 700,
                 new PerformancePresentation(500, 0, 500)
             )
@@ -69,16 +69,16 @@ public class InMemoryPeriodPerformanceDataSourceTests : InfraTest<IPeriodPerform
 
         await this.Verify(
             [
-                new DateRange(DateOnly.Parse("2021-12-01"), DateOnly.Parse("2021-12-31")),
-                new DateRange(DateOnly.Parse("2022-01-01"), DateOnly.Parse("2022-01-31"))
+                new Period(DateOnly.Parse("2021-12-01"), DateOnly.Parse("2021-12-31")),
+                new Period(DateOnly.Parse("2022-01-01"), DateOnly.Parse("2022-01-31"))
             ],
             new PeriodPerformancePresentation(
-                new DateRange(DateOnly.Parse("2021-12-01"), DateOnly.Parse("2021-12-31")),
+                new Period(DateOnly.Parse("2021-12-01"), DateOnly.Parse("2021-12-31")),
                 405,
                 new PerformancePresentation(15, 0, 15)
             ),
             new PeriodPerformancePresentation(
-                new DateRange(DateOnly.Parse("2022-01-01"), DateOnly.Parse("2022-01-31")),
+                new Period(DateOnly.Parse("2022-01-01"), DateOnly.Parse("2022-01-31")),
                 420,
                 new PerformancePresentation(80, 0, 80)
             )
@@ -93,22 +93,22 @@ public class InMemoryPeriodPerformanceDataSourceTests : InfraTest<IPeriodPerform
 
         await this.Verify(
             [
-                new DateRange(DateOnly.Parse("2024-06-01"), DateOnly.Parse("2024-06-30")),
-                new DateRange(DateOnly.Parse("2024-07-01"), DateOnly.Parse("2024-07-31")),
-                new DateRange(DateOnly.Parse("2024-08-01"), DateOnly.Parse("2024-08-31"))
+                new Period(DateOnly.Parse("2024-06-01"), DateOnly.Parse("2024-06-30")),
+                new Period(DateOnly.Parse("2024-07-01"), DateOnly.Parse("2024-07-31")),
+                new Period(DateOnly.Parse("2024-08-01"), DateOnly.Parse("2024-08-31"))
             ],
             new PeriodPerformancePresentation(
-                new DateRange(DateOnly.Parse("2024-06-01"), DateOnly.Parse("2024-06-30")),
+                new Period(DateOnly.Parse("2024-06-01"), DateOnly.Parse("2024-06-30")),
                 50,
                 new PerformancePresentation(80, 0, 80)
             ),
             new PeriodPerformancePresentation(
-                new DateRange(DateOnly.Parse("2024-07-01"), DateOnly.Parse("2024-07-31")),
+                new Period(DateOnly.Parse("2024-07-01"), DateOnly.Parse("2024-07-31")),
                 130,
                 new PerformancePresentation(0, 0, 0)
             ),
             new PeriodPerformancePresentation(
-                new DateRange(DateOnly.Parse("2024-08-01"), DateOnly.Parse("2024-08-31")),
+                new Period(DateOnly.Parse("2024-08-01"), DateOnly.Parse("2024-08-31")),
                 130,
                 new PerformancePresentation(0, 0, 0)
             )
@@ -123,9 +123,9 @@ public class InMemoryPeriodPerformanceDataSourceTests : InfraTest<IPeriodPerform
         this.Feed([anAccount, anotherAccount]);
 
         await this.Verify(
-            [new DateRange(DateOnly.Parse("2024-09-01"), DateOnly.Parse("2024-09-30"))],
+            [new Period(DateOnly.Parse("2024-09-01"), DateOnly.Parse("2024-09-30"))],
             new PeriodPerformancePresentation(
-                new DateRange(DateOnly.Parse("2024-09-01"), DateOnly.Parse("2024-09-30")),
+                new Period(DateOnly.Parse("2024-09-01"), DateOnly.Parse("2024-09-30")),
                 anAccount.Balance + anotherAccount.Balance,
                 new PerformancePresentation(0, 0, 0)
             )
@@ -147,29 +147,29 @@ public class InMemoryPeriodPerformanceDataSourceTests : InfraTest<IPeriodPerform
 
         await this.Verify(
             [
-                new DateRange(DateOnly.Parse("2017-01-01"), DateOnly.Parse("2017-01-31")),
-                new DateRange(DateOnly.Parse("2017-02-01"), DateOnly.Parse("2017-02-28")),
-                new DateRange(DateOnly.Parse("2017-03-01"), DateOnly.Parse("2017-03-31"))
+                new Period(DateOnly.Parse("2017-01-01"), DateOnly.Parse("2017-01-31")),
+                new Period(DateOnly.Parse("2017-02-01"), DateOnly.Parse("2017-02-28")),
+                new Period(DateOnly.Parse("2017-03-01"), DateOnly.Parse("2017-03-31"))
             ],
             new PeriodPerformancePresentation(
-                new DateRange(DateOnly.Parse("2017-01-01"), DateOnly.Parse("2017-01-31")),
+                new Period(DateOnly.Parse("2017-01-01"), DateOnly.Parse("2017-01-31")),
                 2000,
                 new PerformancePresentation(1000, 0, 1000)
             ),
             new PeriodPerformancePresentation(
-                new DateRange(DateOnly.Parse("2017-02-01"), DateOnly.Parse("2017-02-28")),
+                new Period(DateOnly.Parse("2017-02-01"), DateOnly.Parse("2017-02-28")),
                 3000,
                 new PerformancePresentation(1000, 0, 1000)
             ),
             new PeriodPerformancePresentation(
-                new DateRange(DateOnly.Parse("2017-03-01"), DateOnly.Parse("2017-03-31")),
+                new Period(DateOnly.Parse("2017-03-01"), DateOnly.Parse("2017-03-31")),
                 4000,
                 new PerformancePresentation(500, 0, 500)
             )
         );
     }
 
-    private async Task Verify(DateRange[] dateRanges, params PeriodPerformancePresentation[] expected)
+    private async Task Verify(Period[] dateRanges, params PeriodPerformancePresentation[] expected)
     {
         PeriodPerformancePresentation[] actual = await this.Sut.All(dateRanges);
         actual.Should().Equal(expected);

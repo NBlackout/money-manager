@@ -11,12 +11,12 @@ namespace Infra.Tests.Read.DataSources;
 public class InMemoryPerformanceForecastDataSourceTests : InfraTest<IPerformanceForecastDataSource, InMemoryPerformanceForecastDataSource>
 {
     private readonly InMemoryAccountRepository accountRepository;
-    private readonly InMemoryTransactionRepository transactionRepository;
+    private readonly InMemoryRecurringTransactionRepository recurringTransactionRepository;
 
     public InMemoryPerformanceForecastDataSourceTests()
     {
         this.accountRepository = this.Resolve<IAccountRepository, InMemoryAccountRepository>();
-        this.transactionRepository = this.Resolve<ITransactionRepository, InMemoryTransactionRepository>();
+        this.recurringTransactionRepository = this.Resolve<IRecurringTransactionRepository, InMemoryRecurringTransactionRepository>();
     }
 
     [Fact]
@@ -32,12 +32,11 @@ public class InMemoryPerformanceForecastDataSourceTests : InfraTest<IPerformance
     [Fact]
     public async Task Gives_forecast_based_on_recurring_transactions()
     {
-        TransactionBuilder aRecurringIncome = ATransactionMarkedAsRecurring() with { Amount = 25 };
-        TransactionBuilder anotherRecurringIncome = ATransactionMarkedAsRecurring() with { Amount = 75 };
-        TransactionBuilder aRecurringExpense = ATransactionMarkedAsRecurring() with { Amount = -300 };
-        TransactionBuilder anotherRecurringExpense = ATransactionMarkedAsRecurring() with { Amount = -100 };
-        TransactionBuilder notRecurringTransaction = ATransaction() with { IsRecurring = false };
-        this.Feed([aRecurringIncome, anotherRecurringIncome, aRecurringExpense, anotherRecurringExpense, notRecurringTransaction]);
+        RecurringTransactionBuilder aRecurringIncome = ARecurringTransaction() with { Amount = 25 };
+        RecurringTransactionBuilder anotherRecurringIncome = ARecurringTransaction() with { Amount = 75 };
+        RecurringTransactionBuilder aRecurringExpense = ARecurringTransaction() with { Amount = -300 };
+        RecurringTransactionBuilder anotherRecurringExpense = ARecurringTransaction() with { Amount = -100 };
+        this.Feed([aRecurringIncome, anotherRecurringIncome, aRecurringExpense, anotherRecurringExpense]);
 
         await this.Verify(new PerformanceForecastPresentation(0, 100, -400, -300));
     }
@@ -51,9 +50,6 @@ public class InMemoryPerformanceForecastDataSourceTests : InfraTest<IPerformance
     private void Feed(AccountBuilder[] accounts) =>
         this.accountRepository.Feed([..accounts.Select(a => a.ToSnapshot())]);
 
-    private void Feed(TransactionBuilder[] transactions) =>
-        this.transactionRepository.Feed([..transactions.Select(t => t.ToSnapshot())]);
-
-    private static TransactionBuilder ATransactionMarkedAsRecurring() =>
-        ATransaction() with { IsRecurring = true };
+    private void Feed(RecurringTransactionBuilder[] transactions) =>
+        this.recurringTransactionRepository.Feed([..transactions.Select(t => t.ToSnapshot())]);
 }

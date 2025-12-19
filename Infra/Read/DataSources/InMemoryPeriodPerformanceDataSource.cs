@@ -9,7 +9,7 @@ namespace Infra.Read.DataSources;
 public class InMemoryPeriodPerformanceDataSource(InMemoryAccountRepository accountRepository, InMemoryTransactionRepository transactionRepository)
     : IPeriodPerformanceDataSource
 {
-    public Task<PeriodPerformancePresentation[]> All(DateRange[] dateRanges)
+    public Task<PeriodPerformancePresentation[]> All(Period[] dateRanges)
     {
         AccountSnapshot[] accounts = accountRepository.Data.ToArray();
         if (accounts.Length == 0)
@@ -18,14 +18,14 @@ public class InMemoryPeriodPerformanceDataSource(InMemoryAccountRepository accou
         return Task.FromResult(this.PerformanceOf(accounts, dateRanges));
     }
 
-    private PeriodPerformancePresentation[] PerformanceOf(AccountSnapshot[] accounts, DateRange[] dateRanges)
+    private PeriodPerformancePresentation[] PerformanceOf(AccountSnapshot[] accounts, Period[] dateRanges)
     {
         List<PeriodPerformancePresentation> periods = [];
 
         DateOnly beginningOfThisMonth = dateRanges.Last().From;
         decimal balancesOfMonth = accounts.Sum(a => a.Balance); // TODO depends on account BalanceDate
 
-        foreach (DateRange period in dateRanges.Reverse())
+        foreach (Period period in dateRanges.Reverse())
         {
             TransactionSnapshot[] transactions = this.TransactionOf(period);
 
@@ -43,6 +43,6 @@ public class InMemoryPeriodPerformanceDataSource(InMemoryAccountRepository accou
         return periods.ToArray().Reverse().ToArray();
     }
 
-    private TransactionSnapshot[] TransactionOf(DateRange dateRange) =>
-        transactionRepository.Data.Where(t => t.Date >= dateRange.From && t.Date <= dateRange.To).ToArray();
+    private TransactionSnapshot[] TransactionOf(Period period) =>
+        transactionRepository.Data.Where(t => t.Date >= period.From && t.Date <= period.To).ToArray();
 }

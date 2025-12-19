@@ -3,11 +3,11 @@ using App.Shared;
 
 namespace App.Read.UseCases;
 
-public class MonthlyPerformance(IDateRangeProvider dateRangeProvider, IPeriodPerformanceDataSource dataSource)
+public class MonthlyPerformance(IPeriodProvider periodProvider, IPeriodPerformanceDataSource dataSource)
 {
     public async Task<PeriodPerformancePresentation[]> Execute()
     {
-        DateRange[] rollingTwelveMonths = await dateRangeProvider.RollingTwelveMonths();
+        Period[] rollingTwelveMonths = await periodProvider.RollingTwelveMonths();
 
         return await dataSource.All(rollingTwelveMonths);
     }

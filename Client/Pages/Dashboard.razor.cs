@@ -14,18 +14,18 @@ public partial class Dashboard
     [Inject] public PerformanceForecast PerformanceForecast { get; set; } = null!;
     [Inject] public IJSRuntime JsRuntime { get; set; } = null!;
 
-    private PeriodPerformancePresentation[]? monthlyPerformance;
+    private PeriodPerformancePresentation[]? periodPerformance;
     private PerformanceForecastPresentation? performanceForecast;
 
     protected override async Task OnInitializedAsync()
     {
-        this.monthlyPerformance = await this.MonthlyPerformance.Execute();
+        this.periodPerformance = await this.MonthlyPerformance.Execute();
         this.performanceForecast = await this.PerformanceForecast.Execute();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (this.monthlyPerformance == null || this.performanceForecast == null || this.monthlyPerformance.Length == 0)
+        if (this.periodPerformance == null || this.performanceForecast == null || this.periodPerformance.Length == 0)
             return;
 
         HighchartsRenderer renderer = new(
@@ -36,7 +36,7 @@ public partial class Dashboard
                 [
                     new XAxis
                     {
-                        Categories = CategoriesBy(this.monthlyPerformance),
+                        Categories = CategoriesBy(this.periodPerformance),
                         TickWidth = 1,
                         PlotLines = [new XAxisPlotLines { Value = 10.5, DashStyle = XAxisPlotLinesDashStyle.Dash, Width = 2, Color = "#4840d6" }],
                         PlotBands =
@@ -57,7 +57,7 @@ public partial class Dashboard
                     new YAxis { Title = new YAxisTitle { Text = "Balance (€)" }, Id = "Balance", Opposite = true }
                 ],
                 Credits = new Credits { Enabled = false },
-                Series = SeriesBy(this.monthlyPerformance, this.performanceForecast),
+                Series = SeriesBy(this.periodPerformance, this.performanceForecast),
                 Tooltip = new Tooltip { Shared = true, Distance = 75, ValueSuffix = " €" },
                 PlotOptions = new PlotOptions
                 {
@@ -87,7 +87,7 @@ public partial class Dashboard
 
     private static List<string> CategoriesBy(PeriodPerformancePresentation[] periods)
     {
-        DateRange[] ranges = [..periods.Select(p => p.DateRange)];
+        Period[] ranges = [..periods.Select(p => p.Period)];
         ranges = [..ranges, ranges.Last() with { From = ranges.Last().From.AddMonths(1) }];
 
         return ranges.Select(r => r.From.ToString("MMMM")).ToList();
