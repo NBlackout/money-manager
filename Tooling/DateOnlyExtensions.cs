@@ -4,7 +4,7 @@ namespace Tooling;
 
 public static class DateOnlyExtensions
 {
-    public static DateRange MonthRange(this DateOnly date) =>
+    public static Period MonthRange(this DateOnly date) =>
         new(date.FirstDayOfMonth(), date.LastDayOfMonth());
 
     private static DateOnly FirstDayOfMonth(this DateOnly date) =>

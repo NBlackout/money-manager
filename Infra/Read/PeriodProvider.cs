@@ -5,8 +5,8 @@ using Tooling;
 
 namespace Infra.Read;
 
-public class DateRangeProvider(IClock clock) : IDateRangeProvider
+public class PeriodProvider(IClock clock) : IPeriodProvider
 {
-    public Task<DateRange[]> RollingTwelveMonths() =>
+    public Task<Period[]> RollingTwelveMonths() =>
         Task.FromResult(Enumerable.Range(-11, 12).Select(i => clock.Today.AddMonths(i).MonthRange()).ToArray());
 }

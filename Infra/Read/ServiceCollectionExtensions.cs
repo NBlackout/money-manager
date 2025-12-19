@@ -11,7 +11,7 @@ public static class ServiceCollectionExtensions
             .AddDataSources()
             .AddSingleton<ICategoryExporter, CsvCategoryExporter>()
             .AddSingleton<ICategorizationRuleExporter, CsvCategorizationRuleExporter>()
-            .AddSingleton<IDateRangeProvider, DateRangeProvider>();
+            .AddSingleton<IPeriodProvider, PeriodProvider>();
 
     private static IServiceCollection AddDataSources(this IServiceCollection services) =>
         services
