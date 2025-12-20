@@ -11,7 +11,7 @@ public class InMemoryBudgetRepository : IBudgetRepository
     public IEnumerable<BudgetSnapshot> Data => this.data.Values.Select(c => c);
 
     public Budget By(BudgetId id) =>
-        Budget.From(this.data[id]);
+        new(this.data[id]);
 
     public Task EnsureNotAlreadyDefined(Label name)
     {

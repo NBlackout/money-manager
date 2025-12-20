@@ -3,14 +3,22 @@ using App.Write.Model.ValueObjects;
 
 namespace App.Write.Model.RecurringTransactions;
 
-public class RecurringTransaction : DomainEntity<RecurringTransactionId>
+public class RecurringTransaction : DomainEntity<RecurringTransactionId, RecurringTransactionSnapshot>
 {
     private readonly Amount amount;
     private readonly Label label;
     private readonly DateOnly date;
     private readonly CategoryId? categoryId;
 
-    public RecurringTransactionSnapshot Snapshot => new(this.Id, this.amount.Value, this.label.Value, this.date, this.categoryId);
+    public override RecurringTransactionSnapshot Snapshot => new(this.Id, this.amount.Value, this.label.Value, this.date, this.categoryId);
+
+    public RecurringTransaction(RecurringTransactionSnapshot snapshot) : base(snapshot)
+    {
+        this.amount = new Amount(snapshot.Amount);
+        this.label = new Label(snapshot.Label);
+        this.date = snapshot.Date;
+        this.categoryId = snapshot.CategoryId;
+    }
 
     internal RecurringTransaction(RecurringTransactionId id, Amount amount, Label label, DateOnly date, CategoryId? categoryId) : base(id)
     {
@@ -19,7 +27,4 @@ public class RecurringTransaction : DomainEntity<RecurringTransactionId>
         this.date = date;
         this.categoryId = categoryId;
     }
-
-    public static RecurringTransaction From(RecurringTransactionSnapshot snapshot) =>
-        new(snapshot.Id, new Amount(snapshot.Amount), new Label(snapshot.Label), snapshot.Date, snapshot.CategoryId);
 }

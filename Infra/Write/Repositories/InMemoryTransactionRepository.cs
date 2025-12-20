@@ -16,10 +16,10 @@ public class InMemoryTransactionRepository : ITransactionRepository
         Task.FromResult(this.NextId());
 
     public Task<Transaction> By(TransactionId id) =>
-        Task.FromResult(Transaction.From(this.data[id]));
+        Task.FromResult(new Transaction(this.data[id]));
 
     public Task<Transaction[]> By(CategoryId categoryId) =>
-        Task.FromResult(this.data.Values.Where(t => t.CategoryId == categoryId).Select(Transaction.From).ToArray());
+        Task.FromResult(this.data.Values.Where(t => t.CategoryId == categoryId).Select(s => new Transaction(s)).ToArray());
 
     public Task<ExternalId[]> UnknownExternalIds(IEnumerable<ExternalId> externalIds) =>
         Task.FromResult(externalIds.Except(this.data.Values.Select(v => new ExternalId(v.ExternalId))).ToArray());

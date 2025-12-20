@@ -14,7 +14,7 @@ public class InMemoryCategorizationRuleRepository : ICategorizationRuleRepositor
         Task.FromResult(this.NextId());
 
     public Task<CategorizationRule> By(CategorizationRuleId id) =>
-        Task.FromResult(CategorizationRule.From(this.data[id]));
+        Task.FromResult(new CategorizationRule(this.data[id]));
 
     public Task Save(CategorizationRule categorizationRule)
     {
@@ -32,7 +32,4 @@ public class InMemoryCategorizationRuleRepository : ICategorizationRuleRepositor
 
     public void Feed(params CategorizationRuleSnapshot[] categories) =>
         categories.ToList().ForEach(categorizationRule => this.data[categorizationRule.Id] = categorizationRule);
-
-    public bool Exists(CategorizationRuleId id) =>
-        this.data.ContainsKey(id);
 }
