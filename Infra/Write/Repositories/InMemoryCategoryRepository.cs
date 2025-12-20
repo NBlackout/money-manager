@@ -15,13 +15,13 @@ public class InMemoryCategoryRepository : ICategoryRepository
         Task.FromResult(this.NextId());
 
     public Task<Category> By(CategoryId id) =>
-        Task.FromResult(Category.From(this.data[id]));
+        Task.FromResult(new Category(this.data[id]));
 
     public Task<Dictionary<Label, Category?>> By(Label[] labels) =>
         Task.FromResult(
             labels.Distinct().ToDictionary(
                 l => l,
-                l => this.data.Values.SingleOrDefault(c => c.Label == l.Value) != null ? Category.From(this.data.Values.Single(c => c.Label == l.Value)) : null
+                l => this.data.Values.SingleOrDefault(c => c.Label == l.Value) != null ? new Category(this.data.Values.Single(c => c.Label == l.Value)) : null
             )
         );
 

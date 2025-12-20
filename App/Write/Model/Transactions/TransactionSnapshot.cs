@@ -12,4 +12,4 @@ public record TransactionSnapshot(
     DateOnly Date,
     CategoryId? CategoryId,
     bool IsRecurring
-);
+) : ISnapshot<TransactionId>;

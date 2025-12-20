@@ -5,7 +5,7 @@ using App.Write.Model.ValueObjects;
 
 namespace App.Write.Model.Transactions;
 
-public class Transaction : DomainEntity<TransactionId>
+public class Transaction : DomainEntity<TransactionId, TransactionSnapshot>
 {
     private readonly AccountId accountId;
     private readonly ExternalId externalId;
@@ -15,8 +15,19 @@ public class Transaction : DomainEntity<TransactionId>
     private CategoryId? categoryId;
     private bool isRecurring;
 
-    public TransactionSnapshot Snapshot =>
+    public override TransactionSnapshot Snapshot =>
         new(this.Id, this.accountId, this.externalId.Value, this.amount.Value, this.label.Value, this.date, this.categoryId, this.isRecurring);
+
+    public Transaction(TransactionSnapshot snapshot) : base(snapshot)
+    {
+        this.accountId = snapshot.AccountId;
+        this.externalId = new ExternalId(snapshot.ExternalId);
+        this.amount = new Amount(snapshot.Amount);
+        this.label = new Label(snapshot.Label);
+        this.date = snapshot.Date;
+        this.categoryId = snapshot.CategoryId;
+        this.isRecurring = snapshot.IsRecurring;
+    }
 
     private Transaction(
         TransactionId id,
@@ -49,18 +60,6 @@ public class Transaction : DomainEntity<TransactionId>
     )
     {
     }
-
-    public static Transaction From(TransactionSnapshot snapshot) =>
-        new(
-            snapshot.Id,
-            snapshot.AccountId,
-            new ExternalId(snapshot.ExternalId),
-            new Amount(snapshot.Amount),
-            new Label(snapshot.Label),
-            snapshot.Date,
-            snapshot.CategoryId,
-            snapshot.IsRecurring
-        );
 
     public void AssignCategory(CategoryId newCategoryId) =>
         this.categoryId = newCategoryId;

@@ -4,13 +4,20 @@ using App.Write.Model.ValueObjects;
 
 namespace App.Write.Model.Accounts;
 
-public class Account : DomainEntity<AccountId>
+public class Account : DomainEntity<AccountId, AccountSnapshot>
 {
     private readonly ExternalId externalId;
     private Label label;
     private Balance balance;
 
-    public AccountSnapshot Snapshot => new(this.Id, this.externalId.Value, this.label.Value, this.balance.Amount, this.balance.BalanceDate);
+    public override AccountSnapshot Snapshot => new(this.Id, this.externalId.Value, this.label.Value, this.balance.Amount, this.balance.BalanceDate);
+
+    public Account(AccountSnapshot snapshot) : base(snapshot)
+    {
+        this.externalId = new ExternalId(snapshot.Number);
+        this.label = new Label(snapshot.Label);
+        this.balance = new Balance(snapshot.Balance, snapshot.BalanceDate);
+    }
 
     private Account(AccountId id, ExternalId externalId, Label label, Balance balance) : base(id)
     {
@@ -36,7 +43,4 @@ public class Account : DomainEntity<AccountId>
         DateOnly date,
         Category? category) =>
         new(transactionId, this.Id, externalId, amount, transactionLabel, date, category);
-
-    public static Account From(AccountSnapshot snapshot) =>
-        new(snapshot.Id, new ExternalId(snapshot.Number), new Label(snapshot.Label), new Balance(snapshot.Balance, snapshot.BalanceDate));
 }

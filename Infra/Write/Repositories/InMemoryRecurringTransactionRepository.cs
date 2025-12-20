@@ -10,7 +10,7 @@ public class InMemoryRecurringTransactionRepository : IRecurringTransactionRepos
     public IEnumerable<RecurringTransactionSnapshot> Data => this.data.Values.Select(t => t);
 
     public Task<RecurringTransaction> By(RecurringTransactionId id) =>
-        Task.FromResult(RecurringTransaction.From(this.data[id]));
+        Task.FromResult(new RecurringTransaction(this.data[id]));
 
     public Task Save(RecurringTransaction recurringTransaction)
     {

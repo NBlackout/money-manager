@@ -3,21 +3,24 @@ using App.Write.Model.ValueObjects;
 
 namespace App.Write.Model.Categories;
 
-public class Category : DomainEntity<CategoryId>
+public class Category : DomainEntity<CategoryId, CategorySnapshot>
 {
     private Label label;
     private readonly CategoryId? parentId;
 
-    public CategorySnapshot Snapshot => new(this.Id, this.label.Value, this.parentId);
+    public override CategorySnapshot Snapshot => new(this.Id, this.label.Value, this.parentId);
+
+    public Category(CategorySnapshot snapshot) : base(snapshot)
+    {
+        this.label = new Label(snapshot.Label);
+        this.parentId = snapshot.ParentId;
+    }
 
     internal Category(CategoryId id, Label label, CategoryId? parentId) : base(id)
     {
         this.label = label;
         this.parentId = parentId;
     }
-
-    public static Category From(CategorySnapshot snapshot) =>
-        new(snapshot.Id, new Label(snapshot.Label), snapshot.ParentId);
 
     public CategorizationRule ApplyWhenMatches(CategorizationRuleId id, string keywords) =>
         new(id, this.Id, keywords);
