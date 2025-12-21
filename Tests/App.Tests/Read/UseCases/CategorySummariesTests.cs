@@ -14,7 +14,7 @@ public class CategorySummariesTests
 
     [Theory]
     [RandomData]
-    public async Task Gives_category_summaries(CategorySummaryPresentation[] expected)
+    public async Task Gives_categories(CategorySummaryPresentation[] expected)
     {
         this.Feed(expected);
         await this.Verify(expected);

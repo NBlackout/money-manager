@@ -25,5 +25,8 @@ public static class ServiceCollectionExtensions
             .AddSingleton<IBudgetSummariesDataSource, InMemoryBudgetSummariesDataSource>()
             .AddSingleton<IPeriodPerformanceDataSource, InMemoryPeriodPerformanceDataSource>()
             .AddSingleton<IExpectedTransactionSummariesDataSource, InMemoryExpectedTransactionSummariesDataSource>()
-            .AddSingleton<IBalanceForecastsDataSource, InMemoryBalanceForecastsDataSource>();
+            .AddSingleton<IBalanceForecastsDataSource, InMemoryBalanceForecastsDataSource>()
+            .AddSingleton<IBalanceDataSource, InMemoryBalanceDataSource>()
+            .AddSingleton<ISamplePeriodsDataSource, InMemorySamplePeriodsDataSource>()
+            .AddSingleton<IForecastPeriodsDataSource, InMemoryForecastPeriodsDataSource>();
 }

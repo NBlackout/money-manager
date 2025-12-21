@@ -18,7 +18,7 @@ public class InMemoryAccountSummariesDataSourceTests : InfraTest<IAccountSummari
 
     [Theory]
     [RandomData]
-    public async Task Retrieves_summaries(AccountBuilder[] accounts)
+    public async Task Gives_accounts(AccountBuilder[] accounts)
     {
         this.Feed(accounts);
         await this.Verify(accounts);

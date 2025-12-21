@@ -169,9 +169,9 @@ public class InMemoryPeriodPerformanceDataSourceTests : InfraTest<IPeriodPerform
         );
     }
 
-    private async Task Verify(Period[] dateRanges, params PeriodPerformancePresentation[] expected)
+    private async Task Verify(Period[] periods, params PeriodPerformancePresentation[] expected)
     {
-        PeriodPerformancePresentation[] actual = await this.Sut.All(dateRanges);
+        PeriodPerformancePresentation[] actual = await this.Sut.All(periods);
         actual.Should().Equal(expected);
     }
 

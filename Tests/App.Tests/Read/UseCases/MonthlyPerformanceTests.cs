@@ -15,10 +15,10 @@ public class MonthlyPerformanceTests
         this.sut = new MonthlyPerformance(this.periodProvider, this.dataSource);
 
     [Theory, RandomData]
-    public async Task Gives_performance_of_rolling_twelve_months(Period[] dateRanges, PeriodPerformancePresentation[] expected)
+    public async Task Gives_performance_of_rolling_twelve_months(Period[] periods, PeriodPerformancePresentation[] expected)
     {
-        this.RollingTwelveMonthsAre(dateRanges);
-        this.MonthlyPerformanceIs(dateRanges, expected);
+        this.RollingTwelveMonthsAre(periods);
+        this.PeriodPerformanceAre(periods, expected);
         await this.Verify(expected);
     }
 
@@ -28,20 +28,9 @@ public class MonthlyPerformanceTests
         actual.Should().Equal(expected);
     }
 
-    private void RollingTwelveMonthsAre(Period[] dateRanges) =>
-        this.periodProvider.Feed( dateRanges);
+    private void RollingTwelveMonthsAre(Period[] periods) =>
+        this.periodProvider.FeedRollingTwelveMonths(periods);
 
-    private void MonthlyPerformanceIs(Period[] dateRanges, PeriodPerformancePresentation[] expected) =>
-        this.dataSource.Feed(dateRanges, expected);
-}
-
-public class StubbedPeriodProvider : IPeriodProvider
-{
-    private Period[] data = [];
-
-    public Task<Period[]> RollingTwelveMonths() =>
-        Task.FromResult(this.data);
-
-    public void Feed(Period[] dateRanges) =>
-        this.data = dateRanges;
+    private void PeriodPerformanceAre(Period[] periods, PeriodPerformancePresentation[] expected) =>
+        this.dataSource.Feed(periods, expected);
 }
