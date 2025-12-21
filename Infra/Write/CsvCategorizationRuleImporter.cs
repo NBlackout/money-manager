@@ -5,7 +5,7 @@ namespace Infra.Write;
 
 public class CsvCategorizationRuleImporter : ICategorizationRuleImporter
 {
-    private const string CellSeparator = ",";
+    private const string CellSeparator = ";";
 
     public async Task<CategorizationRuleToImport[]> Parse(Stream content)
     {

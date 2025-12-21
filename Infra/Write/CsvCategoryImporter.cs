@@ -5,6 +5,8 @@ namespace Infra.Write;
 
 public class CsvCategoryImporter : ICategoryImporter
 {
+    private const string CellSeparator = ";";
+
     public async Task<CategoryToImport[]> Parse(Stream content)
     {
         using StreamReader reader = new(content);
@@ -19,6 +21,12 @@ public class CsvCategoryImporter : ICategoryImporter
         return [..categories];
     }
 
-    private static CategoryToImport Parse(string line) =>
-        new(new Label(line));
+    private static CategoryToImport Parse(string line)
+    {
+        string[] segments = line.Split(CellSeparator);
+        Label label = new(segments[0]);
+        Label? parentLabel = !string.IsNullOrWhiteSpace(segments[1]) ? new Label(segments[1]) : null;
+
+        return new CategoryToImport(label, parentLabel);
+    }
 }

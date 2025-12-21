@@ -22,7 +22,7 @@ public class ImportCategorizationRulesTests
     }
 
     [Theory, RandomData]
-    public async Task Imports_many_categorization_rules(
+    public async Task Imports_categorization_rules(
         CategorizationRuleToImport aCategorizationRule,
         CategorizationRuleToImport anotherCategorizationRule,
         CategorySnapshot aCategory,

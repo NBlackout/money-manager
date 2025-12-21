@@ -27,7 +27,7 @@ public class CategorizationSuggestions(
             ..categories.Where(c => transaction.Label.Contains(c.Keywords, StringComparison.InvariantCultureIgnoreCase))
         ];
 
-        return matchingCategories.Length == 1 ? Match(transaction, matchingCategories.Single()) : null;
+        return matchingCategories.Length == 1 ? Match(transaction, matchingCategories[0]) : null;
     }
 
     private static CategorizationSuggestionPresentation Match(TransactionToCategorize transaction, CategoryWithKeywords category) =>

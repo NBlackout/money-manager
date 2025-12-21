@@ -11,23 +11,37 @@ public class ImportCategories(ICategoryRepository categoryRepository, ICategoryI
         CategoryToImport[] categoriesToImport = await categoryImporter.Parse(content);
 
         List<Category> categories = [];
-        Label[] existingLabels = await this.ExistingLabels(categoriesToImport);
-        foreach (CategoryToImport categoryToImport in categoriesToImport)
+        Dictionary<Label, Category?> existingCategories = await this.ExistingCategories(categoriesToImport);
+        foreach (CategoryToImport categoryToImport in categoriesToImport.OrderByDescending(c => c.ParentLabel is null))
         {
-            if (existingLabels.Contains(categoryToImport.Label))
+            if (existingCategories[categoryToImport.Label] is not null)
                 continue;
 
-            categories.Add(new Category(await categoryRepository.NextIdentity(), categoryToImport.Label, null));
+            CategoryId? parentId = IfOf(categoryToImport.ParentLabel, existingCategories);
+            Category category = new(await categoryRepository.NextIdentity(), categoryToImport.Label, parentId);
+            categories.Add(category);
+            existingCategories[categoryToImport.Label] = category;
         }
 
         await categoryRepository.Save(categories.ToArray());
     }
 
-    private async Task<Label[]> ExistingLabels(CategoryToImport[] categoriesToImport)
+    private async Task<Dictionary<Label, Category?>> ExistingCategories(CategoryToImport[] categoriesToImport)
     {
-        Label[] labelsToImport = categoriesToImport.Select(c => c.Label).ToArray();
-        Dictionary<Label, Category?> categories = await categoryRepository.By(labelsToImport);
+        Label[] labels = categoriesToImport.Select(c => c.Label).ToArray();
+        Label[] parentLabels = categoriesToImport.Where(c => c.ParentLabel is not null).Select(c => c.ParentLabel!).ToArray();
+        Label[] allLabels = labels.Concat(parentLabels).Distinct().ToArray();
 
-        return categories.Where(kv => kv.Value is not null).Select(kv => kv.Key).ToArray();
+        return await categoryRepository.By(allLabels);
+    }
+
+    private static CategoryId? IfOf(Label? label, Dictionary<Label, Category?> existingCategories)
+    {
+        if (label is null)
+            return null;
+        if (existingCategories[label] is null)
+            return null;
+
+        return existingCategories[label]!.Id;
     }
 }
