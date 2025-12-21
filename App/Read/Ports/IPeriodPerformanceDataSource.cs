@@ -4,7 +4,7 @@ namespace App.Read.Ports;
 
 public interface IPeriodPerformanceDataSource
 {
-    Task<PeriodPerformancePresentation[]> All(params Period[] dateRanges);
+    Task<PeriodPerformancePresentation[]> All(params Period[] periods);
 }
 
 public record PeriodPerformancePresentation(Period Period, decimal Balance, PerformancePresentation Performance);

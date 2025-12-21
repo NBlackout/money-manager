@@ -2,7 +2,7 @@ namespace App.Read.Ports;
 
 public interface IBalanceForecastsDataSource
 {
-    Task<BalanceForecastPresentation[]> Fetch();
+    Task<BalanceForecastPresentation[]> Fetch(decimal balance, SamplePeriod[] samplePeriods, ForecastPeriod[] forecastPeriods);
 }
 
-public record BalanceForecastPresentation(decimal Balance);
+public record BalanceForecastPresentation(DateOnly Date, decimal Balance);

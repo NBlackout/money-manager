@@ -1,14 +1,18 @@
+using System.Text.Json;
 using App.Read.Ports;
 
 namespace App.Tests.Read.TestDoubles;
 
 public class StubbedBalanceForecastsDataSource : IBalanceForecastsDataSource
 {
-    private BalanceForecastPresentation[] data = null!;
+    private readonly Dictionary<string, BalanceForecastPresentation[]> data = [];
 
-    public Task<BalanceForecastPresentation[]> Fetch() =>
-        Task.FromResult(this.data);
+    public Task<BalanceForecastPresentation[]> Fetch(decimal balance, SamplePeriod[] samplePeriods, ForecastPeriod[] forecastPeriods) =>
+        Task.FromResult(this.data[Serialize(balance, samplePeriods, forecastPeriods)]);
 
-    public void Feed(BalanceForecastPresentation[] forecasts) =>
-        this.data = forecasts;
+    public void Feed(decimal balance, SamplePeriod[] samplePeriods, ForecastPeriod[] forecastPeriods, BalanceForecastPresentation[] forecasts) =>
+        this.data[Serialize(balance, samplePeriods, forecastPeriods)] = forecasts;
+
+    private static string Serialize(decimal balance, SamplePeriod[] samplePeriods, ForecastPeriod[] forecastPeriods) =>
+        JsonSerializer.Serialize(new { balance, samplePeriods, forecastPeriods });
 }

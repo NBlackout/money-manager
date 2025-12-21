@@ -95,7 +95,7 @@ public partial class Dashboard
     private static List<string> CategoriesBy(PeriodPerformancePresentation[] performances, BalanceForecastPresentation[] balanceForecasts)
     {
         DateOnly[] months = performances.Select(p => p.Period.From).ToArray();
-        DateOnly[] forecastedMonths = Enumerable.Range(1, balanceForecasts.Length - 1).Select(r => months.Last().AddMonths(r)).ToArray();
+        DateOnly[] forecastedMonths = balanceForecasts.Select(f => f.Date.AddDays(1)).ToArray();
         DateOnly[] from = [..months, ..forecastedMonths];
 
         return from.Select(f => f.ToString("MMMM")).ToList();
@@ -106,7 +106,7 @@ public partial class Dashboard
         new ColumnSeries { Name = "Net", YAxis = "Performance", Data = NetOf(periods), Color = "green", NegativeColor = "red", Opacity = 0.5 },
         new AreaSeries { Name = "Revenue", YAxis = "Performance", Data = RevenueOf(periods), Color = "green" },
         new AreaSeries { Name = "Expenses", YAxis = "Performance", Data = ExpensesOf(periods), Color = "red" },
-        new LineSeries { Name = "Balance", YAxis = "Balance", Data = BalancesOf(periods), ColorIndex = 0, PointPlacementNumber = -0.5 },
+        new LineSeries { Name = "Starting balance", YAxis = "Balance", Data = BalancesOf(periods), ColorIndex = 0, PointPlacementNumber = -0.5 },
         new LineSeries { Name = "Forecast", YAxis = "Balance", Data = ForecastsOf(periods, forecast), ColorIndex = 0, PointPlacementNumber = 0.5 }
     ];
 
@@ -124,7 +124,7 @@ public partial class Dashboard
 
     private static List<LineSeriesData> ForecastsOf(PeriodPerformancePresentation[] periods, BalanceForecastPresentation[] forecasts)
     {
-        decimal?[] balances = [..Enumerable.Repeat((decimal?)null, periods.Length - 2), periods.Last().Balance, ..forecasts.Select(f => f.Balance)];
+        decimal?[] balances = [..Enumerable.Repeat((decimal?)null, periods.Length - 1), ..forecasts.Select(f => f.Balance)];
 
         return balances.Select(b => new LineSeriesData { Y = b.HasValue ? decimal.ToDouble(b.Value) : null }).ToList();
     }

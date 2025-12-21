@@ -9,23 +9,23 @@ namespace Infra.Read.DataSources;
 public class InMemoryPeriodPerformanceDataSource(InMemoryAccountRepository accountRepository, InMemoryTransactionRepository transactionRepository)
     : IPeriodPerformanceDataSource
 {
-    public Task<PeriodPerformancePresentation[]> All(Period[] dateRanges)
+    public Task<PeriodPerformancePresentation[]> All(Period[] periods)
     {
         AccountSnapshot[] accounts = accountRepository.Data.ToArray();
         if (accounts.Length == 0)
             return Task.FromResult(Array.Empty<PeriodPerformancePresentation>());
 
-        return Task.FromResult(this.PerformanceOf(accounts, dateRanges));
+        return Task.FromResult(this.PerformancesOf(accounts, periods));
     }
 
-    private PeriodPerformancePresentation[] PerformanceOf(AccountSnapshot[] accounts, Period[] dateRanges)
+    private PeriodPerformancePresentation[] PerformancesOf(AccountSnapshot[] accounts, Period[] periods)
     {
-        List<PeriodPerformancePresentation> periods = [];
+        List<PeriodPerformancePresentation> performances = [];
 
-        DateOnly beginningOfThisMonth = dateRanges.Last().From;
+        DateOnly beginningOfThisMonth = periods.Last().From;
         decimal balancesOfMonth = accounts.Sum(a => a.Balance); // TODO depends on account BalanceDate
 
-        foreach (Period period in dateRanges.Reverse())
+        foreach (Period period in periods.Reverse())
         {
             TransactionSnapshot[] transactions = this.TransactionOf(period);
 
@@ -35,14 +35,14 @@ public class InMemoryPeriodPerformanceDataSource(InMemoryAccountRepository accou
             );
             balancesOfMonth -= performance.Net;
 
-            periods.Add(new PeriodPerformancePresentation(period, balancesOfMonth, performance));
+            performances.Add(new PeriodPerformancePresentation(period, balancesOfMonth, performance));
 
             beginningOfThisMonth = beginningOfThisMonth.AddMonths(-1);
         }
 
-        return periods.ToArray().Reverse().ToArray();
+        return performances.ToArray().Reverse().ToArray();
     }
 
     private TransactionSnapshot[] TransactionOf(Period period) =>
-        transactionRepository.Data.Where(t => t.Date >= period.From && t.Date <= period.To).ToArray();
+        transactionRepository.Data.Where(t => period.Includes(t.Date)).ToArray();
 }

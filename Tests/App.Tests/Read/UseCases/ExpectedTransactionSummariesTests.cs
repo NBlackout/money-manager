@@ -14,7 +14,7 @@ public class ExpectedTransactionSummariesTests
 
     [Theory]
     [RandomData]
-    public async Task Gives_category_summaries(int year, int month, ExpectedTransactionSummaryPresentation[] expected)
+    public async Task Gives_expected_transactions(int year, int month, ExpectedTransactionSummaryPresentation[] expected)
     {
         this.Feed(year, month, expected);
         await this.Verify(year, month, expected);

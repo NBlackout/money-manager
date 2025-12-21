@@ -20,7 +20,7 @@ public class PeriodProviderTests : InfraTest<IPeriodProvider, PeriodProvider>
     {
         this.TodayIs(DateOnly.Parse("2025-01-25"));
 
-        await this.Verify(
+        await this.Verify_rolling_twelve_months(
             new Period(DateOnly.Parse("2024-02-01"), DateOnly.Parse("2024-02-29")),
             new Period(DateOnly.Parse("2024-03-01"), DateOnly.Parse("2024-03-31")),
             new Period(DateOnly.Parse("2024-04-01"), DateOnly.Parse("2024-04-30")),
@@ -36,9 +36,27 @@ public class PeriodProviderTests : InfraTest<IPeriodProvider, PeriodProvider>
         );
     }
 
-    private async Task Verify(params Period[] expected)
+    [Fact]
+    public async Task Gives_next_three_months()
+    {
+        this.TodayIs(DateOnly.Parse("2022-08-07"));
+
+        await this.Verify_next_three_months(
+            new Period(DateOnly.Parse("2022-09-01"), DateOnly.Parse("2022-09-30")),
+            new Period(DateOnly.Parse("2022-10-01"), DateOnly.Parse("2022-10-31")),
+            new Period(DateOnly.Parse("2022-11-01"), DateOnly.Parse("2022-11-30"))
+        );
+    }
+
+    private async Task Verify_rolling_twelve_months(params Period[] expected)
     {
         Period[] actual = await this.Sut.RollingTwelveMonths();
+        actual.Should().Equal(expected);
+    }
+
+    private async Task Verify_next_three_months(params Period[] expected)
+    {
+        Period[] actual = await this.Sut.NextThreeMonths();
         actual.Should().Equal(expected);
     }
 

@@ -14,7 +14,7 @@ public class CategorizationRuleSummariesTests
 
     [Theory]
     [RandomData]
-    public async Task Gives_categorization_rule_summaries(CategorizationRuleSummaryPresentation[] expected)
+    public async Task Gives_categorization_rules(CategorizationRuleSummaryPresentation[] expected)
     {
         this.Feed(expected);
         await this.Verify(expected);

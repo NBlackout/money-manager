@@ -1,26 +1,28 @@
 using App.Read.Ports;
-using Infra.Write.Repositories;
+using App.Shared;
+using App.Shared.Ports;
 
 namespace Infra.Read.DataSources;
 
-public class InMemoryBalanceForecastsDataSource(
-    InMemoryAccountRepository accountRepository,
-    InMemoryRecurringTransactionRepository recurringTransactionRepository
-) : IBalanceForecastsDataSource
+public class InMemoryBalanceForecastsDataSource(IClock clock) : IBalanceForecastsDataSource
 {
-    public Task<BalanceForecastPresentation[]> Fetch()
+    public Task<BalanceForecastPresentation[]> Fetch(decimal balance, SamplePeriod[] samplePeriods, ForecastPeriod[] forecastPeriods)
     {
-        decimal totalBalance = accountRepository.Data.Sum(a => a.Balance);
-        decimal recurringNet = recurringTransactionRepository.Data.Sum(t => t.Amount);
+        decimal average = AverageDuring(samplePeriods);
 
-        return Task.FromResult(
-            new BalanceForecastPresentation[]
-            {
-                new(totalBalance + recurringNet * 1),
-                new(totalBalance + recurringNet * 2),
-                new(totalBalance + recurringNet * 3),
-                new(totalBalance + recurringNet * 4)
-            }
-        );
+        BalanceForecastPresentation endOfMonthForecast = new(clock.LastDayOfMonth, balance + average);
+        List<BalanceForecastPresentation> forecasts = [endOfMonthForecast];
+        foreach ((Period period, decimal net) in forecastPeriods)
+            forecasts.Add(new BalanceForecastPresentation(period.To, forecasts.Last().Balance + net + average));
+
+        return Task.FromResult(forecasts.ToArray());
+    }
+
+    private static decimal AverageDuring(SamplePeriod[] samplePeriods)
+    {
+        if (samplePeriods.Length == 0)
+            return 0;
+
+        return Math.Round(samplePeriods.Sum(t => t.Amount) / samplePeriods.Length, 2);
     }
 }

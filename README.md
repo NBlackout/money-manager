@@ -2,8 +2,6 @@
 
 ## Feat
 
-- Dashboard
-  - Forecast next 3 months
 - Accounts
     - Empty state
     - Display balance of given month (along with transactions)
