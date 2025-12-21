@@ -9,15 +9,18 @@ public class CsvCategoryExporter : ICategoryExporter
 
     public Task<Stream> Export(CategorySummaryPresentation[] categories)
     {
-        string[] rows = [Headers(), ..categories.Select(Row)];
+        Console.WriteLine("la");
+        string[] rows = [Headers(), ..categories.SelectMany(Row)];
         string content = string.Join(LineSeparator, rows);
 
         return Task.FromResult(content.ToUtf8Stream());
     }
 
     private static string Headers() =>
-        "Label";
+        "Label;Parent label";
 
-    private static string Row(CategorySummaryPresentation category) =>
-        category.Label;
+    private static string[] Row(CategorySummaryPresentation category) => [category.Label + ";", ..category.Children.Select(c => Row(c, category.Label))];
+
+    private static string Row(ChildCategorySummaryPresentation category, string parentLabel) =>
+        category.Label + ";" + parentLabel;
 }
