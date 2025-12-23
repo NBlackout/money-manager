@@ -9,11 +9,12 @@ public class TransactionsOfMonthTests
     private readonly StubbedTransactionsOfMonthDataSource dataSource = new();
     private readonly TransactionsOfMonth sut;
 
-    public TransactionsOfMonthTests() =>
+    public TransactionsOfMonthTests()
+    {
         this.sut = new TransactionsOfMonth(this.dataSource);
+    }
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Gives_transactions_of_month(Guid accountId, int year, int month, TransactionSummaryPresentation[] expected)
     {
         this.Feed(accountId, year, month, expected);

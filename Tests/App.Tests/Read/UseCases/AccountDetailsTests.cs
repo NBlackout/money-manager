@@ -9,11 +9,12 @@ public class AccountDetailsTests
     private readonly StubbedAccountDetailsDataSource dataSource = new();
     private readonly AccountDetails sut;
 
-    public AccountDetailsTests() =>
+    public AccountDetailsTests()
+    {
         this.sut = new AccountDetails(this.dataSource);
+    }
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Gives_account_details(AccountDetailsPresentation expected)
     {
         this.Feed(expected);

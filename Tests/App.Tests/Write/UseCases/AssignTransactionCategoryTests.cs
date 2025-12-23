@@ -15,8 +15,7 @@ public class AssignTransactionCategoryTests
         this.sut = new AssignTransactionCategory(this.repository);
     }
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Assigns_transaction_category(TransactionSnapshot transaction, CategoryId categoryId)
     {
         this.Feed(transaction);

@@ -6,25 +6,25 @@
     - Empty state
     - Display balance of given month (along with transactions)
 - Budget
-  - Import/Export
-  - Change budget amount implies providing begin date
-  - Indent budget fake accounts below reference account
-      - Use year browsing instead of month
-      - Show all fake transaction of given year
-  - Allow renaming (in its own use case though)
+    - Import/Export
+    - Change budget amount implies providing begin date
+    - Indent budget fake accounts below reference account
+        - Use year browsing instead of month
+        - Show all fake transaction of given year
+    - Allow renaming (in its own use case though)
 - Categories
-  - Prevent deletion of used one
+    - Prevent deletion of used one
 - Categorization rules
-  - Sort form & table by label
+    - Sort form & table by label
 - Transactions
-  - Display name vs original label
-  - Assign category -> dropdown list with search?
+    - Display name vs original label
+    - Assign category -> dropdown list with search?
 - UI
-  - Light/Dark/System themes support
+    - Light/Dark/System themes support
 - Organizations
-  - New concept
-  - Assign organization to transaction instead of category?
-  - Assign category to organization
+    - New concept
+    - Assign organization to transaction instead of category?
+    - Assign category to organization
 
 ## Bug
 

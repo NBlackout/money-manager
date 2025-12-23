@@ -13,8 +13,10 @@ public class InMemoryForecastPeriodsDataSourceTests : InfraTest<IForecastPeriods
 {
     private readonly InMemoryRecurringTransactionRepository recurringTransactionRepository;
 
-    public InMemoryForecastPeriodsDataSourceTests() =>
+    public InMemoryForecastPeriodsDataSourceTests()
+    {
         this.recurringTransactionRepository = this.Resolve<IRecurringTransactionRepository, InMemoryRecurringTransactionRepository>();
+    }
 
     [Theory, RandomData]
     public async Task Gives_recurring_transaction(Period aPeriod, Period anotherPeriod)

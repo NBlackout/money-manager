@@ -14,8 +14,10 @@ public class InMemoryBalanceForecastsDataSourceTests : InfraTest<IBalanceForecas
 
     private readonly StubbedClock clock = new();
 
-    public InMemoryBalanceForecastsDataSourceTests() =>
+    public InMemoryBalanceForecastsDataSourceTests()
+    {
         this.clock.LastDayOfMonth = LastDayOfMonth;
+    }
 
     protected override void Configure(IServiceCollection services) =>
         services.AddSingleton<IClock>(this.clock);
@@ -27,7 +29,7 @@ public class InMemoryBalanceForecastsDataSourceTests : InfraTest<IBalanceForecas
     [Theory, RandomData]
     public async Task Gives_forecasts_based_on_recurring_transactions(Period aPeriod, Period anotherPeriod)
     {
-        ForecastPeriod[] forecastPeriods= [new(aPeriod, -250), new(anotherPeriod, -100)];
+        ForecastPeriod[] forecastPeriods = [new(aPeriod, -250), new(anotherPeriod, -100)];
         await this.Verify(
             150,
             forecastPeriods,
@@ -53,11 +55,7 @@ public class InMemoryBalanceForecastsDataSourceTests : InfraTest<IBalanceForecas
     private async Task Verify(decimal balance, SamplePeriod[] samplePeriods, params BalanceForecastPresentation[] expected) =>
         await this.Verify(balance, samplePeriods, [], expected);
 
-    private async Task Verify(
-        decimal balance,
-        SamplePeriod[] samplePeriods,
-        ForecastPeriod[] forecastPeriods,
-        params BalanceForecastPresentation[] expected)
+    private async Task Verify(decimal balance, SamplePeriod[] samplePeriods, ForecastPeriod[] forecastPeriods, params BalanceForecastPresentation[] expected)
     {
         BalanceForecastPresentation[] actual = await this.Sut.Fetch(balance, samplePeriods, forecastPeriods);
         actual.Should().Equal(expected);

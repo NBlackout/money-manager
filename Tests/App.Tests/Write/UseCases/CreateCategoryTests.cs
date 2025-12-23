@@ -15,13 +15,11 @@ public class CreateCategoryTests
         this.sut = new CreateCategory(this.repository);
     }
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Creates_a_new(CategorySnapshot category) =>
         await this.Verify(category);
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Prevents_duplicate_creation_of(CategorySnapshot existingCategory, CategorySnapshot newCategory)
     {
         this.repository.Feed(existingCategory with { Label = " label " });

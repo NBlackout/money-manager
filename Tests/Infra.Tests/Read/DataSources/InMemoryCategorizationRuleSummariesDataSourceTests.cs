@@ -7,7 +7,8 @@ using Infra.Write.Repositories;
 
 namespace Infra.Tests.Read.DataSources;
 
-public class InMemoryCategorizationRuleSummariesDataSourceTests : InfraTest<ICategorizationRuleSummariesDataSource, InMemoryCategorizationRuleSummariesDataSource>
+public class InMemoryCategorizationRuleSummariesDataSourceTests
+    : InfraTest<ICategorizationRuleSummariesDataSource, InMemoryCategorizationRuleSummariesDataSource>
 {
     private readonly InMemoryCategorizationRuleRepository categorizationRuleRepository;
     private readonly InMemoryCategoryRepository categoryRepository;
@@ -18,8 +19,7 @@ public class InMemoryCategorizationRuleSummariesDataSourceTests : InfraTest<ICat
         this.categoryRepository = this.Resolve<ICategoryRepository, InMemoryCategoryRepository>();
     }
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Gives_categorization_rules(CategorizationRuleBuilder[] expected)
     {
         this.Feed(expected);

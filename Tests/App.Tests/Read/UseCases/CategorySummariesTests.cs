@@ -9,11 +9,12 @@ public class CategorySummariesTests
     private readonly StubbedCategorySummariesDataSource dataSource = new();
     private readonly CategorySummaries sut;
 
-    public CategorySummariesTests() =>
+    public CategorySummariesTests()
+    {
         this.sut = new CategorySummaries(this.dataSource);
+    }
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Gives_categories(CategorySummaryPresentation[] expected)
     {
         this.Feed(expected);

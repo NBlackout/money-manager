@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-      <ProjectReference Include="..\App\App.csproj" />
-      <ProjectReference Include="..\Tooling\Tooling.csproj" />
+        <ProjectReference Include="..\App\App.csproj"/>
+        <ProjectReference Include="..\Tooling\Tooling.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions"/>
     </ItemGroup>
 
 </Project>

@@ -9,11 +9,12 @@ public class BudgetSummariesTests
     private readonly StubbedBudgetSummariesDataSource dataSource = new();
     private readonly BudgetSummaries sut;
 
-    public BudgetSummariesTests() =>
+    public BudgetSummariesTests()
+    {
         this.sut = new BudgetSummaries(this.dataSource);
+    }
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Gives_budgets(BudgetSummaryPresentation[] expected)
     {
         this.Feed(expected);

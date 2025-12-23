@@ -11,8 +11,10 @@ public class MonthlyPerformanceTests
     private readonly StubbedPeriodPerformanceDataSource dataSource = new();
     private readonly MonthlyPerformance sut;
 
-    public MonthlyPerformanceTests() =>
+    public MonthlyPerformanceTests()
+    {
         this.sut = new MonthlyPerformance(this.periodProvider, this.dataSource);
+    }
 
     [Theory, RandomData]
     public async Task Gives_performance_of_rolling_twelve_months(Period[] periods, PeriodPerformancePresentation[] expected)

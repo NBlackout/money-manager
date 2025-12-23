@@ -8,17 +8,17 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\App\App.csproj" />
-      <ProjectReference Include="..\..\Infra\Infra.csproj" />
-      <ProjectReference Include="..\..\Tooling\Tooling.csproj" />
-      <ProjectReference Include="..\App.Tests\App.Tests.csproj" />
+        <ProjectReference Include="..\..\App\App.csproj"/>
+        <ProjectReference Include="..\..\Infra\Infra.csproj"/>
+        <ProjectReference Include="..\..\Tooling\Tooling.csproj"/>
+        <ProjectReference Include="..\App.Tests\App.Tests.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Update="Tooling\Resources.resx">
-        <Generator>PublicResXFileCodeGenerator</Generator>
-        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
+        <EmbeddedResource Update="Tooling\Resources.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
     </ItemGroup>
 
 </Project>

@@ -18,8 +18,7 @@ public class RenameAccountTests
         this.Feed(this.existingAccount);
     }
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Renames_account(Label label) =>
         await this.Verify(label);
 

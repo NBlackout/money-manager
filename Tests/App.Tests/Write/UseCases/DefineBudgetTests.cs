@@ -15,13 +15,11 @@ public class DefineBudgetTests
         this.sut = new DefineBudget(this.budgetRepository);
     }
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Defines(BudgetSnapshot newBudget) =>
         await this.Verify(newBudget);
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Prevents_duplication_of(BudgetSnapshot budget)
     {
         this.Feed(budget);
