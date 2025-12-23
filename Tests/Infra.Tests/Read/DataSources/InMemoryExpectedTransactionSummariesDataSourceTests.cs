@@ -35,8 +35,7 @@ public class InMemoryExpectedTransactionSummariesDataSourceTests
         await this.Verify(ExpectedFrom(recurringTransaction) with { CategoryLabel = category.Label });
     }
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Excludes_transactions_of_another_period(RecurringTransactionBuilder recurringTransaction)
     {
         this.Feed(recurringTransaction);

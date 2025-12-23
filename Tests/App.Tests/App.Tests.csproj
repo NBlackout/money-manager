@@ -10,7 +10,7 @@
     <ItemGroup>
         <ProjectReference Include="..\..\App\App.csproj"/>
         <ProjectReference Include="..\..\Infra\Infra.csproj"/>
-        <ProjectReference Include="..\..\Tooling\Tooling.csproj" />
+        <ProjectReference Include="..\..\Tooling\Tooling.csproj"/>
     </ItemGroup>
 
 </Project>

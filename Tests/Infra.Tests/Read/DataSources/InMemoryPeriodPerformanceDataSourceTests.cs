@@ -68,10 +68,7 @@ public class InMemoryPeriodPerformanceDataSourceTests : InfraTest<IPeriodPerform
         );
 
         await this.Verify(
-            [
-                new Period(DateOnly.Parse("2021-12-01"), DateOnly.Parse("2021-12-31")),
-                new Period(DateOnly.Parse("2022-01-01"), DateOnly.Parse("2022-01-31"))
-            ],
+            [new Period(DateOnly.Parse("2021-12-01"), DateOnly.Parse("2021-12-31")), new Period(DateOnly.Parse("2022-01-01"), DateOnly.Parse("2022-01-31"))],
             new PeriodPerformancePresentation(
                 new Period(DateOnly.Parse("2021-12-01"), DateOnly.Parse("2021-12-31")),
                 405,
@@ -107,11 +104,7 @@ public class InMemoryPeriodPerformanceDataSourceTests : InfraTest<IPeriodPerform
                 130,
                 new PerformancePresentation(0, 0, 0)
             ),
-            new PeriodPerformancePresentation(
-                new Period(DateOnly.Parse("2024-08-01"), DateOnly.Parse("2024-08-31")),
-                130,
-                new PerformancePresentation(0, 0, 0)
-            )
+            new PeriodPerformancePresentation(new Period(DateOnly.Parse("2024-08-01"), DateOnly.Parse("2024-08-31")), 130, new PerformancePresentation(0, 0, 0))
         );
     }
 

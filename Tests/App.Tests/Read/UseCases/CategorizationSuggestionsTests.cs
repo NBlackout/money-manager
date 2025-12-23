@@ -41,7 +41,6 @@ public class CategorizationSuggestionsTests
         await this.Verify(HasSuggestion(transaction, category));
     }
 
-
     [Fact]
     public async Task Excludes_transaction_not_matching_any_keywords()
     {

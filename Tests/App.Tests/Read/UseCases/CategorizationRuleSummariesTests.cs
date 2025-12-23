@@ -9,11 +9,12 @@ public class CategorizationRuleSummariesTests
     private readonly StubbedCategorizationRuleSummariesDataSource dataSource = new();
     private readonly CategorizationRuleSummaries sut;
 
-    public CategorizationRuleSummariesTests() =>
+    public CategorizationRuleSummariesTests()
+    {
         this.sut = new CategorizationRuleSummaries(this.dataSource);
+    }
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Gives_categorization_rules(CategorizationRuleSummaryPresentation[] expected)
     {
         this.Feed(expected);

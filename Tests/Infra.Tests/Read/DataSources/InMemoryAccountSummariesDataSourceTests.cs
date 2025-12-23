@@ -16,8 +16,7 @@ public class InMemoryAccountSummariesDataSourceTests : InfraTest<IAccountSummari
         this.accountRepository = this.Resolve<IAccountRepository, InMemoryAccountRepository>();
     }
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Gives_accounts(AccountBuilder[] accounts)
     {
         this.Feed(accounts);

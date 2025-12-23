@@ -26,8 +26,7 @@ public class ImportBankStatementTests
         this.sut = new ImportBankStatement(this.accountRepository, this.categoryRepository, this.transactionRepository, this.bankStatementParser);
     }
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Tracks_unknown_bank_and_account(AccountSnapshot account)
     {
         this.FeedNextIdOf(account);
@@ -36,8 +35,7 @@ public class ImportBankStatementTests
         await this.Verify(account with { Label = account.Number }, []);
     }
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Tracks_unknown_account(AccountSnapshot account)
     {
         this.FeedNextIdOf(account);
@@ -46,8 +44,7 @@ public class ImportBankStatementTests
         await this.Verify(account with { Label = account.Number }, []);
     }
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Synchronizes_known_account(AccountSnapshot account)
     {
         TransactionSnapshot aTransaction = ATransactionFrom(account);
@@ -60,8 +57,7 @@ public class ImportBankStatementTests
         await this.Verify(account, [], aTransaction, anotherTransaction);
     }
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Assigns_existing_category_to_transactions(AccountSnapshot account, CategorySnapshot category)
     {
         TransactionSnapshot aTransaction = ATransactionFrom(account, category);
@@ -75,8 +71,7 @@ public class ImportBankStatementTests
         await this.Verify(account, [category], aTransaction, anotherTransaction);
     }
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Assigns_new_category_to_transactions(AccountSnapshot account, CategorySnapshot category)
     {
         TransactionSnapshot aTransaction = ATransactionFrom(account, category);

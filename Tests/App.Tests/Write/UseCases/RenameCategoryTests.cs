@@ -18,8 +18,7 @@ public class RenameCategoryTests
         this.Feed(this.existingCategory);
     }
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Renames_category(Label label) =>
         await this.Verify(label);
 

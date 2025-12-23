@@ -10,8 +10,10 @@ public class CategorizationRulesExportTests
     private readonly StubbedCategorizationRuleExporter exporter = new();
     private readonly CategorizationRulesExport sut;
 
-    public CategorizationRulesExportTests() =>
+    public CategorizationRulesExportTests()
+    {
         this.sut = new CategorizationRulesExport(this.dataSource, this.exporter);
+    }
 
     [Theory, RandomData]
     public async Task Gives_categorization_rules_export(CategorizationRuleSummaryPresentation[] categorizationRules, Stream content)

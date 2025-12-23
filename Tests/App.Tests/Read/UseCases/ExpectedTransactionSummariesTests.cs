@@ -9,11 +9,12 @@ public class ExpectedTransactionSummariesTests
     private readonly StubbedExpectedTransactionSummariesDataSource dataSource = new();
     private readonly ExpectedTransactionSummaries sut;
 
-    public ExpectedTransactionSummariesTests() =>
+    public ExpectedTransactionSummariesTests()
+    {
         this.sut = new ExpectedTransactionSummaries(this.dataSource);
+    }
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Gives_expected_transactions(int year, int month, ExpectedTransactionSummaryPresentation[] expected)
     {
         this.Feed(year, month, expected);

@@ -19,10 +19,14 @@ public class InMemoryCategoryRepository : ICategoryRepository
 
     public Task<Dictionary<Label, Category?>> By(Label[] labels) =>
         Task.FromResult(
-            labels.Distinct().ToDictionary(
-                l => l,
-                l => this.data.Values.SingleOrDefault(c => c.Label == l.Value) != null ? new Category(this.data.Values.Single(c => c.Label == l.Value)) : null
-            )
+            labels
+                .Distinct()
+                .ToDictionary(
+                    l => l,
+                    l => this.data.Values.SingleOrDefault(c => c.Label == l.Value) != null
+                        ? new Category(this.data.Values.Single(c => c.Label == l.Value))
+                        : null
+                )
         );
 
     public Task EnsureUnique(Label label)

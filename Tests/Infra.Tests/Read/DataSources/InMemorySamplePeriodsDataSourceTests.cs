@@ -13,8 +13,10 @@ public class InMemorySamplePeriodsDataSourceTests : InfraTest<ISamplePeriodsData
 {
     private readonly InMemoryTransactionRepository transactionRepository;
 
-    public InMemorySamplePeriodsDataSourceTests() =>
+    public InMemorySamplePeriodsDataSourceTests()
+    {
         this.transactionRepository = this.Resolve<ITransactionRepository, InMemoryTransactionRepository>();
+    }
 
     [Fact]
     public async Task Gives_total_amount_per_period()

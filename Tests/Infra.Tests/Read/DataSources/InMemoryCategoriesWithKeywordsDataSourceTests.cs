@@ -18,8 +18,7 @@ public class InMemoryCategoriesWithKeywordsDataSourceTests : InfraTest<ICategori
         this.categorizationRuleRepository = this.Resolve<ICategorizationRuleRepository, InMemoryCategorizationRuleRepository>();
     }
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Gives_categories(CategorizationRuleBuilder[] expected)
     {
         this.Feed(expected);

@@ -18,8 +18,7 @@ public class ApplyCategorizationRuleTests
         this.sut = new ApplyCategorizationRule(this.categoryRepository, this.categorizationRuleRepository);
     }
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Applies_rule_on_category(CategorySnapshot category, string keywords)
     {
         this.Feed(category);

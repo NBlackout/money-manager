@@ -11,8 +11,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\App\App.csproj" />
-      <ProjectReference Include="..\Tooling\Tooling.csproj" />
+        <ProjectReference Include="..\App\App.csproj"/>
+        <ProjectReference Include="..\Tooling\Tooling.csproj"/>
     </ItemGroup>
 
 </Project>

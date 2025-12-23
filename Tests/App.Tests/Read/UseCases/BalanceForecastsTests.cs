@@ -16,7 +16,8 @@ public class BalanceForecastsTests
     private readonly StubbedBalanceForecastsDataSource balanceForecastsDataSource = new();
     private readonly BalanceForecasts sut;
 
-    public BalanceForecastsTests() =>
+    public BalanceForecastsTests()
+    {
         this.sut = new BalanceForecasts(
             this.clock,
             this.periodProvider,
@@ -25,9 +26,9 @@ public class BalanceForecastsTests
             this.forecastPeriodsDataSource,
             this.balanceForecastsDataSource
         );
+    }
 
-    [Theory]
-    [RandomData]
+    [Theory, RandomData]
     public async Task Gives_balance_forecasts(
         DateOnly firstDayOfMonth,
         decimal balance,
