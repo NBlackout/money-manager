@@ -18,13 +18,13 @@ public partial class CategorizationRules : ComponentBase
     private CategorizationRuleSummaryPresentation[]? categorizationRules;
     private CategorySummaryPresentation[]? categories;
 
-    [Inject] public CategorizationRuleSummaries CategorizationRuleSummaries { get; set; } = null!;
-    [Inject] public CategorySummaries CategorySummaries { get; set; } = null!;
-    [Inject] public ImportCategorizationRules ImportCategorizationRules { get; set; } = null!;
-    [Inject] public ApplyCategorizationRule ApplyCategorizationRule { get; set; } = null!;
-    [Inject] public DeleteCategorizationRule DeleteCategorizationRule { get; set; } = null!;
-    [Inject] public CategorizationRulesExport CategorizationRulesExport { get; set; } = null!;
-    [Inject] public IJSRuntime JsRuntime { get; set; } = null!;
+    [Inject] private CategorizationRuleSummaries CategorizationRuleSummaries { get; set; } = null!;
+    [Inject] private CategorySummaries CategorySummaries { get; set; } = null!;
+    [Inject] private ImportCategorizationRules ImportCategorizationRules { get; set; } = null!;
+    [Inject] private ApplyCategorizationRule ApplyCategorizationRule { get; set; } = null!;
+    [Inject] private DeleteCategorizationRule DeleteCategorizationRule { get; set; } = null!;
+    [Inject] private CategorizationRulesExport CategorizationRulesExport { get; set; } = null!;
+    [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
 
     [SupplyParameterFromQuery] public string? Keywords { get; set; }
     [SupplyParameterFromForm] public CategorizationRuleForm? CategorizationRule { get; set; }

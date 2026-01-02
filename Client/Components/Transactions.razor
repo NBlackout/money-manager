@@ -1,10 +1,14 @@
 ﻿@if (Inflow != null)
 {
     <h3>Entrées</h3>
-    <TransactionsTable Transactions="@Inflow"></TransactionsTable>
+    <TransactionsTable Transactions="@Inflow" OnPicked="OpenCategoryPickerFor"></TransactionsTable>
 }
 @if (Outflow != null)
 {
     <h3>Sorties</h3>
-    <TransactionsTable Transactions="@Outflow"></TransactionsTable>
+    <TransactionsTable Transactions="@Outflow" OnPicked="OpenCategoryPickerFor"></TransactionsTable>
 }
+
+<div class="offcanvas offcanvas-end" id="categoryPickerOffcanvas" data-bs-backdrop="static">
+    <CategoryPicker OnPicked="OnCategoryPicked" OnClosed="OnCategoryPickerClosed"></CategoryPicker>
+</div>

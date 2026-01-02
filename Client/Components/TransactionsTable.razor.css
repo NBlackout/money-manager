@@ -1,13 +1,9 @@
-th {
-    background-color: #EDEDED;
-}
-
-th.transaction-label {
-    width: 100%;
-}
-
 td {
     white-space: nowrap;
+
+    &.transaction-label {
+        width: 100%;
+    }
 }
 
 tfoot td {

@@ -9,12 +9,12 @@ namespace Client.Pages;
 
 public partial class Dashboard
 {
-    [Inject] public MonthlyPerformance MonthlyPerformance { get; set; } = null!;
-    [Inject] public BalanceForecasts BalanceForecasts { get; set; } = null!;
-    [Inject] public IJSRuntime JsRuntime { get; set; } = null!;
-
     private PeriodPerformancePresentation[]? periodPerformance;
     private BalanceForecastPresentation[]? balanceForecasts;
+
+    [Inject] private MonthlyPerformance MonthlyPerformance { get; set; } = null!;
+    [Inject] private BalanceForecasts BalanceForecasts { get; set; } = null!;
+    [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
