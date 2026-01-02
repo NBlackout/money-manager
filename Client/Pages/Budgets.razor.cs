@@ -13,9 +13,9 @@ public partial class Budgets : ComponentBase
     private BudgetSummaryPresentation[]? budgets;
     private AccountSummaryPresentation[]? accounts;
 
-    [Inject] public BudgetSummaries BudgetSummaries { get; set; } = null!;
-    [Inject] public DefineBudget DefineBudget { get; set; } = null!;
-    [Inject] public AccountSummaries AccountSummaries { get; set; } = null!;
+    [Inject] private BudgetSummaries BudgetSummaries { get; set; } = null!;
+    [Inject] private DefineBudget DefineBudget { get; set; } = null!;
+    [Inject] private AccountSummaries AccountSummaries { get; set; } = null!;
 
     [SupplyParameterFromForm] public BudgetForm? Budget { get; set; }
 

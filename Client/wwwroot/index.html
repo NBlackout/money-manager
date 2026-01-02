@@ -41,6 +41,18 @@
         anchorElement.remove();
         URL.revokeObjectURL(url);
     }
+
+    window.hookOffcanvasTo = (target) => {
+        window.currentOffcanvas = new bootstrap.Offcanvas(target);
+    };
+
+    window.showOffcanvas = (target) => {
+        window.currentOffcanvas.show();
+    };
+
+    window.hideOffcanvas = (target) => {
+        window.currentOffcanvas.hide();
+    };
 </script>
 </body>
 </html>

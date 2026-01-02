@@ -13,9 +13,9 @@ public partial class CategoryCard : ComponentBase
     private ElementReference labelElement;
     private InputText? childLabelElement;
 
-    [Inject] public CreateCategory CreateCategory { get; set; } = null!;
+    [Inject] private CreateCategory CreateCategory { get; set; } = null!;
     [Inject] private RenameCategory RenameCategory { get; set; } = null!;
-    [Inject] public DeleteCategory DeleteCategory { get; set; } = null!;
+    [Inject] private DeleteCategory DeleteCategory { get; set; } = null!;
 
     [Parameter] public CategorySummaryPresentation Category { get; set; } = null!;
     [Parameter] public EventCallback<Guid> OnCategoryDeleted { get; set; }

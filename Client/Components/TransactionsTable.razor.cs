@@ -7,14 +7,13 @@ namespace Client.Components;
 
 public partial class TransactionsTable : ComponentBase
 {
+    [Inject] private AssignTransactionCategory AssignTransactionCategory { get; set; } = null!;
     [Inject] private MarkTransactionAsRecurring MarkTransactionAsRecurring { get; set; } = null!;
 
     [Parameter] public TransactionSummaryPresentation[] Transactions { get; set; } = null!;
+    [Parameter] public EventCallback<Guid> OnPicked { get; set; }
 
     private decimal Total => this.Transactions.Sum(t => t.Amount);
-
-    private void OnCategoryAssigned((Guid TransactionId, string CategoryLabel) args) =>
-        this.Transactions = this.Transactions.Select(t => t with { Category = t.Id == args.TransactionId ? args.CategoryLabel : t.Category }).ToArray();
 
     private async Task MarkAsRecurring(Guid transactionId)
     {
@@ -22,4 +21,7 @@ public partial class TransactionsTable : ComponentBase
 
         this.Transactions = this.Transactions.Select(t => t with { IsRecurring = t.Id == transactionId ? !t.IsRecurring : t.IsRecurring }).ToArray();
     }
+
+    private async Task OpenCategoryPickerFor(Guid transactionId) =>
+        await this.OnPicked.InvokeAsync(transactionId);
 }

@@ -9,7 +9,6 @@ public class CsvCategoryExporter : ICategoryExporter
 
     public Task<Stream> Export(CategorySummaryPresentation[] categories)
     {
-        Console.WriteLine("la");
         string[] rows = [Headers(), ..categories.SelectMany(Row)];
         string content = string.Join(LineSeparator, rows);
 

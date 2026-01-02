@@ -17,11 +17,11 @@ public partial class Categories : ComponentBase
     private InputText? labelElement;
     private CategorySummaryPresentation[]? categories;
 
-    [Inject] public CategorySummaries CategorySummaries { get; set; } = null!;
-    [Inject] public ImportCategories ImportCategories { get; set; } = null!;
-    [Inject] public CreateCategory CreateCategory { get; set; } = null!;
-    [Inject] public CategoriesExport CategoriesExport { get; set; } = null!;
-    [Inject] public IJSRuntime JsRuntime { get; set; } = null!;
+    [Inject] private CategorySummaries CategorySummaries { get; set; } = null!;
+    [Inject] private ImportCategories ImportCategories { get; set; } = null!;
+    [Inject] private CreateCategory CreateCategory { get; set; } = null!;
+    [Inject] private CategoriesExport CategoriesExport { get; set; } = null!;
+    [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
 
     [SupplyParameterFromQuery] public string? Keywords { get; set; }
     [SupplyParameterFromForm] public CategoryForm? Category { get; set; }

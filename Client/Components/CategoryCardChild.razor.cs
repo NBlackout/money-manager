@@ -11,7 +11,7 @@ public partial class CategoryCardChild : ComponentBase
     private ElementReference labelElement;
 
     [Inject] private RenameCategory RenameCategory { get; set; } = null!;
-    [Inject] public DeleteCategory DeleteCategory { get; set; } = null!;
+    [Inject] private DeleteCategory DeleteCategory { get; set; } = null!;
 
     [Parameter] public ChildCategorySummaryPresentation Category { get; set; } = null!;
     [Parameter] public EventCallback<Guid> OnChildDeleted { get; set; }
