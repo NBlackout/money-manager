@@ -7,7 +7,6 @@ namespace Client.Components;
 
 public partial class TransactionsTable : ComponentBase
 {
-    [Inject] private AssignTransactionCategory AssignTransactionCategory { get; set; } = null!;
     [Inject] private MarkTransactionAsRecurring MarkTransactionAsRecurring { get; set; } = null!;
 
     [Parameter] public TransactionSummaryPresentation[] Transactions { get; set; } = null!;

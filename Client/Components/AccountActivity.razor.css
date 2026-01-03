@@ -3,22 +3,6 @@ hr {
     opacity: 1;
 }
 
-th {
-    background-color: #EDEDED;
-}
-
-th.transaction-label {
-    width: 100%;
-}
-
-td {
-    white-space: nowrap;
-}
-
-tfoot td {
-    border-top: 4px double #DDDDDD;
-}
-
 .account-activity {
     background-color: #FFFFFF;
     border: 2px solid #E7E7E7;

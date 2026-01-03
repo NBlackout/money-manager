@@ -4,7 +4,7 @@
         <h5 class="card-header d-flex justify-content-between align-items-center">
             @if (isEditing)
             {
-                <input type="text" value="@Category.Label" @ref="labelElement" @onchange="@LabelChanged" @onfocusout="@ExitEditMode" class="form-control"
+                <input type="text" value="@Category.Label" @ref="labelElement" @onchange="LabelChanged" @onfocusout="ExitEditMode" class="form-control"
                        placeholder="Label"/>
             }
             else
@@ -33,7 +33,7 @@
         {
             <h5 class="card-footer d-flex justify-content-between align-items-center mb-0">
                 <EditForm Model="Child" OnSubmit="CreateChild" FormName="CreateChildCategory">
-                    <InputText @bind-Value="Child!.Label" @ref="childLabelElement" @onfocusout="@ExitCreateMode" class="form-control"></InputText>
+                    <InputText @bind-Value="Child!.Label" @ref="childLabelElement" @onfocusout="ExitCreateMode" class="form-control"></InputText>
                 </EditForm>
             </h5>
         }
