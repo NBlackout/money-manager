@@ -1,25 +1,16 @@
 using App.Read.Ports;
-using Tooling;
+using Infra.Shared;
 
 namespace Infra.Read;
 
-public class CsvCategoryExporter : ICategoryExporter
+public class CsvCategoryExporter(ICsvHelper csvHelper) : ICategoryExporter
 {
-    private static readonly string LineSeparator = Environment.NewLine;
+    public async Task<Stream> Export(CategorySummaryPresentation[] categories) =>
+        await csvHelper.Write(Headers(), [..categories.SelectMany(Row)]);
 
-    public Task<Stream> Export(CategorySummaryPresentation[] categories)
-    {
-        string[] rows = [Headers(), ..categories.SelectMany(Row)];
-        string content = string.Join(LineSeparator, rows);
+    private static string[] Headers() => ["Label", "Parent label"];
 
-        return Task.FromResult(content.ToUtf8Stream());
-    }
+    private static string[][] Row(CategorySummaryPresentation category) => [[category.Label, ""], ..category.Children.Select(c => Row(c, category.Label))];
 
-    private static string Headers() =>
-        "Label;Parent label";
-
-    private static string[] Row(CategorySummaryPresentation category) => [category.Label + ";", ..category.Children.Select(c => Row(c, category.Label))];
-
-    private static string Row(ChildCategorySummaryPresentation category, string parentLabel) =>
-        category.Label + ";" + parentLabel;
+    private static string[] Row(ChildCategorySummaryPresentation category, string parentLabel) => [category.Label, parentLabel];
 }

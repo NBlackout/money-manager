@@ -11,15 +11,15 @@ public class CsvCategorizationRuleExporterTests : InfraTest<ICategorizationRuleE
         await this.Verify(
             [aCategorizationRule, anotherCategorizationRule],
             $"""
-             Category,Keywords
-             {aCategorizationRule.CategoryLabel},{aCategorizationRule.Keywords}
-             {anotherCategorizationRule.CategoryLabel},{anotherCategorizationRule.Keywords}
+             Category;Keywords
+             {aCategorizationRule.CategoryLabel};{aCategorizationRule.Keywords}
+             {anotherCategorizationRule.CategoryLabel};{anotherCategorizationRule.Keywords}
              """
         );
 
     [Fact]
     public async Task Exports_when_no_categorization_rule() =>
-        await this.Verify([], "Category,Keywords");
+        await this.Verify([], "Category;Keywords");
 
     private async Task Verify(CategorizationRuleSummaryPresentation[] categories, string expected)
     {

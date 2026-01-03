@@ -1,31 +1,22 @@
 using App.Write.Model.ValueObjects;
 using App.Write.Ports;
+using Infra.Shared;
 
 namespace Infra.Write;
 
-public class CsvCategoryImporter : ICategoryImporter
+public class CsvCategoryImporter(ICsvHelper csvHelper) : ICategoryImporter
 {
-    private const string CellSeparator = ";";
-
     public async Task<CategoryToImport[]> Parse(Stream content)
     {
-        using StreamReader reader = new(content);
-        string? header = await reader.ReadLineAsync();
-        if (header == null)
-            return [];
+        string[][] lines = await csvHelper.Read(content);
 
-        List<CategoryToImport> categories = [];
-        while (await reader.ReadLineAsync() is { } line)
-            categories.Add(Parse(line));
-
-        return [..categories];
+        return lines.Select(Parse).ToArray();
     }
 
-    private static CategoryToImport Parse(string line)
+    private static CategoryToImport Parse(string[] cells)
     {
-        string[] segments = line.Split(CellSeparator);
-        Label label = new(segments[0]);
-        Label? parentLabel = !string.IsNullOrWhiteSpace(segments[1]) ? new Label(segments[1]) : null;
+        Label label = new(cells[0]);
+        Label? parentLabel = !string.IsNullOrWhiteSpace(cells[1]) ? new Label(cells[1]) : null;
 
         return new CategoryToImport(label, parentLabel);
     }

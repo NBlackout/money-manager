@@ -32,7 +32,6 @@
 
 ## Task
 
-- A single CSV adapter to read/write
 - Make sure bootstrap is properly used everywhere by following their documentation examples (e.g. `NavMenu`)
 - Categorization table background is white
 - Two transactions of month HTTP requests made when switching account

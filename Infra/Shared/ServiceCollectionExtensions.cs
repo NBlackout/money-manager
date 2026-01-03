@@ -6,5 +6,5 @@ namespace Infra.Shared;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddSharedInfra(this IServiceCollection services) =>
-        services.AddSingleton<IClock, SystemClock>();
+        services.AddSingleton<IClock, SystemClock>().AddSingleton<ICsvHelper, CsvHelper>();
 }

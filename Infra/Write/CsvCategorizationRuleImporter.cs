@@ -1,30 +1,18 @@
 using App.Write.Model.ValueObjects;
 using App.Write.Ports;
+using Infra.Shared;
 
 namespace Infra.Write;
 
-public class CsvCategorizationRuleImporter : ICategorizationRuleImporter
+public class CsvCategorizationRuleImporter(ICsvHelper csvHelper) : ICategorizationRuleImporter
 {
-    private const string CellSeparator = ";";
-
     public async Task<CategorizationRuleToImport[]> Parse(Stream content)
     {
-        using StreamReader reader = new(content);
-        string? header = await reader.ReadLineAsync();
-        if (header == null)
-            return [];
+        string[][] lines = await csvHelper.Read(content);
 
-        List<CategorizationRuleToImport> categories = [];
-        while (await reader.ReadLineAsync() is { } line)
-            categories.Add(Parse(line));
-
-        return [..categories];
+        return lines.Select(Parse).ToArray();
     }
 
-    private static CategorizationRuleToImport Parse(string line)
-    {
-        string[] cells = line.Split(CellSeparator);
-
-        return new CategorizationRuleToImport(new Label(cells[0]), cells[1]);
-    }
+    private static CategorizationRuleToImport Parse(string[] cells) =>
+        new(new Label(cells[0]), cells[1]);
 }

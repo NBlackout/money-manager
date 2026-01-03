@@ -1,24 +1,14 @@
 using App.Read.Ports;
-using Tooling;
+using Infra.Shared;
 
 namespace Infra.Read;
 
-public class CsvCategorizationRuleExporter : ICategorizationRuleExporter
+public class CsvCategorizationRuleExporter(ICsvHelper csvHelper) : ICategorizationRuleExporter
 {
-    private static readonly string LineSeparator = Environment.NewLine;
-    private const string CellSeparator = ",";
+    public async Task<Stream> Export(CategorizationRuleSummaryPresentation[] categories) =>
+        await csvHelper.Write(Headers(), [..categories.Select(Row)]);
 
-    public Task<Stream> Export(CategorizationRuleSummaryPresentation[] categories)
-    {
-        string[] rows = [Headers(), ..categories.Select(Row)];
-        string content = string.Join(LineSeparator, rows);
+    private static string[] Headers() => ["Category", "Keywords"];
 
-        return Task.FromResult(content.ToUtf8Stream());
-    }
-
-    private static string Headers() =>
-        string.Join(CellSeparator, "Category", "Keywords");
-
-    private static string Row(CategorizationRuleSummaryPresentation categorizationRule) =>
-        string.Join(CellSeparator, categorizationRule.CategoryLabel, categorizationRule.Keywords);
+    private static string[] Row(CategorizationRuleSummaryPresentation categorizationRule) => [categorizationRule.CategoryLabel, categorizationRule.Keywords];
 }

@@ -30,7 +30,7 @@ public class OfxBankStatementParser
             ..statementResponse.StatementTransactions.Select(t => new TransactionStatement(
                     new ExternalId(t.Identifier),
                     new Amount(t.Amount),
-                    new Label(t.Label),
+                    new Label(t.Label.Split("|").Last().Trim()),
                     t.Date,
                     null
                 )
