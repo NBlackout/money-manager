@@ -7,7 +7,7 @@
                 {
                     <div class="row g-3 align-items-end">
                         <div class="col-auto">
-                            <input type="text" value="@account.Label" @ref="labelElement" @onchange="@LabelChanged" @onfocusout="@ExitEditMode"
+                            <input type="text" value="@account.Label" @ref="labelElement" @onchange="LabelChanged" @onfocusout="ExitEditMode"
                                    class="form-control" placeholder="Label"/>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                     <button type="button" class="btn btn-outline-dark" @onclick="ShowPreviousMonthTransactions">
                         <span class="bi bi-caret-left-fill"></span>
                     </button>
-                    <select @onchange="@ShowTransactionsOfMonth" class="form-select border-dark">
+                    <select @onchange="ShowTransactionsOfMonth" class="form-select border-dark">
                         @foreach (DateOnly month in months)
                         {
                             <option selected="@(month == selectedMonth)" value="@month.ToString("yyyy-MM-dd")">@month.ToString("MMMM yyyy")</option>

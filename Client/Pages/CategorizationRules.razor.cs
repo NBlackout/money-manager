@@ -48,17 +48,19 @@ public partial class CategorizationRules : ComponentBase
 
     private async Task Create()
     {
+        if (this.CategorizationRule!.CategoryId.HasValue is false)
+            return;
+        if (string.IsNullOrWhiteSpace(this.CategorizationRule!.Keywords))
+            return;
+
         Guid id = Guid.NewGuid();
         Guid categoryId = this.CategorizationRule!.CategoryId!.Value;
         string keywords = this.CategorizationRule!.Keywords!;
         await this.ApplyCategorizationRule.Execute(new CategorizationRuleId(id), new CategoryId(categoryId), keywords);
 
-        this.categorizationRules =
-        [
-            ..this.categorizationRules!.Prepend(
-                new CategorizationRuleSummaryPresentation(id, categoryId, this.categories!.Single(c => c.Id == categoryId).Label, keywords)
-            )
-        ];
+        string label = this.categories!.SingleOrDefault(c => c.Id == categoryId)?.Label ??
+            this.categories!.SelectMany(c => c.Children).Single(c => c.Id == categoryId).Label;
+        this.categorizationRules = [..this.categorizationRules!.Prepend(new CategorizationRuleSummaryPresentation(id, categoryId, label, keywords))];
         this.CategorizationRule = new CategorizationRuleForm();
         this.HideCategorizationRuleForm();
     }

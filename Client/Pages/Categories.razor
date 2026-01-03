@@ -8,7 +8,7 @@
         @if (isCreating)
         {
             <EditForm Model="Category" OnSubmit="Create" FormName="CreateCategory">
-                <InputText @bind-Value="Category!.Label" @ref="labelElement" @onfocusout="@ExitCreateMode" class="form-control"></InputText>
+                <InputText @bind-Value="Category!.Label" @ref="labelElement" @onfocusout="ExitCreateMode" class="form-control"></InputText>
             </EditForm>
         }
         else

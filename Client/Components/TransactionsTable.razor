@@ -12,10 +12,12 @@
                     <td>
                         @if (transaction.Category != null)
                         {
-                            <span>@transaction.Category</span>
                         }
                     </td>
-                    <td class="transaction-label">@transaction.Label</td>
+                    <td class="transaction-label lh-sm">
+                        @transaction.Label
+                        <div class="small text-secondary">@transaction.Category</div>
+                    </td>
                     <td class="text-end">
                         <span class="text-@(transaction.Amount > 0 ? "success" : "danger")">@transaction.Amount.ToString("N2") €</span>
                     </td>

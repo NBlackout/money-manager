@@ -10,9 +10,16 @@
                 <InputSelect @bind-Value="CategorizationRule!.CategoryId" class="form-control">
                     @if (categories != null && categories.Any())
                     {
-                        @foreach (CategorySummaryPresentation category in categories)
+                        <option value="" disabled selected>Select a category</option>
+
+                        @foreach (CategorySummaryPresentation category in categories.OrderBy(c => c.Label))
                         {
                             <option value="@category.Id">@category.Label</option>
+
+                            @foreach (ChildCategorySummaryPresentation child in category.Children.OrderBy(c => c.Label))
+                            {
+                                <option value="@child.Id">&nbsp;&nbsp;@child.Label</option>
+                            }
                         }
                     }
                 </InputSelect>
@@ -49,7 +56,7 @@
 @if (categorizationRules is { Length: > 0 })
 {
     <ul class="list-group list-group-flush">
-        @foreach (CategorizationRuleSummaryPresentation categorizationRule in categorizationRules)
+        @foreach (CategorizationRuleSummaryPresentation categorizationRule in categorizationRules.OrderBy(r => r.CategoryLabel).ThenBy(r => r.Keywords))
         {
             <li class="list-group-item">
                 @categorizationRule.CategoryLabel (@categorizationRule.Keywords)

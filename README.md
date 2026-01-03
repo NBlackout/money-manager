@@ -15,10 +15,8 @@
 - Categories
     - Prevent deletion of used one
 - Categorization rules
-    - Sort form & table by label
 - Transactions
     - Display name vs original label
-    - Assign category -> dropdown list with search?
 - UI
     - Light/Dark/System themes support
 - Organizations
@@ -31,13 +29,11 @@
 - Nullable category label during import
 - Multiple import sometimes fails
 - Account activity: next month when already on last
-- Categorization rule: error when creating using default (first) category
 
 ## Task
 
 - A single CSV adapter to read/write
 - Make sure bootstrap is properly used everywhere by following their documentation examples (e.g. `NavMenu`)
-- Merge Read App & Read Infra?
 - Categorization table background is white
 - Two transactions of month HTTP requests made when switching account
 - Introduce `CurrentMonth` or something like that to replace `new DateOnly(DateTime.Now.Year, DateTime.Now.Month, 1)`
