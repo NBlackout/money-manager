@@ -26,7 +26,19 @@ public class InMemoryTransactionsOfMonthDataSourceTests : InfraTest<ITransaction
         TransactionBuilder anotherTransaction = ATransactionOn(accountId, DateOnly.Parse("2023-04-16"));
         this.Feed(aTransaction, anotherTransaction);
 
-        await this.Verify(accountId, 2023, 04, aTransaction.ToSummary(), anotherTransaction.ToSummary());
+        await this.Verify(accountId, 2023, 04, ExpectedFrom(aTransaction), ExpectedFrom(anotherTransaction));
+    }
+
+    [Theory, RandomData]
+    public async Task Tells_when_a_transaction_label_is_preferred(TransactionBuilder transaction)
+    {
+        this.Feed(transaction);
+        await this.Verify(
+            transaction.AccountId,
+            transaction.Date.Year,
+            transaction.Date.Month,
+            ExpectedFrom(transaction) with { Label = transaction.PreferredLabel! }
+        );
     }
 
     [Theory, RandomData]
@@ -62,5 +74,8 @@ public class InMemoryTransactionsOfMonthDataSourceTests : InfraTest<ITransaction
     }
 
     private static TransactionBuilder ATransactionOn(Guid accountId, DateOnly date) =>
-        ATransaction() with { AccountId = accountId, Date = date };
+        ATransaction() with { AccountId = accountId, Date = date, PreferredLabel = null };
+
+    private static TransactionSummaryPresentation ExpectedFrom(TransactionBuilder transaction) =>
+        transaction.ToSummary();
 }

@@ -21,5 +21,6 @@ public static class ServiceCollectionWriteExtensions
             .AddSingleton<ImportCategorizationRules>()
             .AddSingleton<AssignTransactionCategory>()
             .AddSingleton<DefineBudget>()
-            .AddSingleton<MarkTransactionAsRecurring>();
+            .AddSingleton<MarkTransactionAsRecurring>()
+            .AddSingleton<PreferTransactionLabel>();
 }

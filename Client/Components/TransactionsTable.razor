@@ -11,8 +11,16 @@
                     <td>@(index == 0 ? transaction.Date.ToString("dd/MM") : string.Empty) </td>
 
                     <td class="transaction-label lh-sm">
-                        @transaction.Label
-                        <div class="small text-secondary">@transaction.Category</div>
+                        @if (isEditing && transactionId!.Value == transaction.Id)
+                        {
+                            <input type="text" value="@transaction.Label" @ref="labelElement" @onchange="LabelChanged" @onfocusout="ExitEditMode"
+                                   class="form-control form-control-sm" placeholder="Label"/>
+                        }
+                        else
+                        {
+                            <span @onclick="@(() => EnterEditMode(transaction.Id))">@transaction.Label</span>
+                            <div class="small text-secondary">@transaction.Category</div>
+                        }
                     </td>
                     <td class="text-end">
                         <span class="text-@(transaction.Amount > 0 ? "success" : "danger")">@transaction.Amount.ToString("N2") €</span>

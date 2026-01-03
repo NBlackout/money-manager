@@ -9,6 +9,7 @@ public record TransactionSnapshot(
     string ExternalId,
     decimal Amount,
     string Label,
+    string? PreferredLabel,
     DateOnly Date,
     CategoryId? CategoryId,
     bool IsRecurring

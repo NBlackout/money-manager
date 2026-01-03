@@ -5,7 +5,16 @@ using App.Write.Model.Transactions;
 
 namespace App.Tests.Read.Tooling;
 
-public record TransactionBuilder(Guid Id, Guid AccountId, decimal Amount, string Label, DateOnly Date, CategoryBuilder? Category, bool IsRecurring)
+public record TransactionBuilder(
+    Guid Id,
+    Guid AccountId,
+    decimal Amount,
+    string Label,
+    string? PreferredLabel,
+    DateOnly Date,
+    CategoryBuilder? Category,
+    bool IsRecurring
+)
 {
     public TransactionSnapshot ToSnapshot() =>
         new(
@@ -14,6 +23,7 @@ public record TransactionBuilder(Guid Id, Guid AccountId, decimal Amount, string
             "External id",
             this.Amount,
             this.Label,
+            this.PreferredLabel,
             this.Date,
             this.Category is not null ? new CategoryId(this.Category.Id) : null,
             this.IsRecurring

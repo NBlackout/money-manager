@@ -130,7 +130,7 @@ public class ImportBankStatementTests
         this.bankStatementParser.Feed(TheFileName, TheStream, accountStatement);
 
     private static TransactionSnapshot ATransactionFrom(AccountSnapshot account, CategorySnapshot? category = null) =>
-        ATransaction() with { AccountId = account.Id, CategoryId = category?.Id, IsRecurring = false };
+        ATransaction() with { AccountId = account.Id, CategoryId = category?.Id, PreferredLabel = null, IsRecurring = false };
 
     private static AccountStatement AccountStatementFrom(
         AccountSnapshot account,

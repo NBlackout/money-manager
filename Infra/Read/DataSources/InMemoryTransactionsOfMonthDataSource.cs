@@ -28,7 +28,7 @@ public class InMemoryTransactionsOfMonthDataSource(InMemoryTransactionRepository
         return new TransactionSummaryPresentation(
             transaction.Id.Value,
             transaction.Amount,
-            transaction.Label,
+            transaction.PreferredLabel ?? transaction.Label,
             transaction.Date,
             categoryLabel,
             transaction.IsRecurring

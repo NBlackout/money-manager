@@ -11,12 +11,23 @@ public class Transaction : DomainEntity<TransactionId, TransactionSnapshot>
     private readonly ExternalId externalId;
     private readonly Amount amount;
     private readonly Label label;
+    private Label? preferredLabel;
     private readonly DateOnly date;
     private CategoryId? categoryId;
     private bool isRecurring;
 
     public override TransactionSnapshot Snapshot =>
-        new(this.Id, this.accountId, this.externalId.Value, this.amount.Value, this.label.Value, this.date, this.categoryId, this.isRecurring);
+        new(
+            this.Id,
+            this.accountId,
+            this.externalId.Value,
+            this.amount.Value,
+            this.label.Value,
+            this.preferredLabel?.Value,
+            this.date,
+            this.categoryId,
+            this.isRecurring
+        );
 
     public Transaction(TransactionSnapshot snapshot) : base(snapshot)
     {
@@ -24,6 +35,7 @@ public class Transaction : DomainEntity<TransactionId, TransactionSnapshot>
         this.externalId = new ExternalId(snapshot.ExternalId);
         this.amount = new Amount(snapshot.Amount);
         this.label = new Label(snapshot.Label);
+        this.preferredLabel = snapshot.PreferredLabel != null ? new Label(snapshot.PreferredLabel) : null;
         this.date = snapshot.Date;
         this.categoryId = snapshot.CategoryId;
         this.isRecurring = snapshot.IsRecurring;
@@ -35,6 +47,7 @@ public class Transaction : DomainEntity<TransactionId, TransactionSnapshot>
         ExternalId externalId,
         Amount amount,
         Label label,
+        Label? preferredLabel,
         DateOnly date,
         CategoryId? categoryId,
         bool isRecurring) : base(id)
@@ -43,6 +56,7 @@ public class Transaction : DomainEntity<TransactionId, TransactionSnapshot>
         this.externalId = externalId;
         this.amount = amount;
         this.label = label;
+        this.preferredLabel = preferredLabel;
         this.date = date;
         this.categoryId = categoryId;
         this.isRecurring = isRecurring;
@@ -54,6 +68,7 @@ public class Transaction : DomainEntity<TransactionId, TransactionSnapshot>
         externalId,
         amount,
         label,
+        null,
         date,
         category?.Id,
         false
@@ -66,6 +81,9 @@ public class Transaction : DomainEntity<TransactionId, TransactionSnapshot>
 
     public void UnassignCategory() =>
         this.categoryId = null;
+
+    public void Prefer(Label preferredLabel) =>
+        this.preferredLabel = preferredLabel;
 
     public RecurringTransaction MarkAsRecurring(RecurringTransactionId id)
     {
