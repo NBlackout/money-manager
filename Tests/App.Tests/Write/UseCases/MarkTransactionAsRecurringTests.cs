@@ -1,7 +1,7 @@
 using App.Tests.Write.Tooling;
 using App.Write.Model.RecurringTransactions;
 using App.Write.Model.Transactions;
-using App.Write.UseCases;
+using App.Write.UseCases.Transactions;
 using Infra.Write.Repositories;
 using static App.Tests.Write.Tooling.SnapshotHelpers;
 

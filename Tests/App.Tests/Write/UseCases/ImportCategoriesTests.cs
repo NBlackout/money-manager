@@ -2,7 +2,7 @@ using App.Tests.Write.TestDoubles;
 using App.Write.Model.Categories;
 using App.Write.Model.ValueObjects;
 using App.Write.Ports;
-using App.Write.UseCases;
+using App.Write.UseCases.Categories;
 using Infra.Write.Repositories;
 
 namespace App.Tests.Write.UseCases;

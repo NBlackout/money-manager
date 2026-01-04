@@ -1,7 +1,7 @@
 using App.Read.Ports;
 using App.Shared;
 
-namespace App.Read.UseCases;
+namespace App.Read.UseCases.Dashboard;
 
 public class MonthlyPerformance(IPeriodProvider periodProvider, IPeriodPerformanceDataSource dataSource)
 {

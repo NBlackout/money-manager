@@ -2,7 +2,7 @@ using App.Read.Ports;
 using App.Write.Model.RecurringTransactions;
 using App.Write.Model.Transactions;
 using App.Write.Model.ValueObjects;
-using App.Write.UseCases;
+using App.Write.UseCases.Transactions;
 
 namespace Client.Components;
 

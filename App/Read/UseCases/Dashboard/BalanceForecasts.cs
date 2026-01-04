@@ -2,7 +2,7 @@ using App.Read.Ports;
 using App.Shared;
 using App.Shared.Ports;
 
-namespace App.Read.UseCases;
+namespace App.Read.UseCases.Dashboard;
 
 public class BalanceForecasts(
     IClock clock,

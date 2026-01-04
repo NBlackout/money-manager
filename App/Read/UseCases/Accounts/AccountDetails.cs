@@ -1,6 +1,6 @@
 ﻿using App.Read.Ports;
 
-namespace App.Read.UseCases;
+namespace App.Read.UseCases.Accounts;
 
 public class AccountDetails(IAccountDetailsDataSource dataSource)
 {

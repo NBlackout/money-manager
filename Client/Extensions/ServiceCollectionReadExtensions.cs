@@ -1,4 +1,8 @@
 using App.Read.UseCases;
+using App.Read.UseCases.Accounts;
+using App.Read.UseCases.Categories;
+using App.Read.UseCases.CategorizationRules;
+using App.Read.UseCases.Dashboard;
 using Infra.Read;
 
 namespace Client.Extensions;

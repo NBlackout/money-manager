@@ -2,7 +2,7 @@
 using App.Write.Model.ValueObjects;
 using App.Write.Ports;
 
-namespace App.Write.UseCases;
+namespace App.Write.UseCases.Accounts;
 
 public class RenameAccount(IAccountRepository repository)
 {

@@ -1,6 +1,6 @@
 ﻿using App.Write.Model.Categories;
 using App.Write.Model.Transactions;
-using App.Write.UseCases;
+using App.Write.UseCases.Transactions;
 using Infra.Write.Repositories;
 
 namespace App.Tests.Write.UseCases;

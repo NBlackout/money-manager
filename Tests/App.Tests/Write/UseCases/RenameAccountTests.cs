@@ -1,6 +1,6 @@
 using App.Write.Model.Accounts;
 using App.Write.Model.ValueObjects;
-using App.Write.UseCases;
+using App.Write.UseCases.Accounts;
 using Infra.Write.Repositories;
 using static App.Tests.Write.Tooling.SnapshotHelpers;
 

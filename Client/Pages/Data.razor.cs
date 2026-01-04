@@ -1,4 +1,4 @@
-﻿using App.Write.UseCases;
+﻿using App.Write.UseCases.Accounts;
 using Microsoft.AspNetCore.Components.Forms;
 
 namespace Client.Pages;

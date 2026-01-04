@@ -1,6 +1,6 @@
 using System.Collections;
 using App.Read.Ports;
-using App.Read.UseCases;
+using App.Read.UseCases.Dashboard;
 using Highsoft.Web.Mvc.Charts;
 using Highsoft.Web.Mvc.Charts.Rendering;
 using Microsoft.JSInterop;

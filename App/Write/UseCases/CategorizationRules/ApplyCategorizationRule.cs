@@ -2,7 +2,7 @@ using App.Write.Model.Categories;
 using App.Write.Model.CategorizationRules;
 using App.Write.Ports;
 
-namespace App.Write.UseCases;
+namespace App.Write.UseCases.CategorizationRules;
 
 public class ApplyCategorizationRule(ICategoryRepository categoryRepository, ICategorizationRuleRepository categorizationRuleRepository)
 {

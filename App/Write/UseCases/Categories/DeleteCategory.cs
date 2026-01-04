@@ -2,7 +2,7 @@
 using App.Write.Model.Transactions;
 using App.Write.Ports;
 
-namespace App.Write.UseCases;
+namespace App.Write.UseCases.Categories;
 
 public class DeleteCategory(ICategoryRepository repository, ITransactionRepository transactionRepository)
 {

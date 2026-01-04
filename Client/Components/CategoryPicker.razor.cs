@@ -1,5 +1,5 @@
 ﻿using App.Read.Ports;
-using App.Read.UseCases;
+using App.Read.UseCases.Categories;
 
 namespace Client.Components;
 

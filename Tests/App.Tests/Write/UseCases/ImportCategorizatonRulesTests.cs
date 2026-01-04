@@ -2,7 +2,7 @@ using App.Tests.Write.TestDoubles;
 using App.Write.Model.Categories;
 using App.Write.Model.CategorizationRules;
 using App.Write.Ports;
-using App.Write.UseCases;
+using App.Write.UseCases.CategorizationRules;
 using Infra.Write.Repositories;
 
 namespace App.Tests.Write.UseCases;

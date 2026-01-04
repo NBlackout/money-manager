@@ -1,8 +1,8 @@
 ﻿using App.Read.Ports;
-using App.Read.UseCases;
+using App.Read.UseCases.Accounts;
 using App.Write.Model.Categories;
 using App.Write.Model.Transactions;
-using App.Write.UseCases;
+using App.Write.UseCases.Transactions;
 using Microsoft.JSInterop;
 
 namespace Client.Components;

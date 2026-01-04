@@ -1,8 +1,9 @@
 ﻿using App.Read.Ports;
-using App.Read.UseCases;
+using App.Read.UseCases.Categories;
+using App.Read.UseCases.CategorizationRules;
 using App.Write.Model.Categories;
 using App.Write.Model.CategorizationRules;
-using App.Write.UseCases;
+using App.Write.UseCases.CategorizationRules;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 

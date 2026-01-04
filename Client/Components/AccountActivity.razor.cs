@@ -1,8 +1,8 @@
 ﻿using App.Read.Ports;
-using App.Read.UseCases;
+using App.Read.UseCases.Accounts;
 using App.Write.Model.Accounts;
 using App.Write.Model.ValueObjects;
-using App.Write.UseCases;
+using App.Write.UseCases.Accounts;
 
 namespace Client.Components;
 

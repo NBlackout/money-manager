@@ -2,7 +2,7 @@ using App.Write.Model.Transactions;
 using App.Write.Model.ValueObjects;
 using App.Write.Ports;
 
-namespace App.Write.UseCases;
+namespace App.Write.UseCases.Transactions;
 
 public class PreferTransactionLabel(ITransactionRepository transactionRepository)
 {

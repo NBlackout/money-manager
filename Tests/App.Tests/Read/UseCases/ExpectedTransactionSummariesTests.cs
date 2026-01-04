@@ -1,5 +1,5 @@
 using App.Read.Ports;
-using App.Read.UseCases;
+using App.Read.UseCases.Accounts;
 using App.Tests.Read.TestDoubles;
 
 namespace App.Tests.Read.UseCases;

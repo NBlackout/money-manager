@@ -1,4 +1,8 @@
 using App.Write.UseCases;
+using App.Write.UseCases.Accounts;
+using App.Write.UseCases.Categories;
+using App.Write.UseCases.CategorizationRules;
+using App.Write.UseCases.Transactions;
 using Infra.Write;
 
 namespace Client.Extensions;

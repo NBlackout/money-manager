@@ -2,7 +2,7 @@ using App.Write.Model.RecurringTransactions;
 using App.Write.Model.Transactions;
 using App.Write.Ports;
 
-namespace App.Write.UseCases;
+namespace App.Write.UseCases.Transactions;
 
 public class MarkTransactionAsRecurring(ITransactionRepository transactionRepository, IRecurringTransactionRepository recurringTransactionRepository)
 {

@@ -1,7 +1,7 @@
 using App.Read.Ports;
 using App.Write.Model.Categories;
 using App.Write.Model.ValueObjects;
-using App.Write.UseCases;
+using App.Write.UseCases.Categories;
 using Microsoft.AspNetCore.Components.Forms;
 
 namespace Client.Components;

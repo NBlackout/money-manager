@@ -4,7 +4,7 @@ using App.Write.Model.Categories;
 using App.Write.Model.Transactions;
 using App.Write.Model.ValueObjects;
 using App.Write.Ports;
-using App.Write.UseCases;
+using App.Write.UseCases.Accounts;
 using Infra.Write.Repositories;
 using static App.Tests.Write.Tooling.SnapshotHelpers;
 

@@ -1,11 +1,17 @@
 ﻿@if (Inflow != null)
 {
-    <h3>Entrées</h3>
+    <h3 class="border-bottom">
+        <small class="bi bi-graph-up-arrow text-success fs-5"></small>
+        Entrées
+    </h3>
     <TransactionsTable Transactions="@Inflow" OnPicked="OpenCategoryPickerFor"></TransactionsTable>
 }
 @if (Outflow != null)
 {
-    <h3>Sorties</h3>
+    <h3 class="border-bottom">
+        <small class="bi bi-graph-down-arrow text-danger fs-5"></small>
+        Sorties
+    </h3>
     <TransactionsTable Transactions="@Outflow" OnPicked="OpenCategoryPickerFor"></TransactionsTable>
 }
 
