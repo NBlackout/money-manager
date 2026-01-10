@@ -15,7 +15,8 @@ public class InMemoryCategoriesWithKeywordsDataSource(
             ..categorizationRuleRepository.Data.Select(cr => new CategoryWithKeywords(
                     cr.CategoryId.Value,
                     categoryRepository.Data.Single(c => c.Id == cr.CategoryId).Label,
-                    cr.Keywords
+                    cr.Keywords,
+                    cr.Amount
                 )
             )
         ];

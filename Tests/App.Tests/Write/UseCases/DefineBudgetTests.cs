@@ -16,8 +16,8 @@ public class DefineBudgetTests
     }
 
     [Theory, RandomData]
-    public async Task Defines(BudgetSnapshot newBudget) =>
-        await this.Verify(newBudget);
+    public async Task Defines(BudgetSnapshot budget) =>
+        await this.Verify(budget);
 
     [Theory, RandomData]
     public async Task Prevents_duplication_of(BudgetSnapshot budget)

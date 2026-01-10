@@ -22,7 +22,7 @@ public class InMemoryCategoriesWithKeywordsDataSourceTests : InfraTest<ICategori
     public async Task Gives_categories(CategorizationRuleBuilder[] expected)
     {
         this.Feed(expected);
-        await this.Verify(expected.Select(c => new CategoryWithKeywords(c.CategoryId, c.CategoryLabel, c.Keywords)).ToArray());
+        await this.Verify(expected.Select(c => new CategoryWithKeywords(c.CategoryId, c.CategoryLabel, c.Keywords, c.Amount)).ToArray());
     }
 
     private async Task Verify(params CategoryWithKeywords[] expected)

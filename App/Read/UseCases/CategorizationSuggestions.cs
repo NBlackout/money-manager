@@ -24,7 +24,10 @@ public class CategorizationSuggestions(
     {
         CategoryWithKeywords[] matchingCategories =
         [
-            ..categories.Where(c => transaction.Label.Contains(c.Keywords, StringComparison.InvariantCultureIgnoreCase))
+            ..categories.Where(c =>
+                transaction.Label.Contains(c.Keywords, StringComparison.InvariantCultureIgnoreCase) &&
+                (!c.Amount.HasValue || transaction.Amount == c.Amount.Value)
+            )
         ];
 
         return matchingCategories.Length == 1 ? Match(transaction, matchingCategories[0]) : null;

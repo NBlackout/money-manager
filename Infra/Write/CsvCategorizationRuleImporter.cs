@@ -14,5 +14,5 @@ public class CsvCategorizationRuleImporter(ICsvHelper csvHelper) : ICategorizati
     }
 
     private static CategorizationRuleToImport Parse(string[] cells) =>
-        new(new Label(cells[0]), cells[1]);
+        new(new Label(cells[0]), cells[1], cells[2] != string.Empty ? decimal.Parse(cells[2]) : null);
 }

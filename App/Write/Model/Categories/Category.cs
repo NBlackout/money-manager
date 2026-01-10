@@ -22,8 +22,8 @@ public class Category : DomainEntity<CategoryId, CategorySnapshot>
         this.parentId = parentId;
     }
 
-    public CategorizationRule ApplyWhenMatches(CategorizationRuleId id, string keywords) =>
-        new(id, this.Id, keywords);
+    public CategorizationRule ApplyWhenMatches(CategorizationRuleId id, string keywords, Amount? amount) =>
+        new(id, this.Id, keywords, amount);
 
     public void Rename(Label newLabel) =>
         this.label = newLabel;

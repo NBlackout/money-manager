@@ -12,14 +12,14 @@ public class CsvCategorizationRuleImporterTests : InfraTest<ICategorizationRuleI
     public async Task Parses_categorization_rules() =>
         await this.Verify(
             """
-            Category;Keywords
-            A category;Few keywords
-            Another category;Few other keywords
-            Yet another category;Yet few other keywords
+            Category;Keywords;Amount
+            A category;Few keywords;
+            Another category;Few other keywords;2
+            Yet another category;Yet few other keywords;3
             """,
-            new CategorizationRuleToImport(new Label("A category"), "Few keywords"),
-            new CategorizationRuleToImport(new Label("Another category"), "Few other keywords"),
-            new CategorizationRuleToImport(new Label("Yet another category"), "Yet few other keywords")
+            new CategorizationRuleToImport(new Label("A category"), "Few keywords", null),
+            new CategorizationRuleToImport(new Label("Another category"), "Few other keywords", 2),
+            new CategorizationRuleToImport(new Label("Yet another category"), "Yet few other keywords", 3)
         );
 
     [Fact]
@@ -28,7 +28,7 @@ public class CsvCategorizationRuleImporterTests : InfraTest<ICategorizationRuleI
 
     [Fact]
     public async Task Tells_when_only_headers() =>
-        await this.Verify("Category;Keywords");
+        await this.Verify("Category;Keywords;Amount");
 
     private async Task Verify(string content, params CategorizationRuleToImport[] expected)
     {

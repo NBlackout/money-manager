@@ -3,6 +3,7 @@ using App.Read.UseCases.Categories;
 using App.Read.UseCases.CategorizationRules;
 using App.Write.Model.Categories;
 using App.Write.Model.CategorizationRules;
+using App.Write.Model.ValueObjects;
 using App.Write.UseCases.CategorizationRules;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
@@ -27,13 +28,11 @@ public partial class CategorizationRules : ComponentBase
     [Inject] private CategorizationRulesExport CategorizationRulesExport { get; set; } = null!;
     [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
 
-    [SupplyParameterFromQuery] public string? Keywords { get; set; }
     [SupplyParameterFromForm] public CategorizationRuleForm? CategorizationRule { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        this.CategorizationRule ??= new CategorizationRuleForm { Keywords = this.Keywords };
-        this.isCreating = this.Keywords != null;
+        this.CategorizationRule ??= new CategorizationRuleForm();
         await this.LoadCategorizationRules();
         this.categories = await this.CategorySummaries.Execute();
     }
@@ -57,11 +56,17 @@ public partial class CategorizationRules : ComponentBase
         Guid id = Guid.NewGuid();
         Guid categoryId = this.CategorizationRule!.CategoryId!.Value;
         string keywords = this.CategorizationRule!.Keywords!;
-        await this.ApplyCategorizationRule.Execute(new CategorizationRuleId(id), new CategoryId(categoryId), keywords);
+        decimal? amount = this.CategorizationRule!.Amount;
+        await this.ApplyCategorizationRule.Execute(
+            new CategorizationRuleId(id),
+            new CategoryId(categoryId),
+            keywords,
+            amount.HasValue ? new Amount(amount.Value) : null
+        );
 
         string label = this.categories!.SingleOrDefault(c => c.Id == categoryId)?.Label ??
             this.categories!.SelectMany(c => c.Children).Single(c => c.Id == categoryId).Label;
-        this.categorizationRules = [..this.categorizationRules!.Prepend(new CategorizationRuleSummaryPresentation(id, categoryId, label, keywords))];
+        this.categorizationRules = [..this.categorizationRules!.Prepend(new CategorizationRuleSummaryPresentation(id, categoryId, label, keywords, amount))];
         this.CategorizationRule = new CategorizationRuleForm();
         this.HideCategorizationRuleForm();
     }
@@ -107,5 +112,6 @@ public partial class CategorizationRules : ComponentBase
     {
         public Guid? CategoryId { get; set; }
         public string? Keywords { get; set; }
+        public decimal? Amount { get; set; }
     }
 }

@@ -1,29 +1,38 @@
 ﻿@page "/categorization-rules"
-@page "/categorization-rules/create"
 @using global::App.Read.Ports
 
 <div class="row justify-content-between">
-    <div class="col-4">
+    <div class="col-auto">
         @if (isCreating)
         {
-            <EditForm Model="CategorizationRule" OnSubmit="Create" FormName="CreateCategory">
-                <InputSelect @bind-Value="CategorizationRule!.CategoryId" class="form-control">
-                    @if (categories != null && categories.Any())
-                    {
-                        <option value="" disabled selected>Select a category</option>
-
-                        @foreach (CategorySummaryPresentation category in categories.OrderBy(c => c.Label))
+            <EditForm Model="CategorizationRule" OnSubmit="Create" FormName="CreateCategory" class="row row-cols-lg-auto g-3 align-items-center">
+                <div class="col-12">
+                    <InputSelect @bind-Value="CategorizationRule!.CategoryId" class="form-select">
+                        @if (categories != null && categories.Any())
                         {
-                            <option value="@category.Id">@category.Label</option>
+                            <option value="" disabled selected>Category</option>
 
-                            @foreach (ChildCategorySummaryPresentation child in category.Children.OrderBy(c => c.Label))
+                            @foreach (CategorySummaryPresentation category in categories.OrderBy(c => c.Label))
                             {
-                                <option value="@child.Id">&nbsp;&nbsp;@child.Label</option>
+                                <option value="@category.Id">@category.Label</option>
+
+                                @foreach (ChildCategorySummaryPresentation child in category.Children.OrderBy(c => c.Label))
+                                {
+                                    <option value="@child.Id">&nbsp;&nbsp;@child.Label</option>
+                                }
                             }
                         }
-                    }
-                </InputSelect>
-                <InputText @bind-Value="CategorizationRule!.Keywords" class="form-control"></InputText>
+                    </InputSelect>
+                </div>
+                <div class="col-12">
+                    <InputText @bind-Value="CategorizationRule!.Keywords" class="form-control" placeholder="Keywords"></InputText>
+                </div>
+                <div class="col-12">
+                    <InputNumber @bind-Value="CategorizationRule!.Amount" class="form-control" placeholder="Amount"></InputNumber>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
             </EditForm>
         }
         else
@@ -34,7 +43,7 @@
             </button>
         }
     </div>
-    <div class="col-4 text-end">
+    <div class="col-auto text-end">
         <div class="btn-group">
             <label class="btn btn-primary">
                 <small class="bi bi-upload"></small>
@@ -59,7 +68,7 @@
         @foreach (CategorizationRuleSummaryPresentation categorizationRule in categorizationRules.OrderBy(r => r.CategoryLabel).ThenBy(r => r.Keywords))
         {
             <li class="list-group-item">
-                @categorizationRule.CategoryLabel (@categorizationRule.Keywords)
+                @categorizationRule.CategoryLabel (@categorizationRule.Keywords / @categorizationRule.Amount)
                 <button class="btn btn-link" @onclick="() => Delete(categorizationRule)">Delete</button>
             </li>
         }

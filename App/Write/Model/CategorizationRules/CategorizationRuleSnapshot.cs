@@ -2,4 +2,4 @@
 
 namespace App.Write.Model.CategorizationRules;
 
-public record CategorizationRuleSnapshot(CategorizationRuleId Id, CategoryId CategoryId, string Keywords) : ISnapshot<CategorizationRuleId>;
+public record CategorizationRuleSnapshot(CategorizationRuleId Id, CategoryId CategoryId, string Keywords, decimal? Amount) : ISnapshot<CategorizationRuleId>;

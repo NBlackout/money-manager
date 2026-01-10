@@ -9,7 +9,9 @@
             {
                 <tr>
                     <td>@(index == 0 ? transaction.Date.ToString("dd/MM") : string.Empty) </td>
-
+                    <td class="text-end">
+                        <span class="text-@(transaction.Amount > 0 ? "success" : "danger")">@transaction.Amount.ToString("N2") €</span>
+                    </td>
                     <td class="transaction-label lh-sm">
                         @if (isEditing && transactionId!.Value == transaction.Id)
                         {
@@ -21,9 +23,6 @@
                             <span @onclick="@(() => EnterEditMode(transaction.Id))">@transaction.Label</span>
                             <div class="small text-secondary">@transaction.Category</div>
                         }
-                    </td>
-                    <td class="text-end">
-                        <span class="text-@(transaction.Amount > 0 ? "success" : "danger")">@transaction.Amount.ToString("N2") €</span>
                     </td>
                     <td>
                         <div class="btn-group" role="group">
@@ -43,8 +42,8 @@
         </tbody>
         <tfoot>
         <tr>
-            <td colspan="2" class="text-end fw-bold">Total</td>
-            <td class="text-end">
+            <td class="text-end fw-bold">Total</td>
+            <td colspan="2" class="text-end">
                 <span class="text-@(Total > 0 ? "success" : "danger")">@Total.ToString("N2") €</span>
             </td>
             <td></td>

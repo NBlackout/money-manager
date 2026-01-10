@@ -66,6 +66,15 @@ public class CategorizationSuggestionsTests
         await this.Verify();
     }
 
+    [Theory, RandomData]
+    public async Task Also_matches_using_amount(CategoryWithKeywords category, TransactionToCategorize transaction)
+    {
+        this.Feed(category);
+        this.Feed(transaction with { Label = category.Keywords, Amount = AnythingBut(category.Amount!.Value) });
+
+        await this.Verify();
+    }
+
     private async Task Verify(params CategorizationSuggestionPresentation[] expected)
     {
         CategorizationSuggestionPresentation[] actual = await this.sut.Execute();
@@ -79,7 +88,7 @@ public class CategorizationSuggestionsTests
         this.transactionsToCategorizeDataSource.Feed(transactions);
 
     private static CategoryWithKeywords ACategoryMatching(string keywords) =>
-        Any<CategoryWithKeywords>() with { Keywords = keywords };
+        Any<CategoryWithKeywords>() with { Keywords = keywords, Amount = null };
 
     private static TransactionToCategorize ATransactionLabeled(string label) =>
         Any<TransactionToCategorize>() with { Label = label };

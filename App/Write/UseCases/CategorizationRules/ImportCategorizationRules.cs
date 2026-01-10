@@ -36,7 +36,11 @@ public class ImportCategorizationRules(
                 throw new CategoryNotFoundException();
 
             CategorizationRuleId id = await categorizationRuleRepository.NextIdentity();
-            CategorizationRule categorizationRule = category.ApplyWhenMatches(id, categorizationRuleToImport.Keywords);
+            CategorizationRule categorizationRule = category.ApplyWhenMatches(
+                id,
+                categorizationRuleToImport.Keywords,
+                categorizationRuleToImport.Amount.HasValue ? new Amount(categorizationRuleToImport.Amount.Value) : null
+            );
             categorizationRules.Add(categorizationRule);
         }
 

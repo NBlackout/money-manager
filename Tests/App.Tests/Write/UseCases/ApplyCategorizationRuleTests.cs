@@ -1,5 +1,6 @@
 ﻿using App.Write.Model.Categories;
 using App.Write.Model.CategorizationRules;
+using App.Write.Model.ValueObjects;
 using App.Write.UseCases.CategorizationRules;
 using Infra.Write.Repositories;
 
@@ -19,15 +20,15 @@ public class ApplyCategorizationRuleTests
     }
 
     [Theory, RandomData]
-    public async Task Applies_rule_on_category(CategorySnapshot category, string keywords)
+    public async Task Applies_rule_on_category(CategorySnapshot category, string keywords, Amount? amount)
     {
         this.Feed(category);
-        await this.Verify(category.Id, keywords, ExpectedFrom(category, keywords));
+        await this.Verify(category.Id, keywords, amount, ExpectedFrom(category, keywords, amount));
     }
 
-    private async Task Verify(CategoryId categoryId, string keywords, CategorizationRuleSnapshot expected)
+    private async Task Verify(CategoryId categoryId, string keywords, Amount? amount, CategorizationRuleSnapshot expected)
     {
-        await this.sut.Execute(Id, categoryId, keywords);
+        await this.sut.Execute(Id, categoryId, keywords, amount);
         CategorizationRule actual = await this.categorizationRuleRepository.By(Id);
         actual.Snapshot.Should().Be(expected);
     }
@@ -35,6 +36,6 @@ public class ApplyCategorizationRuleTests
     private void Feed(CategorySnapshot category) =>
         this.categoryRepository.Feed(category);
 
-    private static CategorizationRuleSnapshot ExpectedFrom(CategorySnapshot category, string keywords) =>
-        new(Id, category.Id, keywords);
+    private static CategorizationRuleSnapshot ExpectedFrom(CategorySnapshot category, string keywords, Amount? amount) =>
+        new(Id, category.Id, keywords, amount?.Value);
 }

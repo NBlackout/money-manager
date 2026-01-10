@@ -5,4 +5,4 @@ public interface ICategorizationRuleSummariesDataSource
     Task<CategorizationRuleSummaryPresentation[]> All();
 }
 
-public record CategorizationRuleSummaryPresentation(Guid Id, Guid CategoryId, string CategoryLabel, string Keywords);
+public record CategorizationRuleSummaryPresentation(Guid Id, Guid CategoryId, string CategoryLabel, string Keywords, decimal? Amount);
