@@ -71,5 +71,5 @@ public class ImportCategorizationRulesTests
     }
 
     private static CategorizationRuleSnapshot ExpectedFrom(CategorizationRuleId id, CategorySnapshot category, CategorizationRuleToImport categorizationRule) =>
-        new(id, category.Id, categorizationRule.Keywords, categorizationRule.Amount);
+        new(id, category.Id, categorizationRule.Keywords, categorizationRule.Amount, categorizationRule.Margin);
 }

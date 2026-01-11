@@ -39,7 +39,8 @@ public class ImportCategorizationRules(
             CategorizationRule categorizationRule = category.ApplyWhenMatches(
                 id,
                 categorizationRuleToImport.Keywords,
-                categorizationRuleToImport.Amount.HasValue ? new Amount(categorizationRuleToImport.Amount.Value) : null
+                categorizationRuleToImport.Amount.HasValue ? new Amount(categorizationRuleToImport.Amount.Value) : null,
+                categorizationRuleToImport.Margin.HasValue ? new Amount(categorizationRuleToImport.Margin.Value) : null
             );
             categorizationRules.Add(categorizationRule);
         }

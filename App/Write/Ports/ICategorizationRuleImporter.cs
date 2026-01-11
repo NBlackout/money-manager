@@ -7,4 +7,4 @@ public interface ICategorizationRuleImporter
     Task<CategorizationRuleToImport[]> Parse(Stream content);
 }
 
-public record CategorizationRuleToImport(Label CategoryLabel, string Keywords, decimal? Amount);
+public record CategorizationRuleToImport(Label CategoryLabel, string Keywords, decimal? Amount, decimal? Margin);

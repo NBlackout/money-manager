@@ -5,4 +5,4 @@ public interface ICategoriesWithKeywordsDataSource
     Task<CategoryWithKeywords[]> All();
 }
 
-public record CategoryWithKeywords(Guid Id, string Label, string Keywords, decimal? Amount);
+public record CategoryWithKeywords(Guid Id, string Label, string Keywords, decimal? Amount, decimal? Margin);

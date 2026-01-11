@@ -57,16 +57,21 @@ public partial class CategorizationRules : ComponentBase
         Guid categoryId = this.CategorizationRule!.CategoryId!.Value;
         string keywords = this.CategorizationRule!.Keywords!;
         decimal? amount = this.CategorizationRule!.Amount;
+        decimal? margin = this.CategorizationRule!.Margin;
         await this.ApplyCategorizationRule.Execute(
             new CategorizationRuleId(id),
             new CategoryId(categoryId),
             keywords,
-            amount.HasValue ? new Amount(amount.Value) : null
+            amount.HasValue ? new Amount(amount.Value) : null,
+            margin.HasValue ? new Amount(margin.Value) : null
         );
 
         string label = this.categories!.SingleOrDefault(c => c.Id == categoryId)?.Label ??
             this.categories!.SelectMany(c => c.Children).Single(c => c.Id == categoryId).Label;
-        this.categorizationRules = [..this.categorizationRules!.Prepend(new CategorizationRuleSummaryPresentation(id, categoryId, label, keywords, amount))];
+        this.categorizationRules =
+        [
+            ..this.categorizationRules!.Prepend(new CategorizationRuleSummaryPresentation(id, categoryId, label, keywords, amount, margin))
+        ];
         this.CategorizationRule = new CategorizationRuleForm();
         this.HideCategorizationRuleForm();
     }
@@ -113,5 +118,6 @@ public partial class CategorizationRules : ComponentBase
         public Guid? CategoryId { get; set; }
         public string? Keywords { get; set; }
         public decimal? Amount { get; set; }
+        public decimal? Margin { get; set; }
     }
 }

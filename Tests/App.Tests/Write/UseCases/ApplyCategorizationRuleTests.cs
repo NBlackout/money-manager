@@ -20,15 +20,15 @@ public class ApplyCategorizationRuleTests
     }
 
     [Theory, RandomData]
-    public async Task Applies_rule_on_category(CategorySnapshot category, string keywords, Amount? amount)
+    public async Task Applies_rule_on_category(CategorySnapshot category, string keywords, Amount? amount, Amount? margin)
     {
         this.Feed(category);
-        await this.Verify(category.Id, keywords, amount, ExpectedFrom(category, keywords, amount));
+        await this.Verify(category.Id, keywords, amount, margin, ExpectedFrom(category, keywords, amount, margin));
     }
 
-    private async Task Verify(CategoryId categoryId, string keywords, Amount? amount, CategorizationRuleSnapshot expected)
+    private async Task Verify(CategoryId categoryId, string keywords, Amount? amount, Amount? margin, CategorizationRuleSnapshot expected)
     {
-        await this.sut.Execute(Id, categoryId, keywords, amount);
+        await this.sut.Execute(Id, categoryId, keywords, amount, margin);
         CategorizationRule actual = await this.categorizationRuleRepository.By(Id);
         actual.Snapshot.Should().Be(expected);
     }
@@ -36,6 +36,6 @@ public class ApplyCategorizationRuleTests
     private void Feed(CategorySnapshot category) =>
         this.categoryRepository.Feed(category);
 
-    private static CategorizationRuleSnapshot ExpectedFrom(CategorySnapshot category, string keywords, Amount? amount) =>
-        new(Id, category.Id, keywords, amount?.Value);
+    private static CategorizationRuleSnapshot ExpectedFrom(CategorySnapshot category, string keywords, Amount? amount, Amount? margin) =>
+        new(Id, category.Id, keywords, amount?.Value, margin?.Value);
 }

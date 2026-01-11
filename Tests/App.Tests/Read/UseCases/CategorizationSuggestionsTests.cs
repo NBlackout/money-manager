@@ -67,10 +67,40 @@ public class CategorizationSuggestionsTests
     }
 
     [Theory, RandomData]
-    public async Task Also_matches_using_amount(CategoryWithKeywords category, TransactionToCategorize transaction)
+    public async Task Also_matches_using_amount(decimal amount, TransactionToCategorize transaction)
     {
+        CategoryWithKeywords category = ACategory() with { Amount = amount };
         this.Feed(category);
-        this.Feed(transaction with { Label = category.Keywords, Amount = AnythingBut(category.Amount!.Value) });
+        this.Feed(transaction with { Label = category.Keywords, Amount = AnythingBut(amount) });
+
+        await this.Verify();
+    }
+
+    [Theory]
+    [InlineData(30, 10, 40)]
+    [InlineData(30, 10, 20)]
+    public async Task Also_matches_using_margin(decimal amount, decimal margin, decimal amount2)
+    {
+        CategoryWithKeywords category = ACategory() with { Amount = amount, Margin = margin };
+        TransactionToCategorize transaction = ATransactionLabeled(category.Keywords) with { Amount = amount2 };
+        this.Feed(category);
+        this.Feed(transaction);
+
+        await this.Verify(HasSuggestion(transaction, category));
+    }
+
+    [Theory]
+    [InlineRandomData(30, 10, 41)]
+    [InlineRandomData(30, 10, 19)]
+    public async Task Excludes_transaction_exceeding_amount_margin(
+        decimal amount,
+        decimal margin,
+        decimal amount2,
+        CategoryWithKeywords category,
+        TransactionToCategorize transaction)
+    {
+        this.Feed(category with { Amount = amount, Margin = margin });
+        this.Feed(transaction with { Label = category.Keywords, Amount = amount2 });
 
         await this.Verify();
     }
@@ -88,7 +118,10 @@ public class CategorizationSuggestionsTests
         this.transactionsToCategorizeDataSource.Feed(transactions);
 
     private static CategoryWithKeywords ACategoryMatching(string keywords) =>
-        Any<CategoryWithKeywords>() with { Keywords = keywords, Amount = null };
+        ACategory() with { Keywords = keywords };
+
+    private static CategoryWithKeywords ACategory() =>
+        Any<CategoryWithKeywords>() with { Amount = null, Margin = null };
 
     private static TransactionToCategorize ATransactionLabeled(string label) =>
         Any<TransactionToCategorize>() with { Label = label };

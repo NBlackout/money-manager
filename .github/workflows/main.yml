@@ -1,4 +1,4 @@
-name: Build and deploy to App Service
+name: main
 
 env:
   DOTNET_NOLOGO: true

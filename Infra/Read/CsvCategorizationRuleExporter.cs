@@ -8,10 +8,13 @@ public class CsvCategorizationRuleExporter(ICsvHelper csvHelper) : ICategorizati
     public async Task<Stream> Export(CategorizationRuleSummaryPresentation[] categories) =>
         await csvHelper.Write(Headers(), [..categories.Select(Row)]);
 
-    private static string[] Headers() => ["Category", "Keywords", "Amount"];
+    private static string[] Headers() => ["Category", "Keywords", "Amount", "Margin"];
 
     private static string[] Row(CategorizationRuleSummaryPresentation categorizationRule) =>
     [
-        categorizationRule.CategoryLabel, categorizationRule.Keywords, categorizationRule.Amount?.ToString() ?? string.Empty
+        categorizationRule.CategoryLabel,
+        categorizationRule.Keywords,
+        categorizationRule.Amount?.ToString() ?? string.Empty,
+        categorizationRule.Margin?.ToString() ?? string.Empty
     ];
 }

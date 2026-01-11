@@ -31,6 +31,9 @@
                     <InputNumber @bind-Value="CategorizationRule!.Amount" class="form-control" placeholder="Amount"></InputNumber>
                 </div>
                 <div class="col-12">
+                    <InputNumber @bind-Value="CategorizationRule!.Margin" class="form-control" placeholder="Margin"></InputNumber>
+                </div>
+                <div class="col-12">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </EditForm>
@@ -68,7 +71,7 @@
         @foreach (CategorizationRuleSummaryPresentation categorizationRule in categorizationRules.OrderBy(r => r.CategoryLabel).ThenBy(r => r.Keywords))
         {
             <li class="list-group-item">
-                @categorizationRule.CategoryLabel (@categorizationRule.Keywords / @categorizationRule.Amount)
+                @categorizationRule.CategoryLabel (@categorizationRule.Keywords / @categorizationRule.Amount / @categorizationRule.Margin)
                 <button class="btn btn-link" @onclick="() => Delete(categorizationRule)">Delete</button>
             </li>
         }

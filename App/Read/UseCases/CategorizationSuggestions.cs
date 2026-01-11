@@ -22,18 +22,28 @@ public class CategorizationSuggestions(
 
     private static CategorizationSuggestionPresentation? Match(TransactionToCategorize transaction, CategoryWithKeywords[] categories)
     {
-        CategoryWithKeywords[] matchingCategories =
-        [
-            ..categories.Where(c =>
-                transaction.Label.Contains(c.Keywords, StringComparison.InvariantCultureIgnoreCase) &&
-                (!c.Amount.HasValue || transaction.Amount == c.Amount.Value)
-            )
-        ];
+        CategoryWithKeywords[] matchingCategories = [..categories.Where(c => Matches(transaction, c))];
 
-        return matchingCategories.Length == 1 ? Match(transaction, matchingCategories[0]) : null;
+        return matchingCategories.Length == 1 ? PresentationFrom(transaction, matchingCategories[0]) : null;
     }
 
-    private static CategorizationSuggestionPresentation Match(TransactionToCategorize transaction, CategoryWithKeywords category) =>
+    private static bool Matches(TransactionToCategorize transaction, CategoryWithKeywords category)
+    {
+        if (transaction.Label.Contains(category.Keywords, StringComparison.InvariantCultureIgnoreCase) is false)
+            return false;
+        if (category.Amount.HasValue is false)
+            return true;
+        if (category.Margin.HasValue is false)
+            return transaction.Amount == category.Amount.Value;
+        if (transaction.Amount < category.Amount - category.Margin)
+            return false;
+        if (transaction.Amount > category.Amount + category.Margin)
+            return false;
+
+        return true;
+    }
+
+    private static CategorizationSuggestionPresentation PresentationFrom(TransactionToCategorize transaction, CategoryWithKeywords category) =>
         new(transaction.Id, transaction.Label, transaction.Amount, category.Id, category.Label);
 }
 
