@@ -2,6 +2,7 @@ using App.Read.Ports;
 using App.Shared;
 using App.Write.Model.Accounts;
 using App.Write.Model.Transactions;
+using Infra.Shared.Extensions;
 using Infra.Write.Repositories;
 
 namespace Infra.Read.DataSources;

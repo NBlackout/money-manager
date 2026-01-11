@@ -65,7 +65,7 @@ public class OfxBankStatementParser
 
     public class BankMessageSetResponse
     {
-        [XmlArray("STMTTRNRS"), XmlArrayItem("STMTRS")]  public StatementResponse[] StatementResponses { get; init; } = [];
+        [XmlArray("STMTTRNRS"), XmlArrayItem("STMTRS")] public StatementResponse[] StatementResponses { get; init; } = [];
     }
 
     public class StatementResponse
@@ -74,7 +74,7 @@ public class OfxBankStatementParser
         [XmlElement("AVAILBAL")] public BankAccountBalance? AvailableBalance { get; init; }
         [XmlElement("LEDGERBAL")] public BankAccountBalance? LedgerBalance { get; init; }
 
-        [XmlArray("BANKTRANLIST"), XmlArrayItem("STMTTRN")]  public StatementTransaction[] StatementTransactions { get; init; } = [];
+        [XmlArray("BANKTRANLIST"), XmlArrayItem("STMTTRN")] public StatementTransaction[] StatementTransactions { get; init; } = [];
     }
 
     public class BankAccount

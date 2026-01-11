@@ -35,9 +35,9 @@ public record ObjectAssertions<T>(T? Actual)
                 File.WriteAllText(actualPath, actualJson);
 
                 throw new XunitException(
-                    "Actual differs from expected" +
-                    Environment.NewLine +
-                    $"Compare(Rider): \"file:///{actualPath.Replace("\\", "/")}\",\"file:///{expectedPath.Replace("\\", "/")}\""
+                    "Actual differs from expected"
+                    + Environment.NewLine
+                    + $"Compare(Rider): \"file:///{actualPath.Replace("\\", "/")}\",\"file:///{expectedPath.Replace("\\", "/")}\""
                 );
             }
         }

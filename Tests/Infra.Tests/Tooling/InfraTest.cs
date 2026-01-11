@@ -1,5 +1,6 @@
 ﻿using Infra.Read;
 using Infra.Shared;
+using Infra.Shared.Extensions;
 using Infra.Write;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

@@ -30,14 +30,17 @@ public class ImportCategorizationRulesTests
         CategorizationRuleId anId,
         CategorizationRuleId anotherId)
     {
-        this.SetImportParsingTo(aCategorizationRule, anotherCategorizationRule);
+        this.SetImportParsingTo(aCategorizationRule, anotherCategorizationRule with { Amount = null, Margin = null });
         this.SetCategoriesTo(
             aCategory with { Label = aCategorizationRule.CategoryLabel.Value },
             anotherCategory with { Label = anotherCategorizationRule.CategoryLabel.Value }
         );
         this.FeedNextIdsTo(anId, anotherId);
 
-        await this.Verify(ExpectedFrom(anId, aCategory, aCategorizationRule), ExpectedFrom(anotherId, anotherCategory, anotherCategorizationRule));
+        await this.Verify(
+            ExpectedFrom(anId, aCategory, aCategorizationRule),
+            ExpectedFrom(anotherId, anotherCategory, anotherCategorizationRule with { Amount = null, Margin = null })
+        );
     }
 
     [Theory, RandomData]

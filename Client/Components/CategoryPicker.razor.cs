@@ -18,8 +18,7 @@ public partial class CategoryPicker : ComponentBase
 
     private async Task Pick(Guid id)
     {
-        string label = this.categories!.SingleOrDefault(c => c.Id == id)?.Label ??
-            this.categories!.SelectMany(c => c.Children).Single(c => c.Id == id).Label;
+        string label = this.categories!.SingleOrDefault(c => c.Id == id)?.Label ?? this.categories!.SelectMany(c => c.Children).Single(c => c.Id == id).Label;
 
         await this.OnPicked.InvokeAsync((id, label));
     }

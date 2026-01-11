@@ -1,4 +1,5 @@
 using Infra.Shared;
+using Infra.Shared.Extensions;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 namespace Client.Extensions;

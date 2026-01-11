@@ -1,4 +1,6 @@
-namespace App.Shared;
+using App.Shared;
+
+namespace Infra.Shared.Extensions;
 
 public static class DateOnlyExtensions
 {

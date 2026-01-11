@@ -45,16 +45,16 @@ public class ImportBankStatementTests
     }
 
     [Theory, RandomData]
-    public async Task Synchronizes_known_account(AccountSnapshot account)
+    public async Task Synchronizes_known_account(AccountSnapshot account, decimal balance, DateOnly balanceDate)
     {
         TransactionSnapshot aTransaction = ATransactionFrom(account);
         TransactionSnapshot anotherTransaction = ATransactionFrom(account);
 
         this.Feed(account);
         this.FeedNextIdsOf(aTransaction, anotherTransaction);
-        this.Feed(AccountStatementFrom(account, (aTransaction, null), (anotherTransaction, null)));
+        this.Feed(AccountStatementFrom(account with { Balance = balance, BalanceDate = balanceDate }, (aTransaction, null), (anotherTransaction, null)));
 
-        await this.Verify(account, [], aTransaction, anotherTransaction);
+        await this.Verify(account with { Balance = balance, BalanceDate = balanceDate }, [], aTransaction, anotherTransaction);
     }
 
     [Theory, RandomData]

@@ -66,8 +66,8 @@ public partial class CategorizationRules : ComponentBase
             margin.HasValue ? new Amount(margin.Value) : null
         );
 
-        string label = this.categories!.SingleOrDefault(c => c.Id == categoryId)?.Label ??
-            this.categories!.SelectMany(c => c.Children).Single(c => c.Id == categoryId).Label;
+        string label = this.categories!.SingleOrDefault(c => c.Id == categoryId)?.Label
+            ?? this.categories!.SelectMany(c => c.Children).Single(c => c.Id == categoryId).Label;
         this.categorizationRules =
         [
             ..this.categorizationRules!.Prepend(new CategorizationRuleSummaryPresentation(id, categoryId, label, keywords, amount, margin))

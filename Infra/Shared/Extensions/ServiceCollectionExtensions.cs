@@ -1,7 +1,7 @@
 using App.Shared.Ports;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infra.Shared;
+namespace Infra.Shared.Extensions;
 
 public static class ServiceCollectionExtensions
 {

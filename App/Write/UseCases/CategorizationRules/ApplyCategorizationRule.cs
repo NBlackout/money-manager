@@ -10,7 +10,7 @@ public class ApplyCategorizationRule(ICategoryRepository categoryRepository, ICa
     public async Task Execute(CategorizationRuleId categorizationRuleId, CategoryId categoryId, string keywords, Amount? amount, Amount? margin)
     {
         Category category = await categoryRepository.By(categoryId);
-        CategorizationRule categorizationRule = category.ApplyWhenMatches(categorizationRuleId, keywords, amount,margin);
+        CategorizationRule categorizationRule = category.ApplyWhenMatches(categorizationRuleId, keywords, amount, margin);
         await categorizationRuleRepository.Save(categorizationRule);
     }
 }

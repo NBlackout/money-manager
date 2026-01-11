@@ -1,5 +1,6 @@
 using App.Shared;
 using App.Shared.Ports;
+using Infra.Shared.Extensions;
 
 namespace Infra.Shared;
 

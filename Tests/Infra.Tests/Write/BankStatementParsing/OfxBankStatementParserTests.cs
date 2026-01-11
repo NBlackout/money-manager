@@ -44,34 +44,33 @@ public class OfxBankStatementParserTests : InfraTest<OfxBankStatementParser>
     [Fact]
     public async Task Sanitizes_long_transaction_label()
     {
-        const string content =
-            """
-           <OFX>
-               <BANKMSGSRSV1>
-                   <STMTTRNRS>
-                       <STMTRS>
-                           <BANKACCTFROM>
-                               <BANKID>1234567890</BANKID>
-                               <ACCTID>AccountId</ACCTID>
-                           </BANKACCTFROM>
-                           <AVAILBAL>
-                               <DTASOF>20230413000000</DTASOF>
-                               <BALAMT>10</BALAMT>
-                           </AVAILBAL>
-                           <BANKTRANLIST>
-                               <STMTTRN>
-                                   <DTPOSTED>20250102</DTPOSTED>
-                                   <TRNTYPE>DEBIT</TRNTYPE>
-                                   <TRNAMT>-1</TRNAMT>
-                                   <FITID>TransactionId</FITID>
-                                   <NAME>Noise | Label</NAME>
-                               </STMTTRN>
-                           </BANKTRANLIST>
-                       </STMTRS>
-                   </STMTTRNRS>
-               </BANKMSGSRSV1>
-           </OFX>
-           """;
+        const string content = """
+                               <OFX>
+                                   <BANKMSGSRSV1>
+                                       <STMTTRNRS>
+                                           <STMTRS>
+                                               <BANKACCTFROM>
+                                                   <BANKID>1234567890</BANKID>
+                                                   <ACCTID>AccountId</ACCTID>
+                                               </BANKACCTFROM>
+                                               <AVAILBAL>
+                                                   <DTASOF>20230413000000</DTASOF>
+                                                   <BALAMT>10</BALAMT>
+                                               </AVAILBAL>
+                                               <BANKTRANLIST>
+                                                   <STMTTRN>
+                                                       <DTPOSTED>20250102</DTPOSTED>
+                                                       <TRNTYPE>DEBIT</TRNTYPE>
+                                                       <TRNAMT>-1</TRNAMT>
+                                                       <FITID>TransactionId</FITID>
+                                                       <NAME>Noise | Label</NAME>
+                                                   </STMTTRN>
+                                               </BANKTRANLIST>
+                                           </STMTRS>
+                                       </STMTTRNRS>
+                                   </BANKMSGSRSV1>
+                               </OFX>
+                               """;
         AccountStatement expected = new(
             new ExternalId("AccountId"),
             new Balance(10, DateOnly.Parse("2023-04-13")),

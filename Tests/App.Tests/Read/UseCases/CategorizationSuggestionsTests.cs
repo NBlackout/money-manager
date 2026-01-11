@@ -76,9 +76,7 @@ public class CategorizationSuggestionsTests
         await this.Verify();
     }
 
-    [Theory]
-    [InlineData(30, 10, 40)]
-    [InlineData(30, 10, 20)]
+    [Theory, InlineData(30, 10, 40), InlineData(30, 10, 20)]
     public async Task Also_matches_using_margin(decimal amount, decimal margin, decimal amount2)
     {
         CategoryWithKeywords category = ACategory() with { Amount = amount, Margin = margin };
@@ -89,9 +87,7 @@ public class CategorizationSuggestionsTests
         await this.Verify(HasSuggestion(transaction, category));
     }
 
-    [Theory]
-    [InlineRandomData(30, 10, 41)]
-    [InlineRandomData(30, 10, 19)]
+    [Theory, InlineRandomData(30, 10, 41), InlineRandomData(30, 10, 19)]
     public async Task Excludes_transaction_exceeding_amount_margin(
         decimal amount,
         decimal margin,
