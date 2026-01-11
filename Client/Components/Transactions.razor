@@ -4,7 +4,7 @@
         <small class="bi bi-graph-up-arrow text-success fs-5"></small>
         Entrées
     </h3>
-    <TransactionsTable Transactions="@Inflow" OnPicked="OpenCategoryPickerFor"></TransactionsTable>
+    <TransactionsTable Transactions="@Inflow" OnPicked="OpenDetailsOf"></TransactionsTable>
 }
 @if (Outflow != null)
 {
@@ -12,9 +12,9 @@
         <small class="bi bi-graph-down-arrow text-danger fs-5"></small>
         Sorties
     </h3>
-    <TransactionsTable Transactions="@Outflow" OnPicked="OpenCategoryPickerFor"></TransactionsTable>
+    <TransactionsTable Transactions="@Outflow" OnPicked="OpenDetailsOf"></TransactionsTable>
 }
 
-<div class="offcanvas offcanvas-end" id="categoryPickerOffcanvas" data-bs-backdrop="static">
-    <CategoryPicker OnPicked="OnCategoryPicked" OnClosed="OnCategoryPickerClosed"></CategoryPicker>
+<div class="offcanvas offcanvas-end" id="transactionDetails" data-bs-backdrop="static">
+    <TransactionDetails OnPicked="OnCategoryPicked" OnClosed="OnDetailsClosed"></TransactionDetails>
 </div>

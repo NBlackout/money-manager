@@ -1,8 +1,5 @@
 ﻿using App.Read.Ports;
 using App.Read.UseCases.Accounts;
-using App.Write.Model.Categories;
-using App.Write.Model.Transactions;
-using App.Write.UseCases.Transactions;
 using Microsoft.JSInterop;
 
 namespace Client.Components;
@@ -10,11 +7,10 @@ namespace Client.Components;
 public partial class Transactions : ComponentBase
 {
     private TransactionSummaryPresentation[]? transactions;
-    private Guid? selectedTransactionId;
 
     [Inject] private TransactionsOfMonth TransactionsOfMonth { get; set; } = null!;
-    [Inject] private AssignTransactionCategory AssignTransactionCategory { get; set; } = null!;
     [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
+    [Inject] private Store Store { get; set; } = null!;
 
     [Parameter] public Guid AccountId { get; set; }
     [Parameter] public DateOnly Month { get; set; }
@@ -25,7 +21,7 @@ public partial class Transactions : ComponentBase
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
-            await this.JsRuntime.InvokeVoidAsync("hookOffcanvasTo", "#categoryPickerOffcanvas");
+            await this.JsRuntime.InvokeVoidAsync("hookOffcanvasTo", "#transactionDetails");
     }
 
     protected override async Task OnParametersSetAsync() =>
@@ -33,28 +29,27 @@ public partial class Transactions : ComponentBase
 
     private async Task OnCategoryPicked((Guid CategoryId, string CategoryLabel) args)
     {
-        await this.AssignTransactionCategory.Execute(new TransactionId(this.selectedTransactionId!.Value), new CategoryId(args.CategoryId));
         this.transactions = this.transactions!
-            .Select(t => t with { Category = t.Id == this.selectedTransactionId!.Value ? args.CategoryLabel : t.Category })
+            .Select(t => t with { Category = t.Id == this.Store.SelectedTransactionId!.Value ? args.CategoryLabel : t.Category })
             .ToArray();
         await this.UnselectTransaction();
     }
 
-    private async Task OnCategoryPickerClosed() =>
+    private async Task OnDetailsClosed() =>
         await this.UnselectTransaction();
 
-    private async Task OpenCategoryPickerFor(Guid transactionId) =>
+    private async Task OpenDetailsOf(Guid transactionId) =>
         await this.SelectTransaction(transactionId);
 
     private async Task UnselectTransaction()
     {
         await this.JsRuntime.InvokeVoidAsync("hideOffcanvas");
-        this.selectedTransactionId = null;
+        this.Store.SelectedTransactionId = null;
     }
 
     private async Task SelectTransaction(Guid transactionId)
     {
         await this.JsRuntime.InvokeVoidAsync("showOffcanvas");
-        this.selectedTransactionId = transactionId;
+        this.Store.SelectedTransactionId = transactionId;
     }
 }

@@ -48,7 +48,7 @@ jobs:
       - name: Test
         run: dotnet test --no-restore --verbosity minimal
 
-      - name: Mutation testing Write
+      - name: Mutation
         run: dotnet stryker -f Tests/stryker-config.json -p App -tp Tests/App.Tests/App.Tests.csproj
 
       - name: Publish

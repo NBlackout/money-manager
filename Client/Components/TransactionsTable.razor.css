@@ -1,8 +1,8 @@
 td {
     white-space: nowrap;
 
-    &.transaction-label {
-        width: 100%;
+    .transaction-label {
+        cursor: text;
     }
 }
 

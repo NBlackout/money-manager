@@ -1,4 +1,4 @@
-﻿using App.Read.Ports;
+using App.Read.Ports;
 using App.Read.UseCases.Categories;
 
 namespace Client.Components;
@@ -8,10 +8,8 @@ public partial class CategoryPicker : ComponentBase
     private CategorySummaryPresentation[]? categories;
 
     [Inject] private CategorySummaries CategorySummaries { get; set; } = null!;
-    [Inject] private NavigationManager NavigationManager { get; set; } = null!;
 
     [Parameter] public EventCallback<(Guid, string)> OnPicked { get; set; }
-    [Parameter] public EventCallback OnClosed { get; set; }
 
     protected override async Task OnInitializedAsync() =>
         this.categories = await this.CategorySummaries.Execute();
@@ -22,7 +20,4 @@ public partial class CategoryPicker : ComponentBase
 
         await this.OnPicked.InvokeAsync((id, label));
     }
-
-    private void NavigateToCategoryCreation() =>
-        this.NavigationManager.NavigateTo("/categories/create");
 }

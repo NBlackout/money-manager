@@ -1,4 +1,3 @@
-using Infra.Shared;
 using Infra.Shared.Extensions;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -8,7 +7,13 @@ public static class WebAssemblyHostBuilderExtensions
 {
     public static WebAssemblyHostBuilder AddServices(this WebAssemblyHostBuilder builder)
     {
-        builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) }).AddSharedInfra().AddWrite().AddRead();
+        builder
+            .Services
+            .AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) })
+            .AddSharedInfra()
+            .AddWrite()
+            .AddRead()
+            .AddSingleton<Store>();
 
         return builder;
     }

@@ -6,29 +6,25 @@
         {
             @foreach ((TransactionSummaryPresentation transaction, int index) in transactionsPerDate.Select((p, i) => (p, i)))
             {
-                <tr>
+                <tr @onclick="@(() => OpenCategoryPickerFor(transaction.Id))" role="button">
                     <td>@(index == 0 ? transaction.Date.ToString("dd/MM") : string.Empty) </td>
                     <td class="text-end">
                         <span class="text-@(transaction.Amount > 0 ? "success" : "danger")">@transaction.Amount.ToString("N2") €</span>
                     </td>
-                    <td class="transaction-label lh-sm">
+                    <td class="lh-sm w-100">
                         @if (isEditing && transactionId!.Value == transaction.Id)
                         {
-                            <input type="text" value="@transaction.Label" @ref="labelElement" @onchange="LabelChanged" @onfocusout="ExitEditMode"
+                            <input type="text" value="@transaction.Label" @ref="labelElement" @onchange="LabelChanged" @onfocusout="ExitEditMode" @onclick:stopPropagation="true"
                                    class="form-control form-control-sm" placeholder="Label"/>
                         }
                         else
                         {
-                            <span @onclick="@(() => EnterEditMode(transaction.Id))">@transaction.Label</span>
+                            <span @onclick="@(() => EnterEditMode(transaction.Id))" @onclick:stopPropagation="true" class="transaction-label">@transaction.Label</span>
                             <div class="small text-secondary">@transaction.Category</div>
                         }
                     </td>
                     <td>
                         <div class="btn-group" role="group">
-                            <button class="btn btn-@(transaction.Category != null ? "primary" : "outline-primary") py-0 px-2" type="button"
-                                    @onclick="@(() => OpenCategoryPickerFor(transaction.Id))">
-                                <small class="bi bi-tag"></small>
-                            </button>
                             <button class="btn btn-@(transaction.IsRecurring ? "secondary" : "outline-secondary") py-0 px-2" type="button"
                                     @onclick="@(() => MarkAsRecurring(transaction.Id))">
                                 <small class="bi bi-calendar-@(transaction.IsRecurring ? "check" : "plus")"></small>

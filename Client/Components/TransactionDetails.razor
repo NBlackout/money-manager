@@ -1,0 +1,13 @@
+﻿<div class="offcanvas-header">
+    <h5 class="offcanvas-title">Details</h5>
+    <button type="button" class="btn-close" @onclick="OnClosed"></button>
+</div>
+<div class="offcanvas-body">
+    @if (pickCategory)
+    {
+        <CategoryPicker OnPicked="OnCategoryPicked"></CategoryPicker>
+    }
+</div>
+
+<button @onclick="PickCategory" type="button" class="btn btn-primary rounded-0">Click me</button>
+
