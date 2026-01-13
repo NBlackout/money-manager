@@ -23,26 +23,9 @@
                             <div class="small text-secondary">@transaction.Category</div>
                         }
                     </td>
-                    <td>
-                        <div class="btn-group" role="group">
-                            <button class="btn btn-@(transaction.IsRecurring ? "secondary" : "outline-secondary") py-0 px-2" type="button"
-                                    @onclick="@(() => MarkAsRecurring(transaction.Id))">
-                                <small class="bi bi-calendar-@(transaction.IsRecurring ? "check" : "plus")"></small>
-                            </button>
-                        </div>
-                    </td>
                 </tr>
             }
         }
         </tbody>
-        <tfoot>
-        <tr>
-            <td class="text-end fw-bold">Total</td>
-            <td colspan="2" class="text-end">
-                <span class="text-@(Total > 0 ? "success" : "danger")">@Total.ToString("N2") €</span>
-            </td>
-            <td></td>
-        </tr>
-        </tfoot>
     </table>
 </div>

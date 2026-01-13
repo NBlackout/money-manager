@@ -5,7 +5,3 @@ td {
         cursor: text;
     }
 }
-
-tfoot td {
-    border-top: 4px double #DDDDDD;
-}

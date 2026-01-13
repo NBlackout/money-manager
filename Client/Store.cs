@@ -1,6 +1,8 @@
+using App.Read.Ports;
+
 namespace Client;
 
 public class Store
 {
-    public Guid? SelectedTransactionId { get; set; }
+    public TransactionSummaryPresentation? SelectedTransaction { get; set; }
 }

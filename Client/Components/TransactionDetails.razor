@@ -1,13 +1,45 @@
 ﻿<div class="offcanvas-header">
-    <h5 class="offcanvas-title">Details</h5>
+    <h5 class="offcanvas-title">Transaction details</h5>
     <button type="button" class="btn-close" @onclick="OnClosed"></button>
 </div>
 <div class="offcanvas-body">
-    @if (pickCategory)
+    @if (Transaction != null)
     {
-        <CategoryPicker OnPicked="OnCategoryPicked"></CategoryPicker>
+        @if (pickCategory)
+        {
+            <CategoryPicker OnPicked="OnCategoryPicked"></CategoryPicker>
+        }
+        else
+        {
+            <div class="list-group list-group-flush">
+                <button @onclick="PickCategory" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+                    <div>
+                        @if (Transaction.Category != null)
+                        {
+                            <div class="fw-bold">@Transaction.Category</div>
+                            <small>Change category</small>
+                        }
+                        else
+                        {
+                            <span>Categorize</span>
+                        }
+                    </div>
+                    <span class="bi bi-chevron-right"></span>
+                </button>
+
+                @if (Transaction.IsRecurring is false)
+                {
+                    <button @onclick="MarkAsRecurring" class="list-group-item list-group-item-action">Mark as recurring</button>
+                }
+                else
+                {
+                    <span class="list-group-item list-group-item-primary">
+                        <small class="bi bi-calendar-check"></small> Recurring
+                    </span>
+                }
+            </div>
+        }
     }
 </div>
 
-<button @onclick="PickCategory" type="button" class="btn btn-primary rounded-0">Click me</button>
 

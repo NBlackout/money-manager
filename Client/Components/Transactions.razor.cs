@@ -30,7 +30,7 @@ public partial class Transactions : ComponentBase
     private async Task OnCategoryPicked((Guid CategoryId, string CategoryLabel) args)
     {
         this.transactions = this.transactions!
-            .Select(t => t with { Category = t.Id == this.Store.SelectedTransactionId!.Value ? args.CategoryLabel : t.Category })
+            .Select(t => t with { Category = t.Id == this.Store.SelectedTransaction!.Id ? args.CategoryLabel : t.Category })
             .ToArray();
         await this.UnselectTransaction();
     }
@@ -39,17 +39,17 @@ public partial class Transactions : ComponentBase
         await this.UnselectTransaction();
 
     private async Task OpenDetailsOf(Guid transactionId) =>
-        await this.SelectTransaction(transactionId);
+        await this.SelectTransaction(this.transactions!.Single(t => t.Id == transactionId));
 
     private async Task UnselectTransaction()
     {
         await this.JsRuntime.InvokeVoidAsync("hideOffcanvas");
-        this.Store.SelectedTransactionId = null;
+        this.Store.SelectedTransaction = null;
     }
 
-    private async Task SelectTransaction(Guid transactionId)
+    private async Task SelectTransaction(TransactionSummaryPresentation transaction)
     {
         await this.JsRuntime.InvokeVoidAsync("showOffcanvas");
-        this.Store.SelectedTransactionId = transactionId;
+        this.Store.SelectedTransaction = transaction;
     }
 }
