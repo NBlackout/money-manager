@@ -7,10 +7,18 @@
     {
         @if (pickCategory)
         {
+            <a @onclick="Back" class="icon-link icon-link-hover text-decoration-none align-items-baseline mb-2" @onclick:preventDefault="true" href="#"
+               style="--bs-icon-link-transform: translate3d(-.125rem, 0, 0);">
+                <small class="bi bi-chevron-left"></small>
+                Back
+            </a>
             <CategoryPicker OnPicked="OnCategoryPicked"></CategoryPicker>
         }
         else
         {
+            <label for="transactionLabel" class="form-label">Label</label>
+            <input id="transactionLabel" type="text" value="@Transaction.Label" @onchange="OnLabelChanged" class="form-control mb-4" placeholder="Label"/>
+
             <div class="list-group list-group-flush">
                 <button @onclick="PickCategory" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
                     <div>

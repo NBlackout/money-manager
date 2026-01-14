@@ -1,18 +1,18 @@
 ﻿@if (Inflow != null)
 {
-    <h3 class="border-bottom">
+    <h3 class="border-bottom d-flex align-items-baseline gap-2">
         <span class="bi bi-graph-up-arrow text-success fs-5"></span>
-        Entrées
-        <span class="fs-6 text-@(Inflow.Sum(t => t.Amount) > 0 ? "success" : "danger")">@Inflow.Sum(t => t.Amount).ToString("N2") €</span>
+        <span>Entrées</span>
+        <span class="fs-6 ms-auto text-success">@Inflow.Sum(t => t.Amount).ToString("N2") €</span>
     </h3>
     <TransactionsTable Transactions="@Inflow" OnPicked="OpenDetailsOf"></TransactionsTable>
 }
 @if (Outflow != null)
 {
-    <h3 class="border-bottom">
+    <h3 class="border-bottom d-flex align-items-baseline gap-2">
         <span class="bi bi-graph-down-arrow text-danger fs-5"></span>
-        Sorties
-        <span class="fs-6 text-@(Outflow.Sum(t => t.Amount) > 0 ? "success" : "danger")">@Outflow.Sum(t => t.Amount).ToString("N2") €</span>
+        <span>Sorties</span>
+        <span class="fs-6 ms-auto text-danger">@Outflow.Sum(t => t.Amount).ToString("N2") €</span>
     </h3>
     <TransactionsTable Transactions="@Outflow" OnPicked="OpenDetailsOf"></TransactionsTable>
 }

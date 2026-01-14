@@ -1,7 +1,0 @@
-td {
-    white-space: nowrap;
-
-    .transaction-label {
-        cursor: text;
-    }
-}

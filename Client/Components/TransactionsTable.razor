@@ -12,16 +12,8 @@
                         <span class="text-@(transaction.Amount > 0 ? "success" : "danger")">@transaction.Amount.ToString("N2") €</span>
                     </td>
                     <td class="lh-sm w-100">
-                        @if (isEditing && transactionId!.Value == transaction.Id)
-                        {
-                            <input type="text" value="@transaction.Label" @ref="labelElement" @onchange="LabelChanged" @onfocusout="ExitEditMode" @onclick:stopPropagation="true"
-                                   class="form-control form-control-sm" placeholder="Label"/>
-                        }
-                        else
-                        {
-                            <span @onclick="@(() => EnterEditMode(transaction.Id))" @onclick:stopPropagation="true" class="transaction-label">@transaction.Label</span>
-                            <div class="small text-secondary">@transaction.Category</div>
-                        }
+                        <span>@transaction.Label</span>
+                        <div class="small text-secondary">@transaction.Category</div>
                     </td>
                 </tr>
             }

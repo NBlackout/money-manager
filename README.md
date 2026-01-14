@@ -29,6 +29,7 @@
 - Nullable category label during import
 - Multiple import sometimes fails
 - Account activity: next month when already on last
+- Prefer transaction label allow for empty and only whitespaces
 
 ## Task
 
